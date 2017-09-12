@@ -26,7 +26,7 @@ class PortletServiceProvider extends ServiceProvider
     {
         $portlet = $this->app->make('portlet');
         $dir = app_path().'/'.config("newportal.portlets.namespace").'/';
-        if(is_dir($dir) and (\Illuminate\Support\Facades\Schema::hasTable('portlets'))) {
+        /*if(is_dir($dir) and (\Illuminate\Support\Facades\Schema::hasTable('portlets'))) {
             foreach ($portlet->listPagePortlets() as $portlet) {
                 $arrayName = explode("\\", $portlet->path);
                 $nameAuthor = reset($arrayName);
@@ -56,7 +56,7 @@ class PortletServiceProvider extends ServiceProvider
                 }
 
             }
-        }
+        }*/
     }
 
     /**

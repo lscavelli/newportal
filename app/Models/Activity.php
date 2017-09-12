@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    //const UPDATED_AT = null;
+    //const UPDATED_AT = null; incompatible with laravel 5.5
 
     protected $table = 'activity';
 

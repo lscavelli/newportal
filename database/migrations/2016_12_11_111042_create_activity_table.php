@@ -20,7 +20,7 @@ class CreateActivityTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('ip_address', 45);
             $table->text('user_agent');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 
