@@ -1,0 +1,154 @@
+.navigationpage {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #222d32;
+    text-align: left;
+}
+
+.navigationpage,.navigationpage>li.header {
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.navigationpage>li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.navigationpage>li>a {
+    border-left: 3px solid transparent;
+}
+
+.navigationpage li>a {
+    position: relative;
+}
+
+.navigationpage>li>a {
+    padding: 12px 5px 12px 15px;
+    display: block;
+}
+
+.navigationpage>li>a>.fa, .navigationpage>li>a>.glyphicon, .navigationpage>li>a>.ion {
+    width: 20px;
+}
+
+.navigationpage>li.header {
+    color: #4b646f;
+    background: #1a2226;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.navigationpage li.header {
+    padding: 10px 25px 10px 15px;
+    font-size: 12px;
+}
+.navigationpage:hover {
+    overflow: visible
+}
+
+.navigationpage>li.header {
+    overflow: hidden;
+    text-overflow: clip
+}
+
+.navigationpage li>a {
+    position: relative
+}
+
+.navigationpage li>a>.pull-right-container {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -7px
+}
+
+.navigationpage>li .label,.navigationpage>li .badge {
+    margin-right: 5px
+}
+
+.navigationpage>li .badge {
+    margin-top: 3px
+}
+
+.navigationpage li.header {
+    padding: 10px 25px 10px 15px;
+    font-size: 12px
+}
+
+.navigationpage li>a>.fa-angle-left,.navigationpage li>a>.pull-right-container>.fa-angle-left {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px
+}
+
+.navigationpage li>a>.fa-angle-left {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -8px
+}
+
+.navigationpage li.active>a>.fa-angle-left,.navigationpage li.active>a>.pull-right-container>.fa-angle-left {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg)
+}
+
+.navigationpage li.active>.treeview-menu {
+    display: block;
+    font-weight: 500;
+}
+
+.navigationpage .treeview-menu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px
+}
+
+.navigationpage .treeview-menu .treeview-menu {
+    padding-left: 20px
+}
+
+.navigationpage .treeview-menu>li {
+    margin: 0
+}
+
+.navigationpage .treeview-menu>li>a {
+    padding: 5px 5px 5px 15px;
+    display: block;
+    font-size: 14px
+}
+
+.navigationpage .treeview-menu>li>a>.fa,.navigationpage .treeview-menu>li>a>.glyphicon,.navigationpage .treeview-menu>li>a>.ion {
+    width: 20px
+}
+
+.navigationpage .treeview-menu>li>a>.pull-right-container>.fa-angle-left,.navigationpage .treeview-menu>li>a>.pull-right-container>.fa-angle-down,.navigationpage .treeview-menu>li>a>.fa-angle-left,.navigationpage .treeview-menu>li>a>.fa-angle-down {
+    width: auto
+}
+
+.navigationpage>li:hover>a,.navigationpage>li.active>a {
+    color: #fff!important;
+    background: #1e282c!important;
+    border-left-color: #3c8dbc!important;
+}
+
+.navigationpage>li>.treeview-menu {
+    margin: 0 1px;
+    background: #2c3b41
+}
+
+.treeview-menu>li>a {
+    color: #8aa4af
+}
+
+.treeview-menu>li.active>a {
+    color: #fff
+}

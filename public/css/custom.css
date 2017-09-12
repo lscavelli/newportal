@@ -1,0 +1,25 @@
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-top-color: #d3d3d3 !important;
+}
+
+span.select2-selection--single {
+    border: 1px solid #d2d6de !important;
+    line-height: 10px !important;
+    padding-left: 4px !important;
+}
+
+/* select2 version 4.0.0 Beta 2 */
+.select2-dropdown--above {
+    border: 1px solid #d2d6de !important;
+    border-bottom: none !important;
+    line-height: normal !important;
+}
+
+.select2-dropdown--below{
+    border: 1px solid #d2d6de !important;
+    border-top: none !important;
+}
+
+.input-sm {
+    font-size: 14px !important;
+}

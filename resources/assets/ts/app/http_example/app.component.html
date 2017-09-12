@@ -1,0 +1,6 @@
+<div class="container">
+  <blockquote *ngFor="let book of books" class="blockquote">
+    <p>{{book.id}} {{book.name}}</p>
+    <footer class="blockquote-footer">{{book.created_at}}</footer>
+  </blockquote>
+</div>
