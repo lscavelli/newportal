@@ -164,7 +164,9 @@
                         <p><a href="/features">Features</a>
                             <br><a href="/video">Video</a>
                             <br><a href="/installation">Installation</a>
-                            <br><a href="/license">License</a></p>
+                            <br><a href="/license">License</a>
+                            <br><a href="/changelog">Changelog</a>
+                        </p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Around the Web</h3>

@@ -25,7 +25,7 @@
                             ->showAll(false)
                             ->setPrefix('RTYX_')
                             ->customizes('azioni', function($row) use($role) {
-                                return "<a href=\"/roles/". $role->id."/addPermission/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">Assegna</a>";
+                                return "<a href=\"/admin/roles/". $role->id."/addPermission/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">Assegna</a>";
                             })->render()
                     !!}
                 </div> <!-- /.box -->
@@ -33,17 +33,17 @@
             <div class="col-md-7">
 
                 {!!
-                    $composer->profix('admin')->boxNavigator([
+                    $composer->boxNavigator([
                         'type'=> 'primary',
                         'title'=>$role->id." - ".$role->name,
                         'listMenu'=>[
-                            'Lista ruoli'=>url('/roles'),
+                            'Lista ruoli'=>url('/admin/roles'),
                             'divider'=>"divider",
-                            'Modifica'=>url('/roles/edit',$role->id),
-                            'Profilo'=>url('/roles/profile',$role->id),
+                            'Modifica'=>url('/admin/roles/edit',$role->id),
+                            'Profilo'=>url('/admin/roles/profile',$role->id),
                         ],
-                        'urlNavPre'=>url('/roles/assign',$pag['preid']->id),
-                        'urlNavNex'=>url('/roles/assign',$pag['nexid']->id),
+                        'urlNavPre'=>url('/admin/roles/assign',$pag['preid']->id),
+                        'urlNavNex'=>url('/admin/roles/assign',$pag['nexid']->id),
                         ])->render()
                  !!}
 
