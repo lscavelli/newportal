@@ -1,9 +1,9 @@
 @extends('master')
 
 @section('title', $page->title)
-@section('ogTitle', $page->title)
+@section('ogTitle', $page->title)@section('description', $page->description)
 @section('keywords', $page->keywords)
-@section('description', $page->description)
+
 
 @section('css')
     @if($page->css)

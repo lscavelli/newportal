@@ -12,17 +12,17 @@
     <link rel="shortcut icon" href="{{ $theme->url("ico/favicon.png") }}">
     <title>{{ $theme->get('title') }}</title>
 
-    <meta property="og:site_name" content="Newportal Platform 1.0">
+    <meta property="og:site_name" content="Newportal Platform">
     <meta property="og:title" content="{{ $theme->get('title') }}">
     <meta property="og:description" content="{{ $theme->get('description') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ URL::full() }}">
-    <meta property="og:image" content="@yield('image')">
+    <meta property="og:image" content="{{ $theme->url("img/newportal_webpage.png") }}">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ $theme->url("vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
     <!-- Custom styles -->
-    <link href="{{ $theme->url("css/grayscale-01258.css") }}" rel="stylesheet">
+    <link href="{{ $theme->url("css/grayscale-01259.css") }}" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="{{ $theme->url("vendor/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
