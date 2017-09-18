@@ -91,6 +91,7 @@ class Theme {
             throw new ThemeException("Il layout \"$layout\" non è statto trovato");
         }
         $this->layout = $layout;
+        if (isset($args['name'])) $args['title'] = $args['name'];
         if (count($args)>0) $this->arguments = array_merge($this->arguments,$args);
         return $this;
     }

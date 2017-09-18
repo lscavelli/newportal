@@ -1,0 +1,25 @@
+{
+  "name": "public file",
+  "homepage": "https://github.com/lscavelli/newportal",
+  "description": "front end app newportal",
+  "main": "",
+  "authors": [
+    "LGF Scavelli"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "formeo": "^0.7.17",
+    "AdminLTE": "adminlte#^2.3.11",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "ace-builds": "^1.2.8",
+    "jquery-ui": "^1.12.1",
+    "ckeditor": "^4.7.3"
+  }
+}
