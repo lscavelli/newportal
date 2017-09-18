@@ -22,6 +22,14 @@ class contentList extends Portlet {
         if (empty($this->config['model_id'])) return;
         $builder = $this->rp->getModel();
 
+        // ordered
+        if (!empty($this->config['ord'])) {
+            $ord = ['id','name','created_at','updated_at'];
+            $dir = ['asc','desc'];
+            if (!isset($this->config['dir'])) $this->config['dir'] = 0;
+            $builder = $builder->orderBy($ord[$this->config['ord']], $dir[$this->config['dir']]);
+        }
+
         $tags = null;
         if (!empty($this->config['comunication']) and $this->request->has('tag')) {
             $tags = ['tags'=>['tag'=>$this->request->tag]];

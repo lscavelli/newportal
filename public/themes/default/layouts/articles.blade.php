@@ -24,7 +24,7 @@
                     <a href="/welcome">Welcome</a>
                 </li>
                 <li>
-                    <a href="/articles?category=1">Articles</a>
+                    <a href="/articles">Articles</a>
                 </li>
                 @if (Route::has('login'))
                     @if (Auth::check())

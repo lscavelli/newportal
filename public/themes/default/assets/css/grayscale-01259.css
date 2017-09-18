@@ -782,3 +782,17 @@ li.block-hover {
 
 }
 
+.callout {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: white;
+}
+.callout-danger {
+  background-color: #dd4b39;
+}
+.callout-success {
+  background-color: #00a65a;
+}
+

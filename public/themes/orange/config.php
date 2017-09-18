@@ -13,23 +13,7 @@ return [
     ],
 
     'home' => [
-        'navigation',
-        'content',
-        'about',
-        'download',
-    ],
-    'builderlayout' => [
-        'navigation',
-        'content',
-        'about',
-        'download',
-        'navcontent',
-    ],
-
-    'articles' => [
-        'navigation',
-        'content',
-        'navcontent',
-    ],
+        'section-a',
+    ]
 
 ];

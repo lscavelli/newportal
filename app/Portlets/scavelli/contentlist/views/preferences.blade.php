@@ -35,6 +35,13 @@
                                 {{ Form::select('categories'.$vocabulary->id.'[]', $vocabulary->categories()->pluck('name','id'), null, ['class' => "form-control select2-multi multicat", 'multiple' => 'multiple', 'style'=>'width:100%;', 'id'=>'categories'.$vocabulary->id]) }}
                             </div>
                         @endforeach
+                        <div class="form-group">
+                            <label for="type_order">Ordina per</label>
+                            {!! Form::select('ord', $selectOrder['ord'] , $conf['ord'] , ['class' => "form-control"]) !!}
+                        </div>
+                        <div class="form-group">
+                            {!! Form::select('dir', $selectOrder['dir'] , $conf['dir'] , ['class' => "form-control"]) !!}
+                        </div>
                     </form>
 
                 </div>

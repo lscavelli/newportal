@@ -26,7 +26,7 @@ class assetController extends Controller
      * @return string
      */
     public function configPortlet($portlet, Request $request) {
-        $conf = ['inpage'=>'','service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+        $conf = ['inpage'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $conf = array_merge($conf,json_decode($portlet->pivot->setting, true));
 
         // definizione della lista dei modelli
@@ -75,6 +75,8 @@ class assetController extends Controller
         }
         //===============================================
 
+        $selectOrder = $this->selectOrder();
+
         return view('contentlist::preferences')->with(compact(
             'services',
             'structures',
@@ -85,13 +87,22 @@ class assetController extends Controller
             'conf',
             'portlet',
             'tags_reg',
-            'cats_reg'
+            'cats_reg',
+            'selectOrder'
         ));
     }
 
     private function listVocabularies($class) {
         $service = $this->rp->setModel(Service::class)->where('class',$class)->first();
         return $service->vocabularies;
+    }
+
+    /**
+     * @return array
+     * Definisco i valori dei campi select ord e dir
+     */
+    private function selectOrder() {
+        return  ['ord'=>['Inserimento','Titolo','Data di Creazione','Data di Modifica'],'dir'=>['Ascendente','Discendente']];
     }
 
     /**
