@@ -83,7 +83,7 @@ class FormGenerates
 
     public function ckeditor($field,$attrs, $value) {
         $this->fieldsCKEditor[] = $field->id;
-        return $this->textarea($field,$attrs, $value);
+        return $this->textarea($field,$attrs, htmlspecialchars($value));
     }
 
     public function date($field,$attrs,$value) {
