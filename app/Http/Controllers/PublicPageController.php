@@ -21,6 +21,7 @@ class PublicPageController extends Controller {
     }
 
     public function getPage(Theme $theme, $uri=null) {
+
         //$page = $this->rp->where('slug',$uri)->where('status_id',1)->first();
         $page = app()->make('portlet')->getPage();
         if (!$page) app()->abort(404, 'Pagina non trovata');

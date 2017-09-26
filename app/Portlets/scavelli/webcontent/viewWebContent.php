@@ -14,8 +14,12 @@ class viewWebContent extends Portlet {
 
     public function getContent() {
 
+        $segments = $this->request->segments();
+
         if (!empty($this->config['comunication']) and $this->request->has('content')) {
             $content = $this->rp->findBySlug($this->request->content);
+        } elseif (count($segments)>1) {
+            $content = $this->rp->findBySlug(end($segments));
         } else {
             if (!isset($this->config['content_id']) or empty($this->config['content_id'])) return;
             $content = $this->rp->find($this->config['content_id']);

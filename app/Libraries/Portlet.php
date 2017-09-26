@@ -77,7 +77,7 @@ class Portlet {
 
     public function getPage() {
         if (empty($this->page)) {
-            $uri = \Request::path();
+            $uri = \Request::segment(1); //path();
             $this->rp->setModel(Page::class);
             $this->page = $this->rp->where('slug',$uri)->where('status_id',1)->first();
         }
