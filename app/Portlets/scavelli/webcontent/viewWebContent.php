@@ -53,7 +53,7 @@ class viewWebContent extends Portlet {
         // inserisco il pulsante per la modifica del contenuto
         if (auth()->check()) {
             $urlupdate = url("/admin/content/edit")."/".$content->id; $update = null;
-            $update = "<br /><br /><a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$content->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
+            $update = "<a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$content->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
         }
 
 
