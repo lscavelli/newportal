@@ -109,23 +109,32 @@ function docReady() {
             var ctrl = "#"+id;
             if (!($(ctrl).children('.field-actions').length > 0))  {
                 $(ctrl).append(getOptions(id));
-                $(ctrl).mouseover(function() {
-                    $(ctrl +' .field-actions').css({"display":"inline"});
-                });
-                $(ctrl).mouseout(function(){
-                    $(ctrl +' .field-actions').css({"display":"none"});
-                });
-                $(ctrl +' .field-actions .del-button').click(function(){
-                    if (confirm("Sei sicuro di voler cancellare la portlet?")) {
-                        $(ctrl).remove();
-                        if (pageid && pivotid){
-                            $.getJSON ("/admin/pages/"+pageid+"/removePivotId/"+pivotid);
-                        }
-                    } else {
-                        return false;
-                    }
-                });
             }
+            $(ctrl).mouseover(function() {
+                $(ctrl +' .field-actions').css({"display":"inline"});
+            });
+            $(ctrl).mouseout(function(){
+                $(ctrl +' .field-actions').css({"display":"none"});
+            });
+            $(ctrl +' .field-actions .del-button').click(function(){
+                if (confirm("Sei sicuro di voler cancellare la portlet?")) {
+                    $(ctrl).remove();
+                    if (pageid && pivotid){
+                        $.getJSON ("/admin/pages/"+pageid+"/removePivotId/"+pivotid);
+                    }
+                } else {
+                    return false;
+                }
+            });
+            $(ctrl).on('mouseover', function(e){
+                e.preventDefault();
+                $(ctrl +' .edit-button').css({"display":"inline"});
+            });
+
+            $(ctrl).on('mouseout', function(e){
+                e.preventDefault();
+                $(ctrl +' .edit-button').css({"display":"none"});
+            });
         });
     }
 
@@ -213,6 +222,7 @@ $('.portlet-chooser .toggler').on('click', function(e){
     e.preventDefault();
     $(this).closest('.portlet-chooser').toggleClass('opened');
 });
+
 
 function searchPortlet(q) {
     //console.log(q);

@@ -50,7 +50,14 @@ class viewWebContent extends Portlet {
         if (str_contains($model, '$np_categories')) $data['_categories'] = $content->categories;
         $data['_author_name'] = $content->user->name; $data['_author_username'] = $content->username; $data['_author_id'] = $content->user_id;
 
-        return $this->applyModel($model->content,$data);
+        // inserisco il pulsante per la modifica del contenuto
+        if (auth()->check()) {
+            $urlupdate = url("/admin/content/edit")."/".$content->id; $update = null;
+            $update = "<br /><br /><a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$content->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
+        }
+
+
+        return $this->applyModel($model->content,$data).$update;
     }
 
     public function configPortlet($portlet) {
