@@ -35,7 +35,7 @@ class navigationPages extends Portlet {
             if (count($page->children)) {
                 $this->menu[$page->name]['submenu'] = $this->submenu($page->children);
             } else {
-                $this->menu[$page->name]['url'] = $page->slug;
+                $this->menu[$page->name]['url'] = url($page->slug);
             }
             $nav->add($this->menu);
         }
