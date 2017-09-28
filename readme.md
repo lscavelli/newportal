@@ -4,7 +4,7 @@ del Module Bundler webpack 3<br /><br />
 
 >Documentation under costruction http://newportal.readthedocs.io/it/latest/
 
->Indirizzo web provvisorio: http://hotorbot.io<br />
->Video: http://hotorbot.io/video<br />
->Installation: http://hotorbot.io/installation<br />
+>Indirizzo web provvisorio: http://hotorbot.io
+>Video: http://hotorbot.io/video
+>Installation: http://hotorbot.io/installation
 >Help on Gitter: https://gitter.im/newportalcms/help
