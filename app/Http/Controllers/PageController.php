@@ -68,8 +68,7 @@ class pageController extends Controller {
             $optionsSel = $this->rp->optionsSel();
         }
         $listThemes = $theme->listThemes();
-        $listLayouts = [];
-        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes','listLayouts'));
+        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes'));
     }
 
     /**
@@ -97,9 +96,9 @@ class pageController extends Controller {
         $page = $this->rp->find($id);
         $optionsSel = $this->rp->optionsSel($id);
         $listThemes = $theme->listThemes();
-        $listLayouts = $theme->setTheme($page->theme)->listlayouts();
+        //$listLayouts = $theme->setTheme($page->theme)->listlayouts();
         $action = ["PageController@update",$id];
-        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes','listLayouts'));
+        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes'));
     }
 
     /**

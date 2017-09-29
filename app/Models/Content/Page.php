@@ -11,7 +11,7 @@ class Page extends Model
     protected $fillable = array(
         'name', 'slug', 'description', 'type_id', 'parent_id',
         'keywords', 'title', 'robots', 'css', 'javascript', 'hidden_',
-        'status_id', 'layout', 'theme', 'user_id', 'username'
+        'status_id', 'layout', 'theme', 'user_id', 'username', 'url'
     );
 
     public function parent() {
