@@ -10,7 +10,7 @@
                     <span class="opener @if($nav->isSelected($item)) active @endif">{{ $name }}</span>
                     @include('navigationpages::subPagesGrey',['items' => $item['submenu'],'nav'=>$nav])
                 @else
-                    <a href="{{$nav->prefix}}{{ $item['url'] or '#' }}">{{ $name }}</a>
+                    <a href="{{$nav->prefix}}{{ $item['url'] or '#' }}">{{ $name }} @if(isset($item['external_link'])) <i class="fa fa-external-link"></i> @endif</a>
                 @endif
             @else
                 <a href="{{$nav->prefix}}{{ $item }}">{{ $name }}</a>
