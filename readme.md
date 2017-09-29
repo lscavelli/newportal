@@ -8,3 +8,4 @@ del Module Bundler webpack 3<br /><br />
 >Video: http://hotorbot.io/video  
 >Installation: http://hotorbot.io/installation  
 >Help on Gitter: https://gitter.im/newportalcms/help
+da agg
