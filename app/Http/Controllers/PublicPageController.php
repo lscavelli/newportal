@@ -25,6 +25,9 @@ class PublicPageController extends Controller {
         //$page = $this->rp->where('slug',$uri)->where('status_id',1)->first();
         $page = app()->make('portlet')->getPage();
         if (!$page) app()->abort(404, 'Pagina non trovata');
+        if ($page->type_id===1 && !empty($page->url)) {
+            return redirect($page->url);
+        }
         //if ($page->private && !Auth::check()) abort(403, 'La pagina è riservata');
         $themePage = $page->theme ?: config('newportal.theme-default');
         $layout = $page->layout ?: config('newportal.layout-default');

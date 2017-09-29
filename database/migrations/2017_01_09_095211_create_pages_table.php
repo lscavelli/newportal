@@ -17,7 +17,8 @@ class CreatePagesTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 150);
             $table->string('slug', 150)->unique();
-            $table->unsignedInteger('type_id')->nullable();
+            $table->unsignedInteger('type_id')->nullable()->default(0);
+            $table->string('url', 255)->nullable();
             $table->string('layout')->nullable();
             $table->string('theme')->nullable();
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
