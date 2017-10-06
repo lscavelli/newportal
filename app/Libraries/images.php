@@ -41,10 +41,14 @@ class Images {
         return $this->request->file($formdata);
     }
 
+    /**
+     * cancella il file - se non contiente il path lo aggiunge
+     * @param $file
+     */
     public function delFile($file) {
         if (empty($file)) return;
-        $filepath = sprintf("%s/%s", $this->getPath() , $file);
-        if ($this->fs->exists($filepath))  $this->fs->delete($filepath);
+        $file = sprintf("%s/%s", $this->getPath() , $file);
+        if ($this->fs->exists($file))  $this->fs->delete($file);
     }
 
     public function setPath($dir) {

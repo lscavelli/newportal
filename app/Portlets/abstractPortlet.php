@@ -78,9 +78,21 @@ abstract class abstractPortlet {
         //$__data['__env'] = app(\Illuminate\View\Factory::class);*/
     }
 
+    /**
+     * restituisce il path al file chiamante della portlet corrente
+     * @return string
+     */
     protected function getPath() {
         $pathClass =  dirname((new ReflectionClass(static::class))->getFileName());
         return strtolower(str_replace(app_path(),'',$pathClass))."/";
+    }
+
+    /**
+     * Imposta i meta tag della pagina corrente
+     * @param $metaTag
+     */
+    protected function setMetaTagPage($metaTag) {
+        if (is_array($metaTag) && count($metaTag>0)) $this->theme->setArguments($metaTag);
     }
 
 

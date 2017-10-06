@@ -185,13 +185,20 @@ class ContentController extends Controller {
         $content = $this->rp->find($id);
         $data = $request->all();
         $image->setPath(config('newportal.path_upload_imgwc'));
-        if ($request->has('setImageDefault')) {
+        if ($request->has('setImageDefault') or !$request->has('urlImage')) {
             $data['image'] = null;
-            $image->delFile($content->image);
+            // la cancellazione dev'essere fatta se non è utilizzato da un altro contenuto
+            // $image->delFile($content->image);
+            // vedere anche uploadImage avvia la cancellazione della vecchia
+        } elseif($request->file('image')) {
+            $data['image'] = $image->uploadImage($content->image, 288, 174)[0];
+        } elseif($request->has('urlImage')) {
+            // se diversa e non è utilizzata da un altro contenuto la cancella
+            //if ($request->urlImage!=$content->image) $image->delFile($content->image);
+            $data['image'] = $request->urlImage;
+            // se non contiene http e non esiste il file allora $data['image'] = null;
         }
-        if ($request->file('image')) {
-            $data['image'] = $image->uploadImage($content->image,288,174)[0];
-        }
+
         $this->rp->update($id, $data);
         if ($request->has('saveCategory')) $this->saveCat($content,$request);
         return redirect()->route('content')->withSuccess('Contenuto aggiornato correttamente');

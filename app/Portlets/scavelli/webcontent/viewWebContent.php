@@ -16,13 +16,15 @@ class viewWebContent extends Portlet {
 
         $segments = $this->request->segments();
 
-        $cw =null;
+        $cw = $mt =null;
         if (!empty($this->config['comunication'])) {
             if ($this->request->has('content')) {
                 $cw = $this->rp->findBySlug($this->request->content);
             } elseif (count($segments)>1) {
                 $cw = $this->rp->findBySlug(end($segments));
             }
+            // setto i meta tag della pagina con i dati del web content
+            if (!is_null($cw)) $mt = 1;
         }
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
@@ -63,9 +65,18 @@ class viewWebContent extends Portlet {
             $urlupdate = url("/admin/content/edit")."/".$cw->id;
             $update = "<a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$cw->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
         }
+        $return = $this->applyModel($model->content,$data).$update;
 
+        // se la comunicazione è attiva e il nome del content è presente nell'url, setto i meta Tag della pagina
+        if ($mt) {
+            $mt = array();
+            $mt['title'] = $data['_title'];
+            $mt['description'] = str_limit($cw->description,150);
+            $mt['image'] = $cw->getImage();
+            $this->setMetaTagPage($mt);
+        }
 
-        return $this->applyModel($model->content,$data).$update;
+        return $return;
     }
 
     public function configPortlet($portlet) {

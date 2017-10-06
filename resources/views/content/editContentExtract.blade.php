@@ -28,6 +28,17 @@
                             {!! Form::textarea('description',null,['class' => 'form-control', 'id'=>'description']) !!}
                         </div>
                     </div>
+                    <div class="form-group">
+                        {{ Form::label('urlImage', "URL image", ['class' => 'col-sm-2 control-label']) }}
+                        <div class="col-sm-10">
+                            {!! Form::text('urlImage',$content->image,['class' => 'form-control', "id"=>'urlImage']) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2" style="margin-top: 10px;">
+                            <p>Oppure</p>
+                        </div>
+                    </div>
                     <p class="text_img"></p>
                     <div class="form-group">
                         {{ Form::label('image', "Immagine", ['class' => 'col-sm-2 control-label']) }}
