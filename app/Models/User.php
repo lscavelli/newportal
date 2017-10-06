@@ -177,10 +177,12 @@ class User extends Authenticatable
     }
 
     public function getAvatar() {
-        if (! $this->avatar ) {
+        $image = config('newportal.path_upload_user')."/".$this->avatar;
+        $imagePath = sprintf("%s/%s", public_path(), $image);
+        if (! $this->avatar or !file_exists($imagePath)) {
             return asset('img/avatar.png');
         }
-        return asset(config('newportal.path_upload_user')."/".$this->avatar);
+        return asset($image);
     }
 
 }

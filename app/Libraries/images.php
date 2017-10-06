@@ -47,16 +47,33 @@ class Images {
      */
     public function delFile($file) {
         if (empty($file)) return;
-        $file = sprintf("%s/%s", $this->getPath() , $file);
-        if ($this->fs->exists($file))  $this->fs->delete($file);
+        if ($this->fileExists($file))  $this->fs->delete($file);
     }
 
+    /**
+     * imposto il path delle immagini
+     * @param $dir
+     */
     public function setPath($dir) {
         $this->path = sprintf("%s/%s", public_path(), $dir);
     }
 
+    /**
+     * restituisco il path completo delle immagini
+     * @return null
+     */
     public function getPath() {
         return $this->path;
+    }
+
+    /**
+     * verifico che il file completo di path esista
+     * @param $file
+     * @return bool
+     */
+    public function fileExists($file) {
+        $file = sprintf("%s/%s", $this->getPath() , $file);
+        return ($this->fs->exists($file));
     }
 
     private function makeName($file) {

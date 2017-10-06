@@ -185,18 +185,24 @@ class ContentController extends Controller {
         $content = $this->rp->find($id);
         $data = $request->all();
         $image->setPath(config('newportal.path_upload_imgwc'));
+        $check =$this->checkUseImage($content->image);
         if ($request->has('setImageDefault') or !$request->has('urlImage')) {
             $data['image'] = null;
-            // la cancellazione dev'essere fatta se non è utilizzato da un altro contenuto
-            // $image->delFile($content->image);
-            // vedere anche uploadImage avvia la cancellazione della vecchia
+            // cancello se non viene utilizzato da un altro contenuto
+            if ($check) $image->delFile($content->image);
         } elseif($request->file('image')) {
-            $data['image'] = $image->uploadImage($content->image, 288, 174)[0];
+            $canc = null; if($check) $canc = $content->image;
+            $data['image'] = $image->uploadImage($canc, 288, 174)[0];
         } elseif($request->has('urlImage')) {
-            // se diversa e non è utilizzata da un altro contenuto la cancella
-            //if ($request->urlImage!=$content->image) $image->delFile($content->image);
-            $data['image'] = $request->urlImage;
-            // se non contiene http e non esiste il file allora $data['image'] = null;
+            // se diversa image old e non è utilizzata da un altro contenuto la cancello
+            if (($request->urlImage!=$content->image) && $check) $image->delFile($content->image);
+            // se urlImage non contiene http o https e il file non esiste allora $data['image'] = null;
+            if (!starts_with($request->urlImage, ['http','https']) &&
+                !$image->fileExists($request->urlImage)) {
+                $data['image'] = null;
+            } else {
+                $data['image'] = $request->urlImage;
+            }
         }
 
         $this->rp->update($id, $data);
@@ -256,6 +262,10 @@ class ContentController extends Controller {
     private function listVocabularies() {
         $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
         return $service->vocabularies;
+    }
+
+    private function checkUseImage($image) {
+        return($this->rp->findBy(['image'=>$image]));
     }
 
     /**
