@@ -188,7 +188,7 @@ class ContentController extends Controller {
         $check =$this->checkUseImage($content->image);
         if ($request->has('setImageDefault') or !$request->has('urlImage')) {
             $data['image'] = null;
-            // cancello se non viene utilizzato da un altro contenuto
+            // se non viene utilizzato da un altro contenuto cancello l'immagine
             if ($check) $image->delFile($content->image);
         } elseif($request->file('image')) {
             $canc = null; if($check) $canc = $content->image;
