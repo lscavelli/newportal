@@ -185,13 +185,26 @@ class ContentController extends Controller {
         $content = $this->rp->find($id);
         $data = $request->all();
         $image->setPath(config('newportal.path_upload_imgwc'));
-        if ($request->has('setImageDefault')) {
+        $check =$this->checkUseImage($content->image);
+        if ($request->has('setImageDefault') or !$request->has('urlImage')) {
             $data['image'] = null;
-            $image->delFile($content->image);
+            // se non viene utilizzato da un altro contenuto cancello l'immagine
+            if ($check) $image->delFile($content->image);
+        } elseif($request->file('image')) {
+            $canc = null; if($check) $canc = $content->image;
+            $data['image'] = $image->uploadImage($canc, 288, 174)[0];
+        } elseif($request->has('urlImage')) {
+            // se diversa image old e non è utilizzata da un altro contenuto la cancello
+            if (($request->urlImage!=$content->image) && $check) $image->delFile($content->image);
+            // se urlImage non contiene http o https e il file non esiste allora $data['image'] = null;
+            if (!starts_with($request->urlImage, ['http','https']) &&
+                !$image->fileExists($request->urlImage)) {
+                $data['image'] = null;
+            } else {
+                $data['image'] = $request->urlImage;
+            }
         }
-        if ($request->file('image')) {
-            $data['image'] = $image->uploadImage($content->image,288,174)[0];
-        }
+
         $this->rp->update($id, $data);
         if ($request->has('saveCategory')) $this->saveCat($content,$request);
         return redirect()->route('content')->withSuccess('Contenuto aggiornato correttamente');
@@ -249,6 +262,10 @@ class ContentController extends Controller {
     private function listVocabularies() {
         $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
         return $service->vocabularies;
+    }
+
+    private function checkUseImage($image) {
+        return($this->rp->findBy(['image'=>$image]));
     }
 
     /**

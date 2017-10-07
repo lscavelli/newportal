@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="slug" class="col-sm-2 control-label">Url pagina</label>
+                                <label for="slug" class="col-sm-2 control-label">Slug pagina</label>
                                 <div class="col-sm-10">
                                     {!! Form::text('slug',null,['class' => 'form-control', 'placeholder'=> "Lasciare vuoto per generarlo automaticamente"]) !!}
                                 </div>
@@ -81,9 +81,15 @@
                     <div class="tab-pane" id="themepane">
                         {!! Form::model($page, ['action' => $action,'class' => 'form-horizontal']) !!}
                         <div class="form-group">
-                            <label for="layout" class="col-sm-2 control-label">Layout</label>
+                            <label for="level" class="col-sm-2 control-label">Tipo pagina</label>
                             <div class="col-sm-10">
-                                {!! Form::select('layout', $listLayouts , \Request::input('layout'), ['class' => "form-control input-sm", 'id'=>"layout"]) !!}
+                                {!! Form::select('type_id', config('newportal.type_page') , \Request::input('type_id'), ['class' => "form-control input-sm", "id"=>'type_id']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group urlpage">
+                            <label for="slug" class="col-sm-2 control-label">Url</label>
+                            <div class="col-sm-10">
+                                {!! Form::text('url',null,['class' => 'form-control', 'placeholder'=> "url esterno o a pagina e documento interno"]) !!}
                             </div>
                         </div>
                         <div class="form-group">
@@ -105,3 +111,25 @@
     <!-- /.row -->
 </section>
 @stop
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        showUrl();
+
+        $('#type_id').on('change', function(e){
+            e.preventDefault();
+            showUrl();
+        });
+
+        function showUrl() {
+            $type = $( "#type_id" ).val();
+            if ($type==1) {
+                $('.urlpage').show();
+            } else {
+                $('.urlpage').hide();
+            }
+        }
+    });
+</script>
+@endpush

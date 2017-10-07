@@ -274,4 +274,5 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 Auth::routes();
 
 Route::post('contactform', 'Mail\\MailController@contact');
-Route::get('{uri?}', 'PublicPageController@getPage');
+Route::get('{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
+//Route::get('{uri?}','PublicPageController@getPage');

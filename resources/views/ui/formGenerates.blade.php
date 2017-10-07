@@ -34,7 +34,7 @@
 
             @foreach ($form->fieldsCKEditor as $nameField)
                 config['height'] = 400;
-                CKEDITOR.replace('{{ $nameField }}', config);
+                CKEDITOR.replace('{{$nameField }}', config);
                 CKEDITOR.dtd.$removeEmpty.i = 0;
             @endforeach
         </script>

@@ -41,18 +41,39 @@ class Images {
         return $this->request->file($formdata);
     }
 
+    /**
+     * cancella il file - se non contiente il path lo aggiunge
+     * @param $file
+     */
     public function delFile($file) {
         if (empty($file)) return;
-        $filepath = sprintf("%s/%s", $this->getPath() , $file);
-        if ($this->fs->exists($filepath))  $this->fs->delete($filepath);
+        if ($this->fileExists($file))  $this->fs->delete($file);
     }
 
+    /**
+     * imposto il path delle immagini
+     * @param $dir
+     */
     public function setPath($dir) {
         $this->path = sprintf("%s/%s", public_path(), $dir);
     }
 
+    /**
+     * restituisco il path completo delle immagini
+     * @return null
+     */
     public function getPath() {
         return $this->path;
+    }
+
+    /**
+     * verifico che il file completo di path esista
+     * @param $file
+     * @return bool
+     */
+    public function fileExists($file) {
+        $file = sprintf("%s/%s", $this->getPath() , $file);
+        return ($this->fs->exists($file));
     }
 
     private function makeName($file) {

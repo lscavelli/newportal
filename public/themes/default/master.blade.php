@@ -17,7 +17,7 @@
     <meta property="og:description" content="{{ $theme->get('description') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ URL::full() }}">
-    <meta property="og:image" content="{{ $theme->url("img/newportal_webpage.png") }}">
+    <meta property="og:image" content="@if(!empty($theme->get('image'))){{ $theme->get('image') }}@else{{ $theme->url("img/newportal_webpage.png") }}@endif">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ $theme->url("vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">

@@ -92,8 +92,17 @@ class Theme {
         }
         $this->layout = $layout;
         if (isset($args['name'])) $args['title'] = $args['name'];
-        if (count($args)>0) $this->arguments = array_merge($this->arguments,$args);
+        $this->setArguments($args);
         return $this;
+    }
+
+    /**
+     * imposta la var arguments utilizzati dal metodo get() per Meta Tag page
+     * @param $args
+     */
+    public function setArguments($args) {
+        if (is_array($args) && count($args)>0)
+            $this->arguments = array_merge($this->arguments,$args);
     }
 
     public function removeAsset() {

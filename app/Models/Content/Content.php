@@ -29,8 +29,11 @@ class Content extends Model
     public function getImage() {
         if (! $this->image ) {
             return asset('img/webcontent.jpg');
+        } elseif (starts_with($this->image,['http','https'])) {
+            return $this->image;
+        } else {
+            return asset(config('newportal.path_upload_imgwc')."/".$this->image);
         }
-        return asset(config('newportal.path_upload_imgwc')."/".$this->image);
     }
 
     public function user() {
