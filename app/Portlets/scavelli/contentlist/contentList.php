@@ -74,9 +74,16 @@ class contentList extends Portlet {
             $builder = $builder->where('user_id',$this->request->author);
         }
 
-        // se l'url contiene content escludo il content visualizzato
-        if (!empty($this->config['comunication']) and $this->request->has('content')) {
-            $builder = $builder->where('slug','<>',$this->request->content);
+        // se l'url contiene il content escludo dalla query il content
+        if (!empty($this->config['comunication'])) {
+            $segments = $this->request->segments(); $qwc = null;
+            if ($this->request->has('content')) {
+                $qwc = $this->request->content;
+            } elseif (count($segments)>1) {
+                $qwc = end($segments);
+            }
+            if (!is_null($qwc))
+                $builder = $builder->where('slug','<>',$qwc);
         }
 
         //print $builder->toSql(); exit;

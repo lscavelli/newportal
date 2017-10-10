@@ -45,3 +45,12 @@
     border-bottom: 0;
     margin-bottom: 0;
 }
+
+li.block-hover a{
+    font-size: 16px;
+    color: inherit;
+}
+
+li.block-hover a:link, li.block-hover a:visited{
+    text-decoration: none;
+}
