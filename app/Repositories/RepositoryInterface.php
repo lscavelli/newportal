@@ -13,6 +13,7 @@ interface RepositoryInterface {
     public function find($id,$md=null);
     public function findBy(array $criteria, $oper = "=");
     public function findByEmail($email);
+    public function findBySlug($slug);
     public function delete($id,$md=null);
     public function create(array $item);
     public function update($id, array $item);
