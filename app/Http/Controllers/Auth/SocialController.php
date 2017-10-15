@@ -19,7 +19,7 @@ class SocialController extends Controller
 
     public function redirectToProvider($provider)
     {
-        return Socialite::with($provider)->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     public function getProviderCallback($provider)
@@ -29,7 +29,8 @@ class SocialController extends Controller
 
         if (!is_null($user)) {
             Auth::login($user);
+            return redirect()->route('dashboard');
         }
-        return redirect('/')->with('success', 'Successfully logged in!');
+        return redirect('login')->withErrors("Accesso riservato agli utenti già registrati");
     }
 }
