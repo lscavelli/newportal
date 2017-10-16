@@ -30,7 +30,35 @@ class contentList extends Portlet {
             $builder = $builder->orderBy($ord[$this->config['ord']], $dir[$this->config['dir']]);
         }
 
+        // inizializzo le variabili $categories e $tags
+        $categories = null;
         $tags = null;
+
+        // se la comunicazione è attiva e l'URL contiente un content web
+        if (!empty($this->config['comunication'])) {
+            $segments = $this->request->segments(); $qwc = null;
+            if ($this->request->has('content')) {
+                $qwc = $this->request->content;
+            } elseif (count($segments)>1) {
+                $qwc = end($segments);
+            }
+            if (!is_null($qwc)) {
+                // escludo il content web dell'URL dalla lista
+                $builder = $builder->where('slug','<>',$qwc);
+
+                // prelevo tutti i tag e le categorie del content
+                $content = $this->rp->findBySlug($qwc);
+
+                foreach ($content->categories->pluck('id')->toArray() as $id) {
+                    $categories[] = ['category'=>$id];
+                }
+                foreach ($content->tags->pluck('id')->toArray() as $id) {
+                    $tags[] = ['tag'=>$id];
+                }
+            }
+        }
+
+        // imposto la query con i tag se presenti
         if (!empty($this->config['comunication']) and $this->request->has('tag')) {
             $tags = ['tags'=>['tag'=>$this->request->tag]];
         } elseif (!empty($this->config['tags'])) {
@@ -47,7 +75,7 @@ class contentList extends Portlet {
             }
         }
 
-        $categories = null;
+        // imposto la query con le categorie se presenti
         if (!empty($this->config['comunication']) and $this->request->has('category')) {
             $categories = ['categories'=>['category'=>$this->request->category]];
         } elseif (!empty($this->config['categories'])) {
@@ -72,11 +100,6 @@ class contentList extends Portlet {
         // se l'url contiene author applico il filtro sull'autore
         if (!empty($this->config['comunication']) and $this->request->has('author')) {
             $builder = $builder->where('user_id',$this->request->author);
-        }
-
-        // se l'url contiene content escludo il content visualizzato
-        if (!empty($this->config['comunication']) and $this->request->has('content')) {
-            $builder = $builder->where('slug','<>',$this->request->content);
         }
 
         //print $builder->toSql(); exit;

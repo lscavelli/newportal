@@ -272,6 +272,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 });
 
 Auth::routes();
+Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallback');
 
 Route::post('contactform', 'Mail\\MailController@contact');
 Route::get('{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');

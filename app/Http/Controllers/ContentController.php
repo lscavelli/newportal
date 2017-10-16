@@ -186,13 +186,13 @@ class ContentController extends Controller {
         $data = $request->all();
         $image->setPath(config('newportal.path_upload_imgwc'));
         $check =$this->checkUseImage($content->image);
-        if ($request->has('setImageDefault') or !$request->has('urlImage')) {
+        if ($request->file('image')) {
+            $canc = null; if($check) $canc = $content->image;
+            $data['image'] = $image->uploadImage($canc, 288, 174)[0];
+        } elseif($request->has('setImageDefault') or !$request->has('urlImage')) {
             $data['image'] = null;
             // se non viene utilizzato da un altro contenuto cancello l'immagine
             if ($check) $image->delFile($content->image);
-        } elseif($request->file('image')) {
-            $canc = null; if($check) $canc = $content->image;
-            $data['image'] = $image->uploadImage($canc, 288, 174)[0];
         } elseif($request->has('urlImage')) {
             // se diversa image old e non è utilizzata da un altro contenuto la cancello
             if (($request->urlImage!=$content->image) && $check) $image->delFile($content->image);

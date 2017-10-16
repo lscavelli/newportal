@@ -93,7 +93,7 @@ return [
 
     'theme-default' => 'default',
     'layout-default' => 'default',
-    'partial-default' => 'default',
+    'partial-default' => 'trasparent',
     'theme-dir' => 'themes',
     'themeSubDir' => array(
         'view'    => 'views',
