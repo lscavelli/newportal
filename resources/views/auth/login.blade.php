@@ -74,7 +74,7 @@
             <p>- Altrimenti -</p>
             <a href="{{ url('/login/facebook') }}" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in utilizzando
                 Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in utilizzando
+            <a href="{{ url('/login/google') }}" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in utilizzando
                 Google+</a>
         </div>
         <!-- /.social-auth-links -->
