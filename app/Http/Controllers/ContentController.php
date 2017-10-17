@@ -189,7 +189,8 @@ class ContentController extends Controller {
         if ($request->file('image')) {
             $canc = null; if($check) $canc = $content->image;
             $data['image'] = $image->uploadImage($canc, 288, 174)[0];
-        } elseif($request->has('setImageDefault') or !$request->has('urlImage')) {
+        } elseif($request->has('setImageDefault') or (isset($request->urlImage) && !$request->has('urlImage'))) {
+            dd('ALT');
             $data['image'] = null;
             // se non viene utilizzato da un altro contenuto cancello l'immagine
             if ($check) $image->delFile($content->image);
