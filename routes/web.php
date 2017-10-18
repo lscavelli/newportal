@@ -267,6 +267,10 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('organizations/profile/{organization_id}', 'OrganizationController@profile');
         Route::get('organizations/treeview', 'OrganizationController@treeViewOrg');
 
+        Route::group(['namespace' => 'General'], function () {
+            Route::get('settings','SettingController@index')->name('settings');
+            Route::post('settings/storeorupdate','SettingController@storeOrUpdate');
+        });
     });
 
 });
