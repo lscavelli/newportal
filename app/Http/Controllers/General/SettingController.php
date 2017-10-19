@@ -6,15 +6,18 @@ use Illuminate\Http\Request;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use Validator;
+use Illuminate\Support\Facades\Cache;
 
 
 class SettingController extends Controller {
 
     private $rp;
+    public $settings;
 
     public function __construct(RepositoryInterface $rp)  {
         $this->middleware('auth');
         $this->rp = $rp->setModel('App\Models\General\Setting');
+        $this->settings = [];
     }
 
     /**
@@ -32,8 +35,20 @@ class SettingController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index()   {
-        $setting = $this->rp->all(); $action = "General\\SettingController@storeOrUpdate";
-        return view('general.setting')->with(compact('setting','action'));
+        $settings = $this->rp->all()->toArray(); $action = "General\\SettingController@storeOrUpdate";
+        foreach($settings as $s) {
+            $this->settings[$s['setting_key']] = $s['setting_value'];
+        }
+        return view('general.setting')->with([
+            'settings' => $this,
+            'action' => $action
+        ]);
+    }
+
+    public function get($key) {
+        if (!empty($key) and key_exists($key,$this->settings)) {
+            return $this->settings[$key];
+        }
     }
 
     /**
@@ -43,14 +58,14 @@ class SettingController extends Controller {
     public function storeOrUpdate(Request $request)   {
         $settings = $request->except('_token');
         $this->validator($settings)->validate();
-        $data = $this->rp->all()->toArray();
-        dd($data);
+        $data = Collect($this->rp->all()->toArray());
         foreach($settings as $key=>$value) {
-            if ($data->has($key)) {
+            if ($data->contains('setting_key',$key)) {
                 $this->update($key,$value);
             } else {
-                //$this->insert($key,$value);
+                $this->insert($key,$value);
             }
+            Cache::forever($key, $value);
         }
         return redirect()->route('settings')->withSuccess('Pagina creata correttamente.');
     }
@@ -74,9 +89,9 @@ class SettingController extends Controller {
      * @param $value
      */
     public function update($key,$value)   {
-        $setting = $this->rp->findBy(['setting_key',$key]);
+        $setting = $this->rp->findBy(['setting_key'=>$key]);
         if ($setting)
-            $this->rp->update($setting->id,['setting_value',$value]);
+            $this->rp->update($setting->id,['setting_value'=>$value]);
     }
 
 
