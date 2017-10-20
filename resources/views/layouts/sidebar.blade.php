@@ -43,7 +43,7 @@
           'Organizzazioni'=>'/organizations','Sessioni attive'=>'/users/sessions',
           'Attività'=>'/users/activity']],
       'Portal'=>['class'=>'treeview','icon'=>'fa-edit','submenu'=>[
-          'Portlets'=>'/portlets','Siti'=>'#','Configurazione'=>'#',
+          'Portlets'=>'/portlets','Settings'=>'/settings','Siti'=>'#',
           'Aggiornamenti'=>'#']],
       'Services'=>['class'=>'treeview','icon'=>'fa-th','submenu'=>[
           'Blog'=>'/posts','Forum'=>'#','Wiki'=>'#','Newsletter'=>'#','Calendario eventi'=>'#',

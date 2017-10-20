@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PortletsTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(CountriesTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
         Model::reguard();
     }
 }

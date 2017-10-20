@@ -22,6 +22,11 @@ class SocialController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
+    /**
+     * @param $provider
+     * @return $this|\Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function getProviderCallback($provider)
     {
         $socialUser = Socialite::with($provider)->user();
@@ -30,6 +35,8 @@ class SocialController extends Controller
         if (!is_null($user)) {
             Auth::login($user);
             return redirect()->route('dashboard');
+        } elseif (array_get(cache('settings'), 'social_registration')===1) {
+            // TODO crea l'user con i dati di $socialUser
         }
         return redirect('login')->withErrors("Accesso riservato agli utenti già registrati");
     }

@@ -68,8 +68,9 @@ class SettingController extends Controller {
             } else {
                 $this->insert($key,$value);
             }
-            Cache::forever('settings', [$key=>$value]);
         }
+        $updateSettings = $this->rp->pluck('setting_value', 'setting_key')->all();
+        Cache::forever('settings', $updateSettings);
         return redirect()->route('settings')->withSuccess('Pagina creata correttamente.');
     }
 

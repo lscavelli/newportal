@@ -14,6 +14,14 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
         Cache::forget('settings');
+        Setting::create([
+            'setting_key' => 'open_registration',
+            'setting_value' => 0,
+        ]);
+        Setting::create([
+            'setting_key' => 'social_registration',
+            'setting_value' => 0,
+        ]);
         $settings = Setting::pluck('setting_value', 'setting_key')->all();
         Cache::forever('settings', $settings);
 
