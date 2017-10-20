@@ -25,9 +25,16 @@
                     <div class="tab-pane active" id="impostazioni">
                         {!! Form::open(['action' => $action,'class' => 'form-horizontal']) !!}
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Registrazione utenti</label>
+                                <label for="open_registration" class="col-sm-2 control-label">Autoregistrazione utenti</label>
                                 <div class="col-sm-10">
-                                    {!! Form::select('open_registration', ['Dissattiva','Attiva'] , $settings->get('open_registration'), ['class' => "form-control input-sm", 'id'=>"regis_ut"]) !!}
+                                    {!! Form::select('open_registration', ['Disabilitata','Abilitata'] , $settings->get('open_registration'), ['class' => "form-control input-sm", 'id'=>"open_registration"]) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="social_registration" class="col-sm-2 control-label">Registrazione social</label>
+                                <div class="col-sm-10">
+                                    {!! Form::select('social_registration', ['Dissattiva','Attiva'] , $settings->get('social_registration'), ['class' => "form-control input-sm", 'id'=>"social_registration"]) !!}
                                 </div>
                             </div>
 
