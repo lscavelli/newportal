@@ -35,16 +35,19 @@ class SettingController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index()   {
-        $settings = $this->rp->all()->toArray(); $action = "General\\SettingController@storeOrUpdate";
-        foreach($settings as $s) {
-            $this->settings[$s['setting_key']] = $s['setting_value'];
-        }
+        $action = "General\\SettingController@storeOrUpdate";
+        $this->settings =  $this->rp->pluck('setting_value', 'setting_key')->all();
         return view('general.setting')->with([
             'settings' => $this,
             'action' => $action
         ]);
     }
 
+    /**
+     * restituisce la key passata come parametro - richiamata dalla view
+     * @param $key
+     * @return mixed
+     */
     public function get($key) {
         if (!empty($key) and key_exists($key,$this->settings)) {
             return $this->settings[$key];
@@ -58,14 +61,14 @@ class SettingController extends Controller {
     public function storeOrUpdate(Request $request)   {
         $settings = $request->except('_token');
         $this->validator($settings)->validate();
-        $data = Collect($this->rp->all()->toArray());
+        $data = $this->rp->pluck('setting_value', 'setting_key')->all();
         foreach($settings as $key=>$value) {
-            if ($data->contains('setting_key',$key)) {
+            if (array_key_exists($key,$data)) {
                 $this->update($key,$value);
             } else {
                 $this->insert($key,$value);
             }
-            Cache::forever($key, $value);
+            Cache::forever('settings', [$key=>$value]);
         }
         return redirect()->route('settings')->withSuccess('Pagina creata correttamente.');
     }

@@ -456,11 +456,11 @@ class Repository implements RepositoryInterface {
         return $this->model->first($columns);
     }
 
-    public function increment(string $column, int $amount = 1, array $extra = array()) {
+    public function increment($column, $amount = 1, array $extra = array()) {
         return $this->model->increment($column,$amount,$extra);
     }
 
-    public function decrement(string $column, int $amount = 1, array $extra = array()) {
+    public function decrement($column, $amount = 1, array $extra = array()) {
         return $this->model->decrement($column,$amount,$extra);
     }
 

@@ -41,8 +41,8 @@ interface RepositoryInterface {
     public function dissociate($related);
     public function orderBy($column, $direction = 'asc');
     public function first($columns);
-    public function increment(string $column, int $amount = 1, array $extra = array());
-    public function decrement(string $column, int $amount = 1, array $extra = array());
+    public function increment($column, $amount = 1, array $extra = array());
+    public function decrement($column, $amount = 1, array $extra = array());
     public function filter(array $criteria, $oper = "=");
     public function resetModel();
 }
