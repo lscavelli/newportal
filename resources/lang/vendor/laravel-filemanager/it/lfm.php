@@ -22,7 +22,7 @@ return [
     'title-upload'      => 'Upload File(s)',
     'title-view'        => 'Mostra file',
     'title-root'        => 'Files',
-    'title-shares'      => 'Condividi Files',
+    'title-shares'      => 'Files condivisi',
     'title-item'        => 'Item',
     'title-size'        => 'Dimensione',
     'title-type'        => 'Tipo',
