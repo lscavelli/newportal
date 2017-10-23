@@ -20,6 +20,7 @@
 @if(count($form->fieldsCKEditor)>0)
     @section('scripts')
         {!! Html::script('bower_components/ckeditor/ckeditor.js') !!}
+        {!! Html::script('bower_components/ckfinder/ckfinder.js') !!}
 
         <script>
 
@@ -27,10 +28,21 @@
                 extraPlugins: 'codesnippet',
                 codeSnippet_theme: 'sunburst',
                 language: '{{ config('app.locale') }}',
-                filebrowserBrowseUrl: '/elfinder/ckeditor',
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token=',
                 allowedContent: true,
                 extraAllowedContent: 'p(*)[*]{*};div(*)[*]{*};li(*)[*]{*};ul(*)[*]{*}',
             };
+
+            // Set your configuration options below.
+
+            // Examples:
+            // config.language = 'pl';
+            // config.skin = 'jquery-mobile';
+
+            // CKFinder.define( configFinder );
 
             @foreach ($form->fieldsCKEditor as $nameField)
                 config['height'] = 400;
