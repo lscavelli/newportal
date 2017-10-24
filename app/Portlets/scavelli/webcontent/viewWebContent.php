@@ -29,8 +29,12 @@ class viewWebContent extends Portlet {
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
         }
-
-        if (!isset($cw->content)) return;
+        // se non viene trrovato alcun messaggio mostra un messaggio di errore
+        if (!isset($cw->content)) {
+            if (array_get(cache('settings'), 'content_not_found')==1) {
+                return view('errors.contentNotFound');
+            } else return;
+        }
         $data = json_decode($cw->content,true);
         $data['_title'] = $cw->name;
         $data['_data_creazione'] = \Carbon\Carbon::parse($cw->created_at)->format('d/m/Y');

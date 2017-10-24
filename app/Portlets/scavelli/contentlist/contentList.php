@@ -49,11 +49,13 @@ class contentList extends Portlet {
                 // prelevo tutti i tag e le categorie del content
                 $content = $this->rp->findBySlug($qwc);
 
-                foreach ($content->categories->pluck('id')->toArray() as $id) {
-                    $categories[] = ['category'=>$id];
-                }
-                foreach ($content->tags->pluck('id')->toArray() as $id) {
-                    $tags[] = ['tag'=>$id];
+                if ($content) {
+                    foreach ($content->categories->pluck('id')->toArray() as $id) {
+                        $categories[] = ['category'=>$id];
+                    }
+                    foreach ($content->tags->pluck('id')->toArray() as $id) {
+                        $tags[] = ['tag'=>$id];
+                    }
                 }
             }
         }

@@ -45,6 +45,7 @@ use App\Libraries\Helpers;
      */
     public function index($id, Request $request, listGenerates $list) {
         $structure = $this->rp->setModel(new Structure())->find($id);
+        if (is_null($structure)) return;
         $list->setModel($this->rp->paginateArray($structure->models->toArray(),10,$request->page_a,'page_a'));
         return view('content.listModels')->with(compact('list','structure'));
     }

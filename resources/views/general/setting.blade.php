@@ -39,6 +39,13 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="content_not_found" class="col-sm-2 control-label">Contenuto non trovato</label>
+                                <div class="col-sm-10">
+                                    {!! Form::select('content_not_found', ['Non visualizzare','Visualizza messaggio'] , $settings->get('content_not_found'), ['class' => "form-control input-sm", 'id'=>"content_not_found"]) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" class="btn btn-danger">Salva</button>
                                 </div>

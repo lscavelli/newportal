@@ -20,7 +20,6 @@
 @if(count($form->fieldsCKEditor)>0)
     @section('scripts')
         {!! Html::script('bower_components/ckeditor/ckeditor.js') !!}
-        {!! Html::script('bower_components/ckfinder/ckfinder.js') !!}
 
         <script>
 

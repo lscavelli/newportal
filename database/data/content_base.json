@@ -1,0 +1,60 @@
+{
+  "id": "389e959c-65ed-4448-8d35-50fbdc885ad2",
+  "settings": {},
+  "stages": {
+    "ba51bbc0-cfa0-4c67-b47d-3e4ff8a4fa3f": {
+      "id": "ba51bbc0-cfa0-4c67-b47d-3e4ff8a4fa3f",
+      "settings": {},
+      "rows": [
+        "603eea80-5df3-4cdc-8d7e-71d028b81294"
+      ]
+    }
+  },
+  "rows": {
+    "603eea80-5df3-4cdc-8d7e-71d028b81294": {
+      "columns": [
+        "8bacb4bf-cec0-4f54-85dc-33ff0d0fa573"
+      ],
+      "id": "603eea80-5df3-4cdc-8d7e-71d028b81294",
+      "config": {
+        "fieldset": false,
+        "legend": "",
+        "inputGroup": false
+      },
+      "attrs": {
+        "className": "f-row"
+      }
+    }
+  },
+  "columns": {
+    "8bacb4bf-cec0-4f54-85dc-33ff0d0fa573": {
+      "fields": [
+        "31c75a28-82bc-4252-952d-83cb5f2df22b"
+      ],
+      "id": "8bacb4bf-cec0-4f54-85dc-33ff0d0fa573",
+      "config": {
+        "width": "100%"
+      },
+      "className": []
+    }
+  },
+  "fields": {
+    "31c75a28-82bc-4252-952d-83cb5f2df22b": {
+      "tag": "textarea",
+      "attrs": {
+        "type": "ckeditor",
+        "maxlength": 700,
+        "className": "form-control"
+      },
+      "config": {
+        "label": "Content"
+      },
+      "meta": {
+        "group": "common",
+        "icon": "textarea",
+        "id": "visual-editor"
+      },
+      "id": "31c75a28-82bc-4252-952d-83cb5f2df22b"
+    }
+  }
+}

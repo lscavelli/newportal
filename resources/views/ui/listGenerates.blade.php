@@ -136,14 +136,6 @@
             $("#xpage").change(function () {
                 $("#xpage-form").submit();
             });
-            $.fn.removeWin = function() {
-                $(".msgDisabled").slideUp(600, function () {
-                    $(this).remove();
-                })
-            }
-            $(".msgDisabled .close").click($(this).removeWin);
-            setTimeout($(this).removeWin, 2000);
-
             $('#confirmdelete').on('shown.bs.modal', function(){
             });
 
