@@ -140,6 +140,7 @@ class contentList extends Portlet {
                 if (str_contains($model, '$np_title')) $data['_title'] = $rec->name;
                 if (str_contains($model, '$np_image')) $data['_image'] = $rec->getImage();
                 if (str_contains($model, '$np_categories')) $data['_categories'] = $rec->categories;
+                if (str_contains($model, '$np_page')) $data['_page'] = $this->request->segment(1);
                 $data['_author_name'] = $rec->user->name; $data['_author_username'] = $rec->username; $data['_author_id'] = $rec->user_id;
                 $url = (!empty($this->conf['inpage'])) ?  url($this->conf['inpage']) : url()->current();
                 //$data['_href'] = $url.'?'.http_build_query(['content'=>$rec->slug]);

@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Content\Page;
+use App\Models\Content\Structure;
 
 class UsersTableSeeder extends Seeder
 {
@@ -41,5 +42,22 @@ class UsersTableSeeder extends Seeder
          * per uso development
          */
         //factory(App\Models\User::class, 30)->make();
+
+        /**
+         * Imposta la struttura di base e i modelli
+         */
+        $data = File::get(base_path('database/data/content_base.json'));
+        $structure = Structure::create([
+            'name' => 'Contenuto base',
+            'description' => 'Struttura di base del content web',
+            'content' => $data,
+            'type_id' => 2,
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ]);
+
+        $json = File::get(base_path('database/data/modelli.json'));
+        $data = json_decode($json,true);
+        $structure->models()->createMany($data);
     }
 }

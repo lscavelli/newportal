@@ -14,10 +14,12 @@ use App\Events\Deleted;
 use App\Events\Assigned;
 use App\Events\Removed;
 use App\Models\Activity;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityEventsSubscriber {
 
     public function onCreate(Created $event) {
+        if (!Auth::check()) return;
         $this->writeToActivity($event,"Creato");
     }
 

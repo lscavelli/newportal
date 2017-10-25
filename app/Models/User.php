@@ -185,4 +185,13 @@ class User extends Authenticatable
         return asset($image);
     }
 
+    /**
+     * restituisce l'user sociale registrato al portale
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function socialUser()
+    {
+        return $this->hasOne(Social_auth::class, 'user_id');
+    }
+
 }

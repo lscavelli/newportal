@@ -34,14 +34,14 @@
                             <div class="form-group">
                                 <label for="social_registration" class="col-sm-2 control-label">Registrazione social</label>
                                 <div class="col-sm-10">
-                                    {!! Form::select('social_registration', ['Dissattiva','Attiva'] , $settings->get('social_registration'), ['class' => "form-control input-sm", 'id'=>"social_registration"]) !!}
+                                    {!! Form::select('social_registration', ['Dissattivata','Attivata'] , $settings->get('social_registration'), ['class' => "form-control input-sm", 'id'=>"social_registration"]) !!}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="content_not_found" class="col-sm-2 control-label">Contenuto non trovato</label>
+                                <label for="content_not_found" class="col-sm-2 control-label">Messaggio per contenuto non trovato</label>
                                 <div class="col-sm-10">
-                                    {!! Form::select('content_not_found', ['Non visualizzare','Visualizza messaggio'] , $settings->get('content_not_found'), ['class' => "form-control input-sm", 'id'=>"content_not_found"]) !!}
+                                    {!! Form::select('content_not_found', ['Non visualizzare','Visualizza'] , $settings->get('content_not_found'), ['class' => "form-control input-sm", 'id'=>"content_not_found"]) !!}
                                 </div>
                             </div>
 

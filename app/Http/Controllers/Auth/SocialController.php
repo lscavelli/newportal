@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Socialite;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialController extends Controller
 {
@@ -32,12 +33,41 @@ class SocialController extends Controller
         $socialUser = Socialite::with($provider)->user();
         $user = $this->rp->findByEmail($socialUser->getEmail());
 
-        if (!is_null($user)) {
-            Auth::login($user);
-            return redirect()->route('dashboard');
-        } elseif (array_get(cache('settings'), 'social_registration')===1) {
-            // TODO crea l'user con i dati di $socialUser
+        if (is_null($user)) {
+            if (!array_get(cache('settings'), 'social_registration')) {
+                return redirect('login')->withErrors("Accesso riservato agli utenti già registrati");
+            }
+            $user = $this->createSocialUser($socialUser,$provider);
         }
-        return redirect('login')->withErrors("Accesso riservato agli utenti già registrati");
+
+        Auth::login($user);
+        return redirect()->route('dashboard');
+    }
+
+    private function createSocialUser(SocialUser $socialUser,$provider)
+    {
+        $name = explode(" ", $socialUser->getName());
+
+        $user = $this->rp->create([
+            'email' => $socialUser->getEmail(),
+            'password' => bcrypt('password'),
+            'cognome' => array_pop($name),
+            'nome' => implode(' ',$name),
+            'status_id' => 1,
+            'avatar' => $socialUser->getAvatar()
+        ]);
+
+        $this->rp->setModel('App\Models\Social_auth');
+
+        $this->rp->create([
+            'user_id' => $user->id,
+            'provider' => $provider,
+            'provider_id' => $socialUser->getId(),
+            'avatar' => $socialUser->getAvatar()
+        ]);
+
+        //Assegnare un ruolo di site mamber
+
+        return $user;
     }
 }

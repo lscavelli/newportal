@@ -29,31 +29,33 @@
             .content {
                 text-align: center;
                 display: inline-block;
+                font-size: 74px;
+                line-height: 1em;
             }
-
-            .title {
-                font-size: 72px;
-                margin-bottom: 40px;
+            .error {
+                display: block;
+                font-size: 2em;
+                margin: 0 auto 0.2em auto;
+                color: #0093d5;
+                font-family: Gudea, "Helvetica Neue", HelveticaNeue, TeXGyreHeros, "Nimbus Sans L", "Liberation Sans", Helvetica, Arial, sans-serif;
+                opacity: 0.5;
             }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="text-center">
-                <div class="icon">
-                    <i class="fa fa-lock"></i>
-                </div>
-                <h1>Forbidden!</h1>
-                <br />
-                <p>Non hai i permessi per accedere a questa pagina</p>
-            </div>
+            <h1 class="content"><span class="error">403</span>Page Forbidden!</h1>
+            <h2 style="margin-top:-20px">Siamo spiacenti, non puoi avere accesso alla pagina che hai richiesto.
+                Per favore torna <a href="/">sulla homepage</a><br />
+            Potresti comunque visualizzare questa pagina, accedendo con un differente account</h2>
+
+            @if (\Auth::check())
+                <h2>
+                    <a href="{{  route('dashboard') }}" class="btn btn-large btn-info">
+                        <i class="glyphicon glyphicon-home"></i> Vai alla Dashboard
+                    </a>
+                </h2>
+            @endif
         </div>
-        @if (\Auth::check())
-            <div>
-                <a href="{{  route('dashboard') }}" class="btn btn-large btn-info">
-                    <i class="glyphicon glyphicon-home"></i> Vai alla Dashboard
-                </a>
-            </div>
-        @endif
     </body>
 </html>
