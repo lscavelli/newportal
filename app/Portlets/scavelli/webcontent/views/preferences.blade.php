@@ -11,8 +11,11 @@
                 <div class="col-sm-1">
                     {!! Form::text('id', $content->id, ['class' => "form-control input-sm", 'id'=>"id", 'disabled'=>'']) !!}
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                     {!! Form::text('content_name', $content->name, ['class' => "form-control input-sm", 'id'=>"content_name", 'disabled'=>'']) !!}
+                </div>
+                <div class="col-sm-1">
+                    <a href="#" data-id=".{{ $content->id }}. " class="btn btn-danger btn-xs pull-right deleteContent">Cancella</a>
                 </div>
             </div><br /><br />
             <div class="form-group">
@@ -70,11 +73,15 @@
             $("#content_name").val(title);
         });
     });
-    $("#structure_id").change(function(e) {
+    $("#structure_id").change(function() {
         var ble = $( this ).val();
         if (ble.length>0) {
             $( "#selectStructure" ).submit();
         }
+    });
+    $(".deleteContent").click(function() {
+        var id = $(this).data('id');
+        $('#id, #content_name').val('');
     });
 </script>
 @endpush
