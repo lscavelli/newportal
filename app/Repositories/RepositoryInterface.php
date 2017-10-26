@@ -45,4 +45,5 @@ interface RepositoryInterface {
     public function decrement($column, $amount = 1, array $extra = array());
     public function filter(array $criteria, $oper = "=");
     public function resetModel();
+    public function with($relations);
 }

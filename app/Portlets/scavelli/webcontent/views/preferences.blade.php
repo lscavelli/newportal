@@ -2,12 +2,12 @@
 
 @section('body')
 <fieldset>
-    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 0px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Contenuto web selezionato:</span></legend>
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 5px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Web Content selezionato:</span></legend>
     <div class="box-body">
         <form method="POST" id="preferencePortlet">
             {!! Form::hidden('content_id', $content->id, ['id'=>"content_id"]) !!}
             <div class="form-group">
-                <label for="id" class="col-sm-2 control-label">Contenuto</label>
+                <label for="id" class="col-sm-2 control-label">Web content</label>
                 <div class="col-sm-1">
                     {!! Form::text('id', $content->id, ['class' => "form-control input-sm", 'id'=>"id", 'disabled'=>'']) !!}
                 </div>
@@ -19,9 +19,9 @@
                 </div>
             </div><br /><br />
             <div class="form-group">
-                <label for="model_id" class="col-sm-2 control-label">Modello</label>
+                <label for="model_id" class="col-sm-2 control-label">Modello content</label>
                 <div class="col-sm-10">
-                    {!! Form::select('model_id', $listModels ,$modelId , ['class' => "form-control input-sm", 'id'=>"model_id"]) !!}
+                    {!! Form::text('model_name', $modelContentName, ['class' => "form-control input-sm", 'id'=>"model_name", 'disabled'=>'']) !!}
                 </div>
             </div>
         </form>
@@ -29,16 +29,24 @@
 </fieldset>
 
 <fieldset style="margin-top: 5px!important;">
-    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Seleziona contenuto web:</span></legend>
-        <div class="form-group">
-            <form action="/admin/pages/{{ $portlet->pivot->page_id }}/configPortlet/{{ $portlet->pivot->id }}" method="POST" id="selectStructure">
-                {{ csrf_field() }}
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 5px!important;" ><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Seleziona contenuto web:</span></legend>
+    <div class="box-body">
+        <form action="/admin/pages/{{ $portlet->pivot->page_id }}/configPortlet/{{ $portlet->pivot->id }}" method="POST" id="selectStructure">
+            {{ csrf_field() }}
+            <div class="form-group">
                 <label for="structure_id" class="col-sm-2 control-label">Struttura</label>
                 <div class="col-sm-10">
                     {!! Form::select('structure_id', $listStructure ,\Request::input('structure_id') , ['class' => "form-control input-sm", 'id'=>"structure_id"]) !!}
                 </div>
-            </form>
-        </div><br />
+            </div><br /><br />
+            <div class="form-group">
+                <label for="model_id" class="col-sm-2 control-label">Modello portlet</label>
+                <div class="col-sm-10">
+                    {!! Form::select('model_id', $listModels ,$modelId , ['class' => "form-control input-sm", 'id'=>"model_id"]) !!}
+                </div>
+            </div>
+        </form>
+    </div><br />
         {!!
             $list->columns(['id'=>'Id','name'=>'Titolo','azioni' ])
             ->sortFields(['id','name'])
@@ -49,7 +57,7 @@
                 return Carbon\Carbon::parse($row['updated_at'])->format('d/m/Y');
             })
             ->customizes('azioni', function($row) {
-                return "<a href=\"#\" data-id=".$row['id']. " data-name=\"".$row['name']."\" class=\"btn btn-warning btn-xs pull-right assignContent\">Assegna</a>";
+                return "<a href=\"#\" data-id=".$row['id']. " data-name=\"".$row['name']."\" data-model=\"".$row['model']['name']."\" class=\"btn btn-warning btn-xs pull-right assignContent\">Assegna</a>";
             })->render()
         !!}
 </fieldset>
@@ -61,17 +69,18 @@
 @push('scripts')
 <script>
     $(".assignContent").click(function() {
-        var id = $(this).data('id');
-        var title = $(this).data('name');
-        $('#model_id').empty();
-        $.getJSON ("/admin/webcontent/listmodels/"+id, function ( res ) {
+        //var id = $(this).data('id');
+        $("#content_id, #id").val($(this).data('id'));
+        $("#content_name").val($(this).data('name'));
+        $("#model_name").val($(this).data('model'));
+
+        //$('#model_id').empty();
+        /*$.getJSON ("/admin/webcontent/listmodels/"+id, function ( res ) {
             $.each( res, function( key, val ) {
                 $('#model_id').append('<option value=' + key + '>' + val + '</option>');
             });
         }).done(function() {
-            $("#content_id, #id").val(id);
-            $("#content_name").val(title);
-        });
+        });*/
     });
     $("#structure_id").change(function() {
         var ble = $( this ).val();

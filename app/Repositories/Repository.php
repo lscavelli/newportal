@@ -475,4 +475,9 @@ class Repository implements RepositoryInterface {
         $this->model = $this->originalModel;
         return $this;
     }
+
+    public function with($relations) {
+        $this->model = $this->model->with($relations);
+        return $this;
+    }
 }

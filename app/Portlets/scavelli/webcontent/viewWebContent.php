@@ -29,7 +29,7 @@ class viewWebContent extends Portlet {
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
         }
-        // se non viene trrovato alcun messaggio mostra un messaggio di errore
+        // se non viene trrovato alcun contenuto mostra un messaggio di errore
         if (!isset($cw->content)) {
             if (array_get(cache('settings'), 'content_not_found')==1) {
                 return view('errors.contentNotFound');
@@ -40,18 +40,18 @@ class viewWebContent extends Portlet {
         $data['_data_creazione'] = \Carbon\Carbon::parse($cw->created_at)->format('d/m/Y');
         $data['_data_modifica'] = \Carbon\Carbon::parse($cw->updated_at)->format('d/m/Y');
 
-        // verifico se è stato impostato un modello tramite portlet
+        // verifico prima se è stato impostato un modello tramite portlet
 
         if (!empty($this->config['model_id'])) {
             $ModelId = $this->config['model_id'];
             $model = $this->rp->setModel('App\Models\Content\Modelli')->find($ModelId);
 
-        // verifico se è stato assegnato un modello al contenuto
+        // altrimenti se esiste un modello assegnato al contenuto lo utilizzo
 
         } elseif(!empty($cw->model->content)) {
             $model = $cw->model;
 
-        // verifico se esiste almeno un modello appartenente alla struttura del content
+        // altrimenti verifico se esiste almeno un modello appartenente alla struttura del content
 
         } else {
             $model = $this->rp->setModel('App\Models\Content\Structure')->find($cw->structure_id)->models->where('type_id',1)->first();

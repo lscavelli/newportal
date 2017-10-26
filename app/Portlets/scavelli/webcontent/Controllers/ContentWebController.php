@@ -4,6 +4,7 @@ namespace App\Portlets\scavelli\webcontent\Controllers;
 
 use App\Libraries\listGenerates;
 use App\Models\Content\Content;
+use App\Models\Content\Modelli;
 use App\Models\Content\Page;
 use App\Models\Content\Structure;
 use App\Repositories\RepositoryInterface;
@@ -14,7 +15,7 @@ use Illuminate\Http\Request;
 class ContentWebController extends Controller
 {
 
-    private $repo;
+    private $rp;
 
     /**
      * ContentWebController constructor.
@@ -22,7 +23,7 @@ class ContentWebController extends Controller
      */
     public function __construct(RepositoryInterface $rp) {
         //$this->middleware('auth');
-        $this->repo = $rp->setModel('App\Models\Content\Content')->setSearchFields(['name', 'description', 'content']);
+        $this->rp = $rp->setModel('App\Models\Content\Content')->setSearchFields(['name', 'description', 'content']);
     }
 
 
@@ -33,8 +34,8 @@ class ContentWebController extends Controller
      * @return mixed
      */
     public function listModels($id) {
-        $content = $this->repo->find($id);
-        $structure = $this->repo->setModel(new Structure())->find($content->structure_id);
+        $content = $this->rp->find($id);
+        $structure = $this->rp->setModel(new Structure())->find($content->structure_id);
         return json_encode($structure->models()->where('type_id',1)->pluck('name','id')->toArray());
     }
 
@@ -48,28 +49,36 @@ class ContentWebController extends Controller
         //$viewPortlet = app_path("Portlets\\".$portlet->path).'\\'.'views';
         //View()->addLocation($viewPortlet);
 
-        $listStructure = $this->repo->setModel('App\Models\Content\Structure')->where('type_id',2)->where('status_id',1)->pluck()->toArray();
+        $listStructure = $this->rp->setModel('App\Models\Content\Structure')->where('type_id',2)->where('status_id',1)->pluck()->toArray();
         $structure_id = ($request->has('structure_id')) ? $request->structure_id : key($listStructure);
+
+        // ricavo la lista dei modelli riferiti alla struttura_id
+        $listModels = $this->rp->setModel(Structure::class)->find($structure_id)->models->where('type_id',1)->pluck('name','id')->toArray();
         $content = new Content;
-        $listContent = $this->repo->setModel($content)->where('status_id',1)->where('structure_id',$structure_id)->get()->toArray();
-        $listModels = []; $modelId = null;
+        $listContent = $this->rp->setModel($content)->where('status_id',1)->where('structure_id',$structure_id)->with('model')->get()->toArray();
+        $modelId = $modelContentName = null;
+
+        // Attenzione: il model_id si riferisce all'id del model della portlet mentre il model_name
+        // al nome del model del contenuto
+
         if (!empty($portlet->pivot->setting)) {
             $prf = json_decode($portlet->pivot->setting, true);
+            $modelId = (!empty($prf['model_id'])) ? $prf['model_id'] : null;
             if (isset($prf['content_id'])) {
-                $content = $this->repo->setModel('App\Models\Content\Content')->find($prf['content_id']);
-                $modelId = (!empty($prf['model_id'])) ? $prf['model_id'] : $content->model_id;
-                $listModels = $this->repo->setModel('App\Models\Content\Structure')->find($content->structure_id)->models->where('type_id',1)->pluck('name','id')->toArray();
+                $content = $this->rp->setModel(Content::class)->find($prf['content_id']);
+                $modelContentName = (!empty($prf['model_name'])) ? $prf['model_name'] : $this->rp->setModel(Modelli::class)->find($content->model_id)->name;
             }
         }
 
-        $list = new listGenerates($this->repo->paginateArray($listContent,10,$request->page_a,'page_a'));
+        $list = new listGenerates($this->rp->paginateArray($listContent,10,$request->page_a,'page_a'));
         return view('webcontent::preferences')->with(compact(
             'listStructure',
             'list',
             'listModels',
             'modelId',
             'content',
-            'portlet'
+            'portlet',
+            'modelContentName'
         ));
     }
 
