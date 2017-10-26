@@ -2,51 +2,72 @@
 
 @section('body')
 <fieldset>
-    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 5px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Web Content selezionato:</span></legend>
-    <div class="box-body">
-        <form method="POST" id="preferencePortlet">
-            {!! Form::hidden('content_id', $content->id, ['id'=>"content_id"]) !!}
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Web Content selezionato:</span></legend>
+    <div class="box-body" style="margin-right: 22px">
+
+        <form method="POST" id="preferencePortlet" class="form-horizontal">
+            {!! Form::hidden('content_id', $webContent->get('content_id'), ['id'=>"content_id"]) !!}
+            {!! Form::hidden('modelContent', $webContent->get('modelContent'), ['id'=>"modelContent"]) !!}
+            {!! Form::hidden('modelPortletId', $webContent->get('modelPortletId'), ['id'=>"modelPortletId"]) !!}
+            {!! Form::hidden('modelPortlet', $webContent->get('modelPortlet'), ['id'=>"modelPortlet"]) !!}
+
             <div class="form-group">
                 <label for="id" class="col-sm-2 control-label">Web content</label>
                 <div class="col-sm-1">
-                    {!! Form::text('id', $content->id, ['class' => "form-control input-sm", 'id'=>"id", 'disabled'=>'']) !!}
+                    {!! Form::text('id', $webContent->get('content_id'), ['class' => "form-control input-sm", 'id'=>"id",'disabled'=>'']) !!}
                 </div>
                 <div class="col-sm-8">
-                    {!! Form::text('content_name', $content->name, ['class' => "form-control input-sm", 'id'=>"content_name", 'disabled'=>'']) !!}
+                    {!! Form::text('content_name', $webContent->get('content_name'), ['class' => "form-control input-sm", 'id'=>"content_name",'disabled'=>'']) !!}
                 </div>
                 <div class="col-sm-1">
-                    <a href="#" data-id=".{{ $content->id }}. " class="btn btn-danger btn-xs pull-right deleteContent">Cancella</a>
+                    <a href="#" class="btn btn-danger btn-xs pull-right deleteContent">Cancella</a>
                 </div>
-            </div><br /><br />
+            </div>
             <div class="form-group">
-                <label for="model_id" class="col-sm-2 control-label">Modello content</label>
+                <label for="model_content_name" class="col-sm-2 control-label">Modello content</label>
                 <div class="col-sm-10">
-                    {!! Form::text('model_name', $modelContentName, ['class' => "form-control input-sm", 'id'=>"model_name", 'disabled'=>'']) !!}
+                    {!! Form::text('model_content', $webContent->get('modelContent'), ['class' => "form-control input-sm", 'id'=>"model_content",'disabled'=>'']) !!}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="model_portlet_id" class="col-sm-2 control-label">Modello portlet</label>
+                <div class="col-sm-1">
+                    {!! Form::text('model_portlet_id', $webContent->get('modelPortletId'), ['class' => "form-control input-sm", 'id'=>"model_portlet_id", 'disabled'=>'']) !!}
+                </div>
+                <div class="col-sm-8">
+                    {!! Form::text('model_portlet', $webContent->get('modelPortlet'), ['class' => "form-control input-sm", 'id'=>"model_portlet", 'disabled'=>'']) !!}
+                </div>
+                <div class="col-sm-1">
+                    <a href="#" class="btn btn-danger btn-xs pull-right deleteModelPortlet">Cancella</a>
                 </div>
             </div>
         </form>
+
     </div>
 </fieldset>
 
 <fieldset style="margin-top: 5px!important;">
-    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 5px!important;" ><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Seleziona contenuto web:</span></legend>
-    <div class="box-body">
-        <form action="/admin/pages/{{ $portlet->pivot->page_id }}/configPortlet/{{ $portlet->pivot->id }}" method="POST" id="selectStructure">
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;" ><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Seleziona contenuto web:</span></legend>
+    <div class="box-body" style="margin-right: 22px">
+        <form action="/admin/pages/{{ $webContent->get('portlet')->pivot->page_id }}/configPortlet/{{ $webContent->get('portlet')->pivot->id }}" method="POST" id="selectStructure" class="form-horizontal">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="structure_id" class="col-sm-2 control-label">Struttura</label>
                 <div class="col-sm-10">
-                    {!! Form::select('structure_id', $listStructure ,\Request::input('structure_id') , ['class' => "form-control input-sm", 'id'=>"structure_id"]) !!}
+                    {!! Form::select('structure_id', $webContent->get('listStructure') ,\Request::input('structure_id') , ['class' => "form-control input-sm", 'id'=>"structure_id"]) !!}
                 </div>
-            </div><br /><br />
+            </div>
             <div class="form-group">
-                <label for="model_id" class="col-sm-2 control-label">Modello portlet</label>
-                <div class="col-sm-10">
-                    {!! Form::select('model_id', $listModels ,$modelId , ['class' => "form-control input-sm", 'id'=>"model_id"]) !!}
+                <label for="model_id" class="col-sm-2 control-label">Modello</label>
+                <div class="col-sm-9">
+                    {!! Form::select('model_id', $webContent->get('listModels') , $webContent->get('modelId') , ['class' => "form-control input-sm", 'id'=>"model_id"]) !!}
+                </div>
+                <div class="col-sm-1">
+                    <a href="#" class="btn btn-warning btn-xs pull-right assignModelPortlet">Aggiungi</a>
                 </div>
             </div>
         </form>
-    </div><br />
+    </div>
         {!!
             $list->columns(['id'=>'Id','name'=>'Titolo','azioni' ])
             ->sortFields(['id','name'])
@@ -72,7 +93,7 @@
         //var id = $(this).data('id');
         $("#content_id, #id").val($(this).data('id'));
         $("#content_name").val($(this).data('name'));
-        $("#model_name").val($(this).data('model'));
+        $("#model_content_name").val($(this).data('model'));
 
         //$('#model_id').empty();
         /*$.getJSON ("/admin/webcontent/listmodels/"+id, function ( res ) {
@@ -89,8 +110,17 @@
         }
     });
     $(".deleteContent").click(function() {
-        var id = $(this).data('id');
-        $('#id, #content_name').val('');
+        $('#id, #content_name, #content_id, #modelContent, #model_content').val('');
     });
+    $(".assignModelPortlet").click(function() {
+        $("#model_portlet_id, #modelPortletId").val($("#model_id").find('option:selected').val());
+        $("#model_portlet, #modelPortlet").val($("#model_id").find('option:selected').text());
+    });
+    $(".deleteModelPortlet").click(function() {
+        var id = $(this).data('id');
+        $('#model_portlet_id, #model_portlet, #modelPortlet, #modelPortletId').val('');
+    });
+
+
 </script>
 @endpush

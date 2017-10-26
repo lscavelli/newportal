@@ -260,7 +260,7 @@ class pageController extends Controller {
      * @return null
      */
     public function savePref(Request $request) {
-        //Log::info($request);
+        Log::info($request);
         if ($request->has('data')) {
             $data = json_decode($request->data, true);
             foreach ($data as $item) {

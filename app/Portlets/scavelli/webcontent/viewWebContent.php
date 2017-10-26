@@ -2,6 +2,7 @@
 
 namespace App\Portlets\scavelli\webcontent;
 
+use App\Models\Content\Modelli;
 use App\Portlets\abstractPortlet as Portlet;
 use App\Portlets\scavelli\webcontent\Controllers\ContentWebController;
 use Exception;
@@ -42,9 +43,9 @@ class viewWebContent extends Portlet {
 
         // verifico prima se è stato impostato un modello tramite portlet
 
-        if (!empty($this->config['model_id'])) {
-            $ModelId = $this->config['model_id'];
-            $model = $this->rp->setModel('App\Models\Content\Modelli')->find($ModelId);
+        if (!empty($this->config['modelPortletId'])) {
+            $ModelId = $this->config['modelPortletId'];
+            $model = $this->rp->setModel(Modelli::class)->find($ModelId);
 
         // altrimenti se esiste un modello assegnato al contenuto lo utilizzo
 
@@ -52,6 +53,7 @@ class viewWebContent extends Portlet {
             $model = $cw->model;
 
         // altrimenti verifico se esiste almeno un modello appartenente alla struttura del content
+        // considero il primo
 
         } else {
             $model = $this->rp->setModel('App\Models\Content\Structure')->find($cw->structure_id)->models->where('type_id',1)->first();

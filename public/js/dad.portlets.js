@@ -249,6 +249,7 @@ $('#submitPreferences').on('click', function(e){
     if (formPortlet.length>0) {
         data = formPortlet.serializeArray();
     }
+    //console.log(JSON.stringify(data));
 
     data = $.merge($('#otherForm').serializeArray(),data);
     data = $.merge($('#jsForm').serializeArray(),data);
@@ -256,7 +257,7 @@ $('#submitPreferences').on('click', function(e){
     data = $.merge($('#pivot_id').serializeArray(),data);
     data = $.merge($('#page_id').serializeArray(),data);
 
-    //console.log(data);
+    //console.log(JSON.stringify(data));
 
     $.ajaxSetup({
         headers: {
