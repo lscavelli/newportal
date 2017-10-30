@@ -11,6 +11,9 @@ class viewWebContent extends Portlet {
 
     public function init() {
         $this->rp->setModel('App\Models\Content\Content');
+        if ($this->config('socialshare')) {
+            $this->theme->addExJs($this->getPath().'js/socialshare.js');
+        }
     }
 
     public function getContent() {
@@ -80,14 +83,24 @@ class viewWebContent extends Portlet {
             $mt['description'] = str_limit($cw->description,150);
             $mt['image'] = $cw->getImage();
             $this->setMetaTagPage($mt);
+        }
 
+        // inserisce i pulsanti per condividere il contenuto sui social
+        if ($this->config('socialshare')) {
             if (!empty($this->config('providers'))) {
                 foreach($this->config('providers') as $provider=>$param) {
-                    if ($this->config($provider)) {
-                        $url = array_get($param,'uri').urlencode(request()->getUri());
+                    $items[$provider]['url'] = array_get($param,'uri').urlencode(request()->getUri());
+                    if (isset($param['param']['text'])) {
+                        $items[$provider]['url'] .= '&text='.urlencode($data['_title']);
                     }
+                    if (isset($param['param']['text'])) {
+                        $items[$provider]['url'] .= '&original_referer='.urlencode(request()->getUri());
+                    }
+                    $items[$provider]['icon'] = $param['icon'];
+                    $items[$provider]['icon'] = $param['icon'];
                 }
-            };
+                $return .= view('webcontent::social')->with(compact('items'));
+            }
         }
 
         return $return;

@@ -19,5 +19,16 @@ return [
             'path'          =>  'scavelli\webcontent'
         ]
     ],
+    'providers' => [
+        'facebook' => [
+            'uri' => 'https://www.facebook.com/sharer/sharer.php?u=',
+            'icon' => 'fa-facebook'
+        ],
+        'twitter' => [
+            'uri' => 'https://twitter.com/intent/tweet?url=',
+            'param'=>['original_referer','text'],
+            'icon' => 'fa-twitter'
+        ]
+    ],
 
 ];

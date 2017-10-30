@@ -412,8 +412,7 @@ footer .footer-below {
 }
 .blue:hover,
 .blue:focus,
-.blue:active,
-.blue.active {
+.blue:active {
   color: white;
   background: #0b73af;
   border-color: #0b73af;
@@ -427,18 +426,29 @@ footer .footer-below {
 }
 .white:hover,
 .white:focus,
-.white:active,
-.white.active {
+.white:active {
   color: #0b73af;
   background: white;
   border-color: #0b6599;
+}
+
+.grey{
+  color: #9fa3a6;
+  border-color: #9fa3a6;
+}
+.grey:hover,
+.grey:focus,
+.grey:active {
+  color: white;
+  background: #9fa3a6;
+  border-color: #9fa3a6;
 }
 
 .btn-social {
   display: inline-block;
   height: 50px;
   width: 50px;
-  border: 2px solid white;
+  /*border: 2px solid white;*/
   border-radius: 100%;
   text-align: center;
   font-size: 20px;
