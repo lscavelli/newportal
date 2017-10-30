@@ -21,6 +21,7 @@ class navigationPages extends Portlet {
 
         $builder = $this->rp->getModel()->where('status_id',1);
         if ($this->config('page')) {
+            dd($this->config());
             $id = $this->rp->findBySlug($this->config('page'))->id;
             $builder = $builder->where('parent_id',$id);
         } else {

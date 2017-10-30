@@ -6,6 +6,7 @@ use App\Repositories\RepositoryInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use App\Libraries\Theme;
 use ReflectionClass;
+use Illuminate\Support\Facades\File;
 
 abstract class abstractPortlet {
 
@@ -22,6 +23,11 @@ abstract class abstractPortlet {
         $this->rp = $rp;
         $this->request = \Request::instance();
         $this->theme = $theme;
+        $configFile = $this->getPathClass().'/config.php';
+        if (file_exists($configFile)) {
+            $this->setConfig(File::getRequire($configFile));
+        }
+
     }
 
     //public function setDirTemplate($pathPortlet) {
@@ -37,8 +43,7 @@ abstract class abstractPortlet {
     }
 
     protected function config($key) {
-        if (isset($this->config[$key]))
-            return $this->config[$key];
+            return array_get($this->config,$key);
     }
 
     public function inizializeConf() {
@@ -83,8 +88,11 @@ abstract class abstractPortlet {
      * @return string
      */
     protected function getPath() {
-        $pathClass =  dirname((new ReflectionClass(static::class))->getFileName());
-        return strtolower(str_replace(app_path(),'',$pathClass))."/";
+        return strtolower(str_replace(app_path(),'',$this->getPathClass()))."/";
+    }
+
+    private function getPathClass() {
+        return dirname((new ReflectionClass(static::class))->getFileName());
     }
 
     /**

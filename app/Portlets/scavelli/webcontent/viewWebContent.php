@@ -80,6 +80,14 @@ class viewWebContent extends Portlet {
             $mt['description'] = str_limit($cw->description,150);
             $mt['image'] = $cw->getImage();
             $this->setMetaTagPage($mt);
+
+            if (!empty($this->config('providers'))) {
+                foreach($this->config('providers') as $provider=>$param) {
+                    if ($this->config($provider)) {
+                        $url = array_get($param,'uri').urlencode(request()->getUri());
+                    }
+                }
+            };
         }
 
         return $return;
