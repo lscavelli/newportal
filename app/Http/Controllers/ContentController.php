@@ -188,7 +188,7 @@ class ContentController extends Controller {
         $check =$this->checkUseImage($content->image);
         if ($request->file('image')) {
             $canc = null; if($check) $canc = $content->image;
-            $data['image'] = $image->uploadImage($canc, 288, 174)[0];
+            $data['image'] = $image->uploadImage($canc, 331, 200)[0];
         } elseif($request->has('setImageDefault') or (isset($request->urlImage) && !$request->has('urlImage'))) {
             dd('ALT');
             $data['image'] = null;

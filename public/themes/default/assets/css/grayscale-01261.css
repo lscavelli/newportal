@@ -432,12 +432,12 @@ footer .footer-below {
   border-color: #0b6599;
 }
 
-.grey{
+.grey, .grey:focus{
   color: #9fa3a6;
   border-color: #9fa3a6;
 }
+
 .grey:hover,
-.grey:focus,
 .grey:active {
   color: white;
   background: #9fa3a6;

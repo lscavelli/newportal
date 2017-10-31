@@ -83,6 +83,9 @@ class ContentWebController extends Controller
         }
         $this->params['portlet'] = $portlet;
 
+        // imposto la variabile social sharing
+        if (isset($prf['socialshare'])) $this->params['socialshare'] = $prf['socialshare'];
+
         $list = new listGenerates($this->rp->paginateArray($listContent,10,$request->page_a,'page_a'));
         return view('webcontent::preferences')->with([
             'list' => $list,

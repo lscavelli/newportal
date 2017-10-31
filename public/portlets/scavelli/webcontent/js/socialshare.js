@@ -4,7 +4,7 @@ var popupSize = {
     height: 550
 };
 
-$('.btn-social').on('click', function (e) {
+$('.openwinsocial').on('click', function (e) {
 
     var verticalPos = Math.floor(($(window).width() - popupSize.width) / 2),
         horisontalPos = Math.floor(($(window).height() - popupSize.height) / 2);

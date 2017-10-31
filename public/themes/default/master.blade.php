@@ -22,7 +22,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ $theme->url("vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
     <!-- Custom styles -->
-    <link href="{{ $theme->url("css/grayscale-01260.css") }}" rel="stylesheet">
+    <link href="{{ $theme->url("css/grayscale-01261.css") }}" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="{{ $theme->url("vendor/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">

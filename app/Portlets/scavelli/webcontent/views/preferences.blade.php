@@ -10,6 +10,7 @@
             {!! Form::hidden('modelContent', $webContent->get('modelContent'), ['id'=>"modelContent"]) !!}
             {!! Form::hidden('modelPortletId', $webContent->get('modelPortletId'), ['id'=>"modelPortletId"]) !!}
             {!! Form::hidden('modelPortlet', $webContent->get('modelPortlet'), ['id'=>"modelPortlet"]) !!}
+            {!! Form::hidden('socialshare', $webContent->get('socialshare'), ['id'=>"socialshare"]) !!}
 
             <div class="form-group">
                 <label for="id" class="col-sm-2 control-label">Web content</label>
@@ -82,6 +83,23 @@
             })->render()
         !!}
 </fieldset>
+
+<fieldset>
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Condivisione Social:</span></legend>
+    <div class="box-body" style="margin-right: 22px">
+
+        <form method="POST" id="socialshare_form" class="form-horizontal">
+            <div class="form-group">
+                <label for="socialshare_add" class="col-sm-2 control-label">Condivisione</label>
+                <div class="col-sm-10">
+                    {!! Form::select('socialshare_add', ['Disabilitata','Abilitata'] , $webContent->get('socialshare') , ['class' => "form-control input-sm", 'id'=>"socialshare_add"]) !!}
+                </div>
+            </div>
+        </form>
+
+    </div>
+</fieldset>
+
 @endsection
 
 @push('style')
@@ -119,6 +137,10 @@
     $(".deleteModelPortlet").click(function() {
         var id = $(this).data('id');
         $('#model_portlet_id, #model_portlet, #modelPortlet, #modelPortletId').val('');
+    });
+
+    $("#socialshare_add").change(function() {
+        $("#socialshare").val($("#socialshare_add").find('option:selected').val());
     });
 
 
