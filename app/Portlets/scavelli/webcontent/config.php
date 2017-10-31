@@ -26,7 +26,8 @@ return [
         ],
         'twitter' => [
             'uri' => 'https://twitter.com/intent/tweet?url=',
-            'param'=>['original_referer','text'],
+            'text'=>'Nuovo articolo',
+            'original_referer'=>'',
             'icon' => 'fa-twitter'
         ]
     ],

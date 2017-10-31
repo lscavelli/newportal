@@ -90,10 +90,10 @@ class viewWebContent extends Portlet {
             if (!empty($this->config('providers'))) {
                 foreach($this->config('providers') as $provider=>$param) {
                     $items[$provider]['url'] = array_get($param,'uri').urlencode(request()->getUri());
-                    if (isset($param['param']['text'])) {
+                    if (isset($param['text'])) {
                         $items[$provider]['url'] .= '&text='.urlencode($data['_title']);
                     }
-                    if (isset($param['param']['text'])) {
+                    if (isset($param['original_referer'])) {
                         $items[$provider]['url'] .= '&original_referer='.urlencode(request()->getUri());
                     }
                     $items[$provider]['icon'] = $param['icon'];
