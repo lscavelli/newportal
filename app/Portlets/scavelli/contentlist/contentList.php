@@ -11,23 +11,23 @@ class contentList extends Portlet {
 
     public function init() {
         $model = "App\\Models\\Content\\Content";
-        if (!empty($this->config['service'])) $model = $this->config['service'];
+        if ($this->config('service')) $model = $this->config('service');
         $this->rp->setModel($model);
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
 
-        $this->theme->addExCss($this->getPath().'css/assetpublisher3.css');
+        $this->theme->addExCss($this->getPath().'css/assetpublisher003.css');
     }
 
     public function getContent() {
-        if (empty($this->config['model_id'])) return;
+        if (empty($this->config('model_id'))) return;
         $builder = $this->rp->getModel();
 
         // ordered
-        if (!empty($this->config['ord'])) {
-            $ord = ['id','name','created_at','updated_at'];
+        if ($this->config('ord')) {
+            $ord = ['id','name','created_at','updated_at','hits'];
             $dir = ['asc','desc'];
-            if (!isset($this->config['dir'])) $this->config['dir'] = 0;
-            $builder = $builder->orderBy($ord[$this->config['ord']], $dir[$this->config['dir']]);
+            $dirkey = (!is_null($this->config('dir'))) ? $this->config('dir') : 0;
+            $builder = $builder->orderBy($ord[$this->config('ord')], $dir[$dirkey]);
         }
 
         // inizializzo le variabili $categories e $tags
@@ -35,7 +35,8 @@ class contentList extends Portlet {
         $tags = null;
 
         // se la comunicazione è attiva e l'URL contiente un content web
-        if (!empty($this->config['comunication'])) {
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('comunication')) {
             $segments = $this->request->segments(); $qwc = null;
             if ($this->request->has('content')) {
                 $qwc = $this->request->content;
@@ -49,6 +50,8 @@ class contentList extends Portlet {
                 // prelevo tutti i tag e le categorie del content
                 $content = $this->rp->findBySlug($qwc);
 
+                // inizialmente considero i tags e le categorie del content
+                // passato nella url
                 if ($content) {
                     foreach ($content->categories->pluck('id')->toArray() as $id) {
                         $categories[] = ['category'=>$id];
@@ -60,12 +63,14 @@ class contentList extends Portlet {
             }
         }
 
-        // imposto la query con i tag se presenti
-        if (!empty($this->config['comunication']) and $this->request->has('tag')) {
+        // imposto i tag se presenti nel setting se presenti
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('comunication') and $this->request->has('tag')) {
             $tags = ['tags'=>['tag'=>$this->request->tag]];
-        } elseif (!empty($this->config['tags'])) {
-            $tags = $this->config['tags'];
+        } elseif ($this->config('tags')) {
+            $tags = $this->config('tags');
         }
+        //dd($tags);
 
         // se è impostata la variabile tags applico i filtri sui tags
         // in AND
@@ -78,10 +83,10 @@ class contentList extends Portlet {
         }
 
         // imposto la query con le categorie se presenti
-        if (!empty($this->config['comunication']) and $this->request->has('category')) {
+        if ($this->config('comunication') and $this->request->has('category')) {
             $categories = ['categories'=>['category'=>$this->request->category]];
-        } elseif (!empty($this->config['categories'])) {
-            $categories = $this->config['categories'];
+        } elseif ($this->config('categories')) {
+            $categories = $this->config('categories');
         }
 
         // se è impostata la variabile categories applico i filtri sulle categorie
@@ -95,25 +100,26 @@ class contentList extends Portlet {
         }
 
         // se il servizio è di tipo "content web" verifico se risultano impostati la struttura e il modello
-        if (!empty($this->config['structure_id'])) {
-            $builder = $builder->where('structure_id',$this->config['structure_id']);
+        if ($this->config('structure_id')) {
+            $builder = $builder->where('structure_id',$this->config('structure_id'));
         }
 
         // se l'url contiene author applico il filtro sull'autore
-        if (!empty($this->config['comunication']) and $this->request->has('author')) {
+        if ($this->config('comunication') and $this->request->has('author')) {
             $builder = $builder->where('user_id',$this->request->author);
         }
 
-        //print $builder->toSql(); exit;
+        //dd($builder->toSql());
+
         // TODO:  INSERIRE IL VALORE DEL PAGINATE NEL SETTING
 
         //$template = 'listAssets';
-        //if (!empty($this->config['structure_id']))
+        //if (!empty($this->config('structure_id')))
 
         if (!$this->config('template')) {
             return view('contentlist::listAssets')->with([
                 'items' => $builder->paginate(3),
-                'title' => $this->config['title'],
+                'title' => $this->config('title'),
                 'list'  => $this
             ]);
         } else {

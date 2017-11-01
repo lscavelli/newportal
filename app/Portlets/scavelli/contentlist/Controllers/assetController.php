@@ -102,7 +102,7 @@ class assetController extends Controller
      * Definisco i valori dei campi select ord e dir
      */
     private function selectOrder() {
-        return  ['ord'=>['Inserimento','Titolo','Data di Creazione','Data di Modifica'],'dir'=>['Ascendente','Discendente']];
+        return  ['ord'=>['Inserimento','Titolo','Data di Creazione','Data di Modifica','Visite'],'dir'=>['Ascendente','Discendente']];
     }
 
     /**

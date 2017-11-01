@@ -30,6 +30,7 @@ class CreateWebcontentTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('username')->nullable();
             $table->boolean('hidden_')->default(0);
+            $table->integer('hits')->unsigned()->default(0);
             $table->string('image')->nullable();
             $table->timestamps();
         });

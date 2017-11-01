@@ -44,8 +44,9 @@ class viewWebContent extends Portlet {
         $data['_data_creazione'] = \Carbon\Carbon::parse($cw->created_at)->format('d/m/Y');
         $data['_data_modifica'] = \Carbon\Carbon::parse($cw->updated_at)->format('d/m/Y');
 
-        // verifico prima se è stato impostato un modello tramite portlet
 
+        // verifico prima se è stato impostato un modello tramite portlet
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if (!empty($this->config['modelPortletId'])) {
             $ModelId = $this->config['modelPortletId'];
             $model = $this->rp->setModel(Modelli::class)->find($ModelId);
@@ -68,15 +69,19 @@ class viewWebContent extends Portlet {
         if (str_contains($model, '$np_categories')) $data['_categories'] = $cw->categories;
         $data['_author_name'] = $cw->user->name; $data['_author_username'] = $cw->username; $data['_author_id'] = $cw->user_id;
 
-        $update = null;
         // inserisco il pulsante per la modifica del contenuto
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        $update = null;
         if (auth()->check()) {
             $urlupdate = url("/admin/content/edit")."/".$cw->id;
+            //sostituire con view()
             $update = "<a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$cw->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
         }
         $return = $this->applyModel($model->content,$data).$update;
 
-        // se la comunicazione è attiva e il nome del content è presente nell'url, setto i meta Tag della pagina
+        // se la comunicazione è attiva e il nome del content è presente
+        // nell'url, setto i meta Tag della pagina
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($mt) {
             $mt = array();
             $mt['title'] = $data['_title'];
@@ -85,7 +90,9 @@ class viewWebContent extends Portlet {
             $this->setMetaTagPage($mt);
         }
 
+        // Se socialshare e true
         // inserisce i pulsanti per condividere il contenuto sui social
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('socialshare')) {
             if (!empty($this->config('providers'))) {
                 foreach($this->config('providers') as $provider=>$param) {
@@ -102,6 +109,13 @@ class viewWebContent extends Portlet {
                 $return .= view('webcontent::social')->with(compact('items'));
             }
         }
+
+        // se sethits è true aumento incremento di 1 hits
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('sethits')) {
+            $cw->increment('hits');
+        }
+
 
         return $return;
     }

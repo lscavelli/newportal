@@ -11,6 +11,7 @@
             {!! Form::hidden('modelPortletId', $webContent->get('modelPortletId'), ['id'=>"modelPortletId"]) !!}
             {!! Form::hidden('modelPortlet', $webContent->get('modelPortlet'), ['id'=>"modelPortlet"]) !!}
             {!! Form::hidden('socialshare', $webContent->get('socialshare'), ['id'=>"socialshare"]) !!}
+            {!! Form::hidden('sethits', $webContent->get('sethits'), ['id'=>"sethits"]) !!}
 
             <div class="form-group">
                 <label for="id" class="col-sm-2 control-label">Web content</label>
@@ -85,14 +86,21 @@
 </fieldset>
 
 <fieldset>
-    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Condivisione Social:</span></legend>
+    <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;"><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Altre impostazioni:</span></legend>
     <div class="box-body" style="margin-right: 22px">
 
         <form method="POST" id="socialshare_form" class="form-horizontal">
             <div class="form-group">
-                <label for="socialshare_add" class="col-sm-2 control-label">Condivisione</label>
+                <label for="socialshare_add" class="col-sm-2 control-label">Social share</label>
                 <div class="col-sm-10">
-                    {!! Form::select('socialshare_add', ['Disabilitata','Abilitata'] , $webContent->get('socialshare') , ['class' => "form-control input-sm", 'id'=>"socialshare_add"]) !!}
+                    {!! Form::select('socialshare_add', ['Disabilitato','Abilitato'] , $webContent->get('socialshare') , ['class' => "form-control input-sm", 'id'=>"socialshare_add"]) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="sethits_add" class="col-sm-2 control-label">Conteggio visite</label>
+                <div class="col-sm-10">
+                    {!! Form::select('sethits_add', ['Disabilitato','Abilitato'] , $webContent->get('sethits') , ['class' => "form-control input-sm", 'id'=>"sethits_add"]) !!}
                 </div>
             </div>
         </form>
@@ -141,6 +149,10 @@
 
     $("#socialshare_add").change(function() {
         $("#socialshare").val($("#socialshare_add").find('option:selected').val());
+    });
+
+    $("#sethits_add").change(function() {
+        $("#sethits").val($("#sethits_add").find('option:selected').val());
     });
 
 
