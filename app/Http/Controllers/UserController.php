@@ -85,6 +85,7 @@ class UserController extends Controller {
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
+        if (is_null($data['password'])) unset($data['password']); //non la richiede se è in update
         $this->validator($data,true)->validate();
         if (!empty($data['data_nascita'])) {
             $data['data_nascita'] =Carbon::createFromFormat('d/m/Y', $data['data_nascita']);

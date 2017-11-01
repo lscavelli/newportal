@@ -14,7 +14,7 @@
     /*background: #0b73af;
     color: #fff;*/
     /*margin-top: -120px;*/
-    margin-bottom: 0;
+    margin-bottom: 20px;
     /*padding: 10px 10px;*/
     position: relative;
     /*width: 24em;*/
@@ -24,7 +24,7 @@
     border-radius: 3px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    padding: 20px;
+    padding: 20px 20px 20px 15px;
     color: rgba(0,0,0,.8);
 }
 
@@ -44,4 +44,30 @@
 .articles:last-child {
     border-bottom: 0;
     margin-bottom: 0;
+}
+
+li.block-hover a{
+    font-size: 16px;
+    color: inherit;
+}
+
+li.block-hover a:link, li.block-hover a:visited{
+    text-decoration: none;
+}
+
+li.block-hover a:hover {
+    color: #f56a6a;
+}
+
+
+li.block-hover {
+    border-top: solid 1px rgba(210, 215, 217, 0.75);
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+li.block-hover:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
 }

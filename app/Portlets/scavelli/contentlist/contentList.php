@@ -15,7 +15,7 @@ class contentList extends Portlet {
         $this->rp->setModel($model);
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
 
-        $this->theme->addExCss($this->getPath().'css/assetpublisher003.css');
+        $this->theme->addExCss($this->getPath().'css/assetpublisher007.css');
     }
 
     public function getContent() {
