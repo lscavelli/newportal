@@ -34,6 +34,10 @@ p {
   line-height: 1.5;
 }
 
+small{
+  font-size: 70%;
+}
+
 @media only screen and (min-width: 768px) {
   p {
     margin: 0 0 10px;

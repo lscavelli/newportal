@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Errore 404 - Pagina non trovata</title>
+        <title>Whoops, looks like something went wrong.</title>
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
@@ -45,9 +45,8 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="content"><span class="error">404</span>Pagina non trovata.</h1>
-            <h2 style="margin-top:-20px">Siamo spiacenti, la pagina che hai richiesto non è stata trovata.
-                    Per favore torna <a href="/">sulla homepage</a></h2>
+            <h1 class="content"><span class="error">500</span>Whoops, sembra che qualcosa sia andato storto.</h1>
+            <h2 style="margin-top:-20px">Siamo spiacenti, la pagina che hai richiesto ha generato un errore improvviso. Vai <a href="/">sulla homepage</a></h2>
             @if (\Auth::check())
                 <h2>
                     <a href="{{  route('dashboard') }}" class="btn btn-large btn-info">
