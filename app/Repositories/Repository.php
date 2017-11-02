@@ -62,7 +62,7 @@ class Repository implements RepositoryInterface {
     public function find($id,$md=null) {
         $model = $this->model;
         if ($md) $model = $md;
-        return $model->find($id);
+        return $model->findOrFail($id);
     }
 
     /**

@@ -169,6 +169,11 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     });
 
     /**
+     * Accessibile a tutti gli utenti anche senza particolari permessi
+     */
+    Route::get('users/revert', 'UserController@revertUser');
+
+    /**
      * Accessibile all'utente "Super Admin" e agli utenti possessori
      * del permesso users-manage
      */
@@ -176,6 +181,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
         Route::get('users', 'UserController@index')->name('users');
         Route::post('users', 'UserController@index');
+        Route::get('users/impersonate/{user_id}', 'UserController@impersonateUser');
         Route::get('users/profile/{user_id}', 'UserController@profile');
         Route::any('users/cities/{q?}', 'UserController@citiesRemoteData');
         Route::any('users/activity/{user_id?}', 'UserController@showActivity');

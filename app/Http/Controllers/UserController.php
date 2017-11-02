@@ -409,4 +409,31 @@ class UserController extends Controller {
         return '{"items": '. json_encode($list) . '}';
     }
 
+    /**
+     * Impersonate user
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function impersonateUser($id) {
+        $impersonate = $this->repo->find($id);
+        $userId = auth()->user()->id;
+        if ($impersonate->id !== ($userId)) {
+            session()->put('user_r', $userId);
+            auth()->login($impersonate);
+        }
+        return redirect('admin/dashboard');
+    }
+
+    /**
+     * Ripristina l'utente
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function revertUser() {
+        if (session()->has('user_r')) {
+            auth()->loginUsingId(session()->get('user_r'));
+            session()->forget('user_r');
+        }
+        return redirect('admin/dashboard');
+    }
+
 }

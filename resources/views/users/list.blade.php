@@ -11,7 +11,8 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','cognome','nome', 'email', 'created_at'=>'Registrato il'])
-                    ->actions(['profile'=>'Profilo','activity'=>'Attività','assignRole'=>'Assegna ruoli','assignPerm'=>'Assegna permessi'])
+                    ->actions(['profile'=>'Profilo','activity'=>'Attività',
+                    'assignRole'=>'Assegna ruoli','assignPerm'=>'Assegna permessi','impersonate'=>'Impersona Utente'])
                     ->customizes('created_at',function($row){
                         return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
                     })->render()

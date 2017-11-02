@@ -44,12 +44,18 @@
                   <a href="{{ url('/admin/users/profile',Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout</a>
-                  <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                  </form>
+
+                  @if(!session()->has('user_r'))
+                    <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      Logout</a>
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                    </form>
+                  @else
+                    <a href="{{ url('admin/users/revert') }}" class="btn btn-default btn-flat">Ripristina Utente</a>
+                  @endif
+
                 </div>
               </li>
             </ul>

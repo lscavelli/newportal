@@ -109,6 +109,9 @@ class contentList extends Portlet {
             $builder = $builder->where('user_id',$this->request->author);
         }
 
+        $items = $builder->paginate(4);
+        if ($items->count()<1) return;
+
         //dd($builder->toSql());
 
         // TODO:  INSERIRE IL VALORE DEL PAGINATE NEL SETTING
@@ -118,13 +121,13 @@ class contentList extends Portlet {
 
         if (!$this->config('template')) {
             return view('contentlist::listAssets')->with([
-                'items' => $builder->paginate(3),
+                'items' => $items,
                 'title' => $this->config('title'),
                 'list'  => $this
             ]);
         } else {
             $content = [];
-            foreach($builder->paginate(4) as $item) {
+            foreach($items as $item) {
                 $content[] = $this->getItem($item);
             }
             return implode('',$content);

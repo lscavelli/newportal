@@ -41,6 +41,10 @@ class PublicPageController extends Controller {
             $data['setting'] = (!empty($portlet->pivot->setting)) ? json_decode($portlet->pivot->setting, true) : [];
             $setting = array_merge($setting,$data['setting']); unset($setting['setting']);
             $data['content'] = app()->portlet->run($portlet->init,$theme,$portlet->path,$setting);
+            // se priva di contenuti ( $data['content'] == null)
+            // verifica l'impostazione della portlet se deve essere visualizzata comunque
+            // TODO:  INSERIRE NEL SETTING DELLA PORTLET - VISUALIZZA ANCHE SENZA CONTENUTI
+            if (!$data['content']) continue;
             $theme->addPortlet($data);
         }
         // aggiungo gli asset dei temi
