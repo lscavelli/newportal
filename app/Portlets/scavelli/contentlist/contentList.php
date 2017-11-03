@@ -37,40 +37,46 @@ class contentList extends Portlet {
         // se la comunicazione è attiva e l'URL contiente un content web
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('comunication')) {
-            $segments = $this->request->segments(); $qwc = null;
-            if ($this->request->has('content')) {
-                $qwc = $this->request->content;
-            } elseif (count($segments)>1) {
-                $qwc = end($segments);
+            // imposta $tags o/e $categories se presenti nell'url
+            if ($this->request->has('tag')) {
+                $tags = ['tags'=>['tag'=>$this->request->tag]];
             }
-            if (!is_null($qwc)) {
-                // escludo il content web dell'URL dalla lista
-                $builder = $builder->where('slug','<>',$qwc);
+            if ($this->request->has('category')) {
+                $categories = ['categories'=>['category'=>$this->request->category]];
+            }
+            // se tags e categories non sono impostate (entrambe) verifico il content passato nell'url
+            if (!$tags and !$categories) {
+                $segments = $this->request->segments(); $qwc = null;
+                if ($this->request->has('content')) {
+                    $qwc = $this->request->content;
+                } elseif (count($segments)>1) {
+                    $qwc = end($segments);
+                }
+                if (!is_null($qwc)) {
+                    // escludo il content web dell'URL dalla lista
+                    $builder = $builder->where('slug','<>',$qwc);
 
-                // prelevo tutti i tag e le categorie del content
-                $content = $this->rp->findBySlug($qwc);
+                    // prelevo tutti i tag e le categorie del content
+                    $content = $this->rp->findBySlug($qwc);
 
-                // inizialmente considero i tags e le categorie del content
-                // passato nella url
-                if ($content) {
-                    foreach ($content->categories->pluck('id')->toArray() as $id) {
-                        $categories[] = ['category'=>$id];
-                    }
-                    foreach ($content->tags->pluck('id')->toArray() as $id) {
-                        $tags[] = ['tag'=>$id];
+                    // inizialmente considero i tags e le categorie del content
+                    // passato nella url
+                    if ($content) {
+                        foreach ($content->categories->pluck('id')->toArray() as $id) {
+                            $categories[] = ['category'=>$id];
+                        }
+                        foreach ($content->tags->pluck('id')->toArray() as $id) {
+                            $tags[] = ['tag'=>$id];
+                        }
                     }
                 }
             }
-        }
 
-        // imposto i tag se presenti nel setting se presenti
-        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        if ($this->config('comunication') and $this->request->has('tag')) {
-            $tags = ['tags'=>['tag'=>$this->request->tag]];
-        } elseif ($this->config('tags')) {
+        } else {
+            // altrimenti imposto i tags o/e categories se presenti nel setting
             $tags = $this->config('tags');
+            $categories = $this->config('categories');
         }
-        //dd($tags);
 
         // se è impostata la variabile tags applico i filtri sui tags
         // in AND
@@ -80,13 +86,6 @@ class contentList extends Portlet {
                     $q->where('tag_id', '=', $tag['tag']);
                 });
             }
-        }
-
-        // imposto la query con le categorie se presenti
-        if ($this->config('comunication') and $this->request->has('category')) {
-            $categories = ['categories'=>['category'=>$this->request->category]];
-        } elseif ($this->config('categories')) {
-            $categories = $this->config('categories');
         }
 
         // se è impostata la variabile categories applico i filtri sulle categorie
