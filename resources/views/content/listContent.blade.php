@@ -20,7 +20,7 @@
                 {!!
                     $list->columns(['id'=>'Id','name'=>'Titolo','created_at'=>'Creato il','updated_at'=>'Aggiornato il' ])
                     ->sortFields(['id','name','created_at','updated_at'])
-                    ->ShowActions(true)
+                    ->actions([url('admin/comments/contentweb')=>'Lista commenti'])
                     ->addSplitButtons($listStructure,false)
                     ->customizes('created_at',function($row){
                         return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');

@@ -141,6 +141,7 @@ class ContentController extends Controller {
         $content = $this->rp->find($id);
         if ($content->tags()->count()>0) $this->rp->detach($content->tags(), $content->tags()->pluck('id'));
         if ($content->categories()->count()>0) $this->rp->detach($content->categories(), $content->categories()->pluck('id'));
+        if ($content->comments()->count()>0) $content->comments()->delete();
         if ($this->rp->delete($id)) {
             return redirect()->back()->withSuccess('Contenuto web cancellato correttamente');
         }

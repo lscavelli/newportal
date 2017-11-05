@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Blog;
+namespace App\Http\Controllers\Content;
 
 use Illuminate\Http\Request;
 use App\Libraries\listGenerates;
-use App\Models\Blog\Comment;
+use App\Models\Content\Comment;
 use Carbon\Carbon;
 use App\Http\Requests;
 use Validator;
-use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +16,7 @@ class CommentController extends Controller {
 
     public function __construct(RepositoryInterface $rp)  {
         $this->middleware('auth');
-        $this->rp = $rp->setModel('App\Models\Blog\Comment')->setSearchFields(['name','content']);
+        $this->rp = $rp->setModel('App\Models\Content\Comment')->setSearchFields(['name','content']);
     }
 
     /**
@@ -25,9 +24,18 @@ class CommentController extends Controller {
      * @return mixed
      */
     private function validator(array $data)   {
-        return Validator::make($data, [
+        $forguest = [];
+        $forall = [
             'content' => 'required|min:10'
-        ]);
+        ];
+        if (!auth()->check()) {
+            $forguest = [
+                'email' => ['required','email','max:255'],
+                'author' => ['required','min:3'],
+            ];
+        }
+        $forall = array_merge($forall,$forguest);
+        return Validator::make($data, $forall );
     }
 
     /**
@@ -36,25 +44,27 @@ class CommentController extends Controller {
      * @param listGenerates $list
      * @return \Illuminate\Contracts\View\View
      */
-    public function index($id, Request $request, listGenerates $list ) {
+    public function index($service, $id=null, Request $request, listGenerates $list) {
+        $services = $this->rp->setModel($this->getService($service));
         if (!empty($id)) {
-            $post = $this->rp->setModel('App\Models\Blog\Post')->find($id);
-            $comments = $post->comments()->orderBy('id','DESC')->paginate();
-            $namePost = $post->name;
+            $service = $services->find($id);
+            $comments = $service->comments()->orderBy('id','DESC')->paginate();
+            $nameContent = $service->name;
         } else {
-            $comments = $this->rp->paginate($request); $namePost = null;
+            $comments = $services->getModel()->comments()->paginate(4); $nameContent = null;
         }
         $list->setModel($comments);
-        return view('blog.listComment')->with(compact('comments','list','namePost'));
+        return view('content.listComment')->with(compact('comments','list','nameContent'));
     }
 
     /**
      * Mostra il form per la creazione di un nuovo commento
      * @return \Illuminate\Contracts\View\View
      */
-    public function create($postId)   {
-        $comment = new Comment(); $action = "Blog\\CommentController@store";
-        return view('blog.editComment')->with(compact('comment','action','postId'));
+    public function create($service,$serviceId)   {
+        $post = $this->rp->setModel($this->getService($service))->find($serviceId);
+        $comment = new Comment(); $action = "Content\\CommentController@store";
+        return view('content.editComment')->with(compact('comment','action','post','service'));
     }
 
     /**
@@ -108,6 +118,12 @@ class CommentController extends Controller {
             return redirect()->back()->withSuccess('Commento cancellato correttamente');
         }
         return redirect()->back();
+    }
+
+    private function getService($service) {
+        $flip = array_flip(config('newportal.services'));
+        return array_get(array_change_key_case($flip, CASE_LOWER),$service);
+
     }
 
 }

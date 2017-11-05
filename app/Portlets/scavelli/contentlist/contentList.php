@@ -20,6 +20,7 @@ class contentList extends Portlet {
 
     public function getContent() {
         if (empty($this->config('model_id'))) return;
+
         $builder = $this->rp->getModel();
 
         // ordered
@@ -34,7 +35,7 @@ class contentList extends Portlet {
         $categories = null;
         $tags = null;
 
-        // se la comunicazione è attiva e l'URL contiente un content web
+        // se la comunicazione è attiva
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('comunication')) {
             // imposta $tags o/e $categories se presenti nell'url
@@ -44,7 +45,7 @@ class contentList extends Portlet {
             if ($this->request->has('category')) {
                 $categories = ['categories'=>['category'=>$this->request->category]];
             }
-            // se tags e categories non sono impostate (entrambe) verifico il content passato nell'url
+            // se tags e categories non sono impostate verifico il content passato nell'url
             if (!$tags and !$categories) {
                 $segments = $this->request->segments(); $qwc = null;
                 if ($this->request->has('content')) {
@@ -72,7 +73,8 @@ class contentList extends Portlet {
                 }
             }
 
-        } else {
+        }
+        if (!$tags and !$categories) {
             // altrimenti imposto i tags o/e categories se presenti nel setting
             $tags = $this->config('tags');
             $categories = $this->config('categories');

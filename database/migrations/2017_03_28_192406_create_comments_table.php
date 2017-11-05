@@ -19,6 +19,10 @@ class CreateCommentsTable extends Migration
             $table->text('content')->nullable();
             $table->integer('commentable_id')->unsigned()->index();
             $table->string('commentable_type')->nullable();
+            $table->string('email')->nullable();
+            $table->string('author_ip', 100);
+            $table->string('author')->nullable();
+            $table->tinyInteger('approved')->default(0);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

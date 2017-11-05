@@ -14,18 +14,34 @@ class Content extends Model
         'user_id', 'username', 'hidden_', 'image'
     );
 
+    /**
+     * restituisce i tags assegnati al content
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function tags() {
         return $this->morphToMany('App\Models\Content\Tag', 'taggable');
     }
 
+    /**
+     * restituisce tutte le categorie del content
+     * @return $this
+     */
     public function categories() {
         return $this->morphToMany('App\Models\Content\Category', 'categorized')->withPivot('vocabulary_id');
     }
 
+    /**
+     * restituisce il modello assegnato al content
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function model() {
         return $this->belongsTo('App\Models\Content\Modelli');
     }
 
+    /**
+     * restituisce l'immagine associata al content
+     * @return mixed|string
+     */
     public function getImage() {
         if (! $this->image ) {
             return asset('img/webcontent.jpg');
@@ -36,8 +52,20 @@ class Content extends Model
         }
     }
 
+    /**
+     * restituisce l'user che ha prodotto il content
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user() {
         return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     * restituisce i commenti associati al content
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments() {
+        return $this->morphMany('App\Models\Content\Comment','commentable');
     }
 
 }

@@ -3,8 +3,8 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('comments','/admin/comments')->add('Aggiorna commento')
-        ->setTcrumb(\App\Models\Blog\Post::find($postId)->name)
+    {!! $breadcrumb->add('comments','/admin/comments/'.$service)->add('Aggiorna commento')
+        ->setTcrumb($post->name)
         ->render() !!}
 @stop
 
@@ -24,11 +24,13 @@
                     <div class="tab-pane active" id="editpost">
 
                         {!! Form::model($comment, ['action' => $action,'class' => 'form-horizontal']) !!}
-                            <input type="hidden" value="{{ $postId }}" name="post_id">
+                            <input type="hidden" value="{{ $post->id }}" name="post_id">
+                            <input type="hidden" value="{{ $service }}" name="service">
+
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nome</label>
+                                <label for="name" class="col-sm-2 control-label">Titolo</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome - non obbligatorio"]) !!}
+                                    {!! Form::text('name',null,['class' => 'form-control']) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -37,6 +39,26 @@
                                     {!! Form::textarea('content',null,['class' => 'form-control', 'placeholder'=> "Contenuto"]) !!}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    {!! Form::email('email',null,['id' => 'email','class' => 'form-control', 'placeholder'=> "Email"]) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="author" class="col-sm-2 control-label">Autore</label>
+                                <div class="col-sm-10">
+                                    {!! Form::text('author',null,['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="approved" class="col-sm-2 control-label">Stato</label>
+                                <div class="col-sm-10">
+                                    {!! Form::select('approved', ['Non Approvato','Approvato'] , null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" class="btn btn-danger">Salva</button>

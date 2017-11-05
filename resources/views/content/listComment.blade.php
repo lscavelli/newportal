@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-{!! $breadcrumb->add('Lista Post','/admin/posts')->add("Lista commenti")
-    ->setTcrumb($namePost)
+{!! $breadcrumb->add('Lista Content','/admin/posts')->add("Lista commenti")
+    ->setTcrumb($nameContent)
     ->render()
 !!}
 @stop

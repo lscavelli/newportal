@@ -69,8 +69,10 @@ class ContentWebController extends Controller
                     if(!empty($prf['modelContent'])) {
                         $this->params['modelContent'] = $prf['modelContent'];
                     } else {
-                        $modelContent = $this->rp->setModel(Modelli::class)->find($content->model_id);
-                        if ($modelContent) $this->params['modelContent'] = $modelContent->name;
+                        if ($content->model_id) {
+                            $modelContent = $this->rp->setModel(Modelli::class)->find($content->model_id);
+                            $this->params['modelContent'] = $modelContent->name;
+                        }
                     }
                 }
             }
