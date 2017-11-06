@@ -90,7 +90,9 @@ class viewWebContent extends Portlet {
             $this->setMetaTagPage($mt);
         }
 
-        // Se socialshare e true
+        $items = []; $formcomment = null;
+
+        // Se socialshare è true
         // inserisce i pulsanti per condividere il contenuto sui social
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('socialshare')) {
@@ -106,15 +108,36 @@ class viewWebContent extends Portlet {
                     $items[$provider]['icon'] = $param['icon'];
                     $items[$provider]['icon'] = $param['icon'];
                 }
-                $return .= view('webcontent::social')->with(compact('items'));
             }
         }
+
+        // Se activecomments è true
+        // inserisce il pulsante per inserire un commento e mostra l'elenco
+        // dei commenti presenti
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('activecomments')) {
+            $items['comment']['icon'] = 'fa-comments-o';
+            $items['comment']['url'] = '#comments';
+            $items['comment']['openw'] = 0;
+            $formcomment = view('webcontent::formcomments')->with([
+                'action'=>'#comment',
+                'post_id' => $cw->id,
+                'service' => 'contentweb'
+            ]);
+        }
+        if (count($items)>0) {
+            $return .= view('webcontent::social')->with(compact('items')).$formcomment;
+        }
+
+
 
         // se sethits è true aumento incremento di 1 hits
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('sethits')) {
             $cw->increment('hits');
         }
+
+
 
 
         return $return;
