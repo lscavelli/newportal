@@ -59,9 +59,12 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
     Route::group(['namespace' => 'Content'], function () {
 
-        Route::get('comments/{service}/{service_id?}', 'CommentController@index')->name('comments');
-        Route::get('comments/{service}/{service_id}/create', 'CommentController@create');
+        Route::get('comments/{service}/{post_id?}', 'CommentController@index')->name('comments');
+        Route::get('comments/{service}/{post_id}/create', 'CommentController@create');
         Route::post('comments/store', 'CommentController@store');
+        Route::get('comments/{service}/{post_id}/edit/{comment_id}', 'CommentController@edit');
+        Route::post('comments/update/{comment_id}', 'CommentController@update');
+        Route::post('comments/{service}/{post_id}/delete/{comment_id}', 'CommentController@destroy');
 
         Route::get('portlets', 'PortletController@index')->name('portlets');
         Route::post('portlets/store', 'PortletController@store');
@@ -122,15 +125,6 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('models/{structure_id}/edit/{model_id}', 'ModelliController@edit');
         Route::post('models/update/{model_id}', 'ModelliController@update');
         Route::get('models/duplicates/{model_id}', 'ModelliController@duplicates');
-
-
-        //Route::get('comments/create/{service}', 'CommentController@create');
-        //Route::get('comments/{service_id}/create/', 'CommentController@create');
-
-        /*Route::post('comments/store', 'CommentController@store');
-        Route::get('comments/{post_id}/edit/{comment_id}', 'CommentController@edit');
-        Route::post('comments/update/{comment_id}', 'CommentController@update');
-        Route::post('comments/{post_id}/delete/{comment_id}', 'CommentController@destroy');*/
 
     });
 

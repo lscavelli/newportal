@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Titolo</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control']) !!}
+                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Titolo non obbligatorio"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
