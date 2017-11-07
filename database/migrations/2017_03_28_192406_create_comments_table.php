@@ -23,7 +23,7 @@ class CreateCommentsTable extends Migration
             $table->string('author_ip', 100);
             $table->string('author')->nullable();
             $table->tinyInteger('approved')->default(0);
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable(); // per i guest
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

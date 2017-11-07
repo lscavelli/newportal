@@ -284,5 +284,5 @@ Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallback');
 
 Route::post('contactform', 'Mail\\MailController@contact');
-Route::get('{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
+Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');

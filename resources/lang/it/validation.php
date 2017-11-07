@@ -119,6 +119,8 @@ return [
         'name' => 'Nome',
         'email' => 'E-mail',
         'structure_id' => 'Struttura dati',
+        'content' => 'Contenuto',
+        'author' => 'Autore',
     ],
 
 ];

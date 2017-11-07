@@ -28,7 +28,8 @@ class viewWebContent extends Portlet {
                 $cw = $this->rp->findBySlug(end($segments));
             }
             // setto i meta tag della pagina con i dati del web content
-            if (!is_null($cw)) $mt = 1;
+            if (!is_null($cw)) $mt = 1; // $mit mi assicura che ci sia il content con la comunicazione attiva
+
         }
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
@@ -37,7 +38,7 @@ class viewWebContent extends Portlet {
         if (!isset($cw->content)) {
             if (array_get(cache('settings'), 'content_not_found')==1) {
                 return view('errors.contentNotFound');
-            } else return;
+            } else return; // non mostra nulla
         }
         $data = json_decode($cw->content,true);
         $data['_title'] = $cw->name;
@@ -90,7 +91,7 @@ class viewWebContent extends Portlet {
             $this->setMetaTagPage($mt);
         }
 
-        $items = []; $formcomment = null;
+        $items = [];
 
         // Se socialshare è true
         // inserisce i pulsanti per condividere il contenuto sui social
@@ -115,18 +116,29 @@ class viewWebContent extends Portlet {
         // inserisce il pulsante per inserire un commento e mostra l'elenco
         // dei commenti presenti
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        $formcomment = null;
         if ($this->config('activecomments')) {
             $items['comment']['icon'] = 'fa-comments-o';
             $items['comment']['url'] = '#comments';
             $items['comment']['openw'] = 0;
-            $formcomment = view('webcontent::formcomments')->with([
-                'action'=>'#comment',
-                'post_id' => $cw->id,
-                'service' => 'contentweb'
+            $formcomment = view('webcontent::commentsForm')->with([
+                'action'=>$this->request->fullUrl(),
             ]);
+
+            if ($this->request->has('sendComment')) {
+                $this->storeComment($cw);
+            }
+            // mostro l'elenco paginato dei commenti
+            $listcomments = null;
+            $comments = $cw->comments()->orderBy('created_at','DESC')->paginate(3);
+            if ($comments->count()>0) {
+                $this->theme->addExCss($this->getPath().'css/comments.css');
+                $listcomments = view('webcontent::commentsList')->with(compact('comments'));
+            }
+            //dd($cw->comments()->get());sdf
         }
         if (count($items)>0) {
-            $return .= view('webcontent::social')->with(compact('items')).$formcomment;
+            $return .= view('webcontent::social')->with(compact('items')).$formcomment.$listcomments;
         }
 
 
@@ -137,13 +149,43 @@ class viewWebContent extends Portlet {
             $cw->increment('hits');
         }
 
-
-
-
         return $return;
     }
 
     public function configPortlet($portlet) {
         return (new ContentWebController($this->rp))->configPortlet($portlet, $this->request);
+    }
+
+
+    private function storeComment($contentWeb) {
+
+        $this->middleware('guest');
+
+        $data = $this->request->all();
+        if (empty($data['name'])) $data['name'] = str_limit($data['message'],50);
+        $data['content'] = $data['message']; // se lascio content entra in contrasto con il content del contentweb
+        unset($data['message']);
+        $data['author_ip'] = $this->request->ip();
+        if (auth()->check()) {
+            $data['user_id'] = auth()->user()->id;
+        }
+        $this->validator($data)->validate();
+        $contentWeb->comments()->create($data);
+        session()->flash('success', 'Commento inserito correttamente. A breve sarà visibile');
+    }
+
+    private function validator(array $data)   {
+        $forguest = [];
+        $forall = [
+            'content' => 'required|min:10'
+        ];
+        if (!auth()->check()) {
+            $forguest = [
+                'email' => ['required','email','max:255'],
+                'author' => ['required','min:3'],
+            ];
+        }
+        $forall = array_merge($forall,$forguest);
+        return validator()->make($data, $forall );
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Mail;
 
-
 use Illuminate\Support\Collection;
 use Validator;
 use App\Mail\Contact;
@@ -11,6 +10,14 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
 class MailController extends Controller {
+
+    /**
+     * MailController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
 
 
     /**
