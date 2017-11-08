@@ -15,6 +15,7 @@ class SocialController extends Controller
 
     public function __construct(RepositoryInterface $rp)
     {
+        $this->middleware('guest');
         $this->rp = $rp->setModel('App\Models\User');
     }
 

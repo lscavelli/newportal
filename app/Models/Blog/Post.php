@@ -33,7 +33,7 @@ class Post extends Model
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments() {
-        return $this->morphMany('App\Models\Blog\Comment','commentable');
+        return $this->morphMany('App\Models\Content\Comment','commentable');
     }
 
 }

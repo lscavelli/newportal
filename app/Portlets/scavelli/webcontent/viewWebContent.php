@@ -11,7 +11,7 @@ class viewWebContent extends Portlet {
 
     public function init() {
         $this->rp->setModel('App\Models\Content\Content');
-        if ($this->config('socialshare') or $this->config('activecomments')) {
+        if ($this->config('socialshare')) {
             $this->theme->addExJs($this->getPath().'js/socialshare.js');
         }
     }
@@ -125,12 +125,13 @@ class viewWebContent extends Portlet {
             $formcomment = view('webcontent::commentsForm')->with([
                 'action'=>$this->request->fullUrl(),
             ]);
+            $this->theme->addExJs($this->getPath().'js/comments.js');
 
             if ($this->request->has('sendComment')) {
                 $this->storeComment($cw);
             }
             // mostro l'elenco paginato dei commenti
-            $comments = $cw->comments()->where('approved',1)->orderBy('created_at','DESC')->paginate(3);
+            $comments = $cw->comments()->where('approved',1)->orderBy('created_at','DESC')->paginate(4);
             if ($comments->count()>0) {
                 $this->theme->addExCss($this->getPath().'css/comments.css');
                 $listcomments = view('webcontent::commentsList')->with(compact('comments'));

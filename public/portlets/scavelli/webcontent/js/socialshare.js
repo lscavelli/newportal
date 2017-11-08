@@ -3,10 +3,6 @@ var popupSize = {
     width: 780,
     height: 550
 };
-if(!$('.callout').length) {
-    $('.commentsez').hide();
-}
-
 
 $('.openwinsocial').on('click', function (e) {
 
@@ -23,8 +19,4 @@ $('.openwinsocial').on('click', function (e) {
         e.preventDefault();
     }
 
-});
-
-$('.showcommentform').on('click', function (e) {
-    $('.commentsez').slideToggle();
 });

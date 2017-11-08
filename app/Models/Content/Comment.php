@@ -16,7 +16,7 @@ class Comment extends Model
      * restituisce l'autore del commento
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function author() {
+    public function autore() {
         return $this->belongsTo('\App\Models\User', 'user_id');
     }
 
