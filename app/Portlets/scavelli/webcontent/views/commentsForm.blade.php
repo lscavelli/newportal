@@ -1,3 +1,4 @@
+<a name="comments"></a>
 <div class="commentsez" style="margin-bottom: 20px">
     <div class="row" style="margin-bottom: 20px">
         <div class="col-lg-12">
