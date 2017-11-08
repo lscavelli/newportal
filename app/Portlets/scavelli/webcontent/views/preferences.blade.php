@@ -11,6 +11,7 @@
             {!! Form::hidden('modelPortletId', $webContent->get('modelPortletId'), ['id'=>"modelPortletId"]) !!}
             {!! Form::hidden('modelPortlet', $webContent->get('modelPortlet'), ['id'=>"modelPortlet"]) !!}
             {!! Form::hidden('socialshare', $webContent->get('socialshare'), ['id'=>"socialshare"]) !!}
+            {!! Form::hidden('activecomments', $webContent->get('activecomments'), ['id'=>"activecomments"]) !!}
             {!! Form::hidden('sethits', $webContent->get('sethits'), ['id'=>"sethits"]) !!}
 
             <div class="form-group">
@@ -93,7 +94,14 @@
             <div class="form-group">
                 <label for="socialshare_add" class="col-sm-2 control-label">Social share</label>
                 <div class="col-sm-10">
-                    {!! Form::select('socialshare_add', ['Disabilitato','Abilitato'] , $webContent->get('socialshare') , ['class' => "form-control input-sm", 'id'=>"socialshare_add"]) !!}
+                    {!! Form::select('socialshare_add', ['Disabilitata','Abilitata'] , $webContent->get('socialshare') , ['class' => "form-control input-sm", 'id'=>"socialshare_add"]) !!}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="activecomments_add" class="col-sm-2 control-label">Commenti</label>
+                <div class="col-sm-10">
+                    {!! Form::select('activecomments_add', ['Disabilitati','Abilitati'] , $webContent->get('activecomments') , ['class' => "form-control input-sm", 'id'=>"activecomments_add"]) !!}
                 </div>
             </div>
 
@@ -149,6 +157,10 @@
 
     $("#socialshare_add").change(function() {
         $("#socialshare").val($("#socialshare_add").find('option:selected').val());
+    });
+
+    $("#activecomments_add").change(function() {
+        $("#activecomments").val($("#activecomments_add").find('option:selected').val());
     });
 
     $("#sethits_add").change(function() {

@@ -11,7 +11,7 @@ class viewWebContent extends Portlet {
 
     public function init() {
         $this->rp->setModel('App\Models\Content\Content');
-        if ($this->config('socialshare')) {
+        if ($this->config('socialshare') or $this->config('activecomments')) {
             $this->theme->addExJs($this->getPath().'js/socialshare.js');
         }
     }
@@ -100,6 +100,7 @@ class viewWebContent extends Portlet {
             if (!empty($this->config('providers'))) {
                 foreach($this->config('providers') as $provider=>$param) {
                     $items[$provider]['url'] = array_get($param,'uri').urlencode(request()->getUri());
+                    $items[$provider]['class'] = 'openwinsocial';
                     if (isset($param['text'])) {
                         $items[$provider]['url'] .= '&text='.urlencode($data['_title']);
                     }
@@ -116,11 +117,11 @@ class viewWebContent extends Portlet {
         // inserisce il pulsante per inserire un commento e mostra l'elenco
         // dei commenti presenti
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        $formcomment = null;
+        $formcomment = $listcomments = null;
         if ($this->config('activecomments')) {
             $items['comment']['icon'] = 'fa-comments-o';
             $items['comment']['url'] = '#comments';
-            $items['comment']['openw'] = 0;
+            $items['comment']['class'] = 'showcommentform';
             $formcomment = view('webcontent::commentsForm')->with([
                 'action'=>$this->request->fullUrl(),
             ]);
@@ -129,13 +130,11 @@ class viewWebContent extends Portlet {
                 $this->storeComment($cw);
             }
             // mostro l'elenco paginato dei commenti
-            $listcomments = null;
-            $comments = $cw->comments()->orderBy('created_at','DESC')->paginate(3);
+            $comments = $cw->comments()->where('approved',1)->orderBy('created_at','DESC')->paginate(3);
             if ($comments->count()>0) {
                 $this->theme->addExCss($this->getPath().'css/comments.css');
                 $listcomments = view('webcontent::commentsList')->with(compact('comments'));
             }
-            //dd($cw->comments()->get());sdf
         }
         if (count($items)>0) {
             $return .= view('webcontent::social')->with(compact('items')).$formcomment.$listcomments;
@@ -158,8 +157,6 @@ class viewWebContent extends Portlet {
 
 
     private function storeComment($contentWeb) {
-
-        $this->middleware('guest');
 
         $data = $this->request->all();
         if (empty($data['name'])) $data['name'] = str_limit($data['message'],50);

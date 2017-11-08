@@ -1,4 +1,9 @@
 <a name="listcomments"></a>
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-lg-12">
+        <h2>Comments</h2>
+    </div>
+</div>
 <section class="comments">
 @foreach($comments as $comment)
     <article class="comment">

@@ -15,6 +15,7 @@ class PublicPageController extends Controller {
     //private $mPortlet;
 
     public function __construct()  {
+        $this->middleware('web');
         //RepositoryInterface $rp, Portlet $mPortlet
         //$this->rp = $rp->setModel('App\Models\Content\Page');
         //$this->mPortlet = ; //$mPortlet->setRepository($rp);

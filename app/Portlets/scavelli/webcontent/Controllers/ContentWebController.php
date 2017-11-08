@@ -85,8 +85,9 @@ class ContentWebController extends Controller
         }
         $this->params['portlet'] = $portlet;
 
-        // imposto la variabile social sharing e sethits
+        // imposto la variabile social sharing, comments e sethits
         if (isset($prf['socialshare'])) $this->params['socialshare'] = $prf['socialshare'];
+        if (isset($prf['activecomments'])) $this->params['activecomments'] = $prf['activecomments'];
         if (isset($prf['sethits'])) $this->params['sethits'] = $prf['sethits'];
 
         $list = new listGenerates($this->rp->paginateArray($listContent,10,$request->page_a,'page_a'));
