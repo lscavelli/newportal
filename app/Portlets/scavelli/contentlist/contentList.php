@@ -112,12 +112,14 @@ class contentList extends Portlet {
         }
 
         // controllo che sia richiesta la navigazione del contenuto
-        if ($this->config('contentnext') && $content) {
-            //$items = $builder->where('id', '>', $content->id)->orderBy('id','asc')->paginate(1);
-            //if(!$items) $items = $builder->orderBy('id','asc')->first();
+        if ($this->config('nextf') && $content) {
+            $items = $builder->where('id', '>', $content->id)->orderBy('id','asc')->paginate(1);
+            if(!$items) $items = $builder->orderBy('id','asc')->paginate(1);
+        } else {
+            $items = $builder->paginate(4);
         }
 
-        $items = $builder->paginate(4);
+
         if ($items->count()<1) return;
 
         //dd($builder->toSql());
