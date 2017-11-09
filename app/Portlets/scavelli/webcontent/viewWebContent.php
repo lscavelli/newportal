@@ -6,6 +6,7 @@ use App\Models\Content\Modelli;
 use App\Portlets\abstractPortlet as Portlet;
 use App\Portlets\scavelli\webcontent\Controllers\ContentWebController;
 use Exception;
+use App\Notifications\NewComment;
 
 class viewWebContent extends Portlet {
 
@@ -41,6 +42,7 @@ class viewWebContent extends Portlet {
             } else return; // non mostra nulla
         }
         $data = json_decode($cw->content,true);
+
         $data['_title'] = $cw->name;
         $data['_data_creazione'] = \Carbon\Carbon::parse($cw->created_at)->format('d/m/Y');
         $data['_data_modifica'] = \Carbon\Carbon::parse($cw->updated_at)->format('d/m/Y');
@@ -68,7 +70,9 @@ class viewWebContent extends Portlet {
 
         if (str_contains($model, '$np_image')) $data['_image'] = $cw->getImage();
         if (str_contains($model, '$np_categories')) $data['_categories'] = $cw->categories;
-        $data['_author_name'] = $cw->user->name; $data['_author_username'] = $cw->username; $data['_author_id'] = $cw->user_id;
+        $data['_author_name'] = $cw->user->name;
+        $data['_author_username'] = $cw->username;
+        $data['_author_id'] = $cw->user_id;
 
         // inserisco il pulsante per la modifica del contenuto
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -168,8 +172,9 @@ class viewWebContent extends Portlet {
             $data['user_id'] = auth()->user()->id;
         }
         $this->validator($data)->validate();
-        $contentWeb->comments()->create($data);
-        session()->flash('success', 'Commento inserito correttamente. A breve sarà visibile');
+        $comment = $contentWeb->comments()->create($data);
+        session()->flash('success', 'Commento inserito correttamente. A breve sarà visibile on-line');
+        $contentWeb->user->notify(new NewComment("Hai ricevuto un nuovo commento sul content: ". $contentWeb->name, $comment));
     }
 
     private function validator(array $data)   {

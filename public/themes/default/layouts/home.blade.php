@@ -109,7 +109,7 @@
                     @include('ui.messages')
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" method="post" novalidate action="{{ url('/contactform') }}#contact">
+                    <form name="sendMessage" id="contactForm" method="post" novalidate action="{{ url('/contactform') }}#contact">
                         {{ csrf_field() }}
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">

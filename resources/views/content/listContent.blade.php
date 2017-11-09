@@ -18,12 +18,12 @@
         <div class="col-xs-12">
             <div class="box" style="padding-top: 20px;">
                 {!!
-                    $list->columns(['id'=>'Id','name'=>'Titolo','created_at'=>'Creato il','updated_at'=>'Aggiornato il' ])
+                    $list->columns(['id'=>'Id','name'=>'Titolo','comment'=>'Commenti','updated_at'=>'Aggiornato il' ])
                     ->sortFields(['id','name','created_at','updated_at'])
                     ->actions([url('admin/comments/contentweb')=>'Lista commenti'])
                     ->addSplitButtons($listStructure,false)
-                    ->customizes('created_at',function($row){
-                        return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
+                    ->customizes('comment',function($row){
+                        return $row->comments->count();
                     })
                     ->customizes('updated_at',function($row){
                         return Carbon\Carbon::parse($row['updated_at'])->format('d/m/Y');
