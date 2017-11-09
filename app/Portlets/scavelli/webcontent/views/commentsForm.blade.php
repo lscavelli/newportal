@@ -1,4 +1,4 @@
-<a name="comments"></a>
+<a name="messages"></a>
 <div class="commentsez" style="margin-bottom: 20px">
     <div class="row" style="margin-bottom: 20px">
         <div class="col-lg-12">
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-12">
             @include('ui.messages')
-            <form name="commentForm" id="commentForm" method="post" novalidate action="{{ $action }}#comments">
+            <form name="commentForm" id="commentForm" method="post" novalidate action="{{ $action }}#messages">
                 {{ csrf_field() }}
                 <div class="row control-group">
                     <div class="form-group col-xs-12 floating-label-form-group controls">

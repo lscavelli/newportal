@@ -34,6 +34,7 @@ class contentList extends Portlet {
         // inizializzo le variabili $categories e $tags
         $categories = null;
         $tags = null;
+        $content = null;
 
         // se la comunicazione è attiva
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -108,6 +109,12 @@ class contentList extends Portlet {
         // se l'url contiene author applico il filtro sull'autore
         if ($this->config('comunication') and $this->request->has('author')) {
             $builder = $builder->where('user_id',$this->request->author);
+        }
+
+        // controllo che sia richiesta la navigazione del contenuto
+        if ($this->config('contentnext') && $content) {
+            //$items = $builder->where('id', '>', $content->id)->orderBy('id','asc')->paginate(1);
+            //if(!$items) $items = $builder->orderBy('id','asc')->first();
         }
 
         $items = $builder->paginate(4);
