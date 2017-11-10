@@ -27,7 +27,6 @@ abstract class abstractPortlet {
         if (file_exists($configFile)) {
             $this->setConfig(File::getRequire($configFile));
         }
-
     }
 
     //public function setDirTemplate($pathPortlet) {
