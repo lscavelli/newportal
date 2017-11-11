@@ -42,6 +42,10 @@
                             <div class="form-group">
                                 {!! Form::select('dir', $selectOrder['dir'] , $conf['dir'] , ['class' => "form-control"]) !!}
                             </div>
+                            <div class="form-group">
+                                <label for="type_order">Scrolling</label>
+                                {!! Form::select('scrolling', [''=>'','nextf'=>'Prossimo contenuto','prevf'=>'Precedente contenuto',] , $conf['scrolling'] , ['class' => "form-control"]) !!}
+                            </div>
                         </form>
 
                     </div>

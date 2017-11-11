@@ -26,7 +26,7 @@ class assetController extends Controller
      * @return string
      */
     public function configPortlet($portlet, Request $request) {
-        $conf = ['inpage'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+        $conf = ['inpage'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $conf = array_merge($conf,json_decode($portlet->pivot->setting, true));
 
         // definizione della lista dei modelli

@@ -63,7 +63,7 @@ class contentList extends Portlet {
 
                     // inizialmente considero i tags e le categorie del content
                     // passato nella url
-                    if ($content && (!$this->config('nextf') && !$this->config('prevf'))) {
+                    if ($content && (!$this->config('scrolling'))) {
                         foreach ($content->categories->pluck('id')->toArray() as $id) {
                             $categories[] = ['category'=>$id];
                         }
@@ -111,22 +111,28 @@ class contentList extends Portlet {
             $builder = $builder->where('user_id',$this->request->author);
         }
 
-        // controllare - è come se eseguisse due volte la chiamata alla portlet
+        // controllare - sembra che esegua due volte la chiamata alla portlet
         // echo "<br /><br /><br /><br /><br /><br />";
         // var_dump($this->config('scrolling'));
 
+
+        $items = [];
         // controllo che sia richiesta la navigazione del contenuto
-        if (($this->config('nextf') or $this->config('prevf')) && $content) {
-            $builder1 = clone $builder;
-            if ($this->config('nextf')) {
-                $items = $builder->where('id', '>', $content->id)->orderBy('id','asc')->paginate(1);
-                if($items->count()<1){
-                    $items = $builder1->orderBy('id','asc')->paginate(1);
+        if ($this->config('scrolling')) {
+            if ($content) {
+                $builder1 = clone $builder;
+                if ($this->config('scrolling')=='nextf') {
+                    $items = $builder->where('id', '>', $content->id)->orderBy('id','asc')->paginate(1);
+                    if($items->count()<1){
+                        $items = $builder1->orderBy('id','asc')->paginate(1);
+                    }
+                } elseif ($this->config('scrolling')=='prevf') {
+                    $items = $builder->where('id', '<', $content->id)->orderBy('id','desc')->paginate(1);
+                    if($items->count()<1)
+                        $items = $builder1->orderBy('id','desc')->paginate(1);
                 }
-            } elseif ($this->config('prevf')) {
-                $items = $builder->where('id', '<', $content->id)->orderBy('id','desc')->paginate(1);
-                if($items->count()<1)
-                    $items = $builder1->orderBy('id','desc')->paginate(1);
+            } else {
+                return;
             }
         } else {
             $items = $builder->paginate(4);
