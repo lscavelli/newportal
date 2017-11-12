@@ -24,23 +24,24 @@ class PermissionsTableSeeder extends Seeder
                  tutte le funzionalità del sistema'
         ]);
 
+
         /**
-         * Permessi del service Blog
+         * Permessi del service Web Content
          */
         Permission::create([
-            'name' => 'Crea articolo',
-            'slug' => 'create-post',
-            'description' => 'Consente la creazione di un Post per il service Blog'
+            'name' => 'Crea contenuto',
+            'slug' => 'create-content',
+            'description' => 'Consente la creazione di un contenuto web per il service webContent'
         ]);
         Permission::create([
-            'name' => 'Modifica articolo',
-            'slug' => 'update-post',
-            'description' => 'Consente la modifica di un Post per il service Blog'
+            'name' => 'Modifica contenuto',
+            'slug' => 'update-content',
+            'description' => 'Consente la modifica di un contentuto per il service webContent'
         ]);
         Permission::create([
-            'name' => 'Pubblica articolo',
-            'slug' => 'publish-post',
-            'description' => 'Consente la pubblicazione di un Post per il service Blog'
+            'name' => 'Cancella contentuo',
+            'slug' => 'delete-content',
+            'description' => 'Consente la cancellazione di un contenuto per il service webContent'
         ]);
     }
 }
