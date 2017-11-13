@@ -18,8 +18,12 @@
                                 {!! Form::select('structure_id', $structures , $conf['structure_id'] , ['class' => "form-control", "id"=>'structure_id']) !!}
                             </div>
                             <div class="form-group">
-                                <label for="model_id">Modello lista</label>
+                                <label for="model_id">Modello rows</label>
                                 {!! Form::select('model_id', $models , $conf['model_id'] , ['class' => "form-control", "id"=>'model_id']) !!}
+                            </div>
+                            <div class="form-group">
+                                <label for="viewList">Modello lista</label>
+                                {!! Form::select('viewList', $viewList , $conf['viewList'] , ['class' => "form-control", "id"=>'viewList']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="inpage">Visualizza in</label>

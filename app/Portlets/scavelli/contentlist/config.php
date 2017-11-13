@@ -19,6 +19,5 @@ return [
             'type'          =>  '1',
             'path'          =>  'scavelli\contentlist'
         ]
-    ],
-
+    ]
 ];

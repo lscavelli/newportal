@@ -147,9 +147,10 @@ class contentList extends Portlet {
 
         //$template = 'listAssets';
         //if (!empty($this->config('structure_id')))
+        $viewList = $this->config('viewList') ?:  'listAssets';
 
         if (!$this->config('template')) {
-            return view('contentlist::listAssets')->with([
+            return view("contentlist::$viewList")->with([
                 'items' => $items,
                 'title' => $this->config('title'),
                 'list'  => $this

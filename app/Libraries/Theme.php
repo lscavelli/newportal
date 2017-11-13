@@ -139,7 +139,7 @@ class Theme {
         $files = $this->files->files($path);
         $layouts = [];
         foreach ($files as $file) {
-            $file = substr(basename($file), 0, -10); //remove blade.php
+            $file = substr(basename($file), 0, -10); //remove .blade.php
             $layouts[$file] = $file;
         }
         return $layouts;
