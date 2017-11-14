@@ -70,7 +70,6 @@ use App\Libraries\Helpers;
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['type_id'] = 1;
         $this->rp->create($data);
         return redirect()->route('models',['structure_id' => $request->structure_id])->withSuccess('Modello creato correttamente.');
     }

@@ -102,5 +102,21 @@ abstract class abstractPortlet {
         if (is_array($metaTag) && count($metaTag>0)) $this->theme->setArguments($metaTag);
     }
 
+    public function listView() {
+        $path = $this->getPathClass()."/views";
+        if (!is_dir($path)) {
+            throw new ThemeException("la directory dei template non esiste");
+        }
+        $files = File::allFiles($path);
+        $view = [""=>""];
+        foreach ($files as $file) {
+            $file = substr(basename($file), 0, -10); //remove .blade.php
+            if (starts_with($file,'list')) {
+                $view[$file] = $file;
+            }
+        }
+        return $view;
+    }
+
 
 }

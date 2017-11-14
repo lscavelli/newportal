@@ -22,11 +22,11 @@ class assetController extends Controller
     /**
      * Mostra il web form per la configurazione della portlet
      * @param $portlet
-     * @param Request $request
-     * @return string
+     * @param $contentList
+     * @return $this
      */
-    public function configPortlet($portlet, Request $request) {
-        $conf = ['inpage'=>'','viewList'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+    public function configPortlet($portlet, $contentList) {
+        $conf = ['inpage'=>'','listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $conf = array_merge($conf,json_decode($portlet->pivot->setting, true));
 
         // definizione della lista dei modelli
@@ -76,6 +76,7 @@ class assetController extends Controller
         //===============================================
 
         $selectOrder = $this->selectOrder();
+        $listView = $contentList->listView();
 
         return view('contentlist::preferences')->with(compact(
             'services',
@@ -88,7 +89,8 @@ class assetController extends Controller
             'portlet',
             'tags_reg',
             'cats_reg',
-            'selectOrder'
+            'selectOrder',
+            'listView'
         ));
     }
 

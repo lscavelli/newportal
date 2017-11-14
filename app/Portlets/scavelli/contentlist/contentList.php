@@ -147,10 +147,10 @@ class contentList extends Portlet {
 
         //$template = 'listAssets';
         //if (!empty($this->config('structure_id')))
-        $viewList = $this->config('viewList') ?:  'listAssets';
+        $listView = $this->config('listView') ?:  'listAssets';
 
         if (!$this->config('template')) {
-            return view("contentlist::$viewList")->with([
+            return view("contentlist::$listView")->with([
                 'items' => $items,
                 'title' => $this->config('title'),
                 'list'  => $this
@@ -193,6 +193,6 @@ class contentList extends Portlet {
     }
 
     public function configPortlet($portlet) {
-        return (new assetController($this->rp))->configPortlet($portlet, $this->request);
+        return (new assetController($this->rp))->configPortlet($portlet, $this);
     }
 }
