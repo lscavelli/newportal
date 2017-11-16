@@ -279,6 +279,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
 });
 
+Route::get('/feed', 'PublicController@feed');
+
 Auth::routes();
 Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallback');

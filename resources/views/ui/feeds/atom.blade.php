@@ -1,15 +1,21 @@
 <?= '<? xml version="1.0" encoding="UTF-8" ?>'.PHP_EOL ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title type="text">{!! $feed->get('summary.title') !!}</title>
-    <subtitle type="html"><![CDATA[{!! $feed->get('summary.description') !!}]]></subtitle>
-    <link href="{{ $feed->get('summary.link') }}" />
-    <link rel="alternate" type="text/html" href="{{ $feed->get('summary.rssLink') }}" />
-    <link rel="{{ $feed->get('summary.ref') }}" type="application/atom+xml" href="{{ $feed->get('summary.link') }}" />
-    <id>{{ $feed->get('summary.link') }}</id>
-    @if (!empty($feed->get('summary.logo')))
-        <logo>{{ $feed->get('summary.logo') }}</logo>
+    <title type="text">{!! $feed->get('feedTitle') !!}</title>
+    @if (!empty($feed->get('feedSubTitle')))
+        <subtitle type="html"><![CDATA[{!! $feed->get('feedSubTitle') !!}]]></subtitle>
     @endif
-    <updated>{{ $feed->get('summary.date') }}</updated>
+    <link href="{{ $feed->get('feedLink') }}" />
+    <id>{{ $feed->get('feedLink') }}</id>
+    @if (!empty($feed->get('feedIcon')))
+        <icon>{{ $feed->get('feedIcon') }}</icon>
+    @endif
+    @if (!empty($feed->get('feedLogo')))
+        <logo>{{ $feed->get('feedLogo') }}</logo>
+    @endif
+    @if (!empty($feed->get('feedCategory')))
+        <category term="sports" />
+    @endif
+    <updated>{{ $feed->get('feedDate') }}</updated>
     @foreach($feed->get('items') as $item)
         <entry>
             <id>{{ $item->link }}</id>

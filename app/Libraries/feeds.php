@@ -2,8 +2,6 @@
 
 namespace App\Libraries;
 
-use Exception;
-
 class Feeds
 {
     private $property = [];
@@ -43,6 +41,26 @@ class Feeds
         $this->property['author'] = $author;
         return $this;
     }
+    public function feedTitle($title)
+    {
+        $this->property['feedTitle'] = $title;
+        return $this;
+    }
+    public function feedSubTitle($subTitle)
+    {
+        $this->property['feedSubTitle'] = $subTitle;
+        return $this;
+    }
+    public function feedLink($link)
+    {
+        $this->property['feedLink'] = $link;
+        return $this;
+    }
+    public function feedDate($date)
+    {
+        $this->property['feedDate'] = $date;
+        return $this;
+    }
 
     public function get($key)
     {
@@ -55,9 +73,16 @@ class Feeds
             foreach ($data as $key => $value) {
                 $this->property[$key] = $value;
             }
-        } elseif(!is_null($value)) {
+        } elseif(is_string($data) and !is_null($value)) {
             $this->property[$data] = $value;
         }
         return $this;
+    }
+
+    public function render($view = null) {
+        $view = !is_null($view) ?: "ui.feeds.atom";
+        return View()->make($view, [
+            'list' => $this,
+        ])->render();
     }
 }
