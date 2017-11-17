@@ -92,7 +92,7 @@ class viewWebContent extends Portlet {
             $mt['title'] = $data['_title'];
             $mt['description'] = str_limit($cw->description,150);
             $mt['image'] = $cw->getImage();
-            $this->setMetaTagPage($mt);
+            $this->setConfigTheme($mt);
         }
 
         $items = [];

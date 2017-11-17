@@ -98,10 +98,15 @@ abstract class abstractPortlet {
      * Imposta i meta tag della pagina corrente
      * @param $metaTag
      */
-    protected function setMetaTagPage($metaTag) {
+    protected function setConfigTheme($metaTag) {
         if (is_array($metaTag) && count($metaTag>0)) $this->theme->setArguments($metaTag);
     }
 
+    /**
+     * mostra le view (list) contenute nella directory view della portlet
+     * @return array
+     * @throws ThemeException
+     */
     public function listView() {
         $path = $this->getPathClass()."/views";
         if (!is_dir($path)) {

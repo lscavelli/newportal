@@ -23,6 +23,9 @@ class contentList extends Portlet {
 
         $builder = $this->rp->getModel();
 
+        // considero solo i contenuti attivi
+        $builder = $builder->where('status_id',1);
+
         // ordered
         if ($this->config('ord')) {
             $ord = ['id','name','created_at','updated_at','hits'];
@@ -111,13 +114,27 @@ class contentList extends Portlet {
             $builder = $builder->where('user_id',$this->request->author);
         }
 
+        // verifico se è attivo il feed Rss
+        if ($this->config('feed')) {
+            if($this->request->has('rss')) {
+                $builder = $builder->take($this->config('feed.rss_size'));
+                $rss = $this->buildFeed($builder->get());
+                return response($rss)->header('Content-type', 'application/rss+xml');
+            } else {
+                // imposto l'url del feed
+                $this->conf['feedUrl'] = $this->request->fullUrl().'?rss';
+                // imposto il link nella pagina
+                $this->setConfigTheme(['rss'=>$this->conf['feedUrl']]);
+            }
+        }
+
         // controllare - sembra che esegua due volte la chiamata alla portlet
         // echo "<br /><br /><br /><br /><br /><br />";
         // var_dump($this->config('scrolling'));
 
 
         $items = [];
-        // controllo che sia richiesta la navigazione del contenuto
+        // controllo se è richiesta la navigazione del contenuto
         if ($this->config('scrolling')) {
             if ($content) {
                 $builder1 = clone $builder;
@@ -192,7 +209,20 @@ class contentList extends Portlet {
         return null;
     }
 
+    /**
+     * restituisce il valore della key se esistente
+     * @param $key
+     * @return mixed
+     */
+    public function get($key) {
+        return array_get($this->conf,$key);
+    }
+
     public function configPortlet($portlet) {
         return (new assetController($this->rp))->configPortlet($portlet, $this);
+    }
+
+    private function buildFeed($items) {
+        //dd($items);
     }
 }
