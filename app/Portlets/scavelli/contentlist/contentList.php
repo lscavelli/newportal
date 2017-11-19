@@ -4,6 +4,7 @@ namespace App\Portlets\scavelli\contentlist;
 
 use App\Portlets\abstractPortlet as Portlet;
 use App\Portlets\scavelli\contentlist\Controllers\assetController;
+use App\Libraries\feeds;
 
 class contentList extends Portlet {
 
@@ -116,15 +117,23 @@ class contentList extends Portlet {
 
         // verifico se è attivo il feed Rss
         if ($this->config('feed')) {
-            if($this->request->has('rss')) {
+
+            // imposto l'url e Ctype del feed
+            $this->conf['feedUrl'] = $this->request->url().'?'.$this->config('feed.type')."&portletid=".$this->config('id');
+            $this->conf['feedCtype'] = ($this->config('feed.type')=='atom') ? 'application/atom+xml' : 'application/rss+xml';
+
+            if($this->request->has($this->config('feed.type')) && $this->request->portletid==$this->config('id')) {
                 $builder = $builder->take($this->config('feed.rss_size'));
-                $rss = $this->buildFeed($builder->get());
-                return response($rss)->header('Content-type', 'application/rss+xml');
+                $feed = $this->buildFeed($builder->get());
+                header("Content-Type: ".$this->conf['feedCtype']);
+                echo $feed;
+                exit;
             } else {
-                // imposto l'url del feed
-                $this->conf['feedUrl'] = $this->request->fullUrl().'?rss';
                 // imposto il link nella pagina
-                $this->setConfigTheme(['rss'=>$this->conf['feedUrl']]);
+                $this->setConfigTheme([
+                    'feed'=>$this->conf['feedUrl'],
+                    'feedCtype'=>$this->conf['feedCtype']
+                ]);
             }
         }
 
@@ -223,6 +232,29 @@ class contentList extends Portlet {
     }
 
     private function buildFeed($items) {
-        //dd($items);
+        if ($items->count()<1) return;
+
+        $feed = (new feeds())
+            ->title('Feed Rss Content')
+            ->link($this->get('feedUrl'))
+            ->date(now());
+        foreach ($items as $item) {
+            $data = json_decode($item->content,true);
+            $url = ($this->get('inpage')) ?: url()->current();
+            $author = "";
+            if(!empty($item->user)){
+                $author = $item->user->name;
+            }
+            $feed->addItem(
+                        $item->id,
+                        url($url."/".$item->slug),
+                        $item->name,
+                        $item->created_at,
+                        "<p><img src=\"{$item->getImage()}\" /></p>",
+                        head($data),
+                        $author
+                    );
+        };
+        return $feed->render($this->config('feed.type'));
     }
 }

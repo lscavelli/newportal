@@ -9,8 +9,8 @@
     <meta name="author" content="{{ $theme->get('author') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    @if($theme->get('rss'))
-    <link rel="alternate" type="application/rss+xml" href="{{ $theme->get('rss') }}" title="Feed RSS  {{ $theme->get('title') }}">
+    @if($theme->get('feed'))
+    <link rel="alternate" type="{{ $theme->get('feedCtype') }}application/rss+xml" href="{{ $theme->get('feed') }}" title="Feed RSS  {{ $theme->get('title') }}">
     @endif
     <link rel="shortcut icon" href="{{ $theme->url("ico/favicon.png") }}">
     <title>{{ $theme->get('title') }}</title>

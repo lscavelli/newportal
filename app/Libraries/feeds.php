@@ -2,6 +2,8 @@
 
 namespace App\Libraries;
 
+use App\Libraries\sl_text;
+
 class Feeds
 {
     private $property = [];
@@ -10,10 +12,14 @@ class Feeds
     {
         $this->set($data,$value);
     }
-
-    public function id($id)
+    public function title($title)
     {
-        $this->property['id'] = $id;
+        $this->property['title'] = $title;
+        return $this;
+    }
+    public function subTitle($subTitle)
+    {
+        $this->property['subTitle'] = $subTitle;
         return $this;
     }
     public function link($link)
@@ -21,45 +27,26 @@ class Feeds
         $this->property['link'] = $link;
         return $this;
     }
-    public function title($title)
+    public function date($date)
     {
-        $this->property['title'] = $title;
+        $this->property['date'] = date('c', strtotime($date));
         return $this;
     }
-    public function updated($updated)
-    {
-        $this->property['updated'] = $updated;
-        return $this;
+
+    public function addItem($id,$link,$title,$updated,$summary,$content,$author) {
+        $obj = new \stdClass();
+        $obj->id = $id;
+        $obj->link = $link;
+        $obj->title = $title;
+        $obj->updated = date('c', strtotime($updated));
+        $obj->summary = $summary;
+        $obj->content = sl_text::sommario($content);
+        $obj->author = $author;
+        $this->add($obj);
     }
-    public function summary($summary)
-    {
-        $this->property['summary'] = $summary;
-        return $this;
-    }
-    public function author($author)
-    {
-        $this->property['author'] = $author;
-        return $this;
-    }
-    public function feedTitle($title)
-    {
-        $this->property['feedTitle'] = $title;
-        return $this;
-    }
-    public function feedSubTitle($subTitle)
-    {
-        $this->property['feedSubTitle'] = $subTitle;
-        return $this;
-    }
-    public function feedLink($link)
-    {
-        $this->property['feedLink'] = $link;
-        return $this;
-    }
-    public function feedDate($date)
-    {
-        $this->property['feedDate'] = $date;
-        return $this;
+
+    private function add($item) {
+        $this->property['items'][] = $item;
     }
 
     public function get($key)
@@ -80,9 +67,9 @@ class Feeds
     }
 
     public function render($view = null) {
-        $view = !is_null($view) ?: "ui.feeds.atom";
+        $view = !is_null($view) ? "ui.feeds.".$view : "ui.feeds.atom";
         return View()->make($view, [
-            'list' => $this,
+            'feed' => $this,
         ])->render();
     }
 }
