@@ -236,7 +236,8 @@ class contentList extends Portlet {
 
         $feed = (new feeds())
             ->title('Feed Rss Content')
-            ->link($this->get('feedUrl'))
+            ->link($this->request->url())
+            ->linkFeed($this->get('feedUrl'))
             ->date(now());
         foreach ($items as $item) {
             $data = json_decode($item->content,true);

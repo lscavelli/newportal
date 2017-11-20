@@ -27,6 +27,11 @@ class Feeds
         $this->property['link'] = $link;
         return $this;
     }
+    public function linkFeed($linkFeed)
+    {
+        $this->property['linkFeed'] = $linkFeed;
+        return $this;
+    }
     public function date($date)
     {
         $this->property['date'] = date('c', strtotime($date));

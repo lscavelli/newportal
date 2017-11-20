@@ -5,8 +5,9 @@
         <subtitle type="html"><![CDATA[{!! $feed->get('subTitle') !!}]]></subtitle>
     @endif
     <link href="{{ $feed->get('link') }}" />
-    <link rel="self" href="http://lara.dev" />
-    <id>{{ $feed->get('link') }}</id>
+    <link rel="self" href="{{ $feed->get('linkFeed') }}" />
+    <link rel="alternate" type="text/html" href="{{ $feed->get('link') }}" />
+    <id>{{ $feed->get('linkFeed') }}</id>
     @if (!empty($feed->get('icon')))
         <icon>{{ $feed->get('icon') }}</icon>
     @endif
