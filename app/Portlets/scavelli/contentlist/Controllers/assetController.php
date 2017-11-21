@@ -13,10 +13,24 @@ class assetController extends Controller
 {
 
     private $rp;
+    public $conf;
+    public $services;
+    public $models;
+    public $structures;
+    public $pages;
+    public $tags;
+    public $vocabularies;
+    public $portlet;
+    public $tags_reg;
+    public $cats_reg;
+    public $selectOrder;
+    public $listView;
 
 
     public function __construct(RepositoryInterface $rp) {
         $this->rp = $rp->setModel('App\Models\Content\Content');
+        $this->conf = [];
+        $this->models = null;
     }
 
     /**
@@ -26,35 +40,39 @@ class assetController extends Controller
      * @return $this
      */
     public function configPortlet($portlet, $contentList) {
-        $conf = ['inpage'=>'','listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
-        if(!empty($portlet->pivot->setting)) $conf = array_merge($conf,json_decode($portlet->pivot->setting, true));
+        $default = ['inpage'=>'','feed_name'=>'Feed aggregatore contenuti', 'listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+        if(!empty($portlet->pivot->setting)) $this->conf = array_merge($default,json_decode($portlet->pivot->setting, true));
+
+        if ($this->get('feed')) {
+            $this->conf = array_merge($this->conf,['setFeed'=>1]);
+        }
 
         // definizione della lista dei modelli
         //===============================================
-        $models = null;
-        $services = $this->rp->setModel('App\Models\Content\Service')->where('id',1)->pluck('name','class')->toArray();
+
+        $this->services = $this->rp->setModel('App\Models\Content\Service')->where('id',1)->pluck('name','class')->toArray();
         $structures = $this->rp->setModel('App\Models\Content\Structure')->where('type_id',2)->where('status_id',1);
-        if (!empty($conf['structure_id'])) {
-            $structure = $this->rp->getModel()->find($conf['structure_id']);
+        if (!empty($this->get('structure_id'))) {
+            $structure = $this->rp->getModel()->find($this->get('structure_id'));
         } elseif($structures->count()>0) {
             $structure = $structures->first();
         }
 
-        $structures = $structures->pluck('name','id')->toArray();
+        $this->structures = $structures->pluck('name','id')->toArray();
         if (isset($structure))
-            $models = $structure->models->where('type_id',2)->pluck('name','id')->toArray();
+            $this->models = $structure->models->where('type_id',2)->pluck('name','id')->toArray();
         //===============================================
 
-        $pages = $this->rp->setModel('App\Models\Content\Page')->where('status_id',1)->orderBy('name')->pluck('name','slug')->toArray();
+        $this->pages = $this->rp->setModel('App\Models\Content\Page')->where('status_id',1)->orderBy('name')->pluck('name','slug')->toArray();
 
         // definizione dei tags
         //===============================================
-        $tags = $this->rp->setModel('App\Models\Content\Tag')->pluck();
-        $tags_reg = "";
-        if (!empty($conf['tags'])) {
+        $this->tags = $this->rp->setModel('App\Models\Content\Tag')->pluck();
+        $this->tags_reg = "";
+        if (!empty($this->get('tags'))) {
             $and = "";
-            foreach($conf['tags'] as $val) {
-                $tags_reg .= $and.$val['tag'];
+            foreach($this->get('tags') as $val) {
+                $this->tags_reg .= $and.$val['tag'];
                 $and =",";
             }
         }
@@ -62,36 +80,25 @@ class assetController extends Controller
         // definizione delle categorie
         //===============================================
         $class = Content::class;
-        if (!empty($conf['service'])) $class = $conf['service'];
-        $vocabularies = $this->listVocabularies($class);
+        if (!empty($this->get('service'))) $class = $this->get('service');
+        $this->vocabularies = $this->listVocabularies($class);
 
-        $cats_reg = "";
-        if (!empty($conf['categories'])) {
+        $this->cats_reg = "";
+        if (!empty($this->get('categories'))) {
             $and = "";
-            foreach($conf['categories'] as $val) {
-                $cats_reg .= $and.$val['category'];
+            foreach($this->get('categories') as $val) {
+                $this->cats_reg .= $and.$val['category'];
                 $and =",";
             }
         }
         //===============================================
 
-        $selectOrder = $this->selectOrder();
-        $listView = $contentList->listView();
+        $this->selectOrder = $this->selectOrder();
+        $this->listView = $contentList->listView();
 
-        return view('contentlist::preferences')->with(compact(
-            'services',
-            'structures',
-            'models',
-            'pages',
-            'tags',
-            'vocabularies',
-            'conf',
-            'portlet',
-            'tags_reg',
-            'cats_reg',
-            'selectOrder',
-            'listView'
-        ));
+
+
+        return view('contentlist::preferences')->with(['cList'=>$this]);
     }
 
     private function listVocabularies($class) {
@@ -115,6 +122,10 @@ class assetController extends Controller
     public function listModels($id) {
         $structure = $this->rp->setModel('App\Models\Content\Structure')->find($id);
         return json_encode($structure->models->where('type_id',2)->pluck('name','id')->toArray());
+    }
+
+    public function get($key) {
+        return array_get($this->conf, $key);
     }
 
 }

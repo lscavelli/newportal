@@ -117,19 +117,20 @@ class contentList extends Portlet {
 
         // verifico se è attivo il feed Rss
         if ($this->config('feed')) {
-
+            //dd($this->config);
             // imposto l'url e Ctype del feed
-            $this->conf['feedUrl'] = $this->request->url().'?'.$this->config('feed.type')."&portletid=".$this->config('id');
-            $this->conf['feedCtype'] = ($this->config('feed.type')=='atom') ? 'application/atom+xml' : 'application/rss+xml';
+            $this->conf['feedUrl'] = $this->request->url().'?'.$this->config('feed.feed_format')."&portletid=".$this->config('id');
+            $this->conf['feedCtype'] = ($this->config('feed.feed_format')=='atom') ? 'application/atom+xml' : 'application/rss+xml';
 
-            if($this->request->has($this->config('feed.type')) && $this->request->portletid==$this->config('id')) {
-                $builder = $builder->take($this->config('feed.rss_size'));
+            if($this->request->has($this->config('feed.feed_format')) && $this->request->portletid==$this->config('id')) {
+                $builder = $builder->take($this->config('feed.feed_size'));
                 $feed = $this->buildFeed($builder->get());
                 header("Content-Type: ".$this->conf['feedCtype']);
                 echo $feed;
                 exit;
             } else {
                 // imposto il link nella pagina
+                // TODO Consentire link multipli
                 $this->setConfigTheme([
                     'feed'=>$this->conf['feedUrl'],
                     'feedCtype'=>$this->conf['feedCtype']
@@ -235,7 +236,7 @@ class contentList extends Portlet {
         if ($items->count()<1) return;
 
         $feed = (new feeds())
-            ->title('Feed Rss Content')
+            ->title($this->config('feed.feed_name'))
             ->link($this->request->url())
             ->linkFeed($this->get('feedUrl'))
             ->date(now());
@@ -256,6 +257,6 @@ class contentList extends Portlet {
                         $author
                     );
         };
-        return $feed->render($this->config('feed.type'));
+        return $feed->render($this->config('feed.feed_format'));
     }
 }

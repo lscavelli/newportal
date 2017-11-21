@@ -14,12 +14,12 @@ class Feeds
     }
     public function title($title)
     {
-        $this->property['title'] = $title;
+        $this->property['title'] = htmlspecialchars(strip_tags($title), ENT_COMPAT, 'UTF-8');
         return $this;
     }
     public function subTitle($subTitle)
     {
-        $this->property['subTitle'] = $subTitle;
+        $this->property['subTitle'] = htmlspecialchars(strip_tags($subTitle), ENT_COMPAT, 'UTF-8');
         return $this;
     }
     public function link($link)
@@ -42,7 +42,7 @@ class Feeds
         $obj = new \stdClass();
         $obj->id = $id;
         $obj->link = $link;
-        $obj->title = $title;
+        $obj->title = htmlspecialchars(strip_tags($title), ENT_COMPAT, 'UTF-8');
         $obj->updated = date('c', strtotime($updated));
         $obj->summary = $summary;
         $obj->content = sl_text::sommario($content);

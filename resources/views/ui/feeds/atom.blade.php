@@ -4,7 +4,6 @@
     @if (!empty($feed->get('subTitle')))
         <subtitle type="html"><![CDATA[{!! $feed->get('subTitle') !!}]]></subtitle>
     @endif
-    <link href="{{ $feed->get('link') }}" />
     <link rel="self" href="{{ $feed->get('linkFeed') }}" />
     <link rel="alternate" type="text/html" href="{{ $feed->get('link') }}" />
     <id>{{ $feed->get('linkFeed') }}</id>
