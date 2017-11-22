@@ -132,6 +132,7 @@
 
     if ($("#setFeed").find('option:selected').val()==1) {
         $('.feed').show();
+        setFeed();
     } else {
         $('.feed').hide();
     }
@@ -141,19 +142,17 @@
         $('.feed').toggle();
     });
 
-    $("#feed_size, #feed_format, #feed_name").change(function(e) {
-        setFeed();
+    $("#feed_size, #feed_format, #feed_name").change(function() {
+        if ($('#setFeed').find('option:selected').val()==1) setFeed();
     });
 
     function setFeed() {
-        if ($('#setFeed').find('option:selected').val()==1) {
-            $("#feed").val(null);
-            var ids = [];
-            ids.push({feed_name:$('#feed_name').val()});
-            ids.push({feed_size:$("#feed_size").find('option:selected').val()});
-            ids.push({feed_format:$("#feed_format").find('option:selected').val()});
-            $("#feed").val(JSON.stringify(ids));
-        }
+        $("#feed").val(null);
+        var ids = [];
+        ids.push({feed_name:$('#feed_name').val()});
+        ids.push({feed_size:$("#feed_size").find('option:selected').val()});
+        ids.push({feed_format:$("#feed_format").find('option:selected').val()});
+        $("#feed").val(JSON.stringify(ids));
     }
 </script>
 @endpush

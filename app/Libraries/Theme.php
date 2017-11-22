@@ -394,10 +394,8 @@ class Theme {
      * @param $key
      * @return mixed
      */
-    public function get($key) {
-        if (!empty($key) and key_exists($key,$this->arguments)) {
-            return $this->arguments[$key];
-        }
+    public function get($key, $default=null) {
+        return array_get($this->arguments, $key, $default);
     }
 
     /**

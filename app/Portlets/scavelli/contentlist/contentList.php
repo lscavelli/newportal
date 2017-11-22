@@ -131,10 +131,8 @@ class contentList extends Portlet {
             } else {
                 // imposto il link nella pagina
                 // TODO Consentire link multipli
-                $this->setConfigTheme([
-                    'feed'=>$this->conf['feedUrl'],
-                    'feedCtype'=>$this->conf['feedCtype']
-                ]);
+                $feedLink['feedLink'][] = ['url'=>$this->conf['feedUrl'],'cType'=>$this->conf['feedCtype']];
+                $this->setConfigTheme($feedLink);
             }
         }
 
