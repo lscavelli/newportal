@@ -263,7 +263,8 @@ class pageController extends Controller {
         //Log::info($request);
         if ($request->has('data')) {
             $data = json_decode($request->data, true);
-            //Log::info($data);
+            Log::info($data);
+            $newdata =[];
             foreach ($data as $item) {
 
                 if (str_contains($item['name'], 'categories')){
@@ -284,7 +285,7 @@ class pageController extends Controller {
                     $db[$key] = $val;
                 } else {
                     if (!empty($val)) {
-                        if (starts_with($val,'[{') && ends_with($val,'}]')) {
+                        if (is_string($val) && starts_with($val,'[{') && ends_with($val,'}]')) {
                             $val = array_collapse(json_decode($val, true));
                         }
                         $setting[$key] = $val;

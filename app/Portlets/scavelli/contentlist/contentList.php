@@ -235,11 +235,13 @@ class contentList extends Portlet {
     private function buildFeed($items) {
         if ($items->count()<1) return;
 
-        $feed = (new feeds())
+        $feed = (new feeds($this->config('feed.feed_format')))
             ->title($this->config('feed.feed_name'))
             ->link($this->request->url())
             ->linkFeed($this->get('feedUrl'))
-            ->date(now());
+            ->date(now())
+            ->description($this->config('feed.feed_name'))
+            ->language(config('app.locale'));
         foreach ($items as $item) {
             $data = json_decode($item->content,true);
             $url = ($this->get('inpage')) ?: url()->current();

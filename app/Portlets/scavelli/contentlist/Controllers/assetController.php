@@ -30,7 +30,7 @@ class assetController extends Controller
     public function __construct(RepositoryInterface $rp) {
         $this->rp = $rp->setModel('App\Models\Content\Content');
         $this->conf = [];
-        $this->models = null;
+        $this->models = $this->tags_reg = $this->cats_reg = null;
     }
 
     /**
@@ -40,7 +40,7 @@ class assetController extends Controller
      * @return $this
      */
     public function configPortlet($portlet, $contentList) {
-        $default = ['inpage'=>'','feed_name'=>'Feed aggregatore contenuti', 'listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+        $default = ['inpage'=>'', 'listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $this->conf = array_merge($default,json_decode($portlet->pivot->setting, true));
 
         if ($this->get('feed')) {
@@ -68,7 +68,6 @@ class assetController extends Controller
         // definizione dei tags
         //===============================================
         $this->tags = $this->rp->setModel('App\Models\Content\Tag')->pluck();
-        $this->tags_reg = "";
         if (!empty($this->get('tags'))) {
             $and = "";
             foreach($this->get('tags') as $val) {
@@ -83,7 +82,6 @@ class assetController extends Controller
         if (!empty($this->get('service'))) $class = $this->get('service');
         $this->vocabularies = $this->listVocabularies($class);
 
-        $this->cats_reg = "";
         if (!empty($this->get('categories'))) {
             $and = "";
             foreach($this->get('categories') as $val) {
@@ -96,9 +94,7 @@ class assetController extends Controller
         $this->selectOrder = $this->selectOrder();
         $this->listView = $contentList->listView();
 
-
-
-        return view('contentlist::preferences')->with(['cList'=>$this]);
+        return view('contentlist::preferences')->with(['cList' => $this]);
     }
 
     private function listVocabularies($class) {
@@ -124,8 +120,8 @@ class assetController extends Controller
         return json_encode($structure->models->where('type_id',2)->pluck('name','id')->toArray());
     }
 
-    public function get($key) {
-        return array_get($this->conf, $key);
+    public function get($key,$default=null) {
+        return array_get($this->conf, $key, $default);
     }
 
 }

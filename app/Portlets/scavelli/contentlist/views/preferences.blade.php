@@ -71,10 +71,10 @@
                                 <label for="setFeed">Abilitato</label>
                                 {!! Form::select('setFeed', ["No","Si"] ,$cList->get('setFeed') , ['class' => "form-control input-sm", 'id'=>"setFeed"]) !!}
                             </div>
-                            <div class="feed" style="display: none;">
+                            <div class="feed">
                                 <div class="form-group">
                                     <label for="feed_name">Nome del Feed</label>
-                                    {!! Form::text('feed_name', $cList->get('feed.feed_name'), ['class' => "form-control input-sm", 'id'=>"feed_name"]) !!}
+                                    {!! Form::text('feed_name', $cList->get('feed.feed_name', "Feed Aggregatore contenuti"), ['class' => "form-control input-sm", 'id'=>"feed_name"]) !!}
                                 </div>
                                 <div class="form-group">
                                     <label for="feed_size">Numero massimo elementi</label>
@@ -108,10 +108,10 @@
 {{ Html::script('/bower_components/AdminLTE/plugins/select2/select2.min.js') }}
 <script type="text/javascript">
     var $tagMulti = $('.tagsel').select2({tags: true});
-    $tagMulti.val([{!! $tags_reg !!}]).trigger('change');
+    $tagMulti.val([{!! $cList->tags_reg !!}]).trigger('change');
 
     $('.multicat').each(function() {
-        $(this).select2({categories: true}).val([{!! $cats_reg !!}]).trigger('change');
+        $(this).select2({categories: true}).val([{!! $cList->cats_reg !!}]).trigger('change');
     });
 
 
@@ -130,17 +130,30 @@
         });
     });
 
+    if ($("#setFeed").find('option:selected').val()==1) {
+        $('.feed').show();
+    } else {
+        $('.feed').hide();
+    }
+
     $("#setFeed").change(function(e) {
         e.preventDefault();
         $('.feed').toggle();
-        $("#feed").val(null);
-        if ($(this).find('option:selected').val()==1) {
+    });
+
+    $("#feed_size, #feed_format, #feed_name").change(function(e) {
+        setFeed();
+    });
+
+    function setFeed() {
+        if ($('#setFeed').find('option:selected').val()==1) {
+            $("#feed").val(null);
             var ids = [];
             ids.push({feed_name:$('#feed_name').val()});
             ids.push({feed_size:$("#feed_size").find('option:selected').val()});
             ids.push({feed_format:$("#feed_format").find('option:selected').val()});
             $("#feed").val(JSON.stringify(ids));
         }
-    });
+    }
 </script>
 @endpush
