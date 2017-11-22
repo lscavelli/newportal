@@ -3,6 +3,7 @@ Percorso personale di apprendimento e sperimentazione dei framework Laravel 5.5 
 del Module Bundler webpack 3<br /><br />
 
 >Indirizzo web provvisorio: http://hotorbot.io<br />
+>Changelog: http://hotorbot.io/changelog<br />
 >Video: http://hotorbot.io/video<br />
 >Installation: http://hotorbot.io/installation<br />
 >Help on Gitter: https://gitter.im/newportalcms/help<br />
