@@ -279,12 +279,11 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
 });
 
-Route::get('/feed', 'PublicController@feed');
-
 Auth::routes();
 Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallback');
 
 Route::post('contactform', 'Mail\\MailController@contact');
+Route::get('sitemap.xml', 'SiteMapController@siteMap');
 Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');
