@@ -18,14 +18,25 @@ class SiteMapController extends Controller {
     }
 
     public function sitemap(siteMap $siteMap) {
-        $url = trim(url(), '/') . '/';
+        //$url = trim(url(), '/') . '/';
         $pages = $this->rp->setModel(Page::class)
             ->where('hidden_',0)
             ->where('status_id',1)
-            ->pluck('updated_at','slug')
-            ->all();
+            ->get();
 
-        dd($pages);
+        /**
+         * per ogni pagina estraggo le portlet di tipo AssetP
+         */
+        foreach ($pages as $page) {
+            foreach ($page->portlets as $portlet);
+                if ($portlet->init=="contentList") {
+                    $setting = (!empty($portlet->pivot->setting)) ? json_decode($portlet->pivot->setting, true) : [];
+                    if (!empty($setting['sitemap'])) {
+
+                    }
+                }
+                continue;
+        }
         $map = $siteMap->getSiteMap();
 
         return response($map)

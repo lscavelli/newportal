@@ -42,7 +42,7 @@ abstract class abstractPortlet {
     }
 
     protected function config($key) {
-            return array_get($this->config,$key);
+        return array_get($this->config,$key);
     }
 
     public function inizializeConf() {
