@@ -11,6 +11,7 @@ class siteMap
     public function __construct(array $data = [],$value = null)
     {
         $this->set($data,$value);
+        $this->property['items'] = [];
     }
 
     /**
@@ -28,8 +29,10 @@ class siteMap
     }
 
     public function addItem($url,$lastmod=null,$changefreq=null,$priority=null) {
+        $url = htmlspecialchars(strip_tags($url), ENT_COMPAT, 'UTF-8');
+        if (in_array($url,data_get($this->property['items'],'*.url'))) return;
         $obj = new \stdClass();
-        $obj->url = htmlspecialchars(strip_tags($url), ENT_COMPAT, 'UTF-8');
+        $obj->url = $url;
         $obj->lastmod = $lastmod;
         $obj->changefreq = $changefreq;
         $obj->priority = $priority;

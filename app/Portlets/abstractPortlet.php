@@ -16,7 +16,7 @@ abstract class abstractPortlet {
     protected $view;
     protected $theme;
 
-    public function __construct(RepositoryInterface $rp, Theme $theme, array $config = []) {
+    public function __construct(RepositoryInterface $rp, Theme $theme=null, array $config = []) {
         foreach ($config as $key => $value) {
             $this->config[$key] = $value;
         }

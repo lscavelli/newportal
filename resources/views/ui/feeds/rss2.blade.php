@@ -32,6 +32,12 @@
                 @if (!empty($item->comments))
                     <comments>{{ $item->comments }}</comments>
                 @endif
+                @if (!empty($item->enclosure))
+                    <enclosure url="{{ $item->enclosure['url'] }}"
+                               length="{{ $item->enclosure['length'] }}"
+                               type="{{ $item->enclosure['type'] }}" />
+                @endif
+
             </item>
         @endforeach
     </channel>

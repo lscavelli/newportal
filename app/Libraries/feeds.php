@@ -16,17 +16,20 @@ class Feeds
     }
     public function title($title)
     {
-        $this->property['title'] = htmlspecialchars(strip_tags($title), ENT_COMPAT, 'UTF-8');
+        if ($title)
+            $this->property['title'] = htmlspecialchars(strip_tags($title), ENT_COMPAT, 'UTF-8');
         return $this;
     }
     public function subTitle($subTitle)
     {
-        $this->property['subTitle'] = htmlspecialchars(strip_tags($subTitle), ENT_COMPAT, 'UTF-8');
+        if ($subTitle)
+            $this->property['subTitle'] = htmlspecialchars(strip_tags($subTitle), ENT_COMPAT, 'UTF-8');
         return $this;
     }
     public function description($description)
     {
-        $this->property['description'] = htmlspecialchars(strip_tags($description), ENT_COMPAT, 'UTF-8');
+        if ($description)
+            $this->property['description'] = htmlspecialchars(strip_tags($description), ENT_COMPAT, 'UTF-8');
         return $this;
     }
     public function link($link)
@@ -50,7 +53,8 @@ class Feeds
         return $this;
     }
 
-    public function addItem($id,$link,$title,$updated,$summary,$content,$author) {
+    public function addItem($id,$link,$title,$updated,$summary,$content,$author,$enclosure=[]) {
+
         $obj = new \stdClass();
         $obj->id = $id;
         $obj->link = $link;
@@ -61,9 +65,12 @@ class Feeds
             $obj->updated = date('D, d M Y H:i:s O', strtotime($updated));
         }
 
-        $obj->summary = $summary;
+        $obj->summary = $summary; // solo atom 1.0
         $obj->content = sl_text::sommario($content);
         $obj->author = $author;
+        if ($enclosure) {
+            $obj->enclosure = $enclosure;
+        }
         $this->add($obj);
     }
 

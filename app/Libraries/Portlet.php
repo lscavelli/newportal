@@ -35,7 +35,7 @@ class Portlet {
         //return app_path($this->getNamespace()).'/'.'views';
     //}
 
-    public function run($className,$theme,$path=null,$params=[]) {
+    public function run($className,$theme=null,$path=null,$params=[]) {
         $this->setPath($path);
         $className = 'App\\'.$this->getNamespace().'\\'.$className;
         if (class_exists($className)) {

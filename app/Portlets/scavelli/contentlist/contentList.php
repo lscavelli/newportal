@@ -16,7 +16,8 @@ class contentList extends Portlet {
         $this->rp->setModel($model);
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
 
-        $this->theme->addExCss($this->getPath().'css/assetpublisher007.css');
+        if ($this->theme)
+            $this->theme->addExCss($this->getPath().'css/assetpublisher007.css');
     }
 
     public function getContent() {
@@ -113,6 +114,10 @@ class contentList extends Portlet {
         // se l'url contiene author applico il filtro sull'autore
         if ($this->config('comunication') and $this->request->has('author')) {
             $builder = $builder->where('user_id',$this->request->author);
+        }
+
+        if ($this->config('sitemap') && is_null($this->theme)) {
+            return $builder->get();
         }
 
         // verifico se è attivo il feed Rss
@@ -240,6 +245,8 @@ class contentList extends Portlet {
             ->date(now())
             ->description($this->config('feed.feed_name'))
             ->language(config('app.locale'));
+
+        $enclosure = [];
         foreach ($items as $item) {
             $data = json_decode($item->content,true);
             $url = ($this->get('inpage')) ?: url()->current();
@@ -247,6 +254,10 @@ class contentList extends Portlet {
             if(!empty($item->user)){
                 $author = $item->user->name;
             }
+            $enclosure['url'] = $item->getImage();
+            $enclosure['length'] = '28000';
+            $enclosure['type'] = getimagesize($enclosure['url'])['mime'];
+
             $feed->addItem(
                         $item->id,
                         url($url."/".$item->slug),
@@ -254,7 +265,8 @@ class contentList extends Portlet {
                         $item->created_at,
                         "<p><img src=\"{$item->getImage()}\" /></p>",
                         head($data),
-                        $author
+                        $author,
+                        $enclosure
                     );
         };
         return $feed->render($this->config('feed.feed_format'));
