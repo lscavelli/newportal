@@ -59,6 +59,8 @@ class Feeds
         $obj->id = $id;
         $obj->link = $link;
         $obj->title = htmlspecialchars(strip_tags($title), ENT_COMPAT, 'UTF-8');
+
+        //->tz('UTC')->toAtomString()
         if ($this->type=='atom') {
             $obj->updated = date('c', strtotime($updated));
         } elseif($this->type=='rss2') {

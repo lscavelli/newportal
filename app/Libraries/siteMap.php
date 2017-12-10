@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 class siteMap
 {
@@ -33,7 +34,9 @@ class siteMap
         if (in_array($url,data_get($this->property['items'],'*.url'))) return;
         $obj = new \stdClass();
         $obj->url = $url;
-        $obj->lastmod = $lastmod;
+        if ($lastmod) {
+            $obj->lastmod = Carbon::parse($lastmod)->format('Y-m-d');
+        }
         $obj->changefreq = $changefreq;
         $obj->priority = $priority;
         $this->add($obj);

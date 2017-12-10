@@ -20,7 +20,7 @@ class SiteMapController extends Controller {
     public function sitemap(siteMap $siteMap)
     {
         $pages = $this->rp->setModel(Page::class)
-            ->where('hidden_', 0)
+            ->where('sitemap', 1)
             ->where('status_id', 1)
             ->whereNull('parent_id')
             ->get();
@@ -53,7 +53,7 @@ class SiteMapController extends Controller {
                         $contents = app()->portlet->run($portlet->init, null, $portlet->path, $setting);
                         foreach ($contents as $content)
                         {
-                            $siteMap->addItem(url($url . "/" . $content->slug), $page->updated_at, 'daily');
+                            $siteMap->addItem(url($url . "/" . $content->slug), $page->updated_at, 'weekly','0.9');
                         }
                     }
                 }
