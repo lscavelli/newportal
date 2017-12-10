@@ -31,6 +31,7 @@ class CreatePagesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('username')->nullable();
             $table->boolean('hidden_')->default(0);
+            $table->boolean('sitemap')->default(1);
             $table->tinyInteger('status_id')->default(1);
             $table->string('image')->nullable();
             $table->timestamps();

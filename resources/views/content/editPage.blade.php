@@ -93,6 +93,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="sitemap" class="col-sm-2 control-label">SiteMap</label>
+                            <div class="col-sm-10">
+                                {!! Form::select('sitemap', ['No','Si'] , \Request::input('sitemap'), ['class' => "form-control input-sm", 'id'=>"sitemap"]) !!}
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-danger">Salva</button>
                             </div>

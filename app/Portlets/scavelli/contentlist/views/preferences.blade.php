@@ -13,6 +13,7 @@
 
                         <form method="POST" id="preferencePortlet">
                             {!! Form::hidden('feed', null, ['id'=>"feed"]) !!}
+                            {!! Form::hidden('sitemap', null, ['id'=>"sitemap"]) !!}
 
                             <div class="form-group">
                                 <label for="service">Servizi disponibili</label>
@@ -81,11 +82,25 @@
                                     {!! Form::select('feed_size', [5=>5,10=>10,15=>15,20=>20,25=>25,30=>30] ,$cList->get('feed.feed_size') , ['class' => "form-control input-sm", 'id'=>"feed_size"]) !!}
                                 </div>
                                 <div class="form-group">
-                                    <label for="feed_format">Numero massimo elementi</label>
+                                    <label for="feed_format">Tipo feed</label>
                                     {!! Form::select('feed_format', ['atom'=>"Atom 1.0",'rss2'=>"Rss 2.0"] ,$cList->get('feed.feed_format') , ['class' => "form-control input-sm", 'id'=>"feed_format"]) !!}
                                 </div>
                             </div>
                         </form>
+
+                    </div>
+                </div>
+
+                <div class="box box-info">
+                    <div class="box-header with-border" style="background-color: ghostwhite ">
+                        <h3 class="box-title">Altre impostazioni</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="setFeed">SiteMap</label>
+                            {!! Form::select('setSiteMap', ["No","Si"] ,$cList->get('sitemap') , ['class' => "form-control input-sm", 'id'=>"setSiteMap"]) !!}
+                        </div>
 
                     </div>
                 </div>
@@ -154,5 +169,10 @@
         ids.push({feed_format:$("#feed_format").find('option:selected').val()});
         $("#feed").val(JSON.stringify(ids));
     }
+
+    $("#setSiteMap").change(function(e) {
+        e.preventDefault();
+        $("#sitemap").val($(this).find('option:selected').val());
+    });
 </script>
 @endpush
