@@ -48,9 +48,9 @@ class ResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
+                    ->line('Hai ricevuto questa email perché abbiamo ricevuto una richiesta di reimpostazione della password per il tuo account.')
                     ->action('Reset Password', url(config('app.url').route('password.reset', $this->token, false)))
-                    ->line('Thank you for using our application!');
+                    ->line('Se non hai richiesto la reimpostazione della password, non dovrai intraprendere nessuna azione!');
     }
 
     /**

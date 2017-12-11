@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: http://lara.dev/sitemap.xml

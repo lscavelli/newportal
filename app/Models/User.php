@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Permission;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\ResetPassword;
 
 class User extends Authenticatable
 {
@@ -192,6 +193,14 @@ class User extends Authenticatable
     public function socialUser()
     {
         return $this->hasOne(Social_auth::class, 'user_id');
+    }
+
+    /**
+     * Invia il link per il reset della password - override
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 
 }
