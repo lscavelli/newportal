@@ -18,7 +18,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#editpages" data-toggle="tab" aria-expanded="true">Pagine</a></li>
-                    <li><a href="#themepane" data-toggle="tab">Altri dati</a></li>
+                    <li><a href="#othersettings" data-toggle="tab">Altri dati</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -78,16 +78,16 @@
                     </div>
                     <!-- /.tab-pane -->
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="themepane">
+                    <div class="tab-pane" id="othersettings">
                         {!! Form::model($page, ['action' => $action,'class' => 'form-horizontal']) !!}
                         <div class="form-group">
-                            <label for="level" class="col-sm-2 control-label">Tipo pagina</label>
+                            <label for="type_id" class="col-sm-2 control-label">Tipo pagina</label>
                             <div class="col-sm-10">
                                 {!! Form::select('type_id', config('newportal.type_page') , \Request::input('type_id'), ['class' => "form-control input-sm", "id"=>'type_id']) !!}
                             </div>
                         </div>
                         <div class="form-group urlpage">
-                            <label for="slug" class="col-sm-2 control-label">Url</label>
+                            <label for="url" class="col-sm-2 control-label">Url</label>
                             <div class="col-sm-10">
                                 {!! Form::text('url',null,['class' => 'form-control', 'placeholder'=> "url esterno o a pagina e documento interno"]) !!}
                             </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-danger">Salva</button>
+                                <button type="submit" class="btn btn-danger" value="1" name="sButtonOther">Salva</button>
                             </div>
                         </div>
                         {!! Form::close() !!}

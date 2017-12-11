@@ -110,7 +110,7 @@ class pageController extends Controller {
     public function update($id, Request $request)  {
         $data = $request->all();
         $data['id'] = $id;
-        if (!$request->has('hidden_')) $data['hidden_'] = 0;
+        if (!$request->has('sButtonOther') && !$request->has('hidden_')) $data['hidden_'] = 0;
         $this->validator($data,true)->validate();
         if (isset($data['parent_id'])) $data['parent_id'] = $data['parent_id'] ?: null;
         if ($this->rp->update($id,$data)) {
