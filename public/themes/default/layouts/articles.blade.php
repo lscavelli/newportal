@@ -74,7 +74,7 @@
                         <h3>Around the Web</h3>
                         <ul class="list-inline">
                             <li>
-                                <a href="#" class="btn-social btn-outline white"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
+                                <a href="https://www.facebook.com/newportalcms/" class="btn-social btn-outline white"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
                             </li>
                             <li>
                                 <a href="#" class="btn-social btn-outline white"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>

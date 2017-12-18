@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Notifications\EmailConfirmation;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    private $token;
+
     /**
      * Where to redirect users after registration.
      *
@@ -37,6 +40,9 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        if (!array_get(cache('settings'), 'open_registration')) {
+            app()->abort(404, 'Pagina non trovata');
+        }
         $this->middleware('guest');
     }
 
@@ -58,21 +64,50 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\User
+     * @param array $data
+     * @return mixed
      */
     protected function create(array $data)
     {
+        $this->token = $this->makeToken();
         return User::create([
             'nome' => $data['nome'],
             'cognome' => $data['cognome'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_token' => $this->token,
             'status_id' => 3
         ]);
     }
-	
+
+    /**
+     * crea e restituisce il token per la conferma della registrazione
+     * @return string
+     */
+    protected function makeToken() {
+        return hash_hmac('sha256', str_random(60), config('app.key'));
+    }
+
+    /**
+     * Verifica il token in argomento e autentica l'utente registrato
+     * @param $token
+     * @return mixed
+     */
+    protected function confirmationEmail($token) {
+        $user = User::TokenVerification($token)->firstOrFail();
+        $user->confirmed_at = now();
+        $user->confirmation_token = null;
+        $user->status_id = 1;
+        $user->save();
+        $this->guard()->login($user);
+        return redirect()->route('profile',[$user->id])->withSuccess('L\'Email è stata confermata correttamente');
+    }
+
+    /**
+     * Override di register - si evita il login automatico dopo la registrazione
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
 	public function register(Request $request)
     {
         $this->validator($request->all())->validate();
@@ -83,5 +118,18 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    public function registered(Request $request, $user)
+    {
+        $user->notify(new EmailConfirmation($this->token));
+        redirect()->back()->withSuccess('Ti è stata inviata una email. Per completare la registrazione clicca sul pulsante "Conferma email" che trovi nel messaggio che hai ricevuto. Se non trovi alcun messaggio, controlla nella posta indesiderata, nel cestino, negli elementi eliminati o nell\'archivio.' );
     }
 }

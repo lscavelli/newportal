@@ -7,12 +7,12 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPassword extends Notification
+class EmailConfirmation extends Notification
 {
     use Queueable;
 
     /**
-     * The password reset token.
+     * The Email confirmation token.
      *
      * @var string
      */
@@ -20,7 +20,7 @@ class ResetPassword extends Notification
 
     /**
      * Create a new notification instance.
-     * ResetPassword constructor.
+     * Email confirmation constructor.
      * @param $token
      */
     public function __construct($token)
@@ -48,9 +48,10 @@ class ResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Hai ricevuto questa email perché abbiamo ricevuto una richiesta di reimpostazione della password per il tuo account.')
-                    ->action('Reset Password', url(config('app.url').route('password.reset', $this->token, false)))
-                    ->line('Se non hai richiesto la reimpostazione della password, non dovrai intraprendere nessuna azione!');
+                    ->line('Hai ricevuto questa email perché sei stato appena registrato sulla piattaforma '. config('app.name'))
+                    ->line('Clicca sul pulsante \'Conferma email\' per confermare la tua email e completare la registrazione')
+                    ->action('Conferma email', url(config('app.url').route('confirmation.email', $this->token, false)))
+                    ->line('Se non sei stato tu a registrarti, non intraprendere nessuna azione, la registrazione sarà cancellata automaticamente');
     }
 
     /**

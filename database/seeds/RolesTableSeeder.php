@@ -21,13 +21,13 @@ class RolesTableSeeder extends Seeder
 
         Role::create([
             'name' => 'Content manager',
-            'slug' => 'manager-content',
+            'slug' => 'content-manager',
             'description' => 'Consente la gestione dei contenuti compreso strutture, modelli e data set'
         ]);
 
         Role::create([
             'name' => 'User manager',
-            'slug' => 'users-manager',
+            'slug' => 'user-manager',
             'description' => 'Consente la gestione degli utenti compreso l\'assegnazione dei ruoli e permessi. 
                     Il ruolo "Super Admin" accede comunque a tutte le funzionalità di sistema'
         ]);

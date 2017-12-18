@@ -22,7 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nome','cognome','email', 'password', 'username', 'indirizzo',
         'data_nascita', 'note', 'telefono', 'status_id', 'avatar',
-        'country_id', 'city_id'
+        'country_id', 'city_id', 'confirmation_token', 'confirmed_at'
     ];
 
     /**
@@ -134,11 +134,21 @@ class User extends Authenticatable
         return $this->listRoles;
     }
 
+    /**
+     * Verifica se si possiedono i permessi passati come argomento
+     * @param $permissions
+     * @return bool
+     */
     public function hasPermission($permissions) {
         if (is_null($this->listPermissions)) $this->listPermissions();
         return $this->hasPerm($permissions);
     }
 
+    /**
+     * Verifica se si possiedono i ruoli passati in argomento
+     * @param $roles
+     * @return mixed
+     */
     public function hasRole($roles) {
         $roles = is_array($roles) ? $roles : [$roles];
         $roles = array_push($roles, config('newportal.super_admin'));
@@ -146,6 +156,10 @@ class User extends Authenticatable
         //if ($this->listRoles()->where('slug',$role)->first() { return true; }
     }
 
+    /**
+     * Verifica se si possiede il ruolo di super Amministratore della piattaforma
+     * @return bool
+     */
     public function isAdmin() {
         $superAdmin = config('newportal.super_admin');
         foreach ($this->listRoles() as $role) {
@@ -156,10 +170,26 @@ class User extends Authenticatable
         return false;
     }
 
+    /**
+     * Verifica se si possiede il permesso di gestore degli utenti
+     * @return bool
+     */
+    public function isUserManager() {
+        if ($this->isAdmin()) {
+            return true;
+        }
+        return $this->hasPermission('user-manager');
+    }
+
     public function level() {
         return ($role = $this->listRoles()->sortByDesc('level')->first()) ? $role->level : 0;
     }
 
+    /**
+     * Verifica privatamente se si possiedono i permessi in argomento
+     * @param $permissions
+     * @return bool
+     */
     private function hasPerm($permissions)  {
         if (is_string($permissions)) {
             return $this->listPermissions->contains('slug',$permissions);
@@ -201,6 +231,17 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * Scope confirmation_token
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTokenVerification($query,$token)
+    {
+        return $query->where('confirmation_token', $token);
     }
 
 }

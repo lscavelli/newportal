@@ -51,7 +51,7 @@ Saluti,<br>{{ config('app.name') }}
 {{-- Subcopy --}}
 @isset($actionText)
 @component('mail::subcopy')
-Se hai problemi con il clic del "{{ $actionText }}" button, copia e incolla l'URL sottostante
+Se hai problemi con il pulsante "{{ $actionText }}", copia e incolla l'URL sottostante
 nel tuo browser web: [{{ $actionUrl }}]({{ $actionUrl }})
 @endcomponent
 @endisset

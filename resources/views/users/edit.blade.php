@@ -39,9 +39,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">Email</label>
-
                                 <div class="col-sm-10">
-                                    {!! Form::email('email',null,['id' => 'email','class' => 'form-control', 'placeholder'=> "Email"]) !!}
+                                    <?php $disabled = []; if(!(Auth()->user()->isUserManager()) and $user->id) $disabled=['disabled'=>'']; ?>
+                                    {!! Form::email('email',null, array_merge(['id' => 'email','class' => 'form-control', 'placeholder'=> "Email"],$disabled)) !!}
                                 </div>
                             </div>
                             <div class="form-group">

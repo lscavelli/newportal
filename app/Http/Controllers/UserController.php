@@ -69,10 +69,10 @@ class UserController extends Controller {
         $action = ["UserController@update", $id];
         $numOrgs = $this->listOrganizations($user)->count();
         $numGroups = $this->listGroups($user)->count();
-        $countries = $this->repo->setModel(new Country)->orderBy('name')->pluck()->toArray();
+        $countries = $this->repo->setModel(Country::class)->orderBy('name')->pluck()->toArray();
         $cityOptions = [];
         if (!empty($user->city_id)) {
-            $cityOptions = $this->repo->setModel(new City)->where("id", "=", $user->city_id)->pluck()->toArray();
+            $cityOptions = $this->repo->setModel(City::class)->where("id", "=", $user->city_id)->pluck()->toArray();
         }
         return \View::make('users.edit', compact('user','action','numOrgs','numGroups','countries','cityOptions'));
     }
@@ -85,7 +85,14 @@ class UserController extends Controller {
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
-        if (is_null($data['password'])) unset($data['password']); //non la richiede se è in update
+        if (empty($data['password'])) unset($data['password']); //non la richiede se è in update
+
+        // se non si dispone del permesso di aggiornamento utenti l
+        // l'email non viene validata ne aggiornata
+        if(!Auth()->user()->isUserManager()) {
+            if (!empty($data['email'])) unset($data['email']);
+        }
+
         $this->validator($data,true)->validate();
         if (!empty($data['data_nascita'])) {
             $data['data_nascita'] =Carbon::createFromFormat('d/m/Y', $data['data_nascita']);

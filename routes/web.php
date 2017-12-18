@@ -170,6 +170,17 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
      * Accessibile a tutti gli utenti anche senza particolari permessi
      */
     Route::get('users/revert', 'UserController@revertUser');
+    Route::any('users/cities/{q?}', 'UserController@citiesRemoteData');
+
+    /**
+     * Per accedere alla propria scheda
+     */
+    Route::group(['middleware' => ['can:profile,user_id']], function() {
+        Route::get('users/profile/{user_id}', 'UserController@profile')->name('profile');
+        Route::post('users/edit/{user_id}/avatar', 'UserController@setAvatar');
+        Route::get('users/edit/{user_id}', 'UserController@edit');
+        Route::post('users/update/{user_id}', 'UserController@update');
+    });
 
     /**
      * Accessibile all'utente "Super Admin" e agli utenti possessori
@@ -180,15 +191,10 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('users', 'UserController@index')->name('users');
         Route::post('users', 'UserController@index');
         Route::get('users/impersonate/{user_id}', 'UserController@impersonateUser');
-        Route::get('users/profile/{user_id}', 'UserController@profile');
-        Route::any('users/cities/{q?}', 'UserController@citiesRemoteData');
         Route::any('users/activity/{user_id?}', 'UserController@showActivity');
         Route::any('users/sessions/{user_id?}', 'UserController@showSessions');
         Route::any('users/sessions/delete/{session_id}', 'UserController@sessionDestroy');
         Route::any('users/profile/{user_id}/delete/{session_id}', 'UserController@sessionDestroy');
-        Route::post('users/edit/{user_id}/avatar', 'UserController@setAvatar');
-        Route::get('users/edit/{user_id}', 'UserController@edit');
-        Route::post('users/update/{user_id}', 'UserController@update');
         Route::get('users/create', 'UserController@create');
         Route::post('users/store', 'UserController@store');
         Route::post('users/delete/{user_id}', 'UserController@destroy');
@@ -285,5 +291,7 @@ Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallba
 
 Route::post('contactform', 'Mail\\MailController@contact');
 Route::get('sitemap.xml', 'SiteMapController@siteMap');
+Route::get('users/confirmation/{token}', 'Auth\\RegisterController@confirmationEmail')->name('confirmation.email');
+
 Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');

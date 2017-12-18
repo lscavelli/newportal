@@ -26,6 +26,7 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
+    @include('ui.messages')
     <div class="login-logo">
         <a href="#"><b>Newportal</b> Platform</a>
     </div>

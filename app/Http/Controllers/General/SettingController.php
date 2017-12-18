@@ -1,4 +1,9 @@
 <?php
+/**
+ * for controll
+ * es. if (!array_get(cache('settings'), 'social_registration')) {
+ *
+ */
 
 namespace App\Http\Controllers\General;
 
@@ -71,7 +76,7 @@ class SettingController extends Controller {
         }
         $updateSettings = $this->rp->pluck('setting_value', 'setting_key')->all();
         Cache::forever('settings', $updateSettings);
-        return redirect()->route('settings')->withSuccess('Pagina creata correttamente.');
+        return redirect()->route('settings')->withSuccess('Impostazioni registrate correttamente.');
     }
 
     /**

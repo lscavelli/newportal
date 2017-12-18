@@ -12,6 +12,7 @@
 @section('content')
 <!-- Main content -->
 <section class="content">
+    @include('ui.messages')
     <div class="row">
         <div class="col-md-3">
             <?php $status_id = (!empty($user->status_id) ? $user->status_id: 1); ?>

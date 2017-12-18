@@ -26,11 +26,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $gate->before(function($user, $ability){
+        $gate->before(function($user, $ability) use($gate) {
+
             if ($user->isAdmin()) {
                 return true;
             }
+            /*
             return $user->hasPermission($ability);
+            */
+            $gate->define($ability, function ($user, $arguments=null) use($ability) {
+
+                if ($ability=='profile' and
+                    !is_null($arguments) and
+                    $arguments==$user->id) {
+                    return true;
+                }
+                return $user->hasPermission($ability);
+            });
         });
+
     }
 }
