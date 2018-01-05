@@ -480,4 +480,14 @@ class Repository implements RepositoryInterface {
         $this->model = $this->model->with($relations);
         return $this;
     }
+
+    public function take($value) {
+        $this->model = $this->model->take($value);
+        return $this;
+    }
+
+    public function limit($value){
+        $this->model = $this->model->limit($value);
+        return $this;
+    }
 }

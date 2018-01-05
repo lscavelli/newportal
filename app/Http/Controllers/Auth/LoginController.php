@@ -30,8 +30,7 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
+     * LoginController constructor.
      */
     public function __construct()
     {
@@ -44,4 +43,17 @@ class LoginController extends Controller
         $credential['status_id'] = 1;
         return $credential;
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        $field = filter_var(request()->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$field => request()->input('email')]);
+        return $field;
+    }
+
 }

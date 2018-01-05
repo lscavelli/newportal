@@ -46,4 +46,6 @@ interface RepositoryInterface {
     public function filter(array $criteria, $oper = "=");
     public function resetModel();
     public function with($relations);
+    public function take($value);
+    public function limit($value);
 }

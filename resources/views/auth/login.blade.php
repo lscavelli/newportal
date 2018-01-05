@@ -37,7 +37,7 @@
         <form action="{{ url('/login') }}" role="form" method="POST">
             {{ csrf_field() }}
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
-                <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email or username" value="{{ old('email') }}" required autofocus>
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 @if ($errors->has('email'))
                     <span class="help-block">
@@ -85,7 +85,6 @@
 </div>
 <!-- /.login-box -->
 
-
 <!-- jQuery 2.2.3 -->
 <script src="{{ asset("/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -101,5 +100,7 @@
         });
     });
 </script>
+
+
 </body>
 </html>
