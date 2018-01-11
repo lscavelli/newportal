@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Organizzazioni','/admin/organizations')->add('Assegna filiali')
+    {!! $breadcrumb->add(__('app.organizations'),'/admin/organizations')->add(__('app.assign_branches'))
         ->setTcrumb($organization->name)
         ->render() !!}
 @stop
@@ -16,16 +16,16 @@
             <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Organizzazioni diponibili</h3>
+                        <h3 class="box-title">{{ __('app.org_available') }}</h3>
                     </div>
                     {!!
                         $list->setModel($filialDis)
-                            ->columns(['id','name'=>'Nome','azioni'])
+                            ->columns(['id','name'=>__('app.name'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
                             ->setPrefix('RTYX_')
                             ->customizes('azioni', function($row) use($organization) {
-                                return "<a href=\"/admin/organizations/". $organization->id."/addFilial/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">Assegna</a>";
+                                return "<a href=\"/admin/organizations/". $organization->id."/addFilial/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">".__('app.assign')."</a>";
                             })->render()
                     !!}
                 </div> <!-- /.box -->
@@ -37,11 +37,11 @@
                         'type'=>'primary',
                         'title'=>$organization->id ." - ".$organization->name,
                         'listMenu'=>[
-                            'Lista Organizzazioni'=>url('/admin/organizations'),
+                            __('app.list_org')=>url('/admin/organizations'),
                             'divider'=>"divider",
-                            'Modifica'=>url('/admin/organizations/edit',$organization->id),
-                            'Assegna utenti'=>url('/admin/organizations/assignUser',$organization->id),
-                            'Profilo'=>url('/admin/organizations/profile',$organization->id),
+                            __('app.update')=>url('/admin/organizations/edit',$organization->id),
+                            __('app.assign_users')=>url('/admin/organizations/assignUser',$organization->id),
+                            __('app.profile')=>url('/admin/organizations/profile',$organization->id),
                         ],
                         'urlNavPre'=>url('/admin/organizations/assignFilial',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/organizations/assignFilial',$pag['nexid']->id),
@@ -51,12 +51,12 @@
                 <div class="box box-default">
                     {!!
                          $list->setModel($filialAss)
-                            ->columns(['id','name'=>'Nome','azioni'])
+                            ->columns(['id','name'=>__('app.name'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
                             ->setPrefix('HGYU_')
                             ->customizes('azioni', function($row) use($organization) {
-                                return "<a href=\"/admin/organizations/removeFilial/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">Cancella</a>";
+                                return "<a href=\"/admin/organizations/removeFilial/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">".__('app.delete')."</a>";
                             })->render()
                      !!}
                 </div> <!-- /.box -->
