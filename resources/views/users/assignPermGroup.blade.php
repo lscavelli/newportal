@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add(__('app.groups'),'/admin/groups')->add(__('app.assign_perm'))
+    {!! $breadcrumb->add(__('Gruppi'),'/admin/groups')->add(__('Assegna permessi'))
         ->setTcrumb($group->name)
         ->render() !!}
 @stop
@@ -16,16 +16,16 @@
             <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ __('app.perm_available') }}</h3>
+                        <h3 class="box-title">{{ __('Permessi diponibili') }}</h3>
                     </div>
                     {!!
                         $list->setModel($permissionDis)
-                            ->columns(['id','name'=>__('app.name'),'azioni'])
+                            ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
                             ->setPrefix('RTYX_')
                             ->customizes('azioni', function($row) use($group) {
-                                return "<a href=\"/admin/groups/". $group->id."/addPermission/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">".__('app.assign')."</a>";
+                                return "<a href=\"/admin/groups/". $group->id."/addPermission/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">".__('Assegna')."</a>";
                             })->render()
                     !!}
                 </div> <!-- /.box -->
@@ -37,12 +37,12 @@
                         'type'=> 'primary',
                         'title'=>$group->id ." - ".$group->name,
                         'listMenu'=>[
-                            __('app.list_groups')=>url('/admin/groups'),
+                            __('Lista gruppi')=>url('/admin/groups'),
                             'divider'=>"divider",
-                            __('app.update')=>url('/admin/groups/edit',$group->id),
-                            __('app.assign_users')=>url('/admin/groups/assign',$group->id),
-                            __('app.assign_roles')=>url('/admin/groups/assignRole',$group->id),
-                            __('app.profile')=>url('/admin/groups/profile',$group->id),
+                            __('Aggiorna')=>url('/admin/groups/edit',$group->id),
+                            __('Assegna utenti')=>url('/admin/groups/assign',$group->id),
+                            __('Assegna ruoli')=>url('/admin/groups/assignRole',$group->id),
+                            __('Profilo')=>url('/admin/groups/profile',$group->id),
                         ],
                         'urlNavPre'=>url('/admin/groups/assignPerm',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/groups/assignPerm',$pag['nexid']->id),
@@ -52,12 +52,12 @@
                 <div class="box box-default">
                     {!!
                          $list->setModel($permissionAss)
-                            ->columns(['id','name'=>__('app.name'),'azioni'])
+                            ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
                             ->setPrefix('HGYU_')
                             ->customizes('azioni', function($row) use($group) {
-                                return "<a href=\"/admin/groups/". $group->id."/removePermission/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">".__('app.delete')."</a>";
+                                return "<a href=\"/admin/groups/". $group->id."/removePermission/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">".__('Cancella')."</a>";
                             })->render()
                      !!}
                 </div> <!-- /.box -->

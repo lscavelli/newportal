@@ -97,18 +97,24 @@ class User extends Authenticatable
     }
 
     /**
-     * restituisce i commenti sui post degli utenti
+     * restituisce i commenti sui post dell'utente
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments() {
-        return $this->hasMany('App\Models\Blog\Comment','user_id');
+        return $this->hasMany('App\Models\Content\Comment','user_id');
     }
 
+    /**
+     * definisco la mappa dei permessi complessivi posseduti dall'utente
+     * @return mixed|null
+     */
     public function listPermissions() {
         if (!is_null($this->listPermissions)) return $this->listPermissions;
+
         // considero i permessi assegnati direttamente all'utente
         $this->listPermissions = $this->permissions;
-        // considero i permessi assegnati ai ruoli dell'utente
+
+        // considero i permessi dei ruoli assegnati all'utente
         foreach ($this->roles as $role) {
             $this->listPermissions = $this->listPermissions->merge($role->permissions);
         }
@@ -123,6 +129,10 @@ class User extends Authenticatable
         return $this->listPermissions;
     }
 
+    /**
+     * definisco la mappa dei ruoli complessivi posseduti dall'utente
+     * @return mixed|null
+     */
     public function listRoles() {
         if (!is_null($this->listRoles)) return $this->listRoles;
         // considero i ruoli assegnati direttamente all'utente

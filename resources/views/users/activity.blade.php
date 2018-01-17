@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add(__('app.list_users'),url("/admin/users"))
+    {!! $breadcrumb->add(__('Lista utenti'),url("/admin/users"))
         ->add('Attività'. $nameUser)
-        ->setTcrumb($nameUser,__('app.activity'))
+        ->setTcrumb($nameUser,__('Attività'))
         ->render() !!}
 @stop
 
@@ -15,7 +15,7 @@
             <div class="col-xs-12">
                 <div class="box" style="padding-top: 20px;">
                     {!!
-                        $list->columns(['id','user_id'=>__('app.user'),'created_at'=>__('app.date'),'description'=>__('app.activity'),'ip_address'=>'Ip'])
+                        $list->columns(['id','user_id'=>__('Utente'),'created_at'=>__('Data'),'description'=>__('Attività'),'ip_address'=>'Ip'])
                         ->showActions(false)
                         ->showButtonNew(false)
                         ->customizes('user_id',function($row) use($nameUser) {
