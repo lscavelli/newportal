@@ -70,8 +70,6 @@ class CommentController extends Controller {
     /**
      * Salva il commento nel database dopo aver validato i dati
      * @param Request $request
-     * @return mixed
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request) {
         $data = $request->all();

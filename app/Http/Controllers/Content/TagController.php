@@ -53,7 +53,6 @@ class TagController extends Controller {
      * Salva il tag nel database dopo aver validato i dati
      * @param Request $request
      * @return mixed
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request) {
         $data = $request->all();

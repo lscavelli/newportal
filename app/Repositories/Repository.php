@@ -114,8 +114,10 @@ class Repository implements RepositoryInterface {
     /**
      * Crea una istanza con i dati passati in argomento
      * @param array $item
-     * @return static
+     * @return mixed
+     * @throws \Exception
      */
+
     public function create(array $item)  {
         if (array_key_exists('slug',$item)) {
             $item['slug'] =  $this->makeSlug($item['slug']);
@@ -131,6 +133,7 @@ class Repository implements RepositoryInterface {
      * @param $id
      * @param array $item
      * @return mixed
+     * @throws \Exception
      */
     public function update($id, array $item)  {
         $ele = $this->model->find($id);
@@ -239,7 +242,6 @@ class Repository implements RepositoryInterface {
     /**
      * Restituisce la lista degli elementi filtrati per keys
      * @param Request $request
-     * @return EloquentModel
      */
     private function preparePagination(Request $request) {
 
