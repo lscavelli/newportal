@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Organizzazioni','/organizations')->add('Visualizzazione grafica')->render() !!}
+    {!! $breadcrumb->add(__('Organizzazioni'),'/organizations')->add(__('Visualizzazione grafica'))->render() !!}
 @stop
 
 @section('content')

@@ -5,6 +5,7 @@ namespace App\Portlets\scavelli\contentlist;
 use App\Portlets\abstractPortlet as Portlet;
 use App\Portlets\scavelli\contentlist\Controllers\assetController;
 use App\Libraries\feeds;
+use App\Libraries\sl_text;
 
 class contentList extends Portlet {
 
@@ -123,22 +124,33 @@ class contentList extends Portlet {
         // verifico se è attivo il feed Rss
         if ($this->config('feed')) {
             //dd($this->config);
-            // imposto l'url e Ctype del feed
+            // imposto l'url e Ctype dei feed
             $this->conf['feedUrl'] = $this->request->url().'?'.$this->config('feed.feed_format')."&portletid=".$this->config('id');
+            $this->conf['feedJsonUrl'] = $this->request->url().'?json'."&portletid=".$this->config('id');
             $this->conf['feedCtype'] = ($this->config('feed.feed_format')=='atom') ? 'application/atom+xml' : 'application/rss+xml';
 
-            if($this->request->has($this->config('feed.feed_format')) && $this->request->portletid==$this->config('id')) {
-                $builder = $builder->take($this->config('feed.feed_size'));
-                $feed = $this->buildFeed($builder->get());
-                header("Content-Type: ".$this->conf['feedCtype']);
-                echo $feed;
-                exit;
-            } else {
-                // imposto il link nella pagina
-                // TODO Consentire link multipli
-                $feedLink['feedLink'][] = ['url'=>$this->conf['feedUrl'],'cType'=>$this->conf['feedCtype']];
-                $this->setConfigTheme($feedLink);
+            if ($this->request->portletid==$this->config('id')) {
+                if($this->request->has($this->config('feed.feed_format'))) {
+                    $builder = $builder->take($this->config('feed.feed_size'));
+                    $feed = $this->buildFeed($builder->get());
+                    header("Content-Type: ".$this->conf['feedCtype']);
+                    echo $feed;
+                    exit;
+                } elseif ( $this->request->has('json') ) {
+                    $builder = $builder->take($this->config('feed.feed_size'));
+                    $feed = $this->buildFeedJson($builder->get());
+                    header("Content-Type: application/json");
+                    echo json_encode($feed);
+                    exit;
+                }
             }
+
+            // imposto il link nella pagina
+            // TODO Consentire link multipli
+            $feedLink['feedLink'][] = ['url'=>$this->conf['feedUrl'],'cType'=>$this->conf['feedCtype']];
+            $feedLink['feedLink'][] = ['url'=>$this->conf['feedJsonUrl'],'cType'=>'application/json'];
+            $this->setConfigTheme($feedLink);
+
         }
 
         // controllare - sembra che esegua due volte la chiamata alla portlet
@@ -235,6 +247,11 @@ class contentList extends Portlet {
         return (new assetController($this->rp))->configPortlet($portlet, $this);
     }
 
+    /**
+     * return feed rss - atom
+     * @param $items
+     * @return string|void
+     */
     private function buildFeed($items) {
         if ($items->count()<1) return;
 
@@ -270,5 +287,45 @@ class contentList extends Portlet {
                     );
         };
         return $feed->render($this->config('feed.feed_format'));
+    }
+
+    /**
+     * return feed json
+     * @param $items
+     * @return array|void
+     */
+    private function buildFeedJson($items) {
+        if ($items->count()<1) return;
+
+        $data = [
+            'version' => 'https://jsonfeed.org/version/1',
+            'title' => $this->config('feed.feed_name'),
+            'home_page_url' => $this->request->url(),
+            'feed_url' => $this->get('feedUrl'),
+            'favicon' => url("/favicon.ico"),
+            'items' => [],
+        ];
+
+        foreach ($items as $key => $item) {
+            $content = json_decode($item->content,true);
+            $url = ($this->get('inpage')) ?: url()->current();
+            $author = "";
+            if(!empty($item->user)){
+                $author = $item->user->name;
+            }
+            $data['items'][$key] = [
+                'id' => $item->id,
+                'title' => htmlspecialchars(strip_tags($item->name), ENT_COMPAT, 'UTF-8'),
+                'url' => url($url."/".$item->slug),
+                'image' => $item->getImage(),
+                'content_html' => sl_text::sommario(head($content)),
+                'date_created' => $item->created_at->tz('UTC')->toRfc3339String(),
+                'date_modified' => $item->updated_at->tz('UTC')->toRfc3339String(),
+                'author' => [
+                    'name' => $author
+                ],
+            ];
+        }
+        return $data;
     }
 }

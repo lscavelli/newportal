@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Lista utenti',url("/admin/users"))
-        ->add('Sessioni attive')
+    {!! $breadcrumb->add(__('Lista utenti'),url("/admin/users"))
+        ->add(__('Sessioni attive'))
         ->render() !!}
 @stop
 

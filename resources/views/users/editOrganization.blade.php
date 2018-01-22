@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Organizzazioni','/admin/organizations')->add('Aggiorna organizzazioni')
+    {!! $breadcrumb->add(__('Organizzazioni'),'/admin/organizations')->add(__('Aggiorna organizzazioni'))
         ->setTcrumb($organization->name)
         ->render() !!}
 @stop
@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">Dati obbligatori</a></li>
+                    <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">{{ __("Dati obbligatori") }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -25,38 +25,38 @@
 
                         {!! Form::model($organization, ['action' => $action,'class' => 'form-horizontal']) !!}
                             <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nome</label>
+                                <label for="name" class="col-sm-2 control-label">{{ __("Nome") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome"]) !!}
+                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> __("Nome")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="status_id" class="col-sm-2 control-label">Stato</label>
+                                <label for="status_id" class="col-sm-2 control-label">{{ __("Stato") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('status_id', config('newportal.status_general') , \Request::input('xpage'), ['class' => "form-control input-sm", 'id'=>"status_id"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="type_id" class="col-sm-2 control-label">Tipo organizzazione</label>
+                                <label for="type_id" class="col-sm-2 control-label">{{ __("Tipo organizzazione") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('type_id', config('newportal.type_organization') ,\Request::input('xpage') , ['class' => "form-control input-sm", 'id'=>"type_id"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="code" class="col-sm-2 control-label">Codice</label>
+                                <label for="code" class="col-sm-2 control-label">{{ __("Codice") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('code',null,['class' => 'form-control', 'placeholder'=> "Codice"]) !!}
+                                    {!! Form::text('code',null,['class' => 'form-control', 'placeholder'=> __("Codice")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="parent_id" class="col-sm-2 control-label">Filiale di</label>
+                                <label for="parent_id" class="col-sm-2 control-label">{{ __("Filiale di") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('parent_id', $selectOrg ,\Request::input('parent_id') , ['class' => "form-control input-sm", 'id'=>"parent_id"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Salva</button>
+                                    <button type="submit" class="btn btn-danger">{{ __("Salva") }}</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

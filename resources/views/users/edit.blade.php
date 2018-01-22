@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Utenti','/admin/users')->add('Aggiorna utenti')
+    {!! $breadcrumb->add(__("Utenti"),'/admin/users')->add(__("Aggiorna utenti"))
         ->setTcrumb($user->name)
         ->render() !!}
 @stop
@@ -17,8 +17,8 @@
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">Dati obbligatori</a></li>
-                    <li><a href="#Autenticazione" data-toggle="tab">Altri dati</a></li>
+                    <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">{{ __("Dati obbligatori") }}</a></li>
+                    <li><a href="#Autenticazione" data-toggle="tab">{{ __("Altri dati") }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -26,15 +26,15 @@
 
                         {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal']) !!}
                             <div class="form-group">
-                                <label for="nome" class="col-sm-2 control-label">Nome</label>
+                                <label for="nome" class="col-sm-2 control-label">{{ __("Nome") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('nome',null,['class' => 'form-control', 'placeholder'=> "Nome"]) !!}
+                                    {!! Form::text('nome',null,['class' => 'form-control', 'placeholder'=> __("Nome")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="cognome" class="col-sm-2 control-label">Cognome</label>
+                                <label for="cognome" class="col-sm-2 control-label">{{ __("Cognome") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('cognome',null,['class' => 'form-control', 'placeholder'=> "Cognome"]) !!}
+                                    {!! Form::text('cognome',null,['class' => 'form-control', 'placeholder'=> __("Cognome")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -51,9 +51,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password_confirmation" class="col-sm-2 control-label">Conferma Password</label>
+                                <label for="password_confirmation" class="col-sm-2 control-label">{{ __("Conferma Password") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::password('password_confirmation',['id' => 'password_confirmation','class' => 'form-control', 'placeholder'=> "Conferma password"]) !!}
+                                    {!! Form::password('password_confirmation',['id' => 'password_confirmation','class' => 'form-control', 'placeholder'=> __("Conferma Password")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -74,44 +74,44 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="data_nascita" class="col-sm-2 control-label">Data di Nascita</label>
+                                <label for="data_nascita" class="col-sm-2 control-label">{{ __("Data di nascita") }}</label>
                                 <div class="col-sm-10">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <?php $datanascita = (isset($user->data_nascita)?Carbon\Carbon::parse($user->data_nascita)->format('d/m/Y'): null); ?>
-                                        {!! Form::text('data_nascita',$datanascita ,['class' => 'form-control pull-right date-picker', 'placeholder'=> "Data di nascita", 'id'=>'data_nascita']) !!}
+                                        {!! Form::text('data_nascita',$datanascita ,['class' => 'form-control pull-right date-picker', 'placeholder'=> __("Data di nascita"), 'id'=>'data_nascita']) !!}
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="country_id" class="col-sm-2 control-label">Nazione</label>
+                                <label for="country_id" class="col-sm-2 control-label">{{ __("Nazione") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('country_id', $countries , \Request::input('country_id'), ['class' => "form-control input-sm", 'id'=>"country_id"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city_id" class="col-sm-2 control-label">Comune</label>
+                                <label for="city_id" class="col-sm-2 control-label">{{ __("Comune") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('city_id', $cityOptions , $user->city_id, ['class' => "js-example-basic-single js-states form-control", 'id'=>"city_id", 'style'=>"width: 100%", 'aria-hidden'=>"true"]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="indirizzo" class="col-sm-2 control-label">Indirizzo</label>
+                                <label for="indirizzo" class="col-sm-2 control-label">{{ __("Indirizzo") }}</label>
                                 <div class="col-sm-10">
-                                    {!! Form::text('indirizzo',null,['class' => 'form-control', 'placeholder'=> "Indirizzo"]) !!}
+                                    {!! Form::text('indirizzo',null,['class' => 'form-control', 'placeholder'=> __("Indirizzo")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="telefono" class="col-sm-2 control-label">Telefono</label>
+                                <label for="telefono" class="col-sm-2 control-label">{{ __("Telefono") }}</label>
 
                                 <div class="col-sm-10">
-                                    {!! Form::text('telefono',null,['class' => 'form-control', 'placeholder'=> "Telefono"]) !!}
+                                    {!! Form::text('telefono',null,['class' => 'form-control', 'placeholder'=> __("Telefono")]) !!}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="status_id" class="col-sm-2 control-label">Stato</label>
+                                <label for="status_id" class="col-sm-2 control-label">{{ __("Stato") }}</label>
                                 <div class="col-sm-10">
                                     {!! Form::select('status_id', config('newportal.status_user') , \Request::input('xpage'), ['class' => "form-control input-sm", 'id'=>"status_id"]) !!}
                                 </div>
@@ -150,15 +150,15 @@
 
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
-                            <b>Gruppi</b> <a class="pull-right">{{$numGroups or 0}}</a>
+                            <b>{{ __("Gruppi") }}</b> <a class="pull-right">{{$numGroups or 0}}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Organizzazioni</b> <a class="pull-right">{{$numOrgs or 0}}</a>
+                            <b>{{ __("Organizzazioni") }}</b> <a class="pull-right">{{$numOrgs or 0}}</a>
                         </li>
                     </ul>
                     @if($user->id)
-                        <p><a href="#" class="btn btn-default btn-block selectAvatar" data-id="{!! $user->id !!}"><i class="fa fa-camera"></i> Cambia Foto</a></p>
-                        <a href="/admin/users/profile/{!! $user->id !!}" class="btn btn-primary btn-block"><b>Profilo</b></a>
+                        <p><a href="#" class="btn btn-default btn-block selectAvatar" data-id="{!! $user->id !!}"><i class="fa fa-camera"></i> {{ __("Cambia Foto") }}</a></p>
+                        <a href="/admin/users/profile/{!! $user->id !!}" class="btn btn-primary btn-block"><b>{{ __("Profilo") }}</b></a>
                     @endif
                 </div>
                 <!-- /.box-body -->

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Lista utenti')->render() !!}
+    {!! $breadcrumb->add(__("Lista utenti"))->render() !!}
 @stop
 
 @section('content')
@@ -10,9 +10,9 @@
         <div class="col-xs-12">
             <div class="box" style="padding-top: 20px;">
                 {!!
-                    $list->columns(['id','cognome','nome', 'email', 'created_at'=>'Registrato il'])
-                    ->actions(['profile'=>'Profilo','activity'=>'Attività',
-                    'assignRole'=>'Assegna ruoli','assignPerm'=>'Assegna permessi','impersonate'=>'Impersona Utente'])
+                    $list->columns(['id','cognome'=>__("Cognome"),'nome'=>__("Nome"), 'email', 'created_at'=>__("Registrato il")])
+                    ->actions(['profile'=>__('Profilo'),'activity'=>__('Attività'),
+                    'assignRole'=>__('Assegna ruoli'),'assignPerm'=>__('Assegna permessi'),'impersonate'=>__('Impersona Utente')])
                     ->customizes('created_at',function($row){
                         return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
                     })->render()

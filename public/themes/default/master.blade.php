@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @foreach($theme->get('feedLink',[]) as $feedLink)
-        <link rel="alternate" type="{{ $feedLink['cType'] }}" href="{{ $feedLink['url'] }}" title="Feed RSS  {{ $theme->get('title') }}">
+        <link rel="alternate" type="{{ $feedLink['cType'] }}" href="{{ $feedLink['url'] }}" title="Feed - {{ $theme->get('title') }}">
     @endforeach
     <link rel="shortcut icon" href="{{ $theme->url("ico/favicon.png") }}">
     <title>{{ $theme->get('title') }}</title>

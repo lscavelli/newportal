@@ -3,12 +3,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Seleziona Avatar</h4>
+                <h4 class="modal-title" id="myModalLabel">{{ __("Seleziona Avatar") }}</h4>
             </div>
             <form id="avatarForm" enctype="multipart/form-data" action="" method="post">
                 {!! csrf_field() !!}
                 <div class="modal-body">
-                    <p class="text_img">Seleziona localmente il tuo avatar</p>
+                    <p class="text_img">{{ __("Seleziona localmente il tuo avatar") }}</p>
                     <div class="form-group">
                         <div class="input-group">
                             <label class="input-group-btn">
@@ -22,14 +22,14 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" class="avatarDefault" name="setAvatarDefault"> Imposta Avatar predefinito
+                                <input type="checkbox" class="avatarDefault" name="setAvatarDefault"> {{ __("Imposta Avatar predefinito") }}
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> Carica</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-remove"></span> Annulla</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-check"></span> {{ __("Carica") }}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-remove"></span> {{ __("Annulla") }}</button>
                 </div>
             </form>
         </div>

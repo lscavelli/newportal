@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Lista organizzazioni')->render() !!}
+    {!! $breadcrumb->add(__('Lista organizzazioni'))->render() !!}
 @stop
 
 @section('content')
@@ -13,8 +13,8 @@
         <div class="col-xs-12">
             <div class="box" style="padding-top: 20px;">
                 {!!
-                    $list->columns(['id','name'=>'Nome','parent_id'=>'Filiale di', 'type_id'=>'Tipologia','numuser'=>'Num Utenti'])
-                    ->actions(['profile'=>'Profilo','assignUser'=>'Assegna utenti','assignFilial'=>'Assegna filiali'])
+                    $list->columns(['id','name'=>__('Nome'),'parent_id'=>__('Filiale di'), 'type_id'=>__('Tipologia'),'numuser'=>__('Num. utenti')])
+                    ->actions(['profile'=>__('Profilo'),'assignUser'=>__('Assegna utenti'),'assignFilial'=>__('Assegna filiali')])
                     ->customizes('parent_id',function($row){
                         return $row->parent()->pluck('name')->first();
                     })
