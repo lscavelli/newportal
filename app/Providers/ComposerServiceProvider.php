@@ -20,13 +20,17 @@ class ComposerServiceProvider extends ServiceProvider
         View()->share('breadcrumb', new \App\Libraries\breadcrumb());
         View()->share('composer', new \App\Libraries\composerView());
         View()->share('navigation', new \App\Libraries\navigation());
-        View()->share('cspages', $this->app
-            ->make(RepositoryInterface::class)
-            ->setModel(Page::class)
-            ->where('status_id',1)
-            ->limit(4)
-            ->orderby('id', 'desc')
-            ->get());
+        try {
+            View()->share('cspages', $this->app
+                ->make(RepositoryInterface::class)
+                ->setModel(Page::class)
+                ->where('status_id',1)
+                ->limit(4)
+                ->orderby('id', 'desc')
+                ->get());
+        } catch (\Exception $e) {
+            //
+        }
     }
 
     /**
