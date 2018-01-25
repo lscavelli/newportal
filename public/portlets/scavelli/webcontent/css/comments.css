@@ -1,4 +1,4 @@
-.comment {
+.np-comment {
     overflow: hidden;
     padding: 0 0 1em;
     border-bottom: 1px solid #ddd;
@@ -6,66 +6,66 @@
     *zoom: 1;
 }
 
-.comment-img {
+.np-comment-img {
     float: left;
     margin-right: 33px;
     border-radius: 5px;
     overflow: hidden;
 }
 
-.comment-img img {
+.np-comment-img img {
     display: block;
 }
 
-.comment-body {
+.np-comment-body {
     overflow: hidden;
 }
 
-.comment .text {
+.np-comment .text {
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
     background: #f3f6f9;
 }
 
-.comment .text p:last-child {
+.np-comment .text p:last-child {
     margin: 0;
 }
 
-.comment .attribution {
+.np-comment .attribution {
     margin: 0.5em 0 0;
     font-size: 14px;
     color: #666;
 }
 
 /* Decoration */
-.comments {
+.np-comments {
     padding: 0!important;
     margin-top: 40px;
 }
-.comments,
-.comment {
+.np-comments,
+.np-comment {
     position: relative;
     color: #666!important;
 }
 
-.comments:before,
-.comment:before,
-.comment .text:before {
+.np-comments:before,
+.np-comment:before,
+.np-comment .text:before {
     content: "";
     position: absolute;
     top: 0;
     left: 65px;
 }
 
-.comments:before {
+.np-comments:before {
     width: 3px;
     top: -20px;
     bottom: -20px;
     background: rgba(0,0,0,0.1);
 }
 
-.comment:before {
+.np-comment:before {
     width: 9px;
     height: 9px;
     border: 3px solid #fff;
@@ -75,11 +75,11 @@
     background: #ccc;
 }
 
-.comment:hover:before {
+.np-comment:hover:before {
     background: orange;
 }
 
-.comment .text:before {
+.np-comment .text:before {
     top: 18px;
     left: 78px;
     width: 9px;
@@ -94,6 +94,6 @@
     -o-transform: rotate(45deg);
 }​
 
-.comment:hover {
+.np-comment:hover {
      background-color: orange!important;
 }

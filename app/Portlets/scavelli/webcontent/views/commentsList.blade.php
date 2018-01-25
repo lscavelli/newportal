@@ -4,13 +4,13 @@
         <h2>Comments</h2>
     </div>
 </div>
-<section class="comments">
+<section class="np-comments">
 @foreach($comments as $comment)
-    <article class="comment">
-        <a class="comment-img" href="mailto:{{$comment->email}}">
+    <article class="np-comment">
+        <a class="np-comment-img" href="mailto:{{$comment->email}}">
             <img src="@if(!is_null($comment->user_id)) {{ $comment->autore->getAvatar() }} @else {{ url('img/avatar.png') }} @endif" alt="" width="50" height="50">
         </a>
-        <div class="comment-body">
+        <div class="np-comment-body">
             <div class="text">
                 <p>{{$comment->content}}</p>
             </div>
