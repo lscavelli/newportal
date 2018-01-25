@@ -13,6 +13,7 @@
             {!! Form::hidden('socialshare', $webContent->get('socialshare'), ['id'=>"socialshare"]) !!}
             {!! Form::hidden('activecomments', $webContent->get('activecomments'), ['id'=>"activecomments"]) !!}
             {!! Form::hidden('sethits', $webContent->get('sethits'), ['id'=>"sethits"]) !!}
+            {!! Form::hidden('syntax', $webContent->get('syntax'), ['id'=>"syntax"]) !!}
 
             <div class="form-group">
                 <label for="id" class="col-sm-2 control-label">Web content</label>
@@ -111,6 +112,13 @@
                     {!! Form::select('sethits_add', ['Disabilitato','Abilitato'] , $webContent->get('sethits') , ['class' => "form-control input-sm", 'id'=>"sethits_add"]) !!}
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="syntax_high" class="col-sm-2 control-label">Evidenzia sintassi</label>
+                <div class="col-sm-10">
+                    {!! Form::select('syntax_high', ['Disabilitata','Abilitata'] , $webContent->get('syntax') , ['class' => "form-control input-sm", 'id'=>"syntax_high"]) !!}
+                </div>
+            </div>
         </form>
 
     </div>
@@ -165,6 +173,10 @@
 
     $("#sethits_add").change(function() {
         $("#sethits").val($("#sethits_add").find('option:selected').val());
+    });
+
+    $("#syntax_high").change(function() {
+        $("#syntax").val($("#syntax_high").find('option:selected').val());
     });
 
 

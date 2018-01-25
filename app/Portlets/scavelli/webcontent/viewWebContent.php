@@ -15,6 +15,11 @@ class viewWebContent extends Portlet {
         if ($this->config('socialshare')) {
             $this->theme->addExJs($this->getPath().'js/socialshare.js');
         }
+        if ($this->theme && $this->config('syntax')) {
+            $this->theme->addExJs($this->getPath().'js/prism.js');
+            $this->theme->addExCss($this->getPath().'css/prism.css');
+        }
+
     }
 
     public function getContent() {
