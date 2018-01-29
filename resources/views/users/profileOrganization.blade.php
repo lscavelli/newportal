@@ -3,8 +3,8 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Organizzazioni','/admin/organizations')
-        ->add('Profilo')
+    {!! $breadcrumb->add(__('Organizzazioni'),'/admin/organizations')
+        ->add(__('Profilo'))
         ->setTcrumb($organization->name)
         ->render() !!}
 @stop
@@ -19,10 +19,10 @@
 
             {!!
                 $composer->boxProfile([
-                    'subTitle' =>(($filial = $organization->parent()->pluck('name')->first()) ? 'Filiale di: '.$filial : null),
+                    'subTitle' =>(($filial = $organization->parent()->pluck('name')->first()) ? __('Filiale di').': '.$filial : null),
                     'listMenu'=>[
-                        'Creato il'=>Carbon\Carbon::parse($organization->created_at)->format('d/m/Y'),
-                        'Modificato il'=>Carbon\Carbon::parse($organization->updated_at)->format('d/m/Y')
+                        __('Creato il')=>Carbon\Carbon::parse($organization->created_at)->format('d/m/Y'),
+                        __('Modificato il')=>Carbon\Carbon::parse($organization->updated_at)->format('d/m/Y')
                     ],
                     'description'=>$organization->description,
                     'urlEdit'=>url(Request::getBasePath().'/admin/organizations/edit', $organization->id)
@@ -38,11 +38,11 @@
                     'color'=> 'green',
                     'title'=>$organization->id." - ".$organization->name,
                     'listMenu'=>[
-                        'Lista organizzazioni'=>url('/admin/organizations'),
+                        __('Lista organizzazioni')=>url('/admin/organizations'),
                         'divider'=>"divider",
-                        'Modifica'=>url('/admin/organizations/edit',$organization->id),
-                        'Assegna utenti'=>url('/admin/organizations/assignUser',$organization->id),
-                        'Assegna filiali'=>url('/admin/organizations/assignFilial',$organization->id)
+                        __('Modifica')=>url('/admin/organizations/edit',$organization->id),
+                        __('Assegna utenti')=>url('/admin/organizations/assignUser',$organization->id),
+                        __('Assegna filiali')=>url('/admin/organizations/assignFilial',$organization->id)
                     ],
                     'urlNavPre'=>url('/admin/organizations/profile',$pag['preid']->id),
                     'urlNavNex'=>url('/admin/organizations/profile',$pag['nexid']->id),
@@ -51,18 +51,18 @@
 
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#filials" data-toggle="tab" aria-expanded="true">Filiali presenti @if(isset($listFilials))<span class="label label-success">{{$listFilials->count()}}</span>@endif</a></li>
-                    <li><a href="#users" data-toggle="tab">Membri dell'organizzazione @if(isset($listUsers))<span class="label label-success">{{$listUsers->count()}}</span>@endif</a></li>
+                    <li class="active"><a href="#filials" data-toggle="tab" aria-expanded="true">{{ __('Filiali presenti') }} @if(isset($listFilials))<span class="label label-success">{{$listFilials->count()}}</span>@endif</a></li>
+                    <li><a href="#users" data-toggle="tab">{{ __("Membri dell'organizzazione") }} @if(isset($listUsers))<span class="label label-success">{{$listUsers->count()}}</span>@endif</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="filials">
                         @if(isset($listFilials))
                             {!!
-                                $listFilials->columns(['id','name'=>'Nome','azioni'])
+                                $listFilials->columns(['id','name'=>__('Nome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($organization) {
-                                    return "<a href=\"/admin/organizations/removeFilial/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">Cancella</a>";
+                                    return "<a href=\"/admin/organizations/removeFilial/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}
@@ -73,10 +73,10 @@
                     <div class="tab-pane" id="users">
                         @if(isset($listUsers))
                             {!!
-                                $listUsers->columns(['id','nome','cognome','azioni'])
+                                $listUsers->columns(['id','nome'=>__('Nome'),'cognome'=>__('Cognome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($organization) {
-                                    return "<a href=\"/admin/organizations/". $organization->id."/removeUser/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">Cancella</a>";
+                                    return "<a href=\"/admin/organizations/". $organization->id."/removeUser/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}

@@ -3,8 +3,8 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('lista utenti','/admin/users')
-        ->add('Profilo')
+    {!! $breadcrumb->add(__('lista utenti'),'/admin/users')
+        ->add(__('Profilo'))
         ->setTcrumb($user->name)
         ->render() !!}
 @stop
@@ -23,9 +23,9 @@
                     'title'=>$user->name,
                     'subTitle' =>$user->email,
                     'listMenu'=>[
-                        'Creato il'=>Carbon\Carbon::parse($user->created_at)->format('d/m/Y'),
-                        'Modificato il'=>Carbon\Carbon::parse($user->updated_at)->format('d/m/Y'),
-                        'Stato'=>config('newportal.status_user')[$status_id],
+                        __('Creato il')=>Carbon\Carbon::parse($user->created_at)->format('d/m/Y'),
+                        __('Modificato il')=>Carbon\Carbon::parse($user->updated_at)->format('d/m/Y'),
+                        __('Stato')=>config('newportal.status_user')[$status_id],
                     ],
                     'urlEdit'=>url(Request::getBasePath().'/admin/users/edit', $user->id)
                     ])->render()
@@ -40,12 +40,12 @@
                     'type'=> 'primary',
                     'title'=>$user->id." - ".$user->name,
                     'listMenu'=>[
-                        'Lista utenti'=>url('/admin/users'),
+                        __('Lista utenti')=>url('/admin/users'),
                         'divider'=>"divider",
-                        'Modifica'=>url('/admin/users/edit',$user->id),
-                        'Attività'=>url('/admin/users/activity',$user->id),
-                        'Assegna permessi'=>url('/admin/users/assignPerm',$user->id),
-                        'Assegna ruoli'=>url('/admin/users/assignRole',$user->id)
+                        __('Modifica')=>url('/admin/users/edit',$user->id),
+                        __('Attività')=>url('/admin/users/activity',$user->id),
+                        __('Assegna permessi')=>url('/admin/users/assignPerm',$user->id),
+                        __('Assegna ruoli')=>url('/admin/users/assignRole',$user->id)
                     ],
                     'urlNavPre'=>url('/admin/users/profile',$pag['preid']->id),
                     'urlNavNex'=>url('/admin/users/profile',$pag['nexid']->id),
@@ -54,20 +54,20 @@
 
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#groups" data-toggle="tab" aria-expanded="true">Membro dei gruppi @if(isset($listGroups))<span class="label label-primary">{{$listGroups->total()}}</span>@endif</a></li>
-                    <li><a href="#organizations" data-toggle="tab">Membro delle org.ni @if(isset($listOrganizations))<span class="label label-primary">{{$listOrganizations->total()}}</span>@endif</a></li>
-                    <li><a href="#roles" data-toggle="tab">Ruoli assegnati @if(isset($listRoles))<span class="label label-primary">{{$listRoles->total()}}</span>@endif</a></li>
-                    <li><a href="#permissions" data-toggle="tab">Permessi assegnati @if(isset($listPermissions))<span class="label label-primary">{{$listPermissions->total()}}</span>@endif</a></li>
+                    <li class="active"><a href="#groups" data-toggle="tab" aria-expanded="true">{{ __('Membro dei gruppi') }} @if(isset($listGroups))<span class="label label-primary">{{$listGroups->total()}}</span>@endif</a></li>
+                    <li><a href="#organizations" data-toggle="tab">{{ __('Membro delle org.ni') }} @if(isset($listOrganizations))<span class="label label-primary">{{$listOrganizations->total()}}</span>@endif</a></li>
+                    <li><a href="#roles" data-toggle="tab">{{ __('Ruoli assegnati') }} @if(isset($listRoles))<span class="label label-primary">{{$listRoles->total()}}</span>@endif</a></li>
+                    <li><a href="#permissions" data-toggle="tab">{{ __('Permessi assegnati') }} @if(isset($listPermissions))<span class="label label-primary">{{$listPermissions->total()}}</span>@endif</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="groups">
                         @if(isset($listGroups))
                             {!!
-                                $listGroups->columns(['id','name'=>'Nome','azioni'])
+                                $listGroups->columns(['id','name'=>__('Nome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($user) {
-                                    return "<a href=\"/admin/groups/". $row['id'] ."/removeUser/".$user->id."\" class=\"btn btn-primary btn-xs pull-right\">Cancella</a>";
+                                    return "<a href=\"/admin/groups/". $row['id'] ."/removeUser/".$user->id."\" class=\"btn btn-primary btn-xs pull-right\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}
@@ -78,10 +78,10 @@
                     <div class="tab-pane" id="organizations">
                         @if(isset($listOrganizations))
                             {!!
-                                $listOrganizations->columns(['id','name'=>'Nome','azioni'])
+                                $listOrganizations->columns(['id','name'=>__('Nome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($user) {
-                                    return "<a href=\"/admin/organizations/". $row['id'] ."/removeUser/".$user->id."\" class=\"btn btn-primary btn-xs pull-right\">Cancella</a>";
+                                    return "<a href=\"/admin/organizations/". $row['id'] ."/removeUser/".$user->id."\" class=\"btn btn-primary btn-xs pull-right\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}
@@ -92,13 +92,13 @@
                     <div class="tab-pane" id="roles">
                         @if(isset($listRoles))
                             {!!
-                                $listRoles->columns(['id','name'=>'Nome','azioni'])
+                                $listRoles->columns(['id','name'=>__('Nome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($user) {
                                     if ($user->roles->contains('id',$row['id'])) {
-                                        return "<a href=\"/admin/users/". $user->id ."/removeRole/".$row['id']."\" class=\"btn btn-primary btn-xs pull-right\">Cancella</a>";
+                                        return "<a href=\"/admin/users/". $user->id ."/removeRole/".$row['id']."\" class=\"btn btn-primary btn-xs pull-right\">".__('Cancella')."</a>";
                                     }
-                                    return "<a href=\"#\" class=\"btn btn-primary btn-xs pull-right disabled\">Cancella</a>";
+                                    return "<a href=\"#\" class=\"btn btn-primary btn-xs pull-right disabled\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}
@@ -109,13 +109,13 @@
                     <div class="tab-pane" id="permissions">
                         @if(isset($listPermissions))
                             {!!
-                                $listPermissions->columns(['id','name'=>'Nome','azioni'])
+                                $listPermissions->columns(['id','name'=>__('Nome'),'azioni'=>__('Azioni')])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($user) {
                                     if ($user->permissions->contains('id',$row['id'])) {
-                                        return "<a href=\"/admin/users/". $user->id ."/removePermission/".$row['id']."\" class=\"btn btn-primary btn-xs pull-right\">Cancella</a>";
+                                        return "<a href=\"/admin/users/". $user->id ."/removePermission/".$row['id']."\" class=\"btn btn-primary btn-xs pull-right\">".__('Cancella')."</a>";
                                     }
-                                    return "<a href=\"#\" class=\"btn btn-primary btn-xs pull-right disabled\">Cancella</a>";
+                                    return "<a href=\"#\" class=\"btn btn-primary btn-xs pull-right disabled\">".__('Cancella')."</a>";
                                 })
                                 ->render()
                             !!}
@@ -129,18 +129,18 @@
             <!-- About Me Box -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_altridati" data-toggle="tab" aria-expanded="true">Altri dati</a></li>
-                    <li class=""><a href="#tab_activities" data-toggle="tab" aria-expanded="false">Attività @if(isset($listActivity))<span class="label label-primary">{{$listActivity->total()}}</span>@endif</a></li>
-                    <li class=""><a href="#tab_sessions" data-toggle="tab" aria-expanded="false">Sessioni attive @if(isset($listSessions))<span class="label label-primary">{{$listSessions->total()}}</span>@endif</a></li>
+                    <li class="active"><a href="#tab_altridati" data-toggle="tab" aria-expanded="true">{{ __('Altri dati') }}</a></li>
+                    <li class=""><a href="#tab_activities" data-toggle="tab" aria-expanded="false">{{ __('Attività') }} @if(isset($listActivity))<span class="label label-primary">{{$listActivity->total()}}</span>@endif</a></li>
+                    <li class=""><a href="#tab_sessions" data-toggle="tab" aria-expanded="false">{{ __('Sessioni attive') }} @if(isset($listSessions))<span class="label label-primary">{{$listSessions->total()}}</span>@endif</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_altridati">
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <strong><i class="fa fa-book margin-r-5"></i> Contatti</strong>
-                            <p class="text-muted">@if( !empty($user->telefono)) {{"Telefono: ".$user->telefono}} @endif</p>
+                            <strong><i class="fa fa-book margin-r-5"></i> {{ __('Contatti') }}</strong>
+                            <p class="text-muted">@if( !empty($user->telefono)) {{__('Telefono').": ".$user->telefono}} @endif</p>
                             <hr>
-                            <strong><i class="fa fa-map-marker margin-r-5"></i> Indirizzo</strong>
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> {{ __('Indirizzo') }}</strong>
                             <p class="text-muted">{{ $user->indirizzo }}</p>
                             <hr>
                             <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
@@ -151,7 +151,7 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_activities">
                         {!!
-                            $listActivity->columns(['id','created_at'=>'Data','description'=>'Attività','ip_address'=>'Ip'])
+                            $listActivity->columns(['id','created_at'=>__('Data'),'description'=>__('Attività'),'ip_address'=>'Ip'])
                             ->showActions(false)
                             ->showButtonNew(false)
                             ->customizes('created_at',function($row){
@@ -162,7 +162,7 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="tab_sessions">
                         {!!
-                             $listSessions->columns(['ip_address'=>'Ip','user_agent','last_activity'=>'Ultima attività','Azioni'])
+                             $listSessions->columns(['ip_address'=>'Ip','user_agent','last_activity'=>__('Ultima attività'),'azioni'=>__('Azioni')])
                              ->showButtonNew(false)
                              ->showActions(false)
                              ->showSearch(false)
@@ -170,8 +170,8 @@
                              ->customizes('last_activity',function($row){
                                  return Carbon\Carbon::createFromTimestamp($row['last_activity'])->format('d-m-Y H:i');
                              })
-                             ->customizes('Azioni',function($row){
-                                 return "<a href=\"#\" class=\"btn btn-danger btn-xs pull-right delete\" data-id=\"{$row['id']}\">Cancella</a>";
+                             ->customizes('azioni',function($row){
+                                 return "<a href=\"#\" class=\"btn btn-danger btn-xs pull-right delete\" data-id=\"{$row['id']}\">".__('Cancella')."</a>";
                              })->appends(['tab_sessions'=>1])->render()
                         !!}
                     </div>
