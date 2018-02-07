@@ -140,6 +140,9 @@ class contentList extends Portlet {
                     $builder = $builder->take($this->config('feed.feed_size'));
                     $feed = $this->buildFeedJson($builder->get());
                     header("Content-Type: application/json");
+                    header('Access-Control-Allow-Origin: *');
+                    header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+                    header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'); // allow certain headers
                     echo json_encode($feed);
                     exit;
                 }

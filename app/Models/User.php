@@ -50,7 +50,6 @@ class User extends Authenticatable
 
     /**
      * verifiche che l'utente sia attivo
-     * @return bool
      */
     public function isActive() {
        //return $this->status_id == 1;
