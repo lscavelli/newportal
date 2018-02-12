@@ -158,33 +158,6 @@ class viewWebContent extends Portlet {
             $cw->increment('hits');
         }
 
-        // se è richiesto nell'url un formato json trasformo e restituisco json
-        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        if ($this->request->has('json')) {
-            $author = "";
-            if(!empty($cw->user)){
-                $author = $cw->user->name;
-            }
-            $contentJson = [
-                'id' => $cw->id,
-                'title' => $cw->name,
-                'url' => url()->current(),
-                'image' => $cw->getImage(),
-                'content_html' => $return,
-                'date_created' => $cw->created_at->tz('UTC')->toRfc3339String(),
-                'date_modified' => $cw->updated_at->tz('UTC')->toRfc3339String(),
-                'author' => [
-                    'name' => $author
-                ],
-            ];
-            header("Content-Type: application/json");
-            header('Access-Control-Allow-Origin: *');
-            header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-            header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'); // allow certain headers
-            echo json_encode($contentJson);
-            exit;
-        }
-
         return $return;
     }
 

@@ -5,6 +5,7 @@
 /vendor
 /public/bower_components/
 /.idea
+/.vscode
 /.vagrant
 Homestead.json
 Homestead.yaml
