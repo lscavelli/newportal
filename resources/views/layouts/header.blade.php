@@ -50,7 +50,7 @@
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       Logout</a>
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                      {{ csrf_field() }}
+                      @csrf
                     </form>
                   @else
                     <a href="{{ url('admin/users/revert') }}" class="btn btn-default btn-flat">Ripristina Utente</a>

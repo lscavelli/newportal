@@ -25,10 +25,10 @@
                         return "<span class=\"pull-right-container\"><small class=\"label pull-right {$color}\">{$state}</small></span>";
                     })
                     ->customizes('updated_at',function($row){
-                        return Carbon\Carbon::parse($row['updated_at'])->format('d/m/Y');
+                        return $row['updated_at']->format('d/m/Y');
                     })
                     ->customizes('created_at',function($row){
-                        return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
+                        return $row['created_at']->format('d/m/Y');
                     })->render()
                 !!}
             </div> <!-- /.box -->

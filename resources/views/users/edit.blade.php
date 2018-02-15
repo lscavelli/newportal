@@ -80,7 +80,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <?php $datanascita = (isset($user->data_nascita)?Carbon\Carbon::parse($user->data_nascita)->format('d/m/Y'): null); ?>
+                                        <?php $datanascita = (isset($user->data_nascita)?$user->data_nascita->format('d/m/Y'): null); ?>
                                         {!! Form::text('data_nascita',$datanascita ,['class' => 'form-control pull-right date-picker', 'placeholder'=> __("Data di nascita"), 'id'=>'data_nascita']) !!}
                                     </div>
                                 </div>

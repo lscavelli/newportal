@@ -56,7 +56,7 @@ class UserController extends Controller {
     public function index(Request $request, listGenerates $list) {
         $users = $this->repo->paginate($request);
         $list->setModel($users);
-        return \View::make('users.list', compact('users','list'));
+        return view('users.list')->with(compact('users','list'));
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller {
         if (!empty($user->city_id)) {
             $cityOptions = $this->repo->setModel(City::class)->where("id", "=", $user->city_id)->pluck()->toArray();
         }
-        return \View::make('users.edit', compact('user','action','numOrgs','numGroups','countries','cityOptions'));
+        return view('users.edit')->with(compact('user','action','numOrgs','numGroups','countries','cityOptions'));
     }
 
     /**
@@ -82,6 +82,7 @@ class UserController extends Controller {
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
@@ -112,7 +113,7 @@ class UserController extends Controller {
     public function create()   {
         $user = new User(); $action = "UserController@store"; $cityOptions = [];
         $countries = $this->repo->setModel(new Country)->orderBy('name')->pluck()->toArray();
-        return \View::make('users.edit', compact('user','action','countries','cityOptions'));
+        return view('users.edit')->with(compact('user','action','countries','cityOptions'));
     }
 
     /**
@@ -191,7 +192,7 @@ class UserController extends Controller {
     public function showSessions(Request $request, listGenerates $list, $id = null) {
         $sessions = $this->listSessions($request,$id);
         $list->setModel($sessions); $list->setPrefixPage('_a');
-        return \View::make('users.sessions', compact('sessions','list'));
+        return view('users.sessions')->with(compact('sessions','list'));
     }
 
     /**
@@ -230,7 +231,7 @@ class UserController extends Controller {
         // --- Permessi ancora disponibili
         $permDispArray = $this->repo->setModel(new Permission())->all()->diff($ass)->toArray();
         $permissionDis = $this->repo->paginateArray($permDispArray,4,$request->page_b,'page_b');
-        return \View::make('users.assignPermUser', compact('permissionAss','permissionDis','user','pag','list'));
+        return view('users.assignPermUser')->with(compact('permissionAss','permissionDis','user','pag','list'));
     }
 
     /**
@@ -290,7 +291,7 @@ class UserController extends Controller {
         // --- Ruoli ancora disponibili
         $roleDispArray = $this->repo->setModel(new Role())->all()->diff($ass)->toArray();
         $roleDis = $this->repo->paginateArray($roleDispArray,4,$request->page_b,'page_b');
-        return \View::make('users.assignRoleUser', compact('roleAss','roleDis','user','pag','list'));
+        return view('users.assignRoleUser')->with(compact('roleAss','roleDis','user','pag','list'));
     }
 
     /**
@@ -366,7 +367,7 @@ class UserController extends Controller {
         $listPermissions = new listGenerates($this->repo->paginateArray($user->listPermissions()->toArray(),10,$request->page_d,'page_d'));
         $listActivity = (new listGenerates($this->listActivity($request, $id, 'page_e')))->setPrefixPage('_e');
         $listSessions = (new listGenerates($this->listSessions($request, $id, 'page_f')))->setPrefixPage('_f');
-        return \View::make('users.profile', compact(
+        return view('users.profile')->with(compact(
             'user',
             'listGroups',
             'listOrganizations',

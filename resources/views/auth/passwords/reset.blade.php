@@ -36,7 +36,7 @@
         <p class="login-box-msg">Reset Password</p>
 
         <form action="{{ url('/password/reset') }}" role="form" method="POST">
-            {{ csrf_field() }}
+            @csrf
             <input type="hidden" name="token" value="{{ $token }}">
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">

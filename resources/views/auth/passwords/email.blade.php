@@ -36,7 +36,7 @@
         <p class="login-box-msg">Reset Password</p>
 
         <form action="{{ url('/password/email') }}" role="form" method="POST">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group has-feedback">
                 <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required autofocus>
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

@@ -35,7 +35,7 @@
         <p class="login-box-msg">Sign in per avviare la tua sessione</p>
 
         <form action="{{ url('/register') }}" role="form" method="POST">
-            {{ csrf_field() }}
+            @csrf
 
             <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }} has-feedback">
                 <input id="nome" name="nome" type="text" class="form-control" placeholder="Nome" value="{{ old('nome') }}" required autofocus>
