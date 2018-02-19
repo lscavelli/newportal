@@ -24,7 +24,7 @@ class Content extends Model
 
     /**
      * restituisce tutte le categorie del content
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function categories() {
         return $this->morphToMany('App\Models\Content\Category', 'categorized')->withPivot('vocabulary_id');
