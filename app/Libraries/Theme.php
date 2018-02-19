@@ -215,7 +215,7 @@ class Theme {
         if (!empty($file)) {
             $type = '_ex'.$type;
             //if (!isset($this->$type[$index])) $this->$type[$index] = NULL;
-            if (!is_array($this->$type[$index])) $this->$type[$index] = [];
+            if (!isset($this->$type[$index])) $this->$type[$index] = [];
             if (!in_array($file,$this->$type[$index])) $this->$type[$index][] = $file;
         }
         return $this;
