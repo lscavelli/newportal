@@ -116,7 +116,9 @@ function docReady() {
             $(ctrl).mouseout(function(){
                 $(ctrl +' .field-actions').css({"display":"none"});
             });
-            $(ctrl +' .field-actions .del-button').click(function(){
+            $(ctrl +' .field-actions .del-button').on('click', function(e){
+                e.preventDefault();
+                console.log(ctrl);
                 if (confirm("Sei sicuro di voler cancellare la portlet?")) {
                     $(ctrl).remove();
                     if (pageid && pivotid){

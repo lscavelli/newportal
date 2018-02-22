@@ -36,6 +36,7 @@
     <link href="{{ $theme->url("css/grayscale-01264.css") }}" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="{{ $theme->url("vendor/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css">
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -69,7 +70,7 @@
     <script src="{{ $theme->url("vendor/bootstrap/js/bootstrap.min.js") }}"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="{{ asset("/node_modules/jquery.easing/jquery.easing.min.js") }}"></script>
 
     <!-- Theme JavaScript -->
     <script src="{{ $theme->url("js/grayscale.js") }}"></script>

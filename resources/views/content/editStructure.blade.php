@@ -68,13 +68,13 @@
 </style>
 @endpush
 @push('scripts')
-    <script src="{{ asset("/bower_components/formeo/dist/formeo.min.js") }}"></script>
+    <script src="{{ asset("/node_modules/formeo/dist/formeo.min.js") }}"></script>
     <script>
         $(document).ready(function () {
             let container = document.querySelector('.build-form');
             let formeoOpts = {
                 container: container,
-                svgSprite: '{{ asset("/bower_components/formeo/dist/formeo-sprite.svg") }}',
+                svgSprite: '{{ asset("/node_modules/formeo/dist/formeo-sprite.svg") }}',
                 debug: false,
                 i18n: {
                     location: '{{ asset("/lang/formeo") }}/',

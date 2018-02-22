@@ -172,9 +172,9 @@
 @include('users.avatar')
 @stop
 @section('style')
-    <link rel="stylesheet" href="{{ asset("/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("/node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/css/custom.datetimepicker.css") }}">
-    {{ Html::style('/bower_components/select2/dist/css/select2.min.css') }}
+    {{ Html::style('/node_modules/select2/dist/css/select2.min.css') }}
     <style>
         .skin-purple-light, .main-header, .navbar {
             background-color: #2C3E50!important;
@@ -186,10 +186,10 @@
     </style>
 @stop
 @section('scripts')
-    <script src="{{ asset("/bower_components/moment/min/moment.min.js") }}"></script>
-    <script src="{{ asset("/bower_components/moment/locale/it.js") }}"></script>
-    <script src="{{ asset("/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js") }}"></script>
-    {{ Html::script('/bower_components/select2/dist/css/select2.min.js') }}
+    <script src="{{ asset("/node_modules/moment/min/moment.min.js") }}"></script>
+    <script src="{{ asset("/node_modules/moment/locale/it.js") }}"></script>
+    <script src="{{ asset("/node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js") }}"></script>
+    {{ Html::script('/node_modules/select2/dist/css/select2.min.js') }}
     <script>
         //moment.locale('it');
         //Date Time Picker

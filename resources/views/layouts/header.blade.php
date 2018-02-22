@@ -2,7 +2,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="{{ asset("/bower_components/AdminLTE/index2.html") }}" class="logo">
+    <a href="{{ asset("/node_modules/admin-lte/index2.html") }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">N<b>PL</b></span>
       <!-- logo for regular state and mobile devices -->

@@ -69,7 +69,8 @@ class UserController extends Controller {
         $action = ["UserController@update", $id];
         $numOrgs = $this->listOrganizations($user)->count();
         $numGroups = $this->listGroups($user)->count();
-        $countries = $this->repo->setModel(Country::class)->orderBy('name')->pluck()->toArray();
+        $countries = [""];
+        $countries += $this->repo->setModel(Country::class)->orderBy('name')->pluck()->toArray();
         $cityOptions = [];
         if (!empty($user->city_id)) {
             $cityOptions = $this->repo->setModel(City::class)->where("id", "=", $user->city_id)->pluck()->toArray();

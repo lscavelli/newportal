@@ -90,11 +90,11 @@
 
 @section('style')
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/plugins/iCheck/square/blue.css")}}">
+    <link rel="stylesheet" href="{{ asset("/node_modules/admin-lte/plugins/iCheck/square/blue.css")}}">
 @stop
 @section('scripts')
     <!-- iCheck -->
-    <script src="{{asset("/bower_components/admin-lte/plugins/iCheck/icheck.min.js")}}"></script>
+    <script src="{{asset("/node_modules/admin-lte/plugins/iCheck/icheck.min.js")}}"></script>
     <script>
         $(function () {
             $('input').iCheck({

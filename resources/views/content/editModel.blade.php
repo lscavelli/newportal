@@ -84,7 +84,7 @@
 @stop
 @section('scripts')
 
-    <script src="{{ asset("/bower_components/ace-builds/src-noconflict/ace.js") }}"></script>
+    <script src="{{ asset("/node_modules/ace-builds/src-noconflict/ace.js") }}"></script>
 
     <script>
         var content = $("#content");

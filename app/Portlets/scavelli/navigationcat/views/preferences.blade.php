@@ -39,7 +39,7 @@
 @endsection
 
 @push('style')
-    {{ Html::style('/bower_components/AdminLTE/plugins/select2/select2.min.css') }}
+    {{ Html::style('/node_modules/select2/dist/css/select2.min.css') }}
     <Style>
         .select2-container--default .select2-selection--multiple .select2-selection__choice {
             color: #555;
@@ -48,7 +48,7 @@
 @endpush
 
 @push('scripts')
-    {{ Html::script('/bower_components/AdminLTE/plugins/select2/select2.min.js') }}
+    {{ Html::script('/node_modules/select2/dist/js/select2.min.js') }}
     <script type="text/javascript">
 
         var $vocMulti = $('.vocsel').select2({vocabularies: true});
