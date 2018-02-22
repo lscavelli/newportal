@@ -12,7 +12,7 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
@@ -50,7 +50,7 @@
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                       Logout</a>
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                      {{ csrf_field() }}
+                      @csrf
                     </form>
                   @else
                     <a href="{{ url('admin/users/revert') }}" class="btn btn-default btn-flat">Ripristina Utente</a>

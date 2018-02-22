@@ -14,7 +14,7 @@
                     ->actions(['profile'=>__('Profilo'),'activity'=>__('Attività'),
                     'assignRole'=>__('Assegna ruoli'),'assignPerm'=>__('Assegna permessi'),'impersonate'=>__('Impersona Utente')])
                     ->customizes('created_at',function($row){
-                        return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
+                        return $row['created_at']->format('d/m/Y');
                     })->render()
                 !!}
             </div> <!-- /.box -->

@@ -54,7 +54,7 @@
     <legend style="font-size: 14px!important; border-bottom: 2px solid #3c8dbc;!important; margin-bottom: 20px!important;" ><span Style="color: white; background-color: #3c8dbc; padding: 3px;">Seleziona contenuto web:</span></legend>
     <div class="box-body" style="margin-right: 22px">
         <form action="/admin/pages/{{ $webContent->get('portlet')->pivot->page_id }}/configPortlet/{{ $webContent->get('portlet')->pivot->id }}" method="POST" id="selectStructure" class="form-horizontal">
-            {{ csrf_field() }}
+            @csrf
             <div class="form-group">
                 <label for="structure_id" class="col-sm-2 control-label">Struttura</label>
                 <div class="col-sm-10">

@@ -59,10 +59,10 @@
     <!-- /.row -->
 @stop
 @push('style')
-    {{ Html::style('/bower_components/AdminLTE/plugins/select2/select2.min.css') }}
+    {{ Html::style('/bower_components/select2/dist/css/select2.min.css') }}
 @endpush
 @push('scripts')
-    {{ Html::script('/bower_components/AdminLTE/plugins/select2/select2.min.js') }}
+    {{ Html::script('/bower_components/select2/dist/js/select2.min.js') }}
     <script>
         $(".js-example-basic-single").select2({
             minimumInputLength: 3,

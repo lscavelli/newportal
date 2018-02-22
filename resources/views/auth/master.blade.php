@@ -15,9 +15,7 @@
   <link rel="stylesheet" href="{{ asset("/bower_components/Ionicons/css/ionicons.min.css") }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css") }}">
-  <!-- AdminLTE Skins -->
-  <link rel="stylesheet" href="{{ asset("/bower_components/admin-lte/dist/css/skins/skin-blue.min.css") }}">
-  <link rel="stylesheet" href="{{ asset("/css/custom.css") }}">
+
   @yield('style')
   @stack('style')
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,17 +25,18 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+
+<body class="hold-transition login-page">
   @yield('body')
-</body>
-<!-- REQUIRED JS SCRIPTS -->
-<!-- jQuery 2.2.4 -->
-<script src="{{ asset("/bower_components/jquery/dist/jquery.min.js") }}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset("/bower_components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset("/bower_components/admin-lte/dist/js/adminlte.min.js") }}"></script>
-@yield('scripts')
-@stack('scripts')
+
+  <!-- REQUIRED JS SCRIPTS -->
+  <!-- jQuery 2.2.4 -->
+  <script src="{{ asset("/bower_components/jquery/dist/jquery.min.js") }}"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="{{ asset("/bower_components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{ asset("/bower_components/admin-lte/dist/js/adminlte.min.js") }}"></script>
+  @yield('scripts')
+  @stack('scripts')
 </body>
 </html>

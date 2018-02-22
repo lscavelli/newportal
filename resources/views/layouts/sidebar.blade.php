@@ -32,7 +32,7 @@
 
     $navigation->prefix('admin')->add([
       'MAIN NAVIGATION'=>['class'=>'header'],
-      'Dashboard'=>['icon'=>'fa-dashboard','url'=>'/dashboard','class'=>'treeview'],
+      'Dashboard'=>['icon'=>'fa-dashboard','url'=>'/dashboard'],
       'ADMINISTRATOR'=>['class'=>'header'],
       'Content'=>['class'=>'treeview','icon'=>'fa-laptop','submenu'=>[
           'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies','Categorie'=>'/categories',

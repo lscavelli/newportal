@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="myModalLabel">Seleziona Portlet</h4>
             </div>
             <form id="PortletForm" enctype="multipart/form-data" action="{{ url('/admin/portlets/store') }}" method="post">
-                {!! csrf_field() !!}
+                @csrf
                 <div class="modal-body">
                     <p class="text_img">Seleziona localmente la tua Portlet</p>
                     <div class="form-group">
