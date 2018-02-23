@@ -48,6 +48,7 @@ class navigationCat extends Portlet {
         }
 
         $categories = $builder->get();
+        if ($categories->count()<1) return;
         $nav = new navigation();
         foreach($categories as $category) {
             $this->menu = [$category->name=>['class'=>'treeview','icon'=>'fa-laptop']];
@@ -61,7 +62,7 @@ class navigationCat extends Portlet {
         }
         //dd($nav->getNav());
         $title = $this->config['title'];
-        return view('navigationcat::navCatGrey')->with(compact('nav','title'));
+        return view('navigationcat::navCatGrey')->with(compact('nav','title'))->render();
     }
 
     public function submenu($categories) {

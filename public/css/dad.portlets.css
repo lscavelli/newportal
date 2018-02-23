@@ -185,5 +185,5 @@
 }
 
 .noset:after {
-    content: 'New Portlet';
+    /*content: 'New Portlet';*/
 }

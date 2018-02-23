@@ -23,7 +23,9 @@ function docReady() {
         activeClass: "activeDroppable",
         hoverClass: "hoverDroppable",
         accept: ":not(.ui-sortable-helper)",
-        drop: function( event, ui ) {
+
+        drop: function() {
+            alert("dropped");
             //var draggable = ui.draggable;
             //var fieldtype = $(draggable).attr("fieldtype");
             //alert(JSON.stringify(fieldtype));
@@ -31,7 +33,6 @@ function docReady() {
             //$( "<div  class='fld-extensive' fieldtype='"+fieldtype+"'>" +
             //        "</div>").html( draggable.html()+"<div class='sposta'>X</div>"+"<div class='cancella'>X</div>").appendTo( this );
         },
-
         out: function( event, ui ) {
             //cancella portlet
             //$(this).css("background-color", "");
@@ -54,7 +55,7 @@ function docReady() {
                 $(ui.item).removeClass('fld ui-draggable ui-draggable-handle').removeAttr('Style').addClass('fld-extensive');
                 $(ui.item).addClass('noset');
                 $(ui.item).attr('data-pageid',$(this).data('page'));
-                $(ui.item).html('');
+                //$(ui.item).html();
             }
             //$.cookie('splash-cookie', getItems('splash'));
             var data = [];
@@ -81,7 +82,7 @@ function docReady() {
                 type: 'POST',
                 dataType: 'json',
             }).done(function (response) {
-                console.log(response);
+                //console.log(response);
                 if (!$(ui.item)[0].hasAttribute('id') && response.last_id) {
                     ++_ctrl_index;
                     $(ui.item)[0].id = 'ctrl_'+_ctrl_index;
@@ -89,54 +90,64 @@ function docReady() {
                     $(ui.item).attr('data-pivotid',response.last_id);
                     $(ui.item).removeAttr("data-portlet_id");
                     $(ui.item).removeData("portlet_id");
-                    updateControls();
+                    updateControl($(ctrl));
                     eventClick(ctrl);
                 }
             }).fail(function(response){
                 console.log(JSON.stringify(response)+' - Chiamata fallita');
             });
         },
+        receive: function( event, ui ) {
+            //console.log($(ui.item).data('portlet_id'));
+        }
     }).disableSelection();
 
-    updateControls();
+    updateAllOptions();
     eventClick(".fld-extensive .field-actions");
 
-    function updateControls() {
+    /**
+     * cicla sulle portlet presenti nella pagina web
+     *
+     */
+    function updateAllOptions() {
         $('.fld-extensive').each(function() {
-            var id = $(this).attr('id');
-            var pageid = $(this).data('pageid');
-            var pivotid = $(this).data('pivotid');
-            var ctrl = "#"+id;
-            if (!($(ctrl).children('.field-actions').length > 0))  {
-                $(ctrl).append(getOptions(id));
-            }
-            $(ctrl).mouseover(function() {
-                $(ctrl +' .field-actions').css({"display":"inline"});
-            });
-            $(ctrl).mouseout(function(){
-                $(ctrl +' .field-actions').css({"display":"none"});
-            });
-            $(ctrl +' .field-actions .del-button').on('click', function(e){
-                e.preventDefault();
-                console.log(ctrl);
-                if (confirm("Sei sicuro di voler cancellare la portlet?")) {
-                    $(ctrl).remove();
-                    if (pageid && pivotid){
-                        $.getJSON ("/admin/pages/"+pageid+"/removePivotId/"+pivotid);
-                    }
-                } else {
-                    return false;
-                }
-            });
-            $(ctrl).on('mouseover', function(e){
-                e.preventDefault();
-                $(ctrl +' .edit-button').css({"display":"inline"});
-            });
+            updateControl($(this));
+        });
+    }
 
-            $(ctrl).on('mouseout', function(e){
-                e.preventDefault();
-                $(ctrl +' .edit-button').css({"display":"none"});
-            });
+    function updateControl(object) {
+        var id = object.attr('id');
+        var pageid = object.data('pageid');
+        var pivotid = object.data('pivotid');
+        var ctrl = "#"+id;
+        if (!($(ctrl).children('.field-actions').length > 0))  {
+            $(ctrl).append(getOptions(id));
+        }
+        $(ctrl).mouseover(function() {
+            $(ctrl +' .field-actions').css({"display":"inline"});
+        });
+        $(ctrl).mouseout(function(){
+            $(ctrl +' .field-actions').css({"display":"none"});
+        });
+        $(ctrl +' .field-actions .del-button').on('click', function(e){
+            e.preventDefault();
+            if (confirm("Sei sicuro di voler cancellare la portlet?")) {
+                $(ctrl).remove();
+                if (pageid && pivotid){
+                    $.getJSON ("/admin/pages/"+pageid+"/removePivotId/"+pivotid);
+                }
+            } else {
+                return false;
+            }
+        });
+        $(ctrl).on('mouseover', function(e){
+            e.preventDefault();
+            $(ctrl +' .edit-button').css({"display":"inline"});
+        });
+
+        $(ctrl).on('mouseout', function(e){
+            e.preventDefault();
+            $(ctrl +' .edit-button').css({"display":"none"});
         });
     }
 

@@ -16,7 +16,8 @@ class listOrganizations extends Portlet {
 
     public function getContent() {
         $organizations = $this->rp->whereNull('parent_id')->get();
-        return view('organizations::listOrganization')->with(['organizations'=>$organizations,'title'=>'test title']);
+        if ($organizations->count()<1) return;
+        return view('organizations::listOrganization')->with(['organizations'=>$organizations,'title'=>'test title'])->render();
     }
 
     public function configPortlet($portlet) {
