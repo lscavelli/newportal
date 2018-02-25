@@ -25,7 +25,6 @@ function docReady() {
         accept: ":not(.ui-sortable-helper)",
 
         drop: function() {
-            alert("dropped");
             //var draggable = ui.draggable;
             //var fieldtype = $(draggable).attr("fieldtype");
             //alert(JSON.stringify(fieldtype));

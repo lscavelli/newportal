@@ -182,6 +182,7 @@
     padding-top:15px;
     font-weight: bold;
     background-color: rgba(236, 240, 245, 0.4);
+    text-align: center;
 }
 
 .noset:after {

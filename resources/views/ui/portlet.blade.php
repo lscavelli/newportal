@@ -1,3 +1,3 @@
-
-<h4>Portlet id: {{ $portlet->id }} - {{ $portlet->description }}</h4>
-<p>Assegnazione id: {{ $portlet->pivot->id }}</p>
+<div style="text-align: center">
+<h4><i class="fa fa-cubes" aria-hidden="true"></i> Portlet n. {{ $portlet->pivot->id }}</h4>
+<p>{{ $portlet->description }}<br />Tipo portlet {{ $portlet->id }}</p></div>

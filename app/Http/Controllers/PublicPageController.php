@@ -36,7 +36,6 @@ class PublicPageController extends Controller {
         $listPortlets = $page->portlets;
         // ricavo le portlets associate alla pagina
         foreach ($listPortlets as $portlet) {
-            dd($portlet);
             $data = $setting = $portlet->pivot->toArray();
             $data['title'] = ($portlet->pivot->title) ?: $portlet->title;
             $data['template'] = $portlet->pivot->template ?: config('newportal.partial-default');

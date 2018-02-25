@@ -21,6 +21,8 @@
                         </a>
                         @endif
                     @endif
+                @else
+                    ><a href="{{$nav->prefix}}{{ $item['url'] }}"><i class="fa {{ $item['icon'] or "fa-circle-o"}}"></i><span>{{ $title }}</span></a>
                 @endif
             @else
                 ><a href="{{$nav->prefix}}{{ $item }}"><i class="fa fa-circle-o"></i><span>{{ $title }}</span></a>

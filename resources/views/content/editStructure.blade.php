@@ -74,7 +74,7 @@
             let container = document.querySelector('.build-form');
             let formeoOpts = {
                 container: container,
-                svgSprite: '{{ asset("/node_modules/formeo/dist/formeo-sprite.svg") }}',
+                svgSprite: '{{ asset("/vendor/formeo/assets/formeo-sprite.svg") }}',
                 debug: false,
                 i18n: {
                     location: '{{ asset("/lang/formeo") }}/',

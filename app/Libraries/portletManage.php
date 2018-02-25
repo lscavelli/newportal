@@ -33,6 +33,7 @@ class PortletManage {
     /**
      * Upload della portlet
      * @param $rp
+     * @throws Exception
      */
     public function uploadPortlet($rp) {
         // Prende il file dalla request
@@ -156,7 +157,9 @@ class PortletManage {
 
     /**
      * restituisce il path impostato nel config della portlet
-     * @return mixed|null
+     * @param null $path
+     * @return mixed
+     * @throws Exception
      */
     private function getPathConfig($path=null) {
         $pathCons = null;
@@ -173,6 +176,7 @@ class PortletManage {
      * @param $id
      * @param $rp
      * @return bool
+     * @throws Exception
      */
     public function uninstallPortlet($id, $rp) {
 

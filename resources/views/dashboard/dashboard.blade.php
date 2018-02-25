@@ -92,7 +92,7 @@
 @endsection
 @section('scripts')
 	<!-- ChartJS 1.0.1 -->
-	{!! Html::script("/node_modules/admin-lte/chart.js/Chart.min.js") !!}
+	{!! Html::script("/node_modules/chart.js/Chart.min.js") !!}
 <script>
     $(function () {
         //--------------

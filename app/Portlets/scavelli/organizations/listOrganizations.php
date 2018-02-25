@@ -21,7 +21,7 @@ class listOrganizations extends Portlet {
     }
 
     public function configPortlet($portlet) {
-        return "Autore della Portlet: ".$portlet->author;
+        return "Under Costruction - Autore della Portlet: ".$portlet->author;
         // TODO: Implement configPortlet() method.
     }
 }
