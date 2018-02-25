@@ -28,6 +28,8 @@ class navigationTag extends Portlet {
         }
 
         $tags = $this->rp->get();
+        if($tags->count()<1) return;
+
         $nav = new navigation();
         foreach($tags as $tag) {
             $this->menu = [$tag->name=>['class'=>'treeview','icon'=>'fa-laptop']];
@@ -37,7 +39,7 @@ class navigationTag extends Portlet {
         }
         //dd($nav->getNav());
         $title = $this->config['title'];
-        return view('navigationtag::navTagGrey')->with(compact('nav','title'));
+        return view('navigationtag::navTagGrey')->with(compact('nav','title'))->render();
     }
 
     public function configPortlet($portlet) {

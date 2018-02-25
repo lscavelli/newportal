@@ -15,8 +15,8 @@ class Theme {
     protected $files;
     protected $theme;
     protected $layout;
-    protected $_excss;
-    protected $_exjs;
+    protected $_excss = [];
+    protected $_exjs = [];
     protected $_js;
     protected $_css;
     protected $arguments = array();
@@ -215,7 +215,7 @@ class Theme {
         if (!empty($file)) {
             $type = '_ex'.$type;
             //if (!isset($this->$type[$index])) $this->$type[$index] = NULL;
-            if (!is_array($this->$type[$index])) $this->$type[$index] = [];
+            if (!isset($this->$type[$index])) $this->$type[$index] = [];
             if (!in_array($file,$this->$type[$index])) $this->$type[$index][] = $file;
         }
         return $this;
@@ -361,7 +361,7 @@ class Theme {
     public function loadJS($position='body') {
         $js = array();
 
-        if(sizeof($this->_exjs[$position]) > 0) {
+        if(isset($this->_exjs[$position]) && sizeof($this->_exjs[$position]) > 0) {
             foreach ($this->_exjs[$position] as $src){
                 $js[] = "<script type=\"text/javascript\" src=\"$src\"></script>";
             }

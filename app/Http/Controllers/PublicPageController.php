@@ -46,6 +46,7 @@ class PublicPageController extends Controller {
             // verifica l'impostazione della portlet se deve essere visualizzata comunque
             // TODO:  INSERIRE NEL SETTING DELLA PORTLET - VISUALIZZA ANCHE SENZA CONTENUTI
             if (!$data['content'] && !auth()->check()) continue;
+            if (empty($data['content'])) $data['content'] = view('ui.portlet')->with(['portlet'=>$portlet]);
             $theme->addPortlet($data);
         }
         // aggiungo gli asset dei temi

@@ -16,11 +16,12 @@ class listOrganizations extends Portlet {
 
     public function getContent() {
         $organizations = $this->rp->whereNull('parent_id')->get();
-        return view('organizations::listOrganization')->with(['organizations'=>$organizations,'title'=>'test title']);
+        if ($organizations->count()<1) return;
+        return view('organizations::listOrganization')->with(['organizations'=>$organizations,'title'=>'test title'])->render();
     }
 
     public function configPortlet($portlet) {
-        return "Autore della Portlet: ".$portlet->author;
+        return "Under Costruction - Autore della Portlet: ".$portlet->author;
         // TODO: Implement configPortlet() method.
     }
 }

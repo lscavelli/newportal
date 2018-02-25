@@ -226,7 +226,7 @@ class contentList extends Portlet {
                 $url = (!empty($this->conf['inpage'])) ?  url($this->conf['inpage']) : url()->current();
                 //$data['_href'] = $url.'?'.http_build_query(['content'=>$rec->slug]);
                 $data['_href'] = $url."/".$rec->slug;
-                $data['_data_creazione'] = \Carbon\Carbon::parse($rec->created_at)->format('d/m/Y');
+                $data['_data_creazione'] = $rec->created_at->format('d/m/Y');
                 $data['_data_modifica'] = \Carbon\Carbon::parse($rec->updated_at)->format('d/m/Y');
                 return $this->applyModel($model,$data);
             }

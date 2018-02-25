@@ -98,8 +98,8 @@ abstract class abstractPortlet {
      * Imposta i meta tag della pagina corrente
      * @param $metaTag
      */
-    protected function setConfigTheme($metaTag) {
-        if (is_array($metaTag) && count($metaTag>0)) $this->theme->setArguments($metaTag);
+    protected function setConfigTheme(array $metaTag) {
+        if (count($metaTag)>0) $this->theme->setArguments($metaTag);
     }
 
     /**

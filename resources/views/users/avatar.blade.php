@@ -6,7 +6,7 @@
                 <h4 class="modal-title" id="myModalLabel">{{ __("Seleziona Avatar") }}</h4>
             </div>
             <form id="avatarForm" enctype="multipart/form-data" action="" method="post">
-                {!! csrf_field() !!}
+                @csrf
                 <div class="modal-body">
                     <p class="text_img">{{ __("Seleziona localmente il tuo avatar") }}</p>
                     <div class="form-group">

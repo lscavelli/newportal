@@ -15,12 +15,20 @@
     <link rel="shortcut icon" href="{{ $theme->url("ico/favicon.png") }}">
     <title>{{ $theme->get('title') }}</title>
 
+    <!-- Facebook meta tag -->
     <meta property="og:site_name" content="Newportal Platform">
     <meta property="og:title" content="{{ $theme->get('title') }}">
     <meta property="og:description" content="{{ $theme->get('description') }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ URL::full() }}">
     <meta property="og:image" content="@if(!empty($theme->get('image'))){{ $theme->get('image') }}@else{{ $theme->url("img/newportal_webpage.png") }}@endif">
+    <!-- Twitter meta tag -->
+    <meta name="twitter:image" content="@if(!empty($theme->get('image'))){{ $theme->get('image') }}@else{{ $theme->url("img/newportal_webpage.png") }}@endif">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="{{ $theme->get('description') }}">
+    <meta name="twitter:title" content="{{ $theme->get('title') }}">
+    <meta name="twitter:site" content="@newportalcms">
+    <meta name="twitter:creator" content="@lfgscavelli">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ $theme->url("vendor/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
@@ -28,6 +36,7 @@
     <link href="{{ $theme->url("css/grayscale-01264.css") }}" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="{{ $theme->url("vendor/font-awesome/css/font-awesome.min.css") }}" rel="stylesheet" type="text/css">
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -61,7 +70,7 @@
     <script src="{{ $theme->url("vendor/bootstrap/js/bootstrap.min.js") }}"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="{{ asset("/node_modules/jquery.easing/jquery.easing.min.js") }}"></script>
 
     <!-- Theme JavaScript -->
     <script src="{{ $theme->url("js/grayscale.js") }}"></script>

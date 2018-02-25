@@ -108,12 +108,12 @@
 
 @push('style')
         <!-- jQuery ui -->
-<link href="{{ asset("/bower_components/jquery-ui/themes/base/jquery-ui.min.css") }}" rel="stylesheet">
+<link href="{{ asset("/node_modules/jquery-ui-dist/jquery-ui.min.css") }}" rel="stylesheet">
 <link href="{{ asset("css/dad.portlets.css") }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
         <!-- jQuery ui -->
-<script src="{{ asset("/bower_components/jquery-ui/jquery-ui.min.js") }}"></script>
+<script src="{{ asset("/node_modules/jquery-ui-dist/jquery-ui.min.js") }}"></script>
 <script src="{{ asset("js/dad.portlets.js") }}"></script>
 @endpush

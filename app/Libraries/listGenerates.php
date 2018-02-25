@@ -26,7 +26,7 @@ class listGenerates
     public $showXpage = true;
     public $prefixPage = null;
     public $urlDelete = null;
-    public $splitButtons = null;
+    public $splitButtons = [];
     public $showActionsDefault = true;
 
     public function __construct(LengthAwarePaginator $model=null) {

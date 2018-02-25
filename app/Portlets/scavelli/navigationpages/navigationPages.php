@@ -44,7 +44,7 @@ class navigationPages extends Portlet {
         }
         //dd($nav->getNav());
         $title = $this->config['title'];
-        return view('navigationpages::navPagesGrey')->with(compact('nav','title'));
+        return view('navigationpages::navPagesGrey')->with(compact('nav','title'))->render();
     }
 
     public function submenu($pages) {

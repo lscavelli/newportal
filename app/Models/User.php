@@ -40,6 +40,11 @@ class User extends Authenticatable
      */
     //protected $guarded = []
 
+    protected $casts = [
+        'created_at' => 'date:d/m/Y', //'datetime:Y-m-d H:00'
+        'data_nascita' => 'date:d/m/Y',
+    ];
+
     /**
      * return the name attribute calculated
      * @return string
@@ -50,7 +55,6 @@ class User extends Authenticatable
 
     /**
      * verifiche che l'utente sia attivo
-     * @return bool
      */
     public function isActive() {
        //return $this->status_id == 1;

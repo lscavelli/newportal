@@ -436,7 +436,7 @@ class Repository implements RepositoryInterface {
         if (!is_null($id)) {
             // Escludo tutti i discendenti
             $IdDescendants = $this->getIdDescendants($id);
-            if (count($IdDescendants)>0) {
+            if (is_array($IdDescendants) && count($IdDescendants)>0) {
                 $this->whereNotIn('id',$IdDescendants);
             }
             $this->where('id','<>',$id);

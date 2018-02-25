@@ -14,7 +14,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '17/02/2017',
-            'description'   =>  '',
+            'description'   =>  'Lista delle organizzazioni presenti',
             'type'          =>  '1',
             'path'          =>  'scavelli\organizations'
         ],
