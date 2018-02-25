@@ -68,9 +68,11 @@ class Navigation {
     public function render($viewp = null) {
         $view = "ui.navigation";
         if (!empty($viewp)) $view = $viewp;
-        return View::make($view, [
+        $return = View::make($view, [
             'nav' => $this
         ])->render();
+        $this->removeAll();
+        return $return;
     }
 
     /**

@@ -1,6 +1,6 @@
 <h1># Newportal su laravel</h1>
-Percorso personale di apprendimento e sperimentazione dei framework Laravel 5.6 e Angular 5 e
-del Module Bundler webpack 3<br /><br />
+Percorso personale di apprendimento e sperimentazione dei framework Laravel 5.6 e Angular 6 e
+del Module Bundler webpack 4<br /><br />
 
 >Indirizzo web: http://newportalcms.com<br />
 >Changelog: http://newportalcms.com/changelog<br />
