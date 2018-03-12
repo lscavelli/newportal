@@ -212,29 +212,13 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('users/removePermission/{permission}/{user_id}', 'UserController@revokePermission');
         Route::get('users/removeRole/{role}/{user_id}', 'UserController@revokeRole');
 
-        Route::get('roles', ['as'=> 'roles', 'uses'=> 'RoleController@index']);
-        Route::post('roles', 'RoleController@index');
-        Route::get('roles/create', 'RoleController@create');
-        Route::post('roles/store', 'RoleController@store');
-        Route::get('roles/edit/{role_id}', 'RoleController@edit');
-        Route::post('roles/update/{role_id}', 'RoleController@update');
-        Route::post('roles/delete/{role_id}', 'RoleController@destroy');
+        Route::resource('roles','RoleController');
 
         Route::any('roles/assign/{role_id}', 'RoleController@assignPerm');
         Route::get('roles/{role_id}/addPermission/{permission_id}', 'RoleController@addPerm');
         Route::get('roles/{role_id}/removePermission/{permission_id}', 'RoleController@delPerm');
 
-        Route::get('roles/profile/{role_id}', 'RoleController@profile');
-
-        Route::get('permissions', ['as'=> 'permissions', 'uses'=> 'PermissionController@index']);
-        Route::post('permissions', 'PermissionController@index');
-        Route::get('permissions/create', 'PermissionController@create');
-        Route::post('permissions/store', 'PermissionController@store');
-        Route::get('permissions/edit/{permission_id}', 'PermissionController@edit');
-        Route::post('permissions/update/{permission_id}', 'PermissionController@update');
-        Route::post('permissions/delete/{permission_id}', 'PermissionController@destroy');
-
-        Route::get('permissions/profile/{permission_id}', 'PermissionController@profile');
+        Route::resource('permissions','PermissionController');
 
         Route::get('groups', ['as'=> 'groups', 'uses'=> 'GroupController@index']);
         Route::post('groups', 'GroupController@index');

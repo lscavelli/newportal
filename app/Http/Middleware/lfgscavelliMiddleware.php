@@ -18,7 +18,6 @@ class lfgscavelliMiddleware
     {
         if (Auth::guard($guard)->check()) {
             new \App\Libraries\FormComponents();
-            //app()->register(ComposerServiceProvider::class);
         }
         return $next($request);
     }

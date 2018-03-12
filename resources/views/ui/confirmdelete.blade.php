@@ -11,6 +11,7 @@
             <div class="modal-footer">
                 <form id="confirmForm" action="" method="post">
                     @csrf
+                    @method('DELETE')
                     <button type="submit" class="btn btn-danger"><span class="fa fa-check"></span> Si, Cancella</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-remove"></span> Annulla</button>
                 </form>
