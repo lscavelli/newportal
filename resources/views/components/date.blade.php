@@ -5,17 +5,17 @@
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </div>
-            <?php $date = (isset($value->date)?$value->date->format('d/m/Y'): null); ?>
+            <?php $date = (isset($value)?$value->format('d/m/Y'): null); ?>
             {{ Form::text($name, $date, array_merge(['class' => 'form-control pull-right date-picker','id'=>$name],$attributes)) }}
         </div>
     </div>
 </div>
 
-@section('dateStyle')
+@push('style')
     <link rel="stylesheet" href="{{ asset("/node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/css/custom.datetimepicker.css") }}">
-@stop
-@section('dateScript')
+@endpush
+@push('scripts')
     <script src="{{ asset("/node_modules/moment/min/moment.min.js") }}"></script>
     <script src="{{ asset("/node_modules/moment/locale/it.js") }}"></script>
     <script src="{{ asset("/node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js") }}"></script>
@@ -38,4 +38,4 @@
             });
         }
     </script>
-@stop
+@endpush

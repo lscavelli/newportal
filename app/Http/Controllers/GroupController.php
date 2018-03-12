@@ -52,7 +52,7 @@ class GroupController extends Controller
         $groups = $this->repo->paginate($request);
         $list = new \App\Libraries\listGenerates($groups);
         $user_group = $this->repo->get($user_group); // for column count user
-        return \View::make('users.listGroup', compact('groups','list','user_group'));
+        return view('users.listGroup', compact('groups','list','user_group'));
     }
 
     /**
@@ -60,8 +60,8 @@ class GroupController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function create()   {
-        $group = new Group(); $action = "GroupController@store";
-        return \View::make('users.editGroup', compact('group','action'));
+        $group = new Group();
+        return view('users.editGroup', compact('group'));
     }
 
     /**
@@ -74,7 +74,7 @@ class GroupController extends Controller
         $data = $request->all();
         $this->validator($data)->validate();
         $this->repo->create($data);
-        return redirect()->route('groups')->withSuccess('Gruppo creato correttamente.');
+        return redirect('admin/groups')->withSuccess('Gruppo creato correttamente.');
     }
 
     /**
@@ -84,8 +84,7 @@ class GroupController extends Controller
      */
     public function edit($id) {
         $group = $this->repo->find($id);
-        $action = ["GroupController@update",$id];
-        return \View::make('users.editGroup', compact('group','action'));
+        return view('users.editGroup', compact('group'));
     }
 
     /**
@@ -93,15 +92,15 @@ class GroupController extends Controller
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all();
         $data['id'] = $id;
         $this->validator($data,true)->validate();
         if ($this->repo->update($id,$data)) {
-            return redirect()->route('groups')->withSuccess('Gruppo aggiornato correttamente');
+            return redirect('admin/groups')->withSuccess('Gruppo aggiornato correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -111,9 +110,8 @@ class GroupController extends Controller
      */
     public function destroy($id)  {
         if ($this->repo->delete($id)) {
-            return redirect()->back()->withSuccess('Gruppo cancellato correttamente');
+            return redirect('admin/groups')->withSuccess('Gruppo cancellato correttamente');
         }
-        return redirect()->back();
     }
 
     /**
@@ -134,7 +132,7 @@ class GroupController extends Controller
         $usersDisArray = $this->repo->setModel(new User())->all()->diff($ass)->toArray();
         $usersDis = $this->repo->paginateArray($usersDisArray,10,$request->page_b,'page_b');
 
-        return \View::make('users.assignUserGroup', compact('usersAss','usersDis','group','pag','list'));
+        return view('users.assignUserGroup', compact('usersAss','usersDis','group','pag','list'));
     }
 
     /**
@@ -223,7 +221,7 @@ class GroupController extends Controller
         // --- Permessi ancora disponibili
         $permDispArray = $this->repo->setModel(new Permission())->all()->diff($permAss)->toArray();
         $permissionDis = $this->repo->paginateArray($permDispArray,4,$request->page_b,'page_b');
-        return \View::make('users.assignPermGroup', compact('permissionAss','permissionDis','group','pag','list'));
+        return view('users.assignPermGroup', compact('permissionAss','permissionDis','group','pag','list'));
     }
 
     /**
@@ -283,7 +281,7 @@ class GroupController extends Controller
         // --- Ruoli ancora disponibili
         $roleDispArray = $this->repo->setModel(new Role())->all()->diff($ass)->toArray();
         $roleDis = $this->repo->paginateArray($roleDispArray,4,$request->page_b,'page_b');
-        return \View::make('users.assignRoleGroup', compact('roleAss','roleDis','group','pag','list'));
+        return view('users.assignRoleGroup', compact('roleAss','roleDis','group','pag','list'));
     }
 
     /**
@@ -327,17 +325,17 @@ class GroupController extends Controller
 
     /**
      * Mostra il profilo del gruppo
-     * @param $Id
+     * @param $id
      * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function profile($Id, Request $request) {
-        $group = $this->repo->find($Id);
-        $pag['nexid'] = $this->repo->next($Id);
-        $pag['preid'] = $this->repo->prev($Id);
-        $listUsers = new listGenerates($this->repo->paginateArray($this->listUsers($Id)->toArray(),10,$request->page_a,'page_a'));
-        $listRoles = new listGenerates($this->repo->paginateArray($this->listRoles($Id)->toArray(),10,$request->page_b,'page_b'));
+    public function show($id, Request $request) {
+        $group = $this->repo->find($id);
+        $pag['nexid'] = $this->repo->next($id);
+        $pag['preid'] = $this->repo->prev($id);
+        $listUsers = new listGenerates($this->repo->paginateArray($this->listUsers($id)->toArray(),10,$request->page_a,'page_a'));
+        $listRoles = new listGenerates($this->repo->paginateArray($this->listRoles($id)->toArray(),10,$request->page_b,'page_b'));
         $listPermissions = new listGenerates($this->repo->paginateArray($group->listPermissions()->toArray(),10,$request->page_c,'page_c'));
-        return \View::make('users.profileGroup', compact('group','listUsers','listRoles','listPermissions','pag'));
+        return view('users.profileGroup', compact('group','listUsers','listRoles','listPermissions','pag'));
     }
 }

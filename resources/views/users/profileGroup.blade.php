@@ -26,7 +26,7 @@
                         __('Modificato il')=>Carbon\Carbon::parse($group->updated_at)->format('d/m/Y')
                     ],
                     'description'=>$group->description,
-                    'urlEdit'=>url(Request::getBasePath().'/admin/groups/edit', $group->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/groups/'.$group->id.'/edit')
                     ])->render()
              !!}
 
@@ -41,13 +41,13 @@
                     'listMenu'=>[
                         __('Lista gruppi')=>url('/admin/groups'),
                         'divider'=>"divider",
-                        __('Modifica')=>url('/admin/groups/edit',$group->id),
+                        __('Modifica')=>url('/admin/groups/'.$group->id.'/edit'),
                         __('Assegna utenti')=>url('/admin/groups/assign',$group->id),
                         __('Assegna permessi')=>url('/admin/groups/assignPerm',$group->id),
                         __('Assegna ruoli')=>url('/admin/groups/assignRole',$group->id)
                     ],
-                    'urlNavPre'=>url('/admin/groups/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/groups/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/groups',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/groups',$pag['nexid']->id),
                     ])->render()
              !!}
 

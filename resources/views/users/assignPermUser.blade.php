@@ -39,7 +39,7 @@
                         'listMenu'=>[
                             __('Lista utenti')=>url('/admin/users'),
                             'divider'=>"divider",
-                            __('Aggiorna')=>url('/admin/users/edit',$user->id),
+                            __('Modifica')=>url('/admin/users/'.$user->id.'/edit'),
                             __('Attività')=>url('/admin/users/activity',$user->id),
                             __('Assegna ruoli')=>url('/admin/users/assignRole',$user->id),
                             __('Profilo')=>url('/admin/users/profile',$user->id),

@@ -14,7 +14,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>__('Nome'),'parent_id'=>__('Filiale di'), 'type_id'=>__('Tipologia'),'numuser'=>__('Num. utenti')])
-                    ->actions(['profile'=>__('Profilo'),'assignUser'=>__('Assegna utenti'),'assignFilial'=>__('Assegna filiali')])
+                    ->actions([__('Profilo'),'assignUser'=>__('Assegna utenti'),'assignFilial'=>__('Assegna filiali')])
                     ->customizes('parent_id',function($row){
                         return $row->parent()->pluck('name')->first();
                     })

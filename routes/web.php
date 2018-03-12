@@ -177,8 +177,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
      */
     Route::group(['middleware' => ['can:profile,user_id']], function() {
         Route::get('users/profile/{user_id}', 'UserController@profile')->name('profile');
-        Route::post('users/edit/{user_id}/avatar', 'UserController@setAvatar');
-        Route::get('users/edit/{user_id}', 'UserController@edit');
+        Route::post('users/{user_id}/edit/avatar', 'UserController@setAvatar');
+        Route::get('users/{user_id}/edit', 'UserController@edit');
         Route::post('users/update/{user_id}', 'UserController@update');
     });
 
@@ -188,6 +188,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
      */
     Route::group(['middleware' => 'can:users-manage'], function() {
 
+        // Utenti
+        // *****************************************************************************
         Route::get('users', 'UserController@index')->name('users');
         Route::post('users', 'UserController@index');
         Route::get('users/impersonate/{user_id}', 'UserController@impersonateUser');
@@ -212,21 +214,21 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('users/removePermission/{permission}/{user_id}', 'UserController@revokePermission');
         Route::get('users/removeRole/{role}/{user_id}', 'UserController@revokeRole');
 
+        // Ruoli
+        // *****************************************************************************
         Route::resource('roles','RoleController');
 
         Route::any('roles/assign/{role_id}', 'RoleController@assignPerm');
         Route::get('roles/{role_id}/addPermission/{permission_id}', 'RoleController@addPerm');
         Route::get('roles/{role_id}/removePermission/{permission_id}', 'RoleController@delPerm');
 
+        // Permessi
+        // *****************************************************************************
         Route::resource('permissions','PermissionController');
 
-        Route::get('groups', ['as'=> 'groups', 'uses'=> 'GroupController@index']);
-        Route::post('groups', 'GroupController@index');
-        Route::get('groups/create', 'GroupController@create');
-        Route::post('groups/store', 'GroupController@store');
-        Route::get('groups/edit/{group_id}', 'GroupController@edit');
-        Route::post('groups/update/{group_id}', 'GroupController@update');
-        Route::post('groups/delete/{group_id}', 'GroupController@destroy');
+        // Gruppi di utenti
+        // *****************************************************************************
+        Route::resource('groups','GroupController');
 
         Route::any('groups/assign/{group_id}', 'GroupController@assignUser');
         Route::get('groups/{group_id}/addUser/{user_id}', 'GroupController@addUser');
@@ -241,15 +243,9 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('groups/{group_id}/addRole/{role_id}', 'GroupController@addRole');
         Route::get('groups/{group_id}/removeRole/{role_id}', 'GroupController@delRole');
 
-        Route::get('groups/profile/{group_id}', 'GroupController@profile');
-
-        Route::get('organizations', ['as'=> 'organizations', 'uses'=> 'OrganizationController@index']);
-        Route::post('organizations', 'OrganizationController@index');
-        Route::get('organizations/create', 'OrganizationController@create');
-        Route::post('organizations/store', 'OrganizationController@store');
-        Route::get('organizations/edit/{organization_id}', 'OrganizationController@edit');
-        Route::post('organizations/update/{organization_id}', 'OrganizationController@update');
-        Route::post('organizations/delete/{organization_id}', 'OrganizationController@destroy');
+        // Organizzazioni
+        // *****************************************************************************
+        Route::resource('organizations','OrganizationController');
 
         Route::any('organizations/assignFilial/{organization_id}', 'OrganizationController@assignFilial');
         Route::get('organizations/{organization_id}/addFilial/{filial_id}', 'OrganizationController@addFilial');
@@ -258,7 +254,6 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('organizations/{organization_id}/addUser/{user_id}', 'OrganizationController@addUser');
         Route::get('organizations/{organization_id}/removeUser/{user_id}', 'OrganizationController@delUser');
 
-        Route::get('organizations/profile/{organization_id}', 'OrganizationController@profile');
         Route::get('organizations/treeview', 'OrganizationController@treeViewOrg');
 
         Route::group(['namespace' => 'General'], function () {
