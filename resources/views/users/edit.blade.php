@@ -80,7 +80,7 @@
                     </ul>
                     @if($user->id)
                         <p><a href="#" class="btn btn-default btn-block selectAvatar" data-id="{!! $user->id !!}"><i class="fa fa-camera"></i> {{ __("Cambia Foto") }}</a></p>
-                        <a href="/admin/users/profile/{!! $user->id !!}" class="btn btn-primary btn-block"><b>{{ __("Profilo") }}</b></a>
+                        <a href="/admin/users/{!! $user->id !!}" class="btn btn-primary btn-block"><b>{{ __("Profilo") }}</b></a>
                     @endif
                 </div>
                 <!-- /.box-body -->

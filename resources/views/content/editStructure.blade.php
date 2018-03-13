@@ -16,33 +16,20 @@
 
             <div class="box box-primary" style="padding-top: 20px;">
                 <div class="box-body">
-                    {!! Form::model($structure, ['action' => $action,'id'=>'structureForm']) !!}
+                    {!! Form::model($structure, ['url'=>url('admin/structure',$structure->id),'id'=>'structureForm','class' => 'form-horizontal']) !!}
+                        @if(isset($structure->id))@method('PUT')@endif
 
-                    <div class="col-md-6">
-                        <input type="hidden" name="content" id="content"  value="">
-                        <div class="form-group">
-                            <label for="name">Nome</label>
-                            {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome", "id"=>'name']) !!}
+                        <div class="col-md-6">
+                            <input type="hidden" name="content" id="content"  value="">
+                            {!! Form::slText('name','Nome') !!}
+                            {!! Form::slSelect('status_id','Stato',config('newportal.status_general')) !!}
+                            {!! Form::slText('created_at','Creato',Carbon\Carbon::parse($structure->created_at)->format('d/m/Y - H:i'),['disabled'=>'']) !!}
+                            {!! Form::slText('updated_at','Modificato',Carbon\Carbon::parse($structure->updated_at)->format('d/m/Y - H:i'),['disabled'=>'']) !!}
                         </div>
-                        <div class="form-group">
-                            <label for="status_id">Stato</label>
-                            {!! Form::select('status_id', config('newportal.status_general') , \Request::input('status_id'), ['class' => "form-control input-sm", 'id'=>"status_id"]) !!}
+                        <div class="col-md-6">
+                            {!! Form::slTextarea('description','Descrizione') !!}
                         </div>
-                        <div class="form-group">
-                            {{ Form::label('created_at', "Creato il:") }}
-                            {!! Form::text('created_at',Carbon\Carbon::parse($structure->created_at)->format('d/m/Y - H:i'),['class' => 'form-control', "id"=>'created_at', 'disabled'=>'']) !!}
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('updated_at', "Aggiornato il:") }}
-                            {!! Form::text('updated_at',Carbon\Carbon::parse($structure->updated_at)->format('d/m/Y - H:i'),['class' => 'form-control', "id"=>'updated_at', 'disabled'=>'']) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="description">Descrizione</label>
-                            {!! Form::textarea('description',null,['class' => 'form-control', 'placeholder'=> "Descrizione"]) !!}
-                        </div>
-                    </div>
+
                     {!! Form::close() !!}
 
                 </div>

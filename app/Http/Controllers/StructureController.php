@@ -41,7 +41,7 @@ class StructureController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $list->setModel($this->repo->paginate($request));
-        return \View::make('content.listStructure', compact('list'));
+        return view('content.listStructure', compact('list'));
     }
 
     /**
@@ -49,8 +49,8 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function create()   {
-        $structure = new Structure(); $action = "StructureController@store";
-        return \View::make('content.editStructure', compact('structure','action'));
+        $structure = new Structure();
+        return view('content.editStructure', compact('structure'));
     }
 
     /**
@@ -62,9 +62,9 @@ class StructureController extends Controller {
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['user_id'] = \Auth::user()->id; $data['username'] = \Auth::user()->username; $data['type_id'] = 2; // content structure
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; $data['type_id'] = 2; // content structure
         $this->repo->create($data);
-        return redirect()->route('structure')->withSuccess('Strutura creata correttamente.');
+        return redirect('admin/structure')->withSuccess('Strutura creata correttamente.');
     }
 
     /**
@@ -73,8 +73,8 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id) {
-        $structure = $this->repo->find($id); $action = ["StructureController@update",$id];
-        return \View::make('content.editStructure', compact('structure','action'));
+        $structure = $this->repo->find($id);
+        return view('content.editStructure', compact('structure'));
     }
 
     /**
@@ -82,14 +82,14 @@ class StructureController extends Controller {
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
         if ($this->repo->update($id,$data)) {
-            return redirect()->route('structure')->withSuccess('Struttura aggiornata correttamente');
+            return redirect('admin/structure')->withSuccess('Struttura aggiornata correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**

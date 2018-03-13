@@ -47,8 +47,8 @@
                         __('Assegna permessi')=>url('/admin/users/assignPerm',$user->id),
                         __('Assegna ruoli')=>url('/admin/users/assignRole',$user->id)
                     ],
-                    'urlNavPre'=>url('/admin/users/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/users/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/users',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/users',$pag['nexid']->id),
                     ])->render()
              !!}
 

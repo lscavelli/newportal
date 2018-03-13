@@ -36,8 +36,8 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
+     * RegisterController constructor.
+     * @throws \Exception
      */
     public function __construct()
     {
@@ -101,7 +101,7 @@ class RegisterController extends Controller
         $user->status_id = 1;
         $user->save();
         $this->guard()->login($user);
-        return redirect()->route('profile',[$user->id])->withSuccess('L\'Email è stata confermata correttamente');
+        return redirect('admin/users/'.$user->id)->withSuccess('L\'Email è stata confermata correttamente');
     }
 
     /**

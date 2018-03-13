@@ -25,7 +25,7 @@
                         'Modificato il'=>Carbon\Carbon::parse($page->updated_at)->format('d/m/Y')
                     ],
                     'description'=>$page->description,
-                    'urlEdit'=>url(Request::getBasePath().'/admin/pages/edit', $page->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/pages/'.$page->id.'/edit')
                     ])->render()
              !!}
 
@@ -40,14 +40,14 @@
                     'listMenu'=>[
                         'Lista pagine'=>url('/admin/pages'),
                         'divider'=>"divider",
-                        'Modifica'=>url('/admin/pages/edit',$page->id),
+                        'Modifica'=>url('/admin/pages/'.$page->id.'/edit'),
                         'Crea pagina figlia'=>url('/admin/pages/create',$page->id),
                         'Duplica pagina'=>url('/admin/pages/duplicates',$page->id),
                         'divider1'=>"divider",
                         'Layout'=>url('/admin/pages/addLayout',$page->id),
                     ],
-                    'urlNavPre'=>url('/admin/pages/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/pages/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/pages',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/pages',$pag['nexid']->id),
                     ])->render()
              !!}
 
@@ -80,7 +80,7 @@
                     <i class="fa fa-code-fork"></i>
                     <h3 class="box-title">{{$titleGraph}}</h3>
                 </div>
-                <div class="tree">
+                <div class="sltree">
                     @include('ui.treeview',['nodes' => $graphPage])
                 </div>
             </div> <!-- /.box -->

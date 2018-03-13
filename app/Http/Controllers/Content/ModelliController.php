@@ -44,8 +44,7 @@ use App\Libraries\Helpers;
      * @return \Illuminate\Contracts\View\View
      */
     public function index($id, Request $request, listGenerates $list) {
-        $structure = $this->rp->setModel(new Structure())->find($id);
-        if (is_null($structure)) return;
+        $structure = $this->rp->setModel(Structure::class)->find($id);
         $list->setModel($this->rp->paginateArray($structure->models->toArray(),10,$request->page_a,'page_a'));
         return view('content.listModels')->with(compact('list','structure'));
     }
@@ -56,7 +55,7 @@ use App\Libraries\Helpers;
      */
     public function create($strutturaId) {
         $modello = new Modelli(); $action = "Content\\ModelliController@store";
-        $structure = $this->rp->setModel(new Structure())->find($strutturaId);
+        $structure = $this->rp->setModel(Structure::class)->find($strutturaId);
         $listVariable = $this->listVariable($structure);
         return view('content.editModel')->with(compact('modello','action','structure','listVariable'));
     }
@@ -86,19 +85,18 @@ use App\Libraries\Helpers;
         return view('content.editModel')->with(compact('modello','action','structure','listVariable'));
     }
 
-    /**
-     * Aggiorna i dati nel DB
-     * @param $id
-     * @param Request $request
-     * @return $this
-     */
+        /**
+         * Aggiorna i dati nel DBm $id
+         * @param Request $request
+         * @return $this
+         * @throws \Illuminate\Validation\ValidationException
+         */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
         if ($this->rp->update($id,$data)) {
             return redirect()->route('models',['structure_id' => $request->structure_id])->withSuccess('Modello aggiornato correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -106,7 +104,7 @@ use App\Libraries\Helpers;
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($structureId,$id)  {
+    public function destroy($structureid,$id)  {
         if ($this->rp->delete($id)) {
             return redirect()->back()->withSuccess('Modello cancellato correttamente');
         }

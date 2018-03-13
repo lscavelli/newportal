@@ -93,7 +93,7 @@
                     <i class="fa fa-code-fork"></i>
                     <h3 class="box-title">{{$titleGraph}}</h3>
                 </div>
-                <div class="tree">
+                <div class="sltree">
                     @include('ui.treeview',['nodes' => $graphorg])
                 </div>
             </div> <!-- /.box -->

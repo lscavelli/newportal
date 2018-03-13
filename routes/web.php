@@ -26,35 +26,21 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     Route::get('dashboard/data', 'DashboardController@activitiesData');
 
     Route::any('content/store', 'ContentController@store');
-    // spostato sotto per store
     Route::any('content/{structure_id?}', 'ContentController@index')->name('content');
     Route::get('content/create/{structure_id?}', 'ContentController@create');
-    Route::get('content/edit/{content_id}', 'ContentController@edit');
+    Route::get('content/{content_id}/edit/', 'ContentController@edit');
     Route::get('content/{structure_id}/edit/{content_id}', 'ContentController@editWrapper');
     Route::post('content/update/{content_id}', 'ContentController@update');
-    Route::post('content/delete/{content_id}', 'ContentController@destroy');
+    Route::delete('content/{content_id}', 'ContentController@destroy');
     Route::get('content/categorization/{content_id}', 'ContentController@categorization');
     Route::get('content/model/{content_id}', 'ContentController@model');
     Route::get('content/estratto/{content_id}', 'ContentController@extract');
     Route::post('content/otherupdate/{content_id}', 'ContentController@otherUpdate');
 
-    Route::any('structure', 'StructureController@index')->name('structure');
-    Route::get('structure/create', 'StructureController@create');
-    Route::any('structure/store', 'StructureController@store');
-    Route::get('structure/edit/{structure_id}', 'StructureController@edit');
-    Route::post('structure/update/{structure_id}', 'StructureController@update');
-    Route::post('structure/delete/{structure_id}', 'StructureController@destroy');
-
+    Route::resource('structure','StructureController');
 
     Route::group(['namespace' => 'Blog'], function () {
-
-        Route::any('posts', 'PostController@index')->name('posts');
-        Route::get('posts/create', 'PostController@create');
-        Route::post('posts/store', 'PostController@store');
-        Route::get('posts/edit/{post_id}', 'PostController@edit');
-        Route::post('posts/update/{post_id}', 'PostController@update');
-        Route::post('posts/delete/{post_id}', 'PostController@destroy');
-
+        Route::resource('posts','PostController');
     });
 
     Route::group(['namespace' => 'Content'], function () {
@@ -66,42 +52,29 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::post('comments/update/{comment_id}', 'CommentController@update');
         Route::post('comments/{service}/{post_id}/delete/{comment_id}', 'CommentController@destroy');
 
-        Route::get('portlets', 'PortletController@index')->name('portlets');
-        Route::post('portlets/store', 'PortletController@store');
-        Route::post('portlets/delete/{portlet_id}', 'PortletController@destroy');
+        Route::resource('portlets','PortletController');
 
-        Route::any('ddl', 'DynamicDataController@index')->name('ddl');
-        Route::get('ddl/create', 'DynamicDataController@create');
-        Route::any('ddl/store', 'DynamicDataController@store');
-        Route::get('ddl/edit/{ddl_id}', 'DynamicDataController@edit');
-        Route::post('ddl/update/{ddl_id}', 'DynamicDataController@update');
-        Route::post('ddl/delete/{ddl_id}', 'DynamicDataController@destroy');
+        Route::resource('ddl','DynamicDataController');
         Route::any('ddl/structure/{q?}', 'DynamicDataController@structureRemoteData');
 
         Route::get('ddl/content/{ddl_id}/create', 'DynamicContentController@create');
         Route::any('ddl/content/store', 'DynamicContentController@store');
         // spostato sotto per store
         Route::any('ddl/content/{ddl_id}', 'DynamicContentController@index')->where('ddl_id', '[0-9]+')->name('ddlcontent');
-        Route::get('ddl/content/{ddl_id}/edit/{content_id}', 'DynamicContentController@edit');
+        Route::get('ddl/content/{ddl_id}/{content_id}/edit/', 'DynamicContentController@edit');
         Route::post('ddl/content/update/{content_id}', 'DynamicContentController@update');
-        Route::post('ddl/content/{ddl_id}/delete/{content_id}', 'DynamicContentController@destroy');
+        Route::delete('ddl/content/{ddl_id}/{content_id}', 'DynamicContentController@destroy');
 
-        Route::get('tags', 'TagController@index')->name('tags');
-        Route::get('tags/create', 'TagController@create');
-        Route::post('tags/store', 'TagController@store');
-        Route::get('tags/edit/{tag_id}', 'TagController@edit');
-        Route::post('tags/update/{tag_id}', 'TagController@update');
-        Route::get('tags/content/{tag_id}', 'TagController@content');
-        Route::post('tags/delete/{tag_id}', 'TagController@destroy');
+        Route::resource('tags','TagController');
 
         Route::post('categories/store', 'CategoryController@store');
         // spostato sotto per store
         Route::any('categories/{vocabulary_id?}', 'CategoryController@index')->name('categories');
         Route::get('categories/create/{vocabulary_id}', 'CategoryController@create');
         Route::get('categories/{vocabulary_id}/create', 'CategoryController@create');
-        Route::get('categories/edit/{category_id}', 'CategoryController@edit');
+        Route::get('categories/{category_id}/edit', 'CategoryController@edit');
         Route::post('categories/update/{category_id}', 'CategoryController@update');
-        Route::post('categories/delete/{category_id}', 'CategoryController@destroy');
+        Route::delete('categories/{category_id}', 'CategoryController@destroy');
 
         Route::any('categories/assignSubcat/{category_id}', 'CategoryController@assignSubcat');
         Route::get('categories/{category_id}/addSubcat/{subcat_id}', 'CategoryController@addSubcat');
@@ -110,32 +83,22 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('categories/profile/{category_id}', 'CategoryController@profile');
         Route::get('categories/treeview', 'CategoryController@treeViewOrg');
 
-        Route::any('vocabularies', 'VocabularyController@index')->name('vocabularies');
-        Route::get('vocabularies/create', 'VocabularyController@create');
-        Route::post('vocabularies/store', 'VocabularyController@store');
-        Route::get('vocabularies/edit/{vocabulary_id}', 'VocabularyController@edit');
-        Route::post('vocabularies/update/{vocabulary_id}', 'VocabularyController@update');
-        Route::post('vocabularies/delete/{vocabular_id}', 'VocabularyController@destroy');
+        Route::resource('vocabularies','VocabularyController');
 
         Route::get('models/{structure_id}', 'ModelliController@index')->name('models');
         Route::get('models/{structure_id}/create', 'ModelliController@create');
         Route::get('models/create/{structure_id}', 'ModelliController@create'); // alternativo per menu contestuale
         Route::any('models/store', 'ModelliController@store');
-        Route::post('models/{structure_id}/delete/{model_id}', 'ModelliController@destroy');
-        Route::get('models/{structure_id}/edit/{model_id}', 'ModelliController@edit');
+        Route::delete('models/{structure_id}/{model_id}', 'ModelliController@destroy');
+        Route::get('models/{structure_id}/{model_id}/edit', 'ModelliController@edit');
         Route::post('models/update/{model_id}', 'ModelliController@update');
         Route::get('models/duplicates/{model_id}', 'ModelliController@duplicates');
 
     });
 
-    Route::get('pages', 'PageController@index')->name('pages');
-    Route::post('pages', 'PageController@index');
-    Route::get('pages/create/{page_id?}', 'PageController@create');
-    Route::post('pages/store', 'PageController@store');
-    Route::get('pages/edit/{page_id}', 'PageController@edit');
-    Route::post('pages/update/{page_id}', 'PageController@update');
-    Route::post('pages/delete/{page_id}', 'PageController@destroy');
-    Route::get('pages/profile/{page_id}', 'PageController@profile');
+    Route::get('pages/create/{page_id?}','PageController@create');
+    Route::resource('pages','PageController');
+
     Route::get('pages/removeChild/{child_id}', 'PageController@delChild');
     Route::get('pages/addLayout/{page_id}/{frame_id?}', 'PageController@layout');
     Route::get('pages/{page_id}/addPortlet/{portlet_id}/{frame}', 'PageController@addPortlet');
@@ -176,7 +139,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
      * Per accedere alla propria scheda
      */
     Route::group(['middleware' => ['can:profile,user_id']], function() {
-        Route::get('users/profile/{user_id}', 'UserController@profile')->name('profile');
+        Route::get('users/{user_id}', 'UserController@profile')->name('profile')->where('user_id', '[0-9]+');
         Route::post('users/{user_id}/edit/avatar', 'UserController@setAvatar');
         Route::get('users/{user_id}/edit', 'UserController@edit');
         Route::post('users/update/{user_id}', 'UserController@update');
@@ -199,7 +162,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::any('users/profile/{user_id}/delete/{session_id}', 'UserController@sessionDestroy');
         Route::get('users/create', 'UserController@create');
         Route::post('users/store', 'UserController@store');
-        Route::post('users/delete/{user_id}', 'UserController@destroy');
+        Route::delete('users/{user_id}', 'UserController@destroy');
 
         Route::any('users/assignPerm/{user_id}', 'UserController@assignPerm');
         Route::get('users/{user_id}/addPermission/{permission_id}', 'UserController@addPerm');

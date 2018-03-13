@@ -41,7 +41,7 @@
                             __('Modifica')=>url('/admin/users/'.$user->id.'/edit'),
                             __('Attività')=>url('/admin/users/activity',$user->id),
                             __('Assegna permessi')=>url('/admin/users/assignPerm',$user->id),
-                            __('Profilo')=>url('/admin/users/profile',$user->id),
+                            __('Profilo')=>url('/admin/users',$user->id),
                         ],
                         'urlNavPre'=>url('/admin/users/assignRole',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/users/assignRole',$pag['nexid']->id),
