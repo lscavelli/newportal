@@ -48,40 +48,39 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('comments/{service}/{post_id?}', 'CommentController@index')->name('comments');
         Route::get('comments/{service}/{post_id}/create', 'CommentController@create');
         Route::post('comments/store', 'CommentController@store');
-        Route::get('comments/{service}/{post_id}/edit/{comment_id}', 'CommentController@edit');
+        Route::get('comments/{service}/{post_id}/{comment_id}/edit', 'CommentController@edit');
         Route::post('comments/update/{comment_id}', 'CommentController@update');
-        Route::post('comments/{service}/{post_id}/delete/{comment_id}', 'CommentController@destroy');
+        Route::delete('comments/{service}/{post_id}/{comment_id}', 'CommentController@destroy');
+        Route::get('comments/{service}/{post_id}/{state}/{comment_id}', 'CommentController@state');
 
         Route::resource('portlets','PortletController');
 
+        Route::get('ddl/structure/{q?}', 'DynamicDataController@structureRemoteData');
         Route::resource('ddl','DynamicDataController');
-        Route::any('ddl/structure/{q?}', 'DynamicDataController@structureRemoteData');
 
         Route::get('ddl/content/{ddl_id}/create', 'DynamicContentController@create');
         Route::any('ddl/content/store', 'DynamicContentController@store');
-        // spostato sotto per store
         Route::any('ddl/content/{ddl_id}', 'DynamicContentController@index')->where('ddl_id', '[0-9]+')->name('ddlcontent');
         Route::get('ddl/content/{ddl_id}/{content_id}/edit/', 'DynamicContentController@edit');
         Route::post('ddl/content/update/{content_id}', 'DynamicContentController@update');
         Route::delete('ddl/content/{ddl_id}/{content_id}', 'DynamicContentController@destroy');
 
         Route::resource('tags','TagController');
+        Route::get('tags/content/{tag_id}', 'TagController@content');
 
-        Route::post('categories/store', 'CategoryController@store');
-        // spostato sotto per store
-        Route::any('categories/{vocabulary_id?}', 'CategoryController@index')->name('categories');
-        Route::get('categories/create/{vocabulary_id}', 'CategoryController@create');
-        Route::get('categories/{vocabulary_id}/create', 'CategoryController@create');
-        Route::get('categories/{category_id}/edit', 'CategoryController@edit');
-        Route::post('categories/update/{category_id}', 'CategoryController@update');
-        Route::delete('categories/{category_id}', 'CategoryController@destroy');
+        Route::post('vocabularies/cat/store', 'CategoryController@store');
+        Route::delete('vocabularies/cat/{category_id}', 'CategoryController@destroy');
+        Route::any('vocabularies/cat/{vocabulary_id}', 'CategoryController@index')->name('categories');
+        Route::get('vocabularies/cat/create/{vocabulary_id}', 'CategoryController@create');
+        Route::get('vocabularies/cat/{vocabulary_id}/create', 'CategoryController@create');
+        Route::get('vocabularies/cat/{vocabulary_id}/{category_id}/edit', 'CategoryController@edit');
+        Route::post('vocabularies/cat/update/{category_id}', 'CategoryController@update');
+        Route::any('vocabularies/cat/assignSubcat/{category_id}', 'CategoryController@assignSubcat');
+        Route::get('vocabularies/cat/{category_id}/addSubcat/{subcat_id}', 'CategoryController@addSubcat');
+        Route::get('vocabularies/cat/removeSubcat/{subcat_id}', 'CategoryController@delSubcat');
 
-        Route::any('categories/assignSubcat/{category_id}', 'CategoryController@assignSubcat');
-        Route::get('categories/{category_id}/addSubcat/{subcat_id}', 'CategoryController@addSubcat');
-        Route::get('categories/removeSubcat/{subcat_id}', 'CategoryController@delSubcat');
-
-        Route::get('categories/profile/{category_id}', 'CategoryController@profile');
-        Route::get('categories/treeview', 'CategoryController@treeViewOrg');
+        Route::get('vocabularies/cat/profile/{category_id}', 'CategoryController@profile');
+        Route::get('vocabularies/cat/treeview', 'CategoryController@treeViewOrg');
 
         Route::resource('vocabularies','VocabularyController');
 

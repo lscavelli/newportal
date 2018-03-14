@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Vocabolari','/admin/vocabularies/')->add('Categorie','/admin/categories/'.$vocabulary->id)->add('Assegna sottocategorie')
+    {!! $breadcrumb->add('Vocabolari','/admin/vocabularies/')->add('Categorie','/admin/vocabularies/cat/'.$vocabulary->id)->add('Assegna sottocategorie')
         ->setTcrumb($category->name. " - Vocabolario: ".$vocabulary->name)
         ->render() !!}
 @stop
@@ -25,7 +25,7 @@
                             ->showButtonNew(false)
                             ->setPrefix('RTYX_')
                             ->customizes('azioni', function($row) use($category) {
-                                return "<a href=\"/admin/categories/". $category->id."/addSubcat/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">Assegna</a>";
+                                return "<a href=\"/admin/vocabularies/cat/". $category->id."/addSubcat/".$row['id']."\" class=\"btn btn-warning btn-xs pull-right\">Assegna</a>";
                             })->render()
                     !!}
                 </div> <!-- /.box -->
@@ -38,13 +38,13 @@
                         'title'=>$category->id ." - ".$category->name,
                         'listMenu'=>[
                             'Vocabolari'=>url('/admin/vocabularies'),
-                            'Lista categorie'=>url('/admin/categories/'.$vocabulary->id),
+                            'Lista categorie'=>url('/admin/vocabularies/cat/'.$vocabulary->id),
                             'divider'=>"divider",
-                            'Modifica'=>url('/admin/categories/edit',$category->id),
-                            'Profilo'=>url('/admin/categories/profile',$category->id),
+                            'Modifica'=>url('/admin/vocabularies/cat/'.$vocabulary->id.'/'.$category->id.'/edit'),
+                            'Profilo'=>url('/admin/vocabularies/cat/profile',$category->id),
                         ],
-                        'urlNavPre'=>url('/admin/categories/assignSubcat',$pag['preid']->id),
-                        'urlNavNex'=>url('/admin/categories/assignSubcat',$pag['nexid']->id),
+                        'urlNavPre'=>url('/admin/vocabularies/cat/assignSubcat',$pag['preid']->id),
+                        'urlNavNex'=>url('/admin/vocabularies/cat/assignSubcat',$pag['nexid']->id),
                         ])->render()
                  !!}
 
@@ -56,7 +56,7 @@
                             ->showButtonNew(false)
                             ->setPrefix('HGYU_')
                             ->customizes('azioni', function($row) use($category) {
-                                return "<a href=\"/admin/categories/removeSubcat/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">Cancella</a>";
+                                return "<a href=\"/admin/vocabularies/cat/removeSubcat/".$row['id']."\" class=\"btn btn-danger btn-xs pull-right\">Cancella</a>";
                             })->render()
                      !!}
                 </div> <!-- /.box -->

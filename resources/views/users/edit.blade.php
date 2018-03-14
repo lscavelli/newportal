@@ -43,7 +43,7 @@
                             {!! Form::slText('username','Username') !!}
                             {!! Form::slDate('data_nascita','Data di nascita',$user->data_nascita) !!}
                             {!! Form::slSelect('country_id','Nazione',$countries) !!}
-                            {!! Form::slSelect2('city_id','Comune',$cityOptions,$user->city_id) !!}
+                            {!! Form::slSelect2('city_id','Comune',$cityOptions,$user->city_id,'/admin/users/cities/') !!}
                             {!! Form::slText('indirizzo','Indirizzo') !!}
                             {!! Form::slText('telefono','Telefono') !!}
                             {!! Form::slSelect('status_id','Stato',config('newportal.status_user')) !!}

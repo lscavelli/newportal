@@ -23,18 +23,12 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="edittag">
 
-                        {!! Form::model($tag, ['action' => $action,'class' => 'form-horizontal']) !!}
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nome</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Salva</button>
-                                </div>
-                            </div>
+                        {!! Form::model($tag, ['url'=>url('admin/tags',$tag->id),'class' => 'form-horizontal']) !!}
+                            @if(isset($tag->id))@method('PUT')@endif
+
+                            {!! Form::slText('name','Nome') !!}
+                            {!! Form::slSubmit('Salva') !!}
+
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->

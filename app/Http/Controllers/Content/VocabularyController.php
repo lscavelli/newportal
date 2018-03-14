@@ -50,12 +50,12 @@ class VocabularyController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function create() {
-        $vocabulary = new Vocabulary(); $action = "Content\\VocabularyController@store";
+        $vocabulary = new Vocabulary();
         $defaults = [['id'=>0,'pivot'=>['type_order'=>0,'type_dir'=>0,'required'=>1]]];
         $selectord = $this->selectOrder();
         $services = ["all"=>'Tutti i servizi'];
         $services += $this->listServices();
-        return view('content.editVocabulary')->with(compact('vocabulary','action','selectord','services','defaults'));
+        return view('content.editVocabulary')->with(compact('vocabulary','selectord','services','defaults'));
     }
 
     /**
@@ -69,7 +69,7 @@ class VocabularyController extends Controller
         $this->validator($data)->validate();
         $vocabulary = $this->rp->create($data);
         $this->insertParamService($data,$vocabulary);
-        return redirect()->route('vocabularies')->withSuccess('Vocabolario creato correttamente.');
+        return redirect('admin/vocabularies')->withSuccess('Vocabolario creato correttamente.');
     }
 
     /**
@@ -78,19 +78,20 @@ class VocabularyController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id) {
-        $vocabulary = $this->rp->find($id); $action = ["Content\\VocabularyController@update",$id];
+        $vocabulary = $this->rp->find($id);
         $defaults = $vocabulary->services->toArray();
         $selectord = $this->selectOrder();
         $services = ["all"=>'Tutti i servizi'];
         $services += $this->listServices();
-        return view('content.editVocabulary')->with(compact('vocabulary','action','selectord','services','defaults'));
+        return view('content.editVocabulary')->with(compact('vocabulary','selectord','services','defaults'));
     }
 
     /**
      * Aggiorna i dati nel DB
      * @param $id
      * @param Request $request
-     * @return $this
+     * @return mixed
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all();
@@ -99,7 +100,7 @@ class VocabularyController extends Controller
             $vocabulary = $this->rp->find($id);
             $this->delParamService($vocabulary);
             $this->insertParamService($data,$vocabulary);
-            return redirect()->route('vocabularies')->withSuccess('Vocabolario aggiornato correttamente');
+            return redirect('admin/vocabularies')->withSuccess('Vocabolario aggiornato correttamente');
         }
     }
 

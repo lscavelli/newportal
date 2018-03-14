@@ -35,7 +35,7 @@
       'Dashboard'=>['icon'=>'fa-dashboard','url'=>'/dashboard'],
       'ADMINISTRATOR'=>['class'=>'header'],
       'Content'=>['class'=>'treeview','icon'=>'fa-laptop','submenu'=>[
-          'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies','Categorie'=>'/categories',
+          'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies',
           'Tags'=>'/tags','Dynamic Data List'=>'/ddl','Strutture'=>'/structure','Web Forms'=>'#',
           'Documenti e Immagini'=>'#']],
       'Manage'=>['class'=>'treeview','icon'=>'fa-link','submenu'=>[

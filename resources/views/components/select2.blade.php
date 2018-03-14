@@ -2,7 +2,7 @@
     {{ Form::label($name, __($label), ['class' => 'col-sm-2 control-label']) }}
     <div class="col-sm-10">
         <?php if(is_null($default)) $default = request()->input($name); ?>
-        {!! Form::select($name, $value , $default , array_merge(['class' => "js-example-basic-single js-states form-control",'style'=>"width: 100%",'aria-hidden'=>"true",'id'=>$name],$attributes)) !!}
+        {!! Form::select($name, $value , $default , array_merge(['class' => "js-example-basic-single js-states form-control input-sm",'style'=>"width: 100%",'aria-hidden'=>"true",'id'=>$name],$attributes)) !!}
     </div>
 </div>
 
@@ -24,7 +24,7 @@
         $(".js-example-basic-single").select2({
             minimumInputLength: 3,
             ajax: {
-                url: '/admin/users/cities/',
+                url: '{{ $url  }}',
                 data: function (params) {
                     var query = {
                         q: params.term,
