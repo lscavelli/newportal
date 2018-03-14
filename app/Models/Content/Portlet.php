@@ -13,4 +13,9 @@ class Portlet extends Model
         'author', 'path', 'container', 'revision', 'date'
     );
 
+    public function pages() {
+        return $this->belongsToMany('App\Models\Content\Page','portlets_pages')
+            ->withPivot('frame');
+    }
+
 }

@@ -126,6 +126,18 @@ class CommentController extends Controller {
     }
 
     /**
+     * Cambia lo stato del commento
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function state($service,$postId,$id)  {
+        $comment = $this->rp->find($id);
+        $stateId = ($comment->approved) ? 0 : 1;
+        $this->rp->update($id,['approved'=>$stateId]);
+        return redirect('admin/comments/'.$service.'/'.$postId);
+    }
+
+    /**
      * deternmina il model
      * @param $service
      * @return mixed

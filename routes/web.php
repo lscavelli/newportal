@@ -25,6 +25,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('dashboard/data', 'DashboardController@activitiesData');
 
+    // Webcontent
+    // *****************************************************************************
     Route::any('content/store', 'ContentController@store');
     Route::any('content/{structure_id?}', 'ContentController@index')->name('content');
     Route::get('content/create/{structure_id?}', 'ContentController@create');
@@ -37,6 +39,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     Route::get('content/estratto/{content_id}', 'ContentController@extract');
     Route::post('content/otherupdate/{content_id}', 'ContentController@otherUpdate');
 
+    // Structure
+    // *****************************************************************************
     Route::resource('structure','StructureController');
 
     Route::group(['namespace' => 'Blog'], function () {
@@ -45,16 +49,22 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
     Route::group(['namespace' => 'Content'], function () {
 
+        // Comments
+        // *****************************************************************************
         Route::get('comments/{service}/{post_id?}', 'CommentController@index')->name('comments');
         Route::get('comments/{service}/{post_id}/create', 'CommentController@create');
         Route::post('comments/store', 'CommentController@store');
         Route::get('comments/{service}/{post_id}/{comment_id}/edit', 'CommentController@edit');
         Route::post('comments/update/{comment_id}', 'CommentController@update');
         Route::delete('comments/{service}/{post_id}/{comment_id}', 'CommentController@destroy');
-        Route::get('comments/{service}/{post_id}/{state}/{comment_id}', 'CommentController@state');
+        Route::get('comments/{service}/{post_id}/updatestate/{comment_id}', 'CommentController@state');
 
-        Route::resource('portlets','PortletController');
+        // Portlets
+        // *****************************************************************************
+        Route::resource('portlets','PortletController', ['except' => ['edit', 'create', 'update']]);
 
+        // DynamicDataList - ddl
+        // *****************************************************************************
         Route::get('ddl/structure/{q?}', 'DynamicDataController@structureRemoteData');
         Route::resource('ddl','DynamicDataController');
 
@@ -65,9 +75,13 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::post('ddl/content/update/{content_id}', 'DynamicContentController@update');
         Route::delete('ddl/content/{ddl_id}/{content_id}', 'DynamicContentController@destroy');
 
+        // Tags
+        // *****************************************************************************
         Route::resource('tags','TagController');
         Route::get('tags/content/{tag_id}', 'TagController@content');
 
+        // Vocabularies
+        // *****************************************************************************
         Route::post('vocabularies/cat/store', 'CategoryController@store');
         Route::delete('vocabularies/cat/{category_id}', 'CategoryController@destroy');
         Route::any('vocabularies/cat/{vocabulary_id}', 'CategoryController@index')->name('categories');
@@ -78,12 +92,12 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::any('vocabularies/cat/assignSubcat/{category_id}', 'CategoryController@assignSubcat');
         Route::get('vocabularies/cat/{category_id}/addSubcat/{subcat_id}', 'CategoryController@addSubcat');
         Route::get('vocabularies/cat/removeSubcat/{subcat_id}', 'CategoryController@delSubcat');
-
         Route::get('vocabularies/cat/profile/{category_id}', 'CategoryController@profile');
         Route::get('vocabularies/cat/treeview', 'CategoryController@treeViewOrg');
-
         Route::resource('vocabularies','VocabularyController');
 
+        // Models
+        // *****************************************************************************
         Route::get('models/{structure_id}', 'ModelliController@index')->name('models');
         Route::get('models/{structure_id}/create', 'ModelliController@create');
         Route::get('models/create/{structure_id}', 'ModelliController@create'); // alternativo per menu contestuale
@@ -95,6 +109,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
     });
 
+    // Pages
+    // *****************************************************************************
     Route::get('pages/create/{page_id?}','PageController@create');
     Route::resource('pages','PageController');
 
@@ -134,9 +150,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     Route::get('users/revert', 'UserController@revertUser');
     Route::any('users/cities/{q?}', 'UserController@citiesRemoteData');
 
-    /**
-     * Per accedere alla propria scheda
-     */
+    // Users - public
+    // *****************************************************************************
     Route::group(['middleware' => ['can:profile,user_id']], function() {
         Route::get('users/{user_id}', 'UserController@profile')->name('profile')->where('user_id', '[0-9]+');
         Route::post('users/{user_id}/edit/avatar', 'UserController@setAvatar');
@@ -150,7 +165,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
      */
     Route::group(['middleware' => 'can:users-manage'], function() {
 
-        // Utenti
+        // Users - private
         // *****************************************************************************
         Route::get('users', 'UserController@index')->name('users');
         Route::post('users', 'UserController@index');
@@ -176,7 +191,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('users/removePermission/{permission}/{user_id}', 'UserController@revokePermission');
         Route::get('users/removeRole/{role}/{user_id}', 'UserController@revokeRole');
 
-        // Ruoli
+        // Roles
         // *****************************************************************************
         Route::resource('roles','RoleController');
 
@@ -184,7 +199,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('roles/{role_id}/addPermission/{permission_id}', 'RoleController@addPerm');
         Route::get('roles/{role_id}/removePermission/{permission_id}', 'RoleController@delPerm');
 
-        // Permessi
+        // Permissions
         // *****************************************************************************
         Route::resource('permissions','PermissionController');
 
@@ -205,7 +220,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('groups/{group_id}/addRole/{role_id}', 'GroupController@addRole');
         Route::get('groups/{group_id}/removeRole/{role_id}', 'GroupController@delRole');
 
-        // Organizzazioni
+        // Organizations
         // *****************************************************************************
         Route::resource('organizations','OrganizationController');
 

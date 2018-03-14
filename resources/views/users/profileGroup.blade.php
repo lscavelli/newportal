@@ -58,7 +58,6 @@
                     <li><a href="#permissions" data-toggle="tab">{{ __('Permessi assegnati') }} @if(isset($listPermissions))<span class="label label-success">{{$listPermissions->count()}}</span>@endif</a></li>
                 </ul>
                 <div class="tab-content">
-                    <!-- /.tab-pane -->
                     <div class="tab-pane active" id="users">
                         @if(isset($listUsers))
                             {!!
@@ -72,7 +71,6 @@
                         @endif
                     </div>
                     <!-- /.tab-pane -->
-                    <!-- /.tab-pane -->
                     <div class="tab-pane" id="roles">
                         @if(isset($listRoles))
                             {!!
@@ -85,7 +83,6 @@
                             !!}
                         @endif
                     </div>
-                    <!-- /.tab-pane -->
                     <!-- /.tab-pane -->
                     <div class="tab-pane" id="permissions">
                         @if(isset($listPermissions))
