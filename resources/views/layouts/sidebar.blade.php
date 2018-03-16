@@ -46,7 +46,7 @@
           'Portlets'=>'/portlets','Settings'=>'/settings','Siti'=>'#',
           'Aggiornamenti'=>'#']],
       'Services'=>['class'=>'treeview','icon'=>'fa-th','submenu'=>[
-          'Blog'=>'/posts','Forum'=>'#','Wiki'=>'#','Newsletter'=>'#','Calendario eventi'=>'#',
+          'Blog'=>'#','Forum'=>'#','Wiki'=>'#','Newsletter'=>'#','Calendario eventi'=>'#',
           'Segnalibri'=>'#','Faq'=>'#','Sondaggi'=>'#','Centro Contatti'=>'#','Feed Rss'=>'#']]
       ])->render()
 

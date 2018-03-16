@@ -43,9 +43,6 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     // *****************************************************************************
     Route::resource('structure','StructureController');
 
-    Route::group(['namespace' => 'Blog'], function () {
-        Route::resource('posts','PostController');
-    });
 
     Route::group(['namespace' => 'Content'], function () {
 
