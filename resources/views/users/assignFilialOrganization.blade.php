@@ -39,9 +39,9 @@
                         'listMenu'=>[
                             __('Lista organizzazioni')=>url('/admin/organizations'),
                             'divider'=>"divider",
-                            __('Aggiorna')=>url('/admin/organizations/edit',$organization->id),
+                            __('Aggiorna')=>url('/admin/organizations/'.$organization->id.'/edit'),
                             __('Assegna utenti')=>url('/admin/organizations/assignUser',$organization->id),
-                            __('Profilo')=>url('/admin/organizations/profile',$organization->id),
+                            __('Profilo')=>url('/admin/organizations',$organization->id),
                         ],
                         'urlNavPre'=>url('/admin/organizations/assignFilial',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/organizations/assignFilial',$pag['nexid']->id),

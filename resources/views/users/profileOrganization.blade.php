@@ -25,7 +25,7 @@
                         __('Modificato il')=>Carbon\Carbon::parse($organization->updated_at)->format('d/m/Y')
                     ],
                     'description'=>$organization->description,
-                    'urlEdit'=>url(Request::getBasePath().'/admin/organizations/edit', $organization->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/organizations/'.$organization->id.'/edit')
                     ])->render()
              !!}
 
@@ -40,12 +40,12 @@
                     'listMenu'=>[
                         __('Lista organizzazioni')=>url('/admin/organizations'),
                         'divider'=>"divider",
-                        __('Modifica')=>url('/admin/organizations/edit',$organization->id),
+                        __('Modifica')=>url('/admin/organizations/'.$organization->id.'/edit'),
                         __('Assegna utenti')=>url('/admin/organizations/assignUser',$organization->id),
                         __('Assegna filiali')=>url('/admin/organizations/assignFilial',$organization->id)
                     ],
-                    'urlNavPre'=>url('/admin/organizations/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/organizations/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/organizations',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/organizations',$pag['nexid']->id),
                     ])->render()
              !!}
 
@@ -93,7 +93,7 @@
                     <i class="fa fa-code-fork"></i>
                     <h3 class="box-title">{{$titleGraph}}</h3>
                 </div>
-                <div class="tree">
+                <div class="sltree">
                     @include('ui.treeview',['nodes' => $graphorg])
                 </div>
             </div> <!-- /.box -->

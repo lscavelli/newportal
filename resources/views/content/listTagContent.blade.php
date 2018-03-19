@@ -16,6 +16,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'nome','created_at'=>'Creato il','user_id'=>'utente'])
+                    ->showButtonNew(false)
                     ->customizes('created_at',function($row){
                         return Carbon\Carbon::parse($row['created_at'])->format('d/m/Y');
                     })

@@ -1,4 +1,4 @@
-.tree {
+.sltree {
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
     -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
@@ -16,28 +16,28 @@
     padding: 19px
 }
 
-.tree a {
+.sltree a {
     display: inline;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 90%
 }
 
-.tree li {
+.sltree li {
     list-style-type: none;
     margin: 0;
     padding: 10px 5px 0 5px;
     position: relative
 }
 
-.tree li::before,.tree li::after {
+.sltree li::before,.sltree li::after {
     content: '';
     left: -20px;
     position: absolute;
     right: auto
 }
 
-.tree li::before {
+.sltree li::before {
     border-left: 1px solid #999;
     bottom: 50px;
     height: 100%;
@@ -49,7 +49,7 @@
     transition: "border-color 0.1s ease 0.1s";
 }
 
-.tree li::after {
+.sltree li::after {
     border-top: 1px solid #999;
     height: 20px;
     top: 25px;
@@ -60,7 +60,7 @@
     transition: "border-color 0.1s ease 0.1s";
 }
 
-.tree li span {
+.sltree li span {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border: 1px solid #999;
@@ -75,43 +75,43 @@
     transition: color .2s ease .1s,background-color .2s ease .1s,border-color .3s ease .2s
 }
 
-.tree li.parent_li>span {
+.sltree li.parent_li>span {
     cursor: pointer;
 }
 
-.tree li.parent_li>span:hover {
+.sltree li.parent_li>span:hover {
     background-color: #df8505;
     border: 1px solid #c67605;
     color: #fff
 }
 
-.tree li.parent_li>span:hover+ul li::after {
+.sltree li.parent_li>span:hover+ul li::after {
     border-top-color: #f89406
 }
 
-.tree li.parent_li>span:hover+ul li::before {
+.sltree li.parent_li>span:hover+ul li::before {
     border-left-color: #f89406
 }
 
-.tree li.parent_li>span:hover+ul li span {
+.sltree li.parent_li>span:hover+ul li span {
     background: #fddfb3;
     border: 1px solid #faa937;
     color: #000
 }
 
-.tree li:last-child::before {
+.sltree li:last-child::before {
     height: 30px
 }
 
-.tree>ul>li::before,.tree>ul>li::after {
+.sltree>ul>li::before,.sltree>ul>li::after {
     border: 0
 }
 
-.tree span i {
+.sltree span i {
     margin-right: 0.5em;
 }
 
-.tree span.root{
+.sltree span.root{
     color: #fff;
     background-color: #00ab5c;
 }

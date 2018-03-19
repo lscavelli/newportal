@@ -78,18 +78,20 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     @if($list->showActionsDefault)
-                                        <li><a href="{{ url(Request::path().'/edit', $row['id']) }}">Edit</a></li>
+                                        <li><a href="{{ url(Request::path().'/'.$row['id'], 'edit') }}">Edit</a></li>
                                         <li><a href="#" class="delete" data-id="{{$row['id']}}">Delete</a></li>
                                     @endif
                                     @if(count($list->actions)>0)
                                         @foreach($list->actions as $actionUrl=>$actionLabel)
                                             <li><a href="
-                                                @if(starts_with($actionUrl, 'http'))
-                                                    {{$actionUrl."/".$row['id']}}
-                                                @elseif($actionLabel=="Delete"){{$actionUrl}}@else
-                                                    {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
+                                        @if(starts_with($actionUrl, 'http'))
+                                                {{$actionUrl."/".$row['id']}}
+                                                @elseif(is_numeric($actionUrl))
+                                                {{ url(Request::path(), $row['id']) }}
+                                                @else
+                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
                                                 @endif
-                                            " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
+                                                        " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
                                         @endforeach
                                     @endif
                                 </ul>

@@ -40,9 +40,9 @@
                         'listMenu'=>[
                             __('Lista Organizzazioni')=>url('/admin/organizations'),
                             'divider'=>"divider",
-                            __('Modifica')=>url('/admin/organizations/edit',$organization->id),
+                            __('Modifica')=>url('/admin/organizations/'.$organization->id.'/edit'),
                             __('Assegna filiali')=>url('/admin/organizations/assignFilial',$organization->id),
-                            __('Profilo')=>url('/admin/organizations/profile',$organization->id),
+                            __('Profilo')=>url('/admin/organizations',$organization->id),
                         ],
                         'urlNavPre'=>url('/admin/organizations/assignUser',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/organizations/assignUser',$pag['nexid']->id),

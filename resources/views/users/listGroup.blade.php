@@ -16,7 +16,7 @@
                 {!!
                     $list->columns(['id'=>'Id','name'=>__('Nome'),'slug','description'=>__('Descrizione'),'numuser'=>__('Num. utenti')])
                     ->sortFields(['id','name','slug'])
-                    ->actions(['profile'=>__('Profilo'),'assign'=>__('Assegna utenti'),'assignPerm'=>__('Assegna permessi'),'assignRole'=>__('Assegna ruoli')])
+                    ->actions([__('Profilo'),'assign'=>__('Assegna utenti'),'assignPerm'=>__('Assegna permessi'),'assignRole'=>__('Assegna ruoli')])
                     ->customizes('numuser',function($row) use($user_group){
                         return count($user_group->where('group_id',$row['id']));
                     })->render()

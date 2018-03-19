@@ -15,7 +15,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>__('Nome'),'slug','level'=>__('Livello')])
-                    ->actions(['profile'=>__('Profilo'),'assign'=>__('Assegna permessi')])
+                    ->actions([__('Profilo'),'assign'=>__('Assegna permessi')])
                     ->render()
                 !!}
             </div> <!-- /.box -->

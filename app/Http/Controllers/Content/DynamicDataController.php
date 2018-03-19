@@ -44,7 +44,7 @@ class DynamicDataController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $list->setModel($this->repo->paginate($request));
-        return \View::make('content.listDynamicData', compact('list'));
+        return view('content.listDynamicData', compact('list'));
     }
 
     /**
@@ -52,8 +52,8 @@ class DynamicDataController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function create()   {
-        $dynamicData = new DynamicDataList(); $action = "Content\\DynamicDataController@store"; $structureOptions = [];
-        return \View::make('content.editDynamicData', compact('dynamicData','action','structureOptions'));
+        $dynamicData = new DynamicDataList(); $structureOptions = [];
+        return view('content.editDynamicData', compact('dynamicData','structureOptions'));
     }
 
     /**
@@ -65,9 +65,9 @@ class DynamicDataController extends Controller {
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['user_id'] = \Auth::user()->id; $data['username'] = \Auth::user()->username; $data['type_id'] = 2; // content structure
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; $data['type_id'] = 2; // content structure
         $this->repo->create($data);
-        return redirect()->route('ddl')->withSuccess('Strutura creata correttamente.');
+        return redirect('admin/ddl')->withSuccess('Strutura creata correttamente.');
     }
 
     /**
@@ -76,11 +76,9 @@ class DynamicDataController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id) {
-        $dynamicData = $this->repo->find($id);
-        $structureOptions = [];
+        $dynamicData = $this->repo->find($id); $structureOptions = [];
         if (!empty($dynamicData->structure_id)) $structureOptions = $this->repo->setModel(new Structure)->where("id", "=", $dynamicData->structure_id)->pluck()->toArray();
-        $action = ["Content\\DynamicDataController@update",$id];
-        return \View::make('content.editDynamicData', compact('dynamicData','action','structureOptions'));
+        return view('content.editDynamicData', compact('dynamicData','structureOptions'));
     }
 
     /**
@@ -88,14 +86,14 @@ class DynamicDataController extends Controller {
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
         if ($this->repo->update($id,$data)) {
-            return redirect()->route('ddl')->withSuccess('La lista è stata aggiornata correttamente');
+            return redirect('admin/ddl')->withSuccess('La lista è stata aggiornata correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**

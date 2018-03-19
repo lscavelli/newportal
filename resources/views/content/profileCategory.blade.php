@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-    {!! $breadcrumb->add('Vocabolari','/admin/vocabularies/')->add('Categorie','/admin/categories/'.$vocabulary->id)
+    {!! $breadcrumb->add('Vocabolari','/admin/vocabularies/')->add('Categorie','/admin/vocabularies/cat/'.$vocabulary->id)
         ->add('Profilo')
         ->setTcrumb($category->name. " - Vocabolario: ".$vocabulary->name)
         ->render() !!}
@@ -24,7 +24,7 @@
                         'Creato il'=>Carbon\Carbon::parse($category->created_at)->format('d/m/Y'),
                         'Modificato il'=>Carbon\Carbon::parse($category->updated_at)->format('d/m/Y')
                     ],
-                    'urlEdit'=>url(Request::getBasePath().'/admin/categories/edit', $category->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/vocabularies/cat/'.$vocabulary->id.'/'.$category->id.'/edit')
                     ])->render()
              !!}
 
@@ -38,13 +38,13 @@
                     'title'=>$category->id." - ".$category->name,
                     'listMenu'=>[
                         'Vocabolari'=>url('/admin/vocabularies'),
-                        'Lista categorie'=>url('/admin/categories/'.$vocabulary->id),
+                        'Lista categorie'=>url('/admin/vocabularies/cat/'.$vocabulary->id),
                         'divider'=>"divider",
-                        'Modifica'=>url('/admin/categories/edit',$category->id),
-                        'Assegna sottocategorie'=>url('/admin/categories/assignSubcat',$category->id)
+                        'Modifica'=>url('/admin/vocabularies/cat/'.$vocabulary->id.'/'.$category->id.'/edit'),
+                        'Assegna sottocategorie'=>url('/admin/vocabularies/cat/assignSubcat',$category->id)
                     ],
-                    'urlNavPre'=>url('/admin/categories/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/categories/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/vocabularies/cat/profile',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/vocabularies/cat/profile',$pag['nexid']->id),
                     ])->render()
              !!}
 
@@ -60,7 +60,7 @@
                                 $listSubcat->columns(['id','name'=>'Nome','azioni'])
                                 ->showAll(false)
                                 ->customizes('azioni', function($row) use($category) {
-                                    return "<a href=\"/admin/categories/removeSubcat/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">Cancella</a>";
+                                    return "<a href=\"/admin/vocabularies/cat/removeSubcat/".$row['id']."\" class=\"btn btn-success btn-xs pull-right\">Cancella</a>";
                                 })
                                 ->render()
                             !!}
@@ -78,7 +78,7 @@
                     <i class="fa fa-code-fork"></i>
                     <h3 class="box-title">{{$titleGraph}}</h3>
                 </div>
-                <div class="tree">
+                <div class="sltree">
                     @include('ui.treeview',['nodes' => $graphorg])
                 </div>
             </div> <!-- /.box -->

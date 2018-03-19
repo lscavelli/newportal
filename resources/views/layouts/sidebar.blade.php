@@ -35,7 +35,7 @@
       'Dashboard'=>['icon'=>'fa-dashboard','url'=>'/dashboard'],
       'ADMINISTRATOR'=>['class'=>'header'],
       'Content'=>['class'=>'treeview','icon'=>'fa-laptop','submenu'=>[
-          'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies','Categorie'=>'/categories',
+          'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies',
           'Tags'=>'/tags','Dynamic Data List'=>'/ddl','Strutture'=>'/structure','Web Forms'=>'#',
           'Documenti e Immagini'=>'#']],
       'Manage'=>['class'=>'treeview','icon'=>'fa-link','submenu'=>[
@@ -46,7 +46,7 @@
           'Portlets'=>'/portlets','Settings'=>'/settings','Siti'=>'#',
           'Aggiornamenti'=>'#']],
       'Services'=>['class'=>'treeview','icon'=>'fa-th','submenu'=>[
-          'Blog'=>'/posts','Forum'=>'#','Wiki'=>'#','Newsletter'=>'#','Calendario eventi'=>'#',
+          'Blog'=>'#','Forum'=>'#','Wiki'=>'#','Newsletter'=>'#','Calendario eventi'=>'#',
           'Segnalibri'=>'#','Faq'=>'#','Sondaggi'=>'#','Centro Contatti'=>'#','Feed Rss'=>'#']]
       ])->render()
 

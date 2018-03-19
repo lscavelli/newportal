@@ -11,7 +11,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','cognome'=>__("Cognome"),'nome'=>__("Nome"), 'email', 'created_at'=>__("Registrato il")])
-                    ->actions(['profile'=>__('Profilo'),'activity'=>__('Attività'),
+                    ->actions([__('Profilo'),'activity'=>__('Attività'),
                     'assignRole'=>__('Assegna ruoli'),'assignPerm'=>__('Assegna permessi'),'impersonate'=>__('Impersona Utente')])
                     ->customizes('created_at',function($row){
                         return $row['created_at']->format('d/m/Y');

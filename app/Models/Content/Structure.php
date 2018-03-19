@@ -18,4 +18,6 @@ class Structure extends Model
         return $this->hasMany('App\Models\Content\Modelli', 'structure_id');
     }
 
+
+
 }

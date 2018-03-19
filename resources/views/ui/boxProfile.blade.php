@@ -21,7 +21,21 @@
                 {{ $items->box['description'] }}
             </p>
         @endif
-        <a href="{{ $items->box['urlEdit'] }}" class="btn btn-default btn-block"><b>Modifica</b></a>
+        @if (!empty($items->box['urlEdit']))
+            <a  href="
+                @if (is_array($items->box['urlEdit']))
+                    @if (isset($items->box['urlEdit']['url'])){{ $items->box['urlEdit']['url'] }}@endif
+                    " class="btn btn-default btn-block"><strong>
+                    @if (isset($items->box['urlEdit']['label']))
+                        {{ $items->box['urlEdit']['label'] }}
+                    @else
+                        Modifica
+                    @endif
+                @else
+                    {{ $items->box['urlEdit'] }}" class="btn btn-default btn-block"><strong>Modifica
+                @endif
+                </strong></a>
+        @endif
     </div>
     <!-- /.box-body -->
 </div>

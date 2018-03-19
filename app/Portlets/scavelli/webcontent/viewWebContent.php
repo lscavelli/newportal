@@ -83,7 +83,7 @@ class viewWebContent extends Portlet {
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         $update = null;
         if (auth()->check()) {
-            $urlupdate = url("/admin/content/edit")."/".$cw->id;
+            $urlupdate = url('/admin/content/'.$cw->id.'/edit');
             //sostituire con view()
             $update = "<a href=\"#\" class=\"toggle-form btn btn-info edit-button\" title=\"modifica contenuto web {$cw->id}\" onclick=\"window.open('$urlupdate')\" style=\"display: none; position: absolute; top: 10px; right: 145px;\"><i class=\"glyphicon glyphicon-pencil\"></i></a>";
         }

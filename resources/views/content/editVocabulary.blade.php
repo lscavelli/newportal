@@ -23,29 +23,18 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="settings">
 
-                        {!! Form::model($vocabulary, ['action' => $action,'class' => 'form-horizontal']) !!}
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nome</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="col-sm-2 control-label">Descrizione</label>
-                                <div class="col-sm-10">
-                                    {!! Form::textarea('description',null,['class' => 'form-control', 'placeholder'=> "Descrizione"]) !!}
-                                </div>
-                            </div>
+                        {!! Form::model($vocabulary, ['url'=>url('admin/vocabularies',$vocabulary->id),'class' => 'form-horizontal']) !!}
+                            @if(isset($vocabulary->id))@method('PUT')@endif
+
+                            {!! Form::slText('name','Nome') !!}
+                            {!! Form::slTextarea('description','Descrizione') !!}
                             @foreach($defaults as $default)
                                 @if($loop->index>0)<hr>@endif
 
                                 <div @if($loop->first)id="duplicable"@endif style="border-left: 1px solid #ecf0f5;">
-                                    <div class="form-group">
-                                        <label for="services" class="col-sm-2 control-label">Servizi disponibili</label>
-                                        <div class="col-sm-5">
-                                            {!! Form::select('services[]', $services , $default['id'] , ['class' => "form-control input-sm services"]) !!}
-                                        </div>
-                                    </div>
+
+                                    {!! Form::slSelect('services[]','Servizi disponibili',$services,['class' => "form-control input-sm services"],$default['id']) !!}
+
                                     <div class="form-group">
                                         <label for="type_order" class="col-sm-2 control-label">Ordine categorie</label>
                                         <div class="col-sm-5">
@@ -55,12 +44,9 @@
                                             {!! Form::select('type_dir[]', $selectord['dir'] , $default['pivot']['type_dir'] , ['class' => "form-control input-sm"]) !!}
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="required" class="col-sm-2 control-label">Dato obbligatorio</label>
-                                        <div class="col-sm-5">
-                                            {!! Form::select('required[]', $selectord['req'] , $default['pivot']['required'] , ['class' => "form-control input-sm"]) !!}
-                                        </div>
-                                    </div>
+
+                                    {!! Form::slSelect('required[]','Dato obbligatorio',$selectord['req'],['class' => "form-control input-sm"],$default['pivot']['required']) !!}
+
                                     @if($loop->index>0)
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
@@ -77,11 +63,8 @@
                                     </div>
                                 </div>
                             @endif
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Salva</button>
-                                </div>
-                            </div>
+                            {!! Form::slSubmit('Salva') !!}
+
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->
@@ -112,8 +95,8 @@
         console.log("document ready");
         var rmButton = "<div class=\"form-group\"><div class=\"col-sm-offset-2 col-sm-10\"><a class=\"del-button btn btn-danger pull-right\" title=\"Rimuovi elemento\">Remove</a></div></div>";
         var prg =0;
-        var maxsize = $('#duplicable .services option').size()-1;
-        var serv_presenti = $('.services').size();
+        var maxsize = $('#duplicable .services option').length-1;
+        var serv_presenti = $('.services').length;
 
         $('.add-element').click(function() {
             ++prg;
@@ -121,7 +104,7 @@
             if (maxsize > serv_presenti) {
                 $('#duplicable').after($('#duplicable').clone().attr("id", select).append(rmButton).addClass('borderclass'));
                 $("#" + select).find(".services > option:first").eq(0).remove();
-                serv_presenti = $('.services').size();
+                serv_presenti = $('.services').length;
                 if (maxsize > serv_presenti) {
                     $('.add-element').show();
                 } else {
@@ -132,7 +115,7 @@
         });
         $('body').on('click', '.del-button', function () {
             $(this).parent().parent().parent().remove();
-            serv_presenti = $('.services').size();
+            serv_presenti = $('.services').length;
             if (maxsize > serv_presenti) $('.add-element').show();
             e.preventDefault();
         });

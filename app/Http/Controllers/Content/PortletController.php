@@ -44,21 +44,23 @@ class PortletController extends Controller {
     /**
      * Salva il tag nel database dopo aver validato i dati
      * @param Request $request
-     * @return mixed
-     * @throws \Illuminate\Validation\ValidationException
+     * @param PortletManage $pm
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function store(Request $request, PortletManage $pm) {
         if ($request->file('filePortlet')) {
             $pm->uploadPortlet($this->rp);
-            return redirect()->route('portlets')->withSuccess('Portlets installate correttamente');
+            return redirect('admin/portlets')->withSuccess('Portlets installate correttamente');
         }
-        return redirect()->route('portlets');
     }
 
     /**
      * Cancella la Portlet - chiede conferma prima della cancellazione
      * @param $id
+     * @param PortletManage $pm
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy($id, PortletManage $pm)   {
         if ($pm->uninstallPortlet($id,$this->rp)) {
@@ -67,7 +69,25 @@ class PortletController extends Controller {
         return redirect()->back();
     }
 
+    /**
+     * restituisce in formato json la lista delle portlet installate
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function listPortletDisp() {
         return  response()->json($this->rp->all());
     }
+
+    /**
+     * mostra le informazioni sulla portlet installata
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id, Request $request) {
+        $portlet = $this->rp->find($id);
+        $pag['nexid'] = $this->rp->next($id);
+        $pag['preid'] = $this->rp->prev($id);
+        $listPages = new listGenerates($this->rp->paginateArray($portlet->pages->toArray(),10,$request->page_a,'page_a'));
+        return view('content.profilePortlet')->with(compact('portlet','pag','listPages'));
+    }
+
+
 }
