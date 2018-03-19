@@ -15,7 +15,6 @@ Route::get('/', function () {
     return redirect("/welcome");
 });
 
-
 Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
     Route::get('api/listportlets', "Content\\PortletController@listPortletDisp");
