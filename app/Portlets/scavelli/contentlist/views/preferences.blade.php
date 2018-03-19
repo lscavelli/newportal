@@ -154,6 +154,7 @@
 
     $("#setFeed").change(function(e) {
         e.preventDefault();
+        setFeed();
         $('.feed').toggle();
     });
 
@@ -162,12 +163,16 @@
     });
 
     function setFeed() {
-        $("#feed").val(null);
-        var ids = [];
-        ids.push({feed_name:$('#feed_name').val()});
-        ids.push({feed_size:$("#feed_size").find('option:selected').val()});
-        ids.push({feed_format:$("#feed_format").find('option:selected').val()});
-        $("#feed").val(JSON.stringify(ids));
+        //$("#feed").val(null);
+        if ($('#setFeed').find('option:selected').val()==1) {
+            var ids = [];
+            ids.push({feed_name:$('#feed_name').val()});
+            ids.push({feed_size:$("#feed_size").find('option:selected').val()});
+            ids.push({feed_format:$("#feed_format").find('option:selected').val()});
+            $("#feed").val(JSON.stringify(ids));
+        } else {
+            $("#feed").val(null);
+        }
     }
 
     $("#setSiteMap").change(function(e) {

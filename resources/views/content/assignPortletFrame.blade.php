@@ -27,6 +27,7 @@
                     <!-- /.box-header -->
                     <div class="box-body" style="display: block;">
                         {!! Form::model($page, ['action' => $action,'class' => 'form-horizontal']) !!}
+                            @if(isset($page->id))@method('PUT')@endif
 
                             {!! Form::slSelect('layout','Layout',$listLayouts) !!}
                             {!! Form::slSubmit('Salva',[],'right','default') !!}
