@@ -3,7 +3,10 @@
 namespace App\Listeners;
 
 use Unisharp\Laravelfilemanager\Events\ImageWasUploaded;
-use Unisharp\Laravelfilemanager\Events\ImageIsDeleting;
+use Unisharp\Laravelfilemanager\Events\ImageWasDeleted;
+use Unisharp\Laravelfilemanager\Events\ImageWasRenamed;
+use Unisharp\Laravelfilemanager\Events\ImageIsUploading;
+use Unisharp\Laravelfilemanager\Events\FolderWasRenamed;
 use App\Models\Content\File;
 use Illuminate\Filesystem\Filesystem;
 use App\Repositories\RepositoryInterface;
@@ -19,21 +22,71 @@ class FileEventsSubscriber {
         $this->rp = $rp->setModel(File::class);
     }
 
-    public function onImageIsDeleting(ImageIsDeleting $event)
+    /**
+     * Rinomina il path dei file
+     * @param FolderWasRenamed $event
+     */
+    public function onFolderWasRenamed(FolderWasRenamed $event)
     {
-        $filePath = str_replace(public_path(), "", $event->path());
-        $file = $this->rp->where('path', $filePath)->first();
-        if ($file) {
-            $this->rp->delete($file->id);
+        $oldFolderPath = str_replace(public_path(), "", $event->oldPath());
+        $newFolderPath = str_replace(public_path(), "", $event->newPath());
+        info($oldFolderPath);
+        $this->rp->getModel()->where('path', $oldFolderPath)->update(['path'=>$newFolderPath]);
+    }
+
+    /**
+     * dovrebbe impedire l'upload - da verificare
+     * @return bool
+     */
+    public function onImageIsUploading()
+    {
+        if (!auth()->guard('web')->check()) {
+            return false;
         }
     }
 
+    /**
+     * Rinomina l'immagine nel db dopo che è stata rinominata fisicamente
+     * @param ImageWasRenamed $event
+     */
+    public function onImageWasRenamed(ImageWasRenamed $event)
+    {
+        $oldFilePath = str_replace(public_path(), "", $event->oldPath());
+        $newFilePath = str_replace(public_path(), "", $event->newPath());
+        $file = $this->rp
+            ->where('path', $this->getDirname($oldFilePath))
+            ->where('file_name', $this->getFile($event->oldPath()))
+            ->first();
+        if ($file) $this->rp->update($file->id,[
+                    'path' => $this->getDirname($newFilePath),
+                    'file_name' => $this->getFile($event->newPath()),
+                    ]);
+    }
+
+    /**
+     * Cancella il file dal db dopo che è stato fisicamente eliminato
+     * @param ImageWasDeleted $event
+     */
+    public function onImageWasDeleted(ImageWasDeleted $event)
+    {
+        $filePath = str_replace(public_path(), "", $event->path());
+        $file = $this->rp
+            ->where('path', $this->getDirname($filePath))
+            ->where('file_name', $this->getFile($event->path()))
+            ->first();
+        if ($file) $this->rp->delete($file->id);
+    }
+
+    /**
+     * Crea il file nel database dopo che è stato caricato
+     * @param ImageWasUploaded $event
+     */
     public function onImageWasUploaded(ImageWasUploaded $event)
     {
         $filePath = str_replace(public_path(), "", $event->path());
         $this->rp->create([
-            'path' => $filePath,
-            'name' => $filePath,
+            'path' => $this->getDirname($filePath),
+            'name' => $this->getFile($event->path()),
             'file_name' => $this->getFile($event->path()),
             'mime_type' => $this->getMimeType($event->path()),
             'size' => $this->getSize($event->path()),
@@ -51,7 +104,10 @@ class FileEventsSubscriber {
     {
         $class = 'App\Listeners\FileEventsSubscriber';
         $events->listen(ImageWasUploaded::class, "{$class}@onImageWasUploaded");
-        $events->listen(ImageIsDeleting::class, "{$class}@onImageIsDeleting");
+        $events->listen(ImageWasDeleted::class, "{$class}@onImageWasDeleted");
+        $events->listen(ImageWasRenamed::class, "{$class}@onImageWasRenamed");
+        $events->listen(ImageIsUploading::class, "{$class}@onImageIsUploading");
+        $events->listen(FolderWasRenamed::class, "{$class}@onFolderWasRenamed");
     }
 
     /**
@@ -79,6 +135,10 @@ class FileEventsSubscriber {
      */
     public function getSize($filePath) {
         return $this->fs->size($filePath);
+    }
+
+    public function getDirname($filePath) {
+        return $this->fs->dirname($filePath);
     }
 
 }
