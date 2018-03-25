@@ -43,8 +43,11 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
     // *****************************************************************************
     Route::resource('structure','StructureController');
 
-
     Route::group(['namespace' => 'Content'], function () {
+
+        // File
+        // *****************************************************************************
+        Route::resource('files','FileController');
 
         // Comments
         // *****************************************************************************
