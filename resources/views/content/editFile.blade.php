@@ -12,7 +12,8 @@
 <section class="content">
     @include('ui.messages')
     <div class="row">
-        <div class="col-md-12">
+
+        <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">{{ __("Dati obbligatori") }}</a></li>
@@ -23,7 +24,7 @@
 
                         {!! Form::model($file, ['url' => url('admin/files',$file->id),'class' => 'form-horizontal']) !!}
                             @if(isset($file->id))@method('PUT')@endif
-                            {!! Form::slText('name','Nome') !!}
+                            {!! Form::slText('name','Titolo') !!}
                             {!! Form::slText('file_name','Nome file',null,['disabled'=>'']) !!}
                             {!! Form::slTextarea('description','Descrizione') !!}
                             {!! Form::slSelect('status_id','Stato',config('newportal.status_general')) !!}
@@ -44,6 +45,33 @@
             <!-- /.nav-tabs-custom -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3">
+            <div class="box box-solid">
+                <div class="box-header with-border" style="background-color: #f8f8f8; border-radius: 3px">
+                    <h3 class="box-title">Web Content menu</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding" style="display: block;">
+
+                        <div class="image" style="text-align: center; padding: 15px 15px 0 15px">
+                            @if($file->isImage())
+                                <img src="{{ $file->getPath() }}" alt="Content Image" style="border-radius: 0.375em; width:100%;">
+                            @else
+                                <div style="border: 1px solid lightgrey; padding: 80px 0 80px 0; border-radius: 0.375em;" ><i class="fa {{ $file->getIcon() }} fa-5x"></i></div>
+                            @endif
+                        </div>
+                        <div style="padding: 15px"><a href="/admin/files/download/{!! $file->id !!}" class="btn btn-default btn-block"><i class="fa fa-download"></i> {{ __("Download file") }}</a></div>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+
     </div>
     <!-- /.row -->
 </section>

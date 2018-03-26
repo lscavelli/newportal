@@ -10,7 +10,7 @@ class File extends Model
 
     protected $fillable = array(
         'name', 'path', 'description', 'file_name', 'mime_type', 'size', 'position',
-        'user_id', 'username', 'hits', 'status_id'
+        'user_id', 'username', 'hits', 'status_id', 'extension'
     );
 
     /**
@@ -35,6 +35,32 @@ class File extends Model
      */
     public function user() {
         return $this->belongsTo('App\Models\User');
+    }
+
+    /**
+     * Verifica se il file è di tipo immagine
+     * @return bool
+     */
+    public function isImage() {
+        if(substr($this->mime_type, 0, 5) == 'image') {
+            return true;
+        }
+    }
+
+    /**
+     * Restituisce il fullpath del file
+     * @return string
+     */
+    public function getPath() {
+        return $this->path."/".$this->file_name;
+    }
+
+    /**
+     * restituisce l'icona del file
+     * @return string
+     */
+    public function getIcon() {
+        return config('lfm.file_icon_array.' . $this->extension) ?: 'fa-file';
     }
 
 }

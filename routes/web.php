@@ -48,6 +48,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         // File
         // *****************************************************************************
         Route::resource('files','FileController');
+        Route::get('files/download/{file_id}', 'FileController@download');
 
         // Comments
         // *****************************************************************************

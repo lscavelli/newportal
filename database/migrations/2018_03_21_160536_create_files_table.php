@@ -26,6 +26,7 @@ class CreateFilesTable extends Migration
             $table->string('username')->nullable();
             $table->integer('hits')->unsigned()->default(0);
             $table->tinyInteger('status_id')->default(1);
+            $table->string('extension', 5)->nullable();
             $table->timestamps();
         });
     }

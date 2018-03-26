@@ -49,7 +49,7 @@ class FileController extends Controller {
      */
     public function edit($id)
     {
-        $file= $this->rp->find($id);
+        $file = $this->rp->find($id);
         return view('content.editFile', compact('file'));
     }
 
@@ -85,5 +85,15 @@ class FileController extends Controller {
                 return redirect('/admin/files')->withSuccess('File cancellato correttamente');
             }
         }
+    }
+
+    /**
+     * download file
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download($id)
+    {
+        $file = $this->rp->find($id);
+        return response()->download(public_path($file->getPath()));
     }
 }

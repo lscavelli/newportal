@@ -89,6 +89,7 @@ class FileEventsSubscriber {
             'name' => $this->getFile($event->path()),
             'file_name' => $this->getFile($event->path()),
             'mime_type' => $this->getMimeType($event->path()),
+            'extension' => $this->getExtension($event->path()),
             'size' => $this->getSize($event->path()),
             'user_id'=> auth()->user()->id,
             'username'=> auth()->user()->username
@@ -137,8 +138,22 @@ class FileEventsSubscriber {
         return $this->fs->size($filePath);
     }
 
+    /**
+     * restituisce la base della dir
+     * @param $filePath
+     * @return string
+     */
     public function getDirname($filePath) {
         return $this->fs->dirname($filePath);
+    }
+
+    /**
+     * restituisce il suffisso del file es. .pdf
+     * @param $filePath
+     * @return string
+     */
+    public function getExtension($filePath) {
+        return strtolower($this->fs->extension($filePath));
     }
 
 }
