@@ -36,8 +36,8 @@
       'ADMINISTRATOR'=>['class'=>'header'],
       'Content'=>['class'=>'treeview','icon'=>'fa-laptop','submenu'=>[
           'Pagine'=>'/pages','Web Content'=>'/content','Vocabolari'=>'/vocabularies',
-          'Tags'=>'/tags','Dynamic Data List'=>'/ddl','Strutture'=>'/structure','Web Forms'=>'#',
-          'Documenti e Immagini'=>'#']],
+          'Tags'=>'/tags','Dynamic Data List'=>'/ddl','Strutture'=>'/structure','Documenti e Immagini'=>'/files',
+          'Web Forms'=>'#']],
       'Manage'=>['class'=>'treeview','icon'=>'fa-link','submenu'=>[
           'Utenti'=>'/users','Gruppi'=>'/groups','Ruoli'=>'/roles','Permessi'=>'/permissions',
           'Organizzazioni'=>'/organizations','Sessioni attive'=>'/users/sessions',

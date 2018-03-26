@@ -13,7 +13,7 @@
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu splitButtons" role="menu">
             @foreach($list->splitButtons  as $key=>$val)
                         <li><a href="{{$key}}">{{$val}}</a></li>
             @endforeach
