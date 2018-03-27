@@ -23,7 +23,7 @@
     </div>
     <div class="col-sm-3 col-sm-offset-6">
         @if($list->showSearch)
-        <form method = 'POST' action = '{{url(Request::path())}}'>
+        <form method = 'GET' action = '{{url(Request::path())}}'>
             @csrf
             @foreach(array_except(\Request::all(),['_token',$list->prefix_.'keySearch','page'.$list->prefixPage]) as $key=>$value)
                 {!! Form::hidden($key,$value) !!}
@@ -112,7 +112,7 @@
         <div class="dataTables_length">
             Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
             <label>
-                <form method="post" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
+                <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
                     @csrf
                     {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
                     @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)

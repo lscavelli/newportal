@@ -96,4 +96,15 @@ class FileController extends Controller {
         $file = $this->rp->find($id);
         return response()->download(public_path($file->getPath()));
     }
+
+    /**
+     * visualizza file
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function viewFile($id)
+    {
+        $file = $this->rp->find($id);
+        return response()->file(public_path($file->getPath()));
+    }
+
 }
