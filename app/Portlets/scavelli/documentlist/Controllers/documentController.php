@@ -1,22 +1,17 @@
 <?php
 
-namespace App\Portlets\scavelli\contentlist\Controllers;
+namespace App\Portlets\scavelli\documentlist\Controllers;
 
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Content\Content;
+use App\Models\Content\File;
 use App\Models\Content\Service;
 
-
-class assetController extends Controller
+class documentController extends Controller
 {
 
     private $rp;
     public $conf;
-    public $services;
-    public $models;
-    public $structures;
     public $pages;
     public $tags;
     public $vocabularies;
@@ -25,33 +20,39 @@ class assetController extends Controller
     public $cats_reg;
     public $selectOrder;
     public $listView;
+    public $models;
+    public $structures;
+
 
 
     public function __construct(RepositoryInterface $rp) {
-        $this->rp = $rp->setModel('App\Models\Content\Content');
+        $this->rp = $rp->setModel(File::class);
         $this->conf = [];
         $this->models = $this->tags_reg = $this->cats_reg = null;
+    }
+
+    public function viewFile($slug)
+    {
+        $file = $this->rp->findBySlug($slug);
+        return response()->file(public_path($file->getPath()));
     }
 
     /**
      * Mostra il web form per la configurazione della portlet
      * @param $portlet
-     * @param $contentList
+     * @param $documentList
      * @return $this
      */
-    public function configPortlet($portlet, $contentList) {
-        $default = ['inpage'=>'', 'listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
+    public function configPortlet($portlet, $documentList) {
+        $default = ['listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $this->conf = array_merge($default,json_decode($portlet->pivot->setting, true));
 
-        if ($this->get('feed')) {
-            $this->conf = array_merge($this->conf,['setFeed'=>1]);
-        }
 
         // definizione della lista dei modelli
         //===============================================
-
-        $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
+        $service = $this->rp->setModel(Service::class)->where('class',File::class)->first();
         $structures = $this->rp->setModel('App\Models\Content\Structure')->where('service_id',$service->id)->where('status_id',1);
+
         if (!empty($this->get('structure_id'))) {
             $structure = $this->rp->getModel()->find($this->get('structure_id'));
         } elseif($structures->count()>0) {
@@ -62,6 +63,7 @@ class assetController extends Controller
         if (isset($structure))
             $this->models = $structure->models->where('type_id',2)->pluck('name','id')->toArray();
         //===============================================
+
 
         $this->pages = $this->rp->setModel('App\Models\Content\Page')->where('status_id',1)->orderBy('name')->pluck('name','slug')->toArray();
 
@@ -78,9 +80,7 @@ class assetController extends Controller
 
         // definizione delle categorie
         //===============================================
-        $class = Content::class;
-        if (!empty($this->get('service'))) $class = $this->get('service');
-        $this->vocabularies = $this->listVocabularies($class);
+        $this->vocabularies = $this->listVocabularies(File::class);
 
         if (!empty($this->get('categories'))) {
             $and = "";
@@ -92,11 +92,14 @@ class assetController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $contentList->listView();
+        $this->listView = $documentList->listView();
 
-        return view('contentlist::preferences')->with(['cList' => $this]);
+        return view('documentlist::preferences')->with(['cList' => $this]);
     }
 
+    /*
+     *
+     */
     private function listVocabularies($class) {
         $service = $this->rp->setModel(Service::class)->where('class',$class)->first();
         return $service->vocabularies;
@@ -110,6 +113,10 @@ class assetController extends Controller
         return  ['ord'=>['Inserimento','Titolo','Data di Creazione','Data di Modifica','Visite'],'dir'=>['Ascendente','Discendente']];
     }
 
+    public function get($key,$default=null) {
+        return array_get($this->conf, $key, $default);
+    }
+
     /**
      * Restituisce la lista dei modelli in formato Json relativi alla struttura passata come argomento
      * @param $id
@@ -118,10 +125,6 @@ class assetController extends Controller
     public function listModels($id) {
         $structure = $this->rp->setModel('App\Models\Content\Structure')->find($id);
         return json_encode($structure->models->where('type_id',2)->pluck('name','id')->toArray());
-    }
-
-    public function get($key,$default=null) {
-        return array_get($this->conf, $key, $default);
     }
 
 }

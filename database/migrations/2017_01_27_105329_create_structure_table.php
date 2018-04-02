@@ -20,7 +20,8 @@ class CreateStructureTable extends Migration
             $table->text('content')->nullable();
             $table->string('color', 50)->nullable();
             $table->tinyInteger('status_id')->default(1);
-            $table->unsignedInteger('type_id')->nullable();
+            $table->integer('service_id')->unsigned()->index()->nullable();
+            $table->foreign('service_id')->references('id')->on('services');
             $table->integer('user_id')->unsigned()->index();
             $table->string('username')->nullable();
             $table->timestamps();

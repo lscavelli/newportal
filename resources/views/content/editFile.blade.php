@@ -17,6 +17,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#settings" data-toggle="tab" aria-expanded="true">{{ __("Dati obbligatori") }}</a></li>
+                    <li><a href="#categorization" data-toggle="tab">{{ __("Categorizzazione") }}</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -27,6 +28,7 @@
                             {!! Form::slText('name','Titolo') !!}
                             {!! Form::slText('file_name','Nome file',null,['disabled'=>'']) !!}
                             {!! Form::slTextarea('description','Descrizione') !!}
+                            {!! Form::slText('slug','Slug',null,['placeholder'=> __("Generato automaticamente se lasciato vuoto")]) !!}
                             {!! Form::slSelect('status_id','Stato',config('newportal.status_general')) !!}
                             {!! Form::slText('size','Dimensione',null,['disabled'=>'']) !!}
                             {!! Form::slText('mime_type','Tipo',null,['disabled'=>'']) !!}
@@ -35,6 +37,17 @@
                             {!! Form::slText('created_at','Creato',Carbon\Carbon::parse($file->created_at)->format('d/m/Y - H:i'),['disabled'=>'']) !!}
                             {!! Form::slText('updated_at','Modificato',Carbon\Carbon::parse($file->updated_at)->format('d/m/Y - H:i'),['disabled'=>'']) !!}
                             {!! Form::slSubmit('Salva') !!}
+                        {!! Form::close() !!}
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                    <div class="tab-pane" id="categorization">
+
+                        {!! Form::model($file, ['url' => url('admin/files/categories',$file->id),'class' => 'form-horizontal']) !!}
+                            {!! Form::slText('name','Titolo',null,['disabled'=>'']) !!}
+                            {!! Form::slCategory($vocabularies,$tags,$file) !!}
+                            {!! Form::slSubmit('Salva',['name'=>'saveCategory']) !!}
                         {!! Form::close() !!}
 
                     </div>

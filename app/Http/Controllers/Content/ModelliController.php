@@ -124,7 +124,8 @@ use App\Libraries\Helpers;
             "np_author_username"=>"Autore - username",
             "np_author_name"=>"Autore - name",
             "np_author_id"=>"Autore - id",
-            "np_page"=>"Pagina corrente"];
+            "np_page"=>"Pagina corrente",
+            "np_description"=>"Descrizione"];
         $lv =(new FormGenerates($structure->content))->listLabel();
         $lv = array_map(function ($k,$v) { return array("np".str_replace("-","",$k)=>$v);},array_keys($lv),array_values($lv));
         $listVariable += array_collapse($lv);

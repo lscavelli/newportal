@@ -17,6 +17,7 @@ class CreateServicesTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name')->nullable();
             $table->string('class')->nullable();
+            $table->string('color', 50)->nullable();
             $table->timestamps();
         });
     }

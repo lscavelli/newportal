@@ -9,6 +9,8 @@ use Validator;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
+use App\Models\Content\Service;
+use App\Models\Content\File;
 
 class FileController extends Controller {
 
@@ -16,7 +18,7 @@ class FileController extends Controller {
 
     public function __construct(RepositoryInterface $rp)  {
         $this->middleware('auth');
-        $this->rp = $rp->setModel('App\Models\Content\File')->setSearchFields(['name','description','file_name']);
+        $this->rp = $rp->setModel(File::class)->setSearchFields(['name','description','file_name']);
     }
 
     /**
@@ -50,7 +52,9 @@ class FileController extends Controller {
     public function edit($id)
     {
         $file = $this->rp->find($id);
-        return view('content.editFile', compact('file'));
+        $tags = $this->rp->setModel('App\Models\Content\Tag')->pluck();
+        $vocabularies = $this->listVocabularies();
+        return view('content.editFile', compact('file','tags','vocabularies'));
     }
 
     /**
@@ -105,6 +109,39 @@ class FileController extends Controller {
     {
         $file = $this->rp->find($id);
         return response()->file(public_path($file->getPath()));
+    }
+
+    /**
+     * Salva tags e le categorie
+     * @param $id
+     * @param Request $request
+     * @return mixed
+     */
+    public function saveCategories($id, Request $request) {
+        $file = $this->rp->find($id);
+        if (isset($request->tags)) {
+            $file->tags()->sync($request->tags);
+        } elseif ($request->has('saveCategory')) {
+            $file->tags()->sync([]);
+        }
+
+        $file->categories()->detach();
+        foreach($this->listVocabularies() as $vocabulary) {
+            $itemCats = "categories".$vocabulary->id;
+            if (isset($request->$itemCats)) {
+                $file->categories()->attach($request->$itemCats,['vocabulary_id'=>$vocabulary->id]);
+            }
+        }
+        return redirect('admin/files')->withSuccess('File aggiornato correttamente');
+    }
+
+    /**
+     * Restituisce la lista dei vocabolari
+     * @return mixed
+     */
+    private function listVocabularies() {
+        $service = $this->rp->setModel(Service::class)->where('class',File::class)->first();
+        return $service->vocabularies;
     }
 
 }

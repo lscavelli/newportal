@@ -5,12 +5,11 @@ namespace App\Portlets\scavelli\webcontent\Controllers;
 use App\Libraries\listGenerates;
 use App\Models\Content\Content;
 use App\Models\Content\Modelli;
-use App\Models\Content\Page;
 use App\Models\Content\Structure;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Content\Service;
 
 class ContentWebController extends Controller
 {
@@ -51,7 +50,8 @@ class ContentWebController extends Controller
         //$viewPortlet = app_path("Portlets\\".$portlet->path).'\\'.'views';
         //View()->addLocation($viewPortlet);
 
-        $this->params['listStructure'] = $this->rp->setModel('App\Models\Content\Structure')->where('type_id',2)->where('status_id',1)->pluck()->toArray();
+        $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
+        $this->params['listStructure'] = $this->rp->setModel('App\Models\Content\Structure')->where('service_id',$service->id)->where('status_id',1)->pluck()->toArray();
         $structure_id = ($request->has('structure_id')) ? $request->structure_id : key($this->params['listStructure']);
 
         // ricavo la lista dei modelli riferiti alla struttura_id

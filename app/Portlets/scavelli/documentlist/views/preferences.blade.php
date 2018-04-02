@@ -12,8 +12,6 @@
                     <div class="box-body">
 
                         <form method="POST" id="preferencePortlet">
-                            {!! Form::hidden('feed', null, ['id'=>"feed"]) !!}
-                            {!! Form::hidden('sitemap', null, ['id'=>"sitemap"]) !!}
 
                             <div class="form-group">
                                 <label for="structure_id">Strutture di dati</label>
@@ -26,10 +24,6 @@
                             <div class="form-group">
                                 <label for="listView">Modello applicato alla lista</label>
                                 {!! Form::select('listView', $cList->listView , $cList->get('listView') , ['class' => "form-control", "id"=>'listView']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label for="inpage">Visualizza in</label>
-                                {!! Form::select('inpage', $cList->pages , $cList->get('inpage') , ['class' => "form-control"]) !!}
                             </div>
                             <div class="form-group">
                                 {{ Form::label('tags', 'Tags:') }}
@@ -57,49 +51,6 @@
                     </div>
                 </div>
 
-                <div class="box box-info">
-                    <div class="box-header with-border" style="background-color: ghostwhite ">
-                        <h3 class="box-title">Feed Rss</h3>
-                    </div>
-                    <div class="box-body">
-
-                        <form method="POST" id="feedrss">
-                            <div class="form-group">
-                                <label for="setFeed">Abilitato</label>
-                                {!! Form::select('setFeed', ["No","Si"] ,$cList->get('setFeed') , ['class' => "form-control input-sm", 'id'=>"setFeed"]) !!}
-                            </div>
-                            <div class="feed">
-                                <div class="form-group">
-                                    <label for="feed_name">Nome del Feed</label>
-                                    {!! Form::text('feed_name', $cList->get('feed.feed_name', "Feed Aggregatore contenuti"), ['class' => "form-control input-sm", 'id'=>"feed_name"]) !!}
-                                </div>
-                                <div class="form-group">
-                                    <label for="feed_size">Numero massimo elementi</label>
-                                    {!! Form::select('feed_size', [5=>5,10=>10,15=>15,20=>20,25=>25,30=>30] ,$cList->get('feed.feed_size') , ['class' => "form-control input-sm", 'id'=>"feed_size"]) !!}
-                                </div>
-                                <div class="form-group">
-                                    <label for="feed_format">Tipo feed</label>
-                                    {!! Form::select('feed_format', ['atom'=>"Atom 1.0",'rss2'=>"Rss 2.0"] ,$cList->get('feed.feed_format') , ['class' => "form-control input-sm", 'id'=>"feed_format"]) !!}
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-                <div class="box box-info">
-                    <div class="box-header with-border" style="background-color: ghostwhite ">
-                        <h3 class="box-title">Altre impostazioni</h3>
-                    </div>
-                    <div class="box-body">
-
-                        <div class="form-group">
-                            <label for="setFeed">SiteMap</label>
-                            {!! Form::select('setSiteMap', ["No","Si"] ,$cList->get('sitemap') , ['class' => "form-control input-sm", 'id'=>"setSiteMap"]) !!}
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -125,11 +76,6 @@
         $(this).select2({categories: true}).val([{!! $cList->cats_reg !!}]).trigger('change');
     });
 
-
-    $("#service").change(function(e) {
-        e.preventDefault();
-        $(".form-toggle").toggle();
-    });
     $("#structure_id").change(function(e) {
         e.preventDefault();
         $('#model_id').empty();
@@ -139,41 +85,6 @@
                 $('#model_id').append('<option value=' + key + '>' + val + '</option>');
             });
         });
-    });
-
-    if ($("#setFeed").find('option:selected').val()==1) {
-        $('.feed').show();
-        setFeed();
-    } else {
-        $('.feed').hide();
-    }
-
-    $("#setFeed").change(function(e) {
-        e.preventDefault();
-        setFeed();
-        $('.feed').toggle();
-    });
-
-    $("#feed_size, #feed_format, #feed_name").change(function() {
-        if ($('#setFeed').find('option:selected').val()==1) setFeed();
-    });
-
-    function setFeed() {
-        //$("#feed").val(null);
-        if ($('#setFeed').find('option:selected').val()==1) {
-            var ids = [];
-            ids.push({feed_name:$('#feed_name').val()});
-            ids.push({feed_size:$("#feed_size").find('option:selected').val()});
-            ids.push({feed_format:$("#feed_format").find('option:selected').val()});
-            $("#feed").val(JSON.stringify(ids));
-        } else {
-            $("#feed").val(null);
-        }
-    }
-
-    $("#setSiteMap").change(function(e) {
-        e.preventDefault();
-        $("#sitemap").val($(this).find('option:selected').val());
     });
 </script>
 @endpush

@@ -123,9 +123,9 @@ class listGenerates
         return $this;
     }
 
-    public function addSplitButtons($buttons,$showButtonNew=true) {
+    public function addSplitButtons($options,$showButtonNew=true) {
         $this->showButtonNew($showButtonNew);
-        $this->splitButtons = $buttons;
+        $this->splitButtons = $options;
         return $this;
     }
 

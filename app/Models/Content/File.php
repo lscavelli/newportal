@@ -9,7 +9,7 @@ class File extends Model
     protected $table = 'files';
 
     protected $fillable = array(
-        'name', 'path', 'description', 'file_name', 'mime_type', 'size', 'position',
+        'name', 'slug', 'path', 'description', 'file_name', 'mime_type', 'size', 'position',
         'user_id', 'username', 'hits', 'status_id', 'extension'
     );
 

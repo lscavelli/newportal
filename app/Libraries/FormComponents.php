@@ -21,7 +21,8 @@ class FormComponents
         $this->form->component('slPassword', 'components.password', ['name', 'label', 'value' => null, 'attributes' => []]);
         $this->form->component('slSelect2', 'components.select2', ['name', 'label', 'value' => [], 'default'=>null, 'url'=>null, 'attributes' => []]);
         $this->form->component('slCheckbox', 'components.checkbox', ['name', 'label'=>null, 'value' => null, 'checked'=>false, 'attributes' => []]);
-
+        $this->form->component('slCategory', 'components.category', ['vocabularies', 'tags', 'model', 'default'=>null, 'attributes' => []]);
+        $this->form->component('slFormeo', 'components.formeo', ['structure', 'formId', 'saveButton', 'hiddenContent']);
     }
 }
 

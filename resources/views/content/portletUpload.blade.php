@@ -5,7 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Seleziona Portlet</h4>
             </div>
-            <form id="PortletForm" enctype="multipart/form-data" action="{{ url('/admin/portlets/store') }}" method="post">
+            <form id="PortletForm" enctype="multipart/form-data" action="{{ url('/admin/portlets') }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <p class="text_img">Seleziona localmente la tua Portlet</p>

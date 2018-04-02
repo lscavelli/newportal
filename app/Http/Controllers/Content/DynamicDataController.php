@@ -65,7 +65,7 @@ class DynamicDataController extends Controller {
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; $data['type_id'] = 2; // content structure
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; // content structure
         $this->repo->create($data);
         return redirect('admin/ddl')->withSuccess('Strutura creata correttamente.');
     }

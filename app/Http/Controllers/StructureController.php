@@ -10,14 +10,15 @@ use App\Http\Requests;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
+use App\Models\Content\Service;
 
 class StructureController extends Controller {
 
-    private $repo;
+    private $rp;
 
     public function __construct(RepositoryInterface $rp)  {
         $this->middleware('auth');
-        $this->repo = $rp->setModel('App\Models\Content\Structure')->setSearchFields(['name','description','content']);
+        $this->rp = $rp->setModel('App\Models\Content\Structure')->setSearchFields(['name','description','content']);
     }
 
     /**
@@ -40,17 +41,21 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request, listGenerates $list) {
-        $list->setModel($this->repo->paginate($request));
-        return view('content.listStructure', compact('list'));
+        $list->setModel($this->rp->paginate($request));
+        $optionsSel = $this->rp->setModel(Service::class)->pluck()->mapWithKeys(function ($val, $key) {
+            return ["structure/service/".$key."/create" => $val];
+        });
+        return view('content.listStructure', compact('list','optionsSel'));
     }
 
     /**
      * Mostra il form per la creazione delle strutture
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()   {
+    public function create($service_id)   {
         $structure = new Structure();
-        return view('content.editStructure', compact('structure'));
+        $service = $this->rp->setModel(Service::class)->where('id',$service_id)->first();
+        return view('content.editStructure', compact('structure','service'));
     }
 
     /**
@@ -62,8 +67,8 @@ class StructureController extends Controller {
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; $data['type_id'] = 2; // content structure
-        $this->repo->create($data);
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; // content structure
+        $this->rp->create($data);
         return redirect('admin/structure')->withSuccess('Strutura creata correttamente.');
     }
 
@@ -73,8 +78,9 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id) {
-        $structure = $this->repo->find($id);
-        return view('content.editStructure', compact('structure'));
+        $structure = $this->rp->find($id);
+        $service = $this->rp->setModel(Service::class)->where('id',$structure->service_id)->first();
+        return view('content.editStructure', compact('structure','service'));
     }
 
     /**
@@ -87,7 +93,7 @@ class StructureController extends Controller {
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
-        if ($this->repo->update($id,$data)) {
+        if ($this->rp->update($id,$data)) {
             return redirect('admin/structure')->withSuccess('Struttura aggiornata correttamente');
         }
     }
@@ -98,7 +104,7 @@ class StructureController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)  {
-        if ($this->repo->delete($id)) {
+        if ($this->rp->delete($id)) {
             return redirect()->back()->withSuccess('Struttura cancellata correttamente');
         }
         return redirect()->back();

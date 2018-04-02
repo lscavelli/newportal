@@ -15,8 +15,8 @@ class CreateWebcontentTable extends Migration
     {
         Schema::create('webcontent', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('name', 150);
-            $table->string('slug', 150);
+            $table->string('name');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->unsignedInteger('structure_id')->index();

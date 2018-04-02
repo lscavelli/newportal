@@ -41,7 +41,9 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
     // Structure
     // *****************************************************************************
-    Route::resource('structure','StructureController');
+    Route::resource('structure','StructureController')->except(['create']);
+    Route::get('structure/service/{service_id}/create','StructureController@create');
+
 
     Route::group(['namespace' => 'Content'], function () {
 
@@ -50,6 +52,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::resource('files','FileController');
         Route::get('files/download/{file_id}', 'FileController@download');
         Route::get('files/view/{file_id}', 'FileController@viewFile');
+        Route::post('files/categories/{file_id}', 'FileController@saveCategories');
+
 
         // Comments
         // *****************************************************************************
@@ -251,5 +255,5 @@ Route::post('contactform', 'Mail\\MailController@contact');
 Route::get('sitemap.xml', 'SiteMapController@siteMap');
 Route::get('users/confirmation/{token}', 'Auth\\RegisterController@confirmationEmail')->name('confirmation.email');
 
-Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin).*)?'); //'([A-z\d-\/_.]+)?');
+Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin|web).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');
