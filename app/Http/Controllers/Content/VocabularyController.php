@@ -54,8 +54,13 @@ class VocabularyController extends Controller
         $defaults = [['id'=>0,'pivot'=>['type_order'=>0,'type_dir'=>0,'required'=>1]]];
         $selectord = $this->selectOrder();
         $services = ["all"=>'Tutti i servizi'];
-        $services += $this->listServices();
-        return view('content.editVocabulary')->with(compact('vocabulary','selectord','services','defaults'));
+        $servicesList = $this->listServices();
+        if (is_array( $servicesList) && count( $servicesList)>0) {
+            $services += $servicesList;
+            return view('content.editVocabulary')->with(compact('vocabulary','selectord','services','defaults'));
+        } else {
+            return redirect('admin/vocabularies')->withErrors('Non ci sono servizi attivi.');
+        }
     }
 
     /**

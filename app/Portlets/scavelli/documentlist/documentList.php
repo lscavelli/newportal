@@ -15,7 +15,7 @@ class documentList extends Portlet {
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
 
         if ($this->theme)
-            $this->theme->addExCss($this->getPath().'css/assetpublisher007.css');
+            $this->theme->addExCss($this->getPath().'css/documentAsset01.css');
     }
 
     public function getContent() {
@@ -156,16 +156,13 @@ class documentList extends Portlet {
                 if (str_contains($model, '$np_categories')) $data['_categories'] = $rec->categories;
                 if (str_contains($model, '$np_page')) $data['_page'] = $this->request->segment(1);
                 if (str_contains($model, '$np_description')) $data['_description'] = $rec->description;
-                $data['_href'] = "web/".$rec->slug;
-                if (str_contains($model, '$np_image')) {
-                    $file = $rec->path."/".config('lfm.thumb_folder_name')."/".$rec->file_name;
-                    if($rec->isImage() && file_exists(public_path($file))) {
-                        $data['_image'] = '<img src=\''.$file.'\' alt=\''.$rec->name.'\' width="50">';
-                    } else {
-                        $data['_image'] = '<i class="fa '.$rec->getIcon().'" style="font-size: 2.5em;"></i>';
-                    }
-                }
-
+                if (str_contains($model, '$np_extension')) $data['_extension'] = strtoupper($rec->extension);
+                if (str_contains($model, '$np_size')) $data['_size'] = strtoupper($this->formatBytes($rec->size));
+                if (str_contains($model, '$np_href')) $data['_href'] = "web/".$rec->slug;
+                if (str_contains($model, '$np_file_name')) $data['_file_name'] = $rec->file_name;
+                if (str_contains($model, '$np_mime_type')) $data['_mime_type'] = $rec->mime_type;
+                if (str_contains($model, '$np_fullpath')) $data['_fullpath'] = $rec->path."/".config('lfm.thumb_folder_name')."/".$rec->file_name;
+                if (str_contains($model, '$np_class_icon')) $data['_class_icon'] = "fa ".$rec->getIcon();
                 $data['_author_name'] = $rec->user->name; $data['_author_username'] = $rec->username; $data['_author_id'] = $rec->user_id;
                 $data['_data_creazione'] = $rec->created_at->format('d/m/Y');
                 $data['_data_modifica'] = \Carbon\Carbon::parse($rec->updated_at)->format('d/m/Y');
@@ -186,5 +183,18 @@ class documentList extends Portlet {
 
     public function configPortlet($portlet) {
         return (new documentController($this->rp))->configPortlet($portlet, $this);
+    }
+
+    private function formatBytes($size, $precision = 2)
+    {
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
     }
 }

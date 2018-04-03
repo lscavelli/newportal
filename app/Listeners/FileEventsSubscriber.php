@@ -30,7 +30,7 @@ class FileEventsSubscriber {
     {
         $oldFolderPath = str_replace(public_path(), "", $event->oldPath());
         $newFolderPath = str_replace(public_path(), "", $event->newPath());
-        info($oldFolderPath);
+        //info($oldFolderPath);
         $this->rp->getModel()->where('path', $oldFolderPath)->update(['path'=>$newFolderPath]);
     }
 
@@ -84,10 +84,12 @@ class FileEventsSubscriber {
     public function onImageWasUploaded(ImageWasUploaded $event)
     {
         $filePath = str_replace(public_path(), "", $event->path());
+        $file = $this->getFile($event->path());
         $this->rp->create([
             'path' => $this->getDirname($filePath),
-            'name' => $this->getFile($event->path()),
-            'file_name' => $this->getFile($event->path()),
+            'name' => $file,
+            'slug' => $this->rp->makeSlug($file),
+            'file_name' => $file,
             'mime_type' => $this->getMimeType($event->path()),
             'extension' => $this->getExtension($event->path()),
             'size' => $this->getSize($event->path()),

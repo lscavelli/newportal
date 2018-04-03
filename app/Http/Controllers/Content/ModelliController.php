@@ -115,8 +115,6 @@ use App\Libraries\Helpers;
         $listVariable = [
             ""=>"",
             "np_title"=>"Titolo",
-            "np_image"=>"Immagine",
-            "np_href"=>"Link",
             "np_data_creazione"=>"Data di creazione",
             "np_data_modifica"=>"Data di modifica",
             "np_categories"=>"Categorie",
@@ -126,6 +124,10 @@ use App\Libraries\Helpers;
             "np_author_id"=>"Autore - id",
             "np_page"=>"Pagina corrente",
             "np_description"=>"Descrizione"];
+        if(!empty($structure->service->content)) {
+            $intService = json_decode($structure->service->content, true);
+            $listVariable += $intService['varmodelli'];
+        }
         $lv =(new FormGenerates($structure->content))->listLabel();
         $lv = array_map(function ($k,$v) { return array("np".str_replace("-","",$k)=>$v);},array_keys($lv),array_values($lv));
         $listVariable += array_collapse($lv);

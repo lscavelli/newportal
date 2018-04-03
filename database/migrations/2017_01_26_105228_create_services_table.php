@@ -18,6 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('name')->nullable();
             $table->string('class')->nullable();
             $table->string('color', 50)->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

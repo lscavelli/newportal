@@ -48,4 +48,5 @@ interface RepositoryInterface {
     public function with($relations);
     public function take($value);
     public function limit($value);
+    public function makeSlug($slug,$id=0);
 }

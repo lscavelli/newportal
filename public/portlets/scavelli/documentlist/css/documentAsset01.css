@@ -45,19 +45,6 @@
     margin-bottom: 0;
 }
 
-li.block-hover a{
-    font-size: 16px;
-    color: inherit;
-}
-
-li.block-hover a:link, li.block-hover a:visited{
-    text-decoration: none;
-}
-
-li.block-hover a:hover {
-    color: #f56a6a;
-}
-
 
 li.block-hover {
     border-top: solid 1px rgba(210, 215, 217, 0.75);
@@ -70,3 +57,63 @@ li.block-hover:first-child {
     margin-top: 0;
     padding-top: 0;
 }
+
+li.block-hover .item {
+    display: table-row;
+}
+
+li.block-hover .item .icon {
+    display: table-cell;
+    padding-right: 1em
+}
+
+li.block-hover .item .icon i,
+li.block-hover .item .text .title,
+li.block-hover .text2 .description,
+li.block-hover .text2 .size {
+
+    display: block;
+
+}
+
+li.block-hover .item .text .title {
+    font-weight: 700;
+}
+
+li.block-hover .item {
+    font-size: 1.5em;
+}
+
+li.block-hover a .text .size, li.block-hover .text2 .size {
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.8em;
+}
+
+li.block-hover a {
+    color: #005980;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+li.block-hover a:link, li.block-hover a:visited{
+    text-decoration: none;
+}
+
+li.block-hover a:hover {
+    color: #f56a6a;
+}
+
+li.block-hover .text2 {
+    margin-top: 4px;
+    padding-left: 2.9em;
+    font-size: 1.2em;
+}
+
+li.block-hover .text2 .description {
+    font-style: italic;
+}
+
+
+

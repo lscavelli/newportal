@@ -45,6 +45,9 @@ class StructureController extends Controller {
         $optionsSel = $this->rp->setModel(Service::class)->pluck()->mapWithKeys(function ($val, $key) {
             return ["structure/service/".$key."/create" => $val];
         });
+        if(count($optionsSel)<1) {
+            return redirect('admin/dashboard')->withErrors('Non ci sono servizi attivi.');
+        }
         return view('content.listStructure', compact('list','optionsSel'));
     }
 
@@ -79,7 +82,7 @@ class StructureController extends Controller {
      */
     public function edit($id) {
         $structure = $this->rp->find($id);
-        $service = $this->rp->setModel(Service::class)->where('id',$structure->service_id)->first();
+        $service = $structure->service;
         return view('content.editStructure', compact('structure','service'));
     }
 

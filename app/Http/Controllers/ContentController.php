@@ -54,6 +54,9 @@ class ContentController extends Controller {
         $list->setModel($content);
 
         $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
+        if(is_null($service)) {
+            return redirect('admin/dashboard')->withErrors('Il servizio WebContent non è stato trovato.');
+        }
         $structures = $this->rp->setModel(Structure::class)->where('service_id',$service->id)->where('status_id',1)->pluck();
         $listStructure = [];
         foreach($structures as $key=>$val) {

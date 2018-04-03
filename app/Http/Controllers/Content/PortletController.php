@@ -52,6 +52,8 @@ class PortletController extends Controller {
         if ($request->file('filePortlet')) {
             $pm->uploadPortlet($this->rp);
             return redirect('admin/portlets')->withSuccess('Portlets installate correttamente');
+        } else {
+            return redirect('admin/portlets')->withErrors('Non è stata selezionata alcuna portlet');
         }
     }
 
