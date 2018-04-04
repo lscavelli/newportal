@@ -64,7 +64,7 @@ li.block-hover .item {
 
 li.block-hover .item .icon {
     display: table-cell;
-    padding-right: 1em
+    padding-right: 1em;
 }
 
 li.block-hover .item .icon i,
@@ -85,7 +85,7 @@ li.block-hover .item {
 }
 
 li.block-hover a .text .size, li.block-hover .text2 .size {
-    margin-top: 5px;
+    margin-top: 8px;
     color: #666;
     font-size: 0.8em;
 }
@@ -106,7 +106,7 @@ li.block-hover a:hover {
 }
 
 li.block-hover .text2 {
-    margin-top: 4px;
+    margin-top: 3px;
     padding-left: 2.9em;
     font-size: 1.2em;
 }
@@ -114,6 +114,21 @@ li.block-hover .text2 {
 li.block-hover .text2 .description {
     font-style: italic;
 }
+
+li.block-hover .item img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 48px;
+}
+
+li.block-hover .text3 {
+    margin-top: -10px;
+    padding-left: 4.1em;
+    font-size: 1.2em;
+    font-style: italic;
+ }
 
 
 

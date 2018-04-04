@@ -26,7 +26,7 @@
                     ->customizes('thumb',function($row){
                         $file = $row['path']."/".config('lfm.thumb_folder_name')."/".$row['file_name'];
                         if($row->isImage() && file_exists(public_path($file))) {
-                            return '<div style="text-align:center"><img src=\''.$file.'\' alt=\''.$row['name'].'\' height="50"></div>';
+                            return '<div style="text-align:center"><img src=\''.$file.'\' alt=\''.$row['name'].'\' style="width: 100%; max-width: 45px; height: auto; border-radius: 50%;"></div>';
                         } else {
                             return '<div style="text-align:center"><i class="fa '.$row->getIcon() .' fa-3x"></i></div>';
                         }
