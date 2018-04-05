@@ -53,7 +53,7 @@
                     $.each(data, function(k,v) {
                         array.push(v)
                     });
-                    //console.log(array);
+                    console.log(array);
                     //alert(array);
                     $('#tree-container').highCheckTree({
                         data: array

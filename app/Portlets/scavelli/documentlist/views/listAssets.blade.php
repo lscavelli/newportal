@@ -9,6 +9,7 @@
     <div class="col-lg-12">
         <div class='pull-right' Style="margin-top: 0px; padding-right: 20px">
             {{
+                $item->setCurrentPage(null, 'portlet'.$list->get('id')),
                 $items->appends(array_except(\Request::all(),['_token','page']))->links()
             }}
         </div>

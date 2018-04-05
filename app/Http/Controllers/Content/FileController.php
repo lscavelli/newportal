@@ -83,8 +83,9 @@ class FileController extends Controller {
         $file = $this->rp->find($id);
         $fs = new Filesystem();
         $filePath = public_path($file->path."/".$file->file_name);
+        $fileThumbPath =  public_path($file->path."/".config('lfm.thumb_folder_name')."/".$file->file_name);
         if ($fs->exists($filePath)) {
-            $fs->delete($filePath);
+            $fs->delete([$filePath,$fileThumbPath]);
             if ($this->rp->delete($id)) {
                 return redirect('/admin/files')->withSuccess('File cancellato correttamente');
             }

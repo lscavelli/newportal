@@ -127,10 +127,10 @@ class GroupController extends Controller
         // --- Utenti Assegnati
         $ass = $this->listUsers($groupId);
         $usersAssArray = $ass->toArray();
-        $usersAss = $this->repo->paginateArray($usersAssArray,10,$request->page_a,'page_a');
+        $usersAss = $this->repo->paginateArray($usersAssArray,5,$request->page_a,'page_a');
         // --- Utenti ancora disponibili
         $usersDisArray = $this->repo->setModel(new User())->all()->diff($ass)->toArray();
-        $usersDis = $this->repo->paginateArray($usersDisArray,10,$request->page_b,'page_b');
+        $usersDis = $this->repo->paginateArray($usersDisArray,5,$request->page_b,'page_b');
 
         return view('users.assignUserGroup', compact('usersAss','usersDis','group','pag','list'));
     }
