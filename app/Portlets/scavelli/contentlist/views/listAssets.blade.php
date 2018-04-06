@@ -14,7 +14,7 @@
     @endif
     <div class='pull-right' Style="margin-top: 0px; padding-right: 20px">
         {{
-            $items->appends(array_except(\Request::all(),['_token','page']))->links()
+            $items->links()
         }}
     </div>
     </div>

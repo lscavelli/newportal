@@ -186,7 +186,7 @@ class contentList extends Portlet {
                 return;
             }
         } else {
-            $items = $builder->paginate(4);
+            $items = $builder->paginate(4,['*'],'pagepid'.$this->get('id'));
         }
 
 
