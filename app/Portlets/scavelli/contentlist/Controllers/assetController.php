@@ -50,8 +50,8 @@ class assetController extends Controller
         // definizione della lista dei modelli
         //===============================================
 
-        $this->services = $this->rp->setModel('App\Models\Content\Service')->where('id',1)->pluck('name','class')->toArray();
-        $structures = $this->rp->setModel('App\Models\Content\Structure')->where('type_id',2)->where('status_id',1);
+        $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
+        $structures = $this->rp->setModel('App\Models\Content\Structure')->where('service_id',$service->id)->where('status_id',1);
         if (!empty($this->get('structure_id'))) {
             $structure = $this->rp->getModel()->find($this->get('structure_id'));
         } elseif($structures->count()>0) {

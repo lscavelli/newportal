@@ -58,8 +58,8 @@ class RoleController extends Controller
      * @return \Illuminate\Contracts\View\View
      */
     public function create()   {
-        $role = new Role(); $action = "RoleController@store";
-        return view('users.editRole', compact('role','action'));
+        $role = new Role();
+        return view('users.editRole', compact('role'));
     }
 
     /**
@@ -72,7 +72,7 @@ class RoleController extends Controller
         $data = $request->all();
         $this->validator($data)->validate();
         $this->repo->create($data);
-        return redirect()->route('roles')->withSuccess('Ruolo creato correttamente.');
+        return redirect('admin/roles')->withSuccess('Ruolo creato correttamente.');
     }
 
     /**
@@ -82,8 +82,7 @@ class RoleController extends Controller
      */
     public function edit($id, Request $request) {
         $role = $this->repo->find($id);
-        $action = ["RoleController@update",$id];
-        return view('users.editRole', compact('role','action'));
+        return view('users.editRole', compact('role'));
     }
 
     /**
@@ -91,15 +90,15 @@ class RoleController extends Controller
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update($id, Request $request)  {
+    public function update(Request $request, $id)  {
         $data = $request->all();
         $data['id'] = $id;
         $this->validator($data,true)->validate();
         if ($this->repo->update($id,$data)) {
-            return redirect()->route('roles')->withSuccess('Ruolo aggiornato correttamente');
+            return redirect('admin/roles')->withSuccess('Ruolo aggiornato correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -111,7 +110,6 @@ class RoleController extends Controller
         if ($this->repo->delete($id)) {
             return redirect()->back()->withSuccess('Ruolo cancellato correttamente');
         }
-        return redirect()->back();
     }
 
     /**
@@ -221,17 +219,17 @@ class RoleController extends Controller
 
     /**
      * Mostra il profilo del singolo ruolo
-     * @param $Id
+     * @param $id
      * @param Request $request
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function profile($Id, Request $request) {
-        $role = $this->repo->find($Id);
-        $pag['nexid'] = $this->repo->next($Id);
-        $pag['preid'] = $this->repo->prev($Id);
+    public function show($id, Request $request) {
+        $role = $this->repo->find($id);
+        $pag['nexid'] = $this->repo->next($id);
+        $pag['preid'] = $this->repo->prev($id);
         $listUsers = new listGenerates($this->repo->paginateArray($role->listUsers()->toArray(),10,$request->page_a,'page_a'));
-        $listGroups = new listGenerates($this->repo->paginateArray($this->listGroups($Id)->toArray(),10,$request->page_b,'page_b'));
-        $listPermissions = new listGenerates($this->repo->paginateArray($this->listPermissions($Id)->toArray(),10,$request->page_c,'page_c'));
+        $listGroups = new listGenerates($this->repo->paginateArray($this->listGroups($id)->toArray(),10,$request->page_b,'page_b'));
+        $listPermissions = new listGenerates($this->repo->paginateArray($this->listPermissions($id)->toArray(),10,$request->page_c,'page_c'));
         return view('users.profileRole', compact('role','listUsers','listGroups','listPermissions','pag'));
     }
 }

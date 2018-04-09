@@ -81,7 +81,7 @@ class CategoryController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\View
      */
-    public function edit($id) {
+    public function edit($vid,$id) {
         $category = $this->rp->find($id);
         $selectCat = $this->rp->optionsSel($id,['vocabulary_id'=>$category->vocabulary_id]);
         $action = ["Content\\CategoryController@update",$id];
@@ -94,6 +94,7 @@ class CategoryController extends Controller
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all();

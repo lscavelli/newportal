@@ -12,7 +12,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'Nome','updated_at'=>'Data di Aggiornamento'])
-                    ->actions([url('/admin/categories/create/')=>'Nuova categoria',url('/admin/categories/')=>'Lista categorie'])
+                    ->actions([url('/admin/vocabularies/cat/create/')=>'Nuova categoria',url('/admin/vocabularies/cat/')=>'Lista categorie'])
                     ->customizes('updated_at',function($row){
                         return Carbon\Carbon::parse($row['updated_at'])->format('d/m/Y');
                     })->render()

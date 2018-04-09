@@ -45,8 +45,8 @@ class TagController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function create()   {
-        $tag = new Tag(); $action = "Content\\TagController@store";
-        return view('content.editTag')->with(compact('tag','action'));
+        $tag = new Tag();
+        return view('content.editTag')->with(compact('tag'));
     }
 
     /**
@@ -58,7 +58,7 @@ class TagController extends Controller {
         $data = $request->all();
         $this->validator($data)->validate();
         $this->rp->create($data);
-        return redirect()->route('tags')->withSuccess('Tag creato correttamente.');
+        return redirect('admin/tags')->withSuccess('Tag creato correttamente.');
     }
 
     /**
@@ -68,8 +68,7 @@ class TagController extends Controller {
      */
     public function edit($id) {
         $tag = $this->rp->find($id);
-        $action = ["Content\\TagController@update",$id];
-        return view('content.editTag')->with(compact('tag','action'));
+        return view('content.editTag')->with(compact('tag'));
     }
 
     /**
@@ -82,9 +81,8 @@ class TagController extends Controller {
         $data = $request->all();
         $this->validator($data)->validate();
         if ($this->rp->update($id,$data)) {
-            return redirect()->route('tags')->withSuccess('Tag aggiornato correttamente');
+            return redirect('admin/tags')->withSuccess('Tag aggiornato correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**

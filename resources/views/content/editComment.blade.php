@@ -17,7 +17,7 @@
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#editpost" data-toggle="tab" aria-expanded="true">Contenuto post</a></li>
+                    <li class="active"><a href="#editpost" data-toggle="tab" aria-expanded="true">Commento</a></li>
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -27,43 +27,13 @@
                             <input type="hidden" value="{{ $post->id }}" name="post_id">
                             <input type="hidden" value="{{ $service }}" name="service">
 
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Titolo</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Titolo non obbligatorio"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="content" class="col-sm-2 control-label">Contenuto</label>
-                                <div class="col-sm-10">
-                                    {!! Form::textarea('content',null,['class' => 'form-control', 'placeholder'=> "Contenuto"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-sm-2 control-label">Email</label>
-                                <div class="col-sm-10">
-                                    {!! Form::email('email',null,['id' => 'email','class' => 'form-control', 'placeholder'=> "Email"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="author" class="col-sm-2 control-label">Autore</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('author',null,['class' => 'form-control']) !!}
-                                </div>
-                            </div>
+                            {!! Form::slText('name','Titolo',null,['placeholder'=> "Titolo non obbligatorio"]) !!}
+                            {!! Form::slTextarea('content','Contenuto') !!}
+                            {!! Form::slEmail('email','Email') !!}
+                            {!! Form::slText('author','Autore') !!}
+                            {!! Form::slSelect('approved','Stato',['Non Approvato','Approvato']) !!}
+                            {!! Form::slSubmit('Salva') !!}
 
-                            <div class="form-group">
-                                <label for="approved" class="col-sm-2 control-label">Stato</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('approved', ['Non Approvato','Approvato'] , null, ['class' => 'form-control']) !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Salva</button>
-                                </div>
-                            </div>
                         {!! Form::close() !!}
 
                     </div>

@@ -14,35 +14,19 @@
             <div class="box" style="padding-top: 20px;">
                 <div class="box-body">
                     {!! Form::model($content, ['action' => $action,'class' => 'form-horizontal']) !!}
-                    @if(isset($structureId))<input type="hidden" value="{{ $structureId }}" name="structureId">@endif
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">Nome</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> "Nome"]) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                    {!!
+                        @if(isset($structureId))<input type="hidden" value="{{ $structureId }}" name="structureId">@endif
 
-                    $form->render()
+                        {!! Form::slText('name','Nome') !!}
 
-                    !!}
-                    <div class="form-group">
-                        <label for="slug" class="col-sm-2 control-label">Abbreviazione</label>
-                        <div class="col-sm-10">
-                            {!! Form::text('slug',null,['class' => 'form-control', 'placeholder'=> "Lasciare vuoto per generare automaticamente"]) !!}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-danger">Salva</button>
-                        </div>
-                    </div>
+                        {!!
+
+                        $form->render()
+
+                        !!}
+
+                        {!! Form::slText('slug','Slug',null,['placeholder'=> __("Generato automaticamente se lasciato vuoto")]) !!}
+                        {!! Form::slSubmit('Salva') !!}
+
                     {!! Form::close() !!}
                 </div>
             </div>

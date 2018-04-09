@@ -16,6 +16,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'nome','approved'=>'Stato','created_at'=>'Creato il','updated_at'=>'Aggiornato il'])
+                    ->actions(['updatestate'=>'Cambia stato'])
                      ->customizes('approved',function($row){
                         if ($row['approved']) {
                             $color = 'bg-green'; $state = 'Approvato';

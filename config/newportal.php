@@ -126,6 +126,7 @@ return [
     'services' => [
         'App\Models\Content\Content' => 'ContentWeb',
         'App\Models\Blog\Post' => 'Blog',
+        'App\Models\Content\File' => 'Documenti',
     ],
 
     /*

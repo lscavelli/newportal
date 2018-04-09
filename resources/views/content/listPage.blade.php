@@ -16,7 +16,7 @@
                 {!!
                     $list->columns(['id'=>'Id','name'=>'Nome','slug'=>'Abbreviazione','parent_id'=>'Figlia di'])
                     ->sortFields(['id','name','slug'])
-                    ->actions(['create'=>'Crea pagina figlia','duplicates'=>'Duplica pagina','profile'=>'Profilo','addLayout'=>'Layout'])
+                    ->actions(['create'=>'Crea pagina figlia','duplicates'=>'Duplica pagina','Profilo','addLayout'=>'Layout'])
                     ->customizes('parent_id',function($row){
                         return $row->parent()->pluck('name')->first();
                     })->render()

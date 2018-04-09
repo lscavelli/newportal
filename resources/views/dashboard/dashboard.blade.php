@@ -14,6 +14,7 @@
 @endsection
 
 @section('content')
+@include('ui.messages')
 <section class="content">
 	<div class="row">
 		<div class="col-lg-3 col-xs-6">

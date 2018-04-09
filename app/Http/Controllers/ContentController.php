@@ -52,7 +52,12 @@ class ContentController extends Controller {
         } else
             $content = $this->rp->paginate($request);
         $list->setModel($content);
-        $structures = $this->rp->setModel(new Structure())->where('type_id',2)->where('status_id',1)->pluck();
+
+        $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
+        if(is_null($service)) {
+            return redirect('admin/dashboard')->withErrors('Il servizio WebContent non è stato trovato.');
+        }
+        $structures = $this->rp->setModel(Structure::class)->where('service_id',$service->id)->where('status_id',1)->pluck();
         $listStructure = [];
         foreach($structures as $key=>$val) {
             $listStructure[url('admin/content/create/'.$key)] = $val;
@@ -66,7 +71,7 @@ class ContentController extends Controller {
      */
     public function create($structureId=null)   {
         if (empty($structureId)) $structureId = 1; //structure default
-        $structure = $this->rp->setModel(new Structure())->find($structureId);
+        $structure = $this->rp->setModel(Structure::class)->find($structureId);
         $form = new FormGenerates($structure->content);
         $content = new Content(); $action = "ContentController@store";
         return view('content.editContent')->with(compact('content','action','form','structureId'));
@@ -92,7 +97,7 @@ class ContentController extends Controller {
      */
     public function edit($id) {
         $content = $this->rp->find($id);
-        $structure = $this->rp->setModel(new Structure())->find($content->structure_id);
+        $structure = $this->rp->setModel(Structure::class)->find($content->structure_id);
         $form = new FormGenerates($structure->content,$content->content);
         $action = ["ContentController@update",$id];
         return view('content.editContent')->with(compact('content','action','form'));

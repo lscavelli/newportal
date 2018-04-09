@@ -23,42 +23,16 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="settings">
 
-                        {!! Form::model($organization, ['action' => $action,'class' => 'form-horizontal']) !!}
-                            <div class="form-group">
-                                <label for="name" class="col-sm-2 control-label">{{ __("Nome") }}</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('name',null,['class' => 'form-control', 'placeholder'=> __("Nome")]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="status_id" class="col-sm-2 control-label">{{ __("Stato") }}</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('status_id', config('newportal.status_general') , \Request::input('xpage'), ['class' => "form-control input-sm", 'id'=>"status_id"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="type_id" class="col-sm-2 control-label">{{ __("Tipo organizzazione") }}</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('type_id', config('newportal.type_organization') ,\Request::input('xpage') , ['class' => "form-control input-sm", 'id'=>"type_id"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="code" class="col-sm-2 control-label">{{ __("Codice") }}</label>
-                                <div class="col-sm-10">
-                                    {!! Form::text('code',null,['class' => 'form-control', 'placeholder'=> __("Codice")]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="parent_id" class="col-sm-2 control-label">{{ __("Filiale di") }}</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('parent_id', $selectOrg ,\Request::input('parent_id') , ['class' => "form-control input-sm", 'id'=>"parent_id"]) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">{{ __("Salva") }}</button>
-                                </div>
-                            </div>
+                        {!! Form::model($organization, ['url'=>url('admin/organizations',$organization->id),'class' => 'form-horizontal']) !!}
+                            @if(isset($organization->id))@method('PUT')@endif
+
+                            {!! Form::slText('name','Nome') !!}
+                            {!! Form::slSelect('status_id','Stato',config('newportal.status_general')) !!}
+                            {!! Form::slSelect('type_id','Tipo organizzazione', config('newportal.type_organization')) !!}
+                            {!! Form::slText('code','Codice') !!}
+                            {!! Form::slSelect('parent_id','Filiale di',$selectOrg) !!}
+                            {!! Form::slSubmit('Salva') !!}
+
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->

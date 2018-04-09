@@ -13,7 +13,7 @@
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu splitButtons" role="menu">
             @foreach($list->splitButtons  as $key=>$val)
                         <li><a href="{{$key}}">{{$val}}</a></li>
             @endforeach
@@ -23,7 +23,7 @@
     </div>
     <div class="col-sm-3 col-sm-offset-6">
         @if($list->showSearch)
-        <form method = 'POST' action = '{{url(Request::path())}}'>
+        <form method = 'GET' action = '{{url(Request::path())}}'>
             @csrf
             @foreach(array_except(\Request::all(),['_token',$list->prefix_.'keySearch','page'.$list->prefixPage]) as $key=>$value)
                 {!! Form::hidden($key,$value) !!}
@@ -78,18 +78,20 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     @if($list->showActionsDefault)
-                                        <li><a href="{{ url(Request::path().'/edit', $row['id']) }}">Edit</a></li>
+                                        <li><a href="{{ url(Request::path().'/'.$row['id'], 'edit') }}">Edit</a></li>
                                         <li><a href="#" class="delete" data-id="{{$row['id']}}">Delete</a></li>
                                     @endif
                                     @if(count($list->actions)>0)
                                         @foreach($list->actions as $actionUrl=>$actionLabel)
                                             <li><a href="
-                                                @if(starts_with($actionUrl, 'http'))
-                                                    {{$actionUrl."/".$row['id']}}
-                                                @elseif($actionLabel=="Delete"){{$actionUrl}}@else
-                                                    {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
+                                        @if(starts_with($actionUrl, 'http'))
+                                                {{$actionUrl."/".$row['id']}}
+                                                @elseif(is_numeric($actionUrl))
+                                                {{ url(Request::path(), $row['id']) }}
+                                                @else
+                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
                                                 @endif
-                                            " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
+                                                        " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
                                         @endforeach
                                     @endif
                                 </ul>
@@ -110,7 +112,7 @@
         <div class="dataTables_length">
             Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
             <label>
-                <form method="post" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
+                <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
                     @csrf
                     {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
                     @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)

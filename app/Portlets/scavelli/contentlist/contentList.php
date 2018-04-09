@@ -27,17 +27,21 @@ class contentList extends Portlet {
         $builder = $this->rp->getModel();
 
         // considero solo i contenuti attivi
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         $builder = $builder->where('status_id',1);
 
         // ordered
-        if ($this->config('ord')) {
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('ord') || $this->config('dir')) {
             $ord = ['id','name','created_at','updated_at','hits'];
             $dir = ['asc','desc'];
             $dirkey = (!is_null($this->config('dir'))) ? $this->config('dir') : 0;
-            $builder = $builder->orderBy($ord[$this->config('ord')], $dir[$dirkey]);
+            $ordkey = (!is_null($this->config('ord'))) ? $this->config('ord') : 0;
+            $builder = $builder->orderBy($ord[$ordkey], $dir[$dirkey]);
         }
 
         // inizializzo le variabili $categories e $tags
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         $categories = null;
         $tags = null;
         $content = null;
@@ -89,6 +93,7 @@ class contentList extends Portlet {
 
         // se è impostata la variabile tags applico i filtri sui tags
         // in AND
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($tags) {
             foreach ($tags as $tag) {
                 $builder = $builder->whereHas('tags', function ($q) use ($tag) {
@@ -99,6 +104,7 @@ class contentList extends Portlet {
 
         // se è impostata la variabile categories applico i filtri sulle categorie
         // in AND
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($categories) {
             foreach ($categories as $category) {
                 $builder = $builder->whereHas('categories', function ($q) use ($category) {
@@ -108,11 +114,13 @@ class contentList extends Portlet {
         }
 
         // se il servizio è di tipo "content web" verifico se risultano impostati la struttura e il modello
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('structure_id')) {
             $builder = $builder->where('structure_id',$this->config('structure_id'));
         }
 
         // se l'url contiene author applico il filtro sull'autore
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('comunication') and $this->request->has('author')) {
             $builder = $builder->where('user_id',$this->request->author);
         }
@@ -122,6 +130,7 @@ class contentList extends Portlet {
         }
 
         // verifico se è attivo il feed Rss
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('feed')) {
             //dd($this->config);
             // imposto l'url e Ctype dei feed
@@ -177,7 +186,7 @@ class contentList extends Portlet {
                 return;
             }
         } else {
-            $items = $builder->paginate(4);
+            $items = $builder->paginate(4,['*'],'pagepid'.$this->get('id'));
         }
 
 

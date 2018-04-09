@@ -25,7 +25,7 @@
                         __('Modificato il')=>Carbon\Carbon::parse($role->updated_at)->format('d/m/Y')
                     ],
                     __('description')=>$role->description,
-                    'urlEdit'=>url(Request::getBasePath().'/admin/roles/edit', $role->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/roles/'.$role->id.'/edit')
                     ])->render()
              !!}
 
@@ -40,11 +40,11 @@
                     'listMenu'=>[
                         __('Lista ruoli')=>url('/admin/roles'),
                         'divider'=>"divider",
-                        __('Modifica')=>url('/admin/roles/edit',$role->id),
+                        __('Modifica')=>url('/admin/roles/'.$role->id.'/edit'),
                         __('Assegna permessi')=>url('/admin/roles/assign',$role->id)
                     ],
-                    'urlNavPre'=>url('/admin/roles/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/roles/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/roles',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/roles',$pag['nexid']->id),
                     ])->render()
              !!}
 

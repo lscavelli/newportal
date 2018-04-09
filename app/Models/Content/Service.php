@@ -9,7 +9,7 @@ class Service extends Model
     protected $table = 'services';
 
     protected $fillable = array(
-        'name', 'class'
+        'name', 'class', 'color', 'content'
     );
 
     public function vocabularies() {

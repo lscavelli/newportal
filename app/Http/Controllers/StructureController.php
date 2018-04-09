@@ -10,14 +10,15 @@ use App\Http\Requests;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
+use App\Models\Content\Service;
 
 class StructureController extends Controller {
 
-    private $repo;
+    private $rp;
 
     public function __construct(RepositoryInterface $rp)  {
         $this->middleware('auth');
-        $this->repo = $rp->setModel('App\Models\Content\Structure')->setSearchFields(['name','description','content']);
+        $this->rp = $rp->setModel('App\Models\Content\Structure')->setSearchFields(['name','description','content']);
     }
 
     /**
@@ -40,17 +41,24 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request, listGenerates $list) {
-        $list->setModel($this->repo->paginate($request));
-        return \View::make('content.listStructure', compact('list'));
+        $list->setModel($this->rp->paginate($request));
+        $optionsSel = $this->rp->setModel(Service::class)->pluck()->mapWithKeys(function ($val, $key) {
+            return ["structure/service/".$key."/create" => $val];
+        });
+        if(count($optionsSel)<1) {
+            return redirect('admin/dashboard')->withErrors('Non ci sono servizi attivi.');
+        }
+        return view('content.listStructure', compact('list','optionsSel'));
     }
 
     /**
      * Mostra il form per la creazione delle strutture
      * @return \Illuminate\Contracts\View\View
      */
-    public function create()   {
-        $structure = new Structure(); $action = "StructureController@store";
-        return \View::make('content.editStructure', compact('structure','action'));
+    public function create($service_id)   {
+        $structure = new Structure();
+        $service = $this->rp->setModel(Service::class)->where('id',$service_id)->first();
+        return view('content.editStructure', compact('structure','service'));
     }
 
     /**
@@ -62,9 +70,9 @@ class StructureController extends Controller {
     public function store(Request $request) {
         $data = $request->all();
         $this->validator($data)->validate();
-        $data['user_id'] = \Auth::user()->id; $data['username'] = \Auth::user()->username; $data['type_id'] = 2; // content structure
-        $this->repo->create($data);
-        return redirect()->route('structure')->withSuccess('Strutura creata correttamente.');
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username; // content structure
+        $this->rp->create($data);
+        return redirect('admin/structure')->withSuccess('Strutura creata correttamente.');
     }
 
     /**
@@ -73,8 +81,9 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function edit($id) {
-        $structure = $this->repo->find($id); $action = ["StructureController@update",$id];
-        return \View::make('content.editStructure', compact('structure','action'));
+        $structure = $this->rp->find($id);
+        $service = $structure->service;
+        return view('content.editStructure', compact('structure','service'));
     }
 
     /**
@@ -82,14 +91,14 @@ class StructureController extends Controller {
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
-        if ($this->repo->update($id,$data)) {
-            return redirect()->route('structure')->withSuccess('Struttura aggiornata correttamente');
+        if ($this->rp->update($id,$data)) {
+            return redirect('admin/structure')->withSuccess('Struttura aggiornata correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -98,7 +107,7 @@ class StructureController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)  {
-        if ($this->repo->delete($id)) {
+        if ($this->rp->delete($id)) {
             return redirect()->back()->withSuccess('Struttura cancellata correttamente');
         }
         return redirect()->back();

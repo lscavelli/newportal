@@ -47,17 +47,28 @@ class UsersTableSeeder extends Seeder
          * Imposta la struttura di base e i modelli
          */
         $data = File::get(base_path('database/data/content_base.json'));
-        $structure = Structure::create([
+        $structureCWeb = Structure::create([
             'name' => 'Contenuto base',
             'description' => 'Struttura di base del content web',
             'content' => $data,
-            'type_id' => 2,
+            'service_id' => 2,
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ]);
+
+        $structureDoc = Structure::create([
+            'name' => 'Lista modelli documenti',
+            'description' => 'Contenitore di base dei modelli per files list',
+            'content' => '',
+            'service_id' => 2,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
 
         $json = File::get(base_path('database/data/modelli.json'));
         $data = json_decode($json,true);
-        $structure->models()->createMany($data);
+
+        $structureCWeb->models()->createMany($data['ContentWeb']);
+        $structureDoc->models()->createMany($data['Documenti']);
     }
 }

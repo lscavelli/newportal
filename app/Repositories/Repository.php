@@ -153,7 +153,7 @@ class Repository implements RepositoryInterface {
      * @return string
      * @throws \Exception
      */
-    private function makeSlug($slug,$id=0) {
+    public function makeSlug($slug,$id=0) {
         if(empty($slug)) {
             $slug = \Request::has('name')? \Request::input('name'):'';
         }

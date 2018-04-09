@@ -4,7 +4,7 @@
     </button>
 
     <ul class="dropdown-menu" role="menu">
-        <li><a href="{{ url(Request::path().'/edit', $id) }}">Edit</a></li>
+        <li><a href="{{ url(Request::path().'/'.$id, 'edit') }}">Edit</a></li>
         <li><a href="#" class="delete" data-id="{{$id}}">Delete</a></li>
         @if(isset($actions))
             @foreach($actions as $action)

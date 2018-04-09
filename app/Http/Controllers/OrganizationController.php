@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User_organization;
-use Gate;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -13,7 +12,6 @@ use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
 use App\Libraries\listGenerates;
-use App\Http\Controllers\Auth;
 use App\Models\User;
 
 /**
@@ -70,10 +68,10 @@ class OrganizationController extends Controller
     public function store(Request $request)   {
         $data = $request->all();
         $data['parent_id'] = $data['parent_id'] ? $data['parent_id'] : null;
-        $data['user_id'] = \Auth::user()->id; $data['username'] = \Auth::user()->username;
+        $data['user_id'] = auth()->user()->id; $data['username'] = auth()->user()->username;
         $this->validator($data)->validate();
         $this->repo->create($data);
-        return redirect()->route('organizations')->withSuccess('Organizzazione creata correttamente.');
+        return redirect('admin/organizations')->withSuccess('Organizzazione creata correttamente.');
     }
 
     /**
@@ -84,8 +82,7 @@ class OrganizationController extends Controller
     public function edit($id) {
         $organization = $this->repo->find($id);
         $selectOrg = $this->repo->optionsSel($id);
-        $action = ["OrganizationController@update",$id];
-        return view('users.editOrganization', compact('organization','action','selectOrg'));
+        return view('users.editOrganization', compact('organization','selectOrg'));
     }
 
     /**
@@ -93,6 +90,7 @@ class OrganizationController extends Controller
      * @param $id
      * @param Request $request
      * @return $this
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update($id, Request $request)  {
         $data = $request->all();
@@ -100,9 +98,8 @@ class OrganizationController extends Controller
         $data['parent_id'] = $data['parent_id'] ?: null;
         $this->validator($data,true)->validate();
         if ($this->repo->update($id,$data)) {
-            return redirect()->route('organizations')->withSuccess('Organizzazione aggiornata correttamente');
+            return redirect('admin/organizations')->withSuccess('Organizzazione aggiornata correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -112,9 +109,8 @@ class OrganizationController extends Controller
      */
     public function destroy($id)  {
         if ($this->repo->delete($id)) {
-            return redirect()->back()->withSuccess('Organizzazione cancellata correttamente');
+            return redirect('admin/organizations')->withSuccess('Organizzazione cancellata correttamente');
         }
-        return redirect()->back();
     }
 
     /**
@@ -268,16 +264,16 @@ class OrganizationController extends Controller
 
     /**
      * Mostra il profilo dell'organizzazione
-     * @param $Id
+     * @param $id
      * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function profile($Id, Request $request) {
-        $organization = $this->repo->find($Id);
-        $pag['nexid'] = $this->repo->next($Id);
-        $pag['preid'] = $this->repo->prev($Id);
-        $listUsers = new listGenerates($this->repo->paginateArray($this->listUsers($Id)->toArray(),10,$request->page_a,'page_a'));
-        $listFilials = new listGenerates($this->repo->paginateArray($this->listFilial($Id)->toArray(),10,$request->page_b,'page_b'));
+    public function show($id, Request $request) {
+        $organization = $this->repo->find($id);
+        $pag['nexid'] = $this->repo->next($id);
+        $pag['preid'] = $this->repo->prev($id);
+        $listUsers = new listGenerates($this->repo->paginateArray($this->listUsers($id)->toArray(),10,$request->page_a,'page_a'));
+        $listFilials = new listGenerates($this->repo->paginateArray($this->listFilial($id)->toArray(),10,$request->page_b,'page_b'));
         $graphorg = $this->repo->whereNull('parent_id')->get();
         $titleGraph = "Rappresentazione grafica dell'organizzazione";
         return view('users.profileOrganization', compact('organization','listUsers','listFilials','pag','titleGraph','graphorg'));

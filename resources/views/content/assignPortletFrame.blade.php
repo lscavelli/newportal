@@ -3,7 +3,7 @@
 @extends('layouts.admin')
 
 @section('breadcrumb')
-{!! $breadcrumb->add('Pagina','/admin/pivot_idpages')->add('Assegna Portlet')
+{!! $breadcrumb->add('Pagina','/admin/pages')->add('Assegna Portlet')
     ->setTcrumb($page->name)
     ->render() !!}
 @stop
@@ -27,19 +27,11 @@
                     <!-- /.box-header -->
                     <div class="box-body" style="display: block;">
                         {!! Form::model($page, ['action' => $action,'class' => 'form-horizontal']) !!}
-                        <div class="form-group">
-                            <label for="layout" class="col-sm-2 control-label" >layout</label>
-                            <div class="col-sm-10">
-                                {!! Form::select('layout', $listLayouts , \Request::input('layout'), ['class' => "form-control input-sm", 'id'=>"layout"]) !!}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-default">Salva</button>
-                                </div>
-                            </div>
-                        </div>
+                            @if(isset($page->id))@method('PUT')@endif
+
+                            {!! Form::slSelect('layout','Layout',$listLayouts) !!}
+                            {!! Form::slSubmit('Salva',[],'right','default') !!}
+
                         {!! Form::close() !!}
                         <table class="table table-striped">
                             <thead><tr><th>#</th><th>Frames disponibili</th></tr></thead>

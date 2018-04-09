@@ -14,13 +14,11 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'Nome','parent_id'=>'Sotto categoria di','code'=>'codice'])
-                    ->onlyActions([
-                        url('/admin/categories/edit')=>'Edit',
-                        url('#')=>'Delete',
-                        url('/admin/categories/profile')=>'Profilo categoria',
-                        url('/admin/categories/assignSubcat')=>'Assegna sotto categorie'])
-                    ->setUrlDelete('/admin/categories')
-                    ->showButtonNew(true,'admin/categories')
+                    ->actions([
+                        url('/admin/vocabularies/cat/profile')=>'Profilo categoria',
+                        url('/admin/vocabularies/cat/assignSubcat')=>'Assegna sotto categorie'])
+                    ->setUrlDelete('/admin/vocabularies/cat')
+                    ->showButtonNew(true,'admin/vocabularies/cat')
                     ->customizes('parent_id',function($row){
                         return $row->parent()->pluck('name')->first();
                     })->render()

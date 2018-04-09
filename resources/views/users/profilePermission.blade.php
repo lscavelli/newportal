@@ -25,7 +25,7 @@
                         __('Modificato il')=>Carbon\Carbon::parse($permission->updated_at)->format('d/m/Y')
                     ],
                     'description'=>$permission->description,
-                    'urlEdit'=>url(Request::getBasePath().'/admin/permissions/edit', $permission->id)
+                    'urlEdit'=>url(Request::getBasePath().'/admin/permissions/'.$permission->id.'/edit')
                     ])->render()
              !!}
 
@@ -40,10 +40,10 @@
                     'listMenu'=>[
                         __('Lista permessi')=>url('/admin/permissions'),
                         'divider'=>"divider",
-                        __('Modifica')=>url('/admin/permissions/edit',$permission->id),
+                        __('Modifica')=>url('/admin/permissions/'.$permission->id.'/edit'),
                     ],
-                    'urlNavPre'=>url('/admin/permissions/profile',$pag['preid']->id),
-                    'urlNavNex'=>url('/admin/permissions/profile',$pag['nexid']->id),
+                    'urlNavPre'=>url('/admin/permissions',$pag['preid']->id),
+                    'urlNavNex'=>url('/admin/permissions',$pag['nexid']->id),
                     ])->render()
              !!}
 

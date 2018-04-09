@@ -15,7 +15,7 @@ return [
     'middlewares' => ['web', 'auth'],
 
     // The url to this package. Change it if necessary.
-    'url_prefix' => 'laravel-filemanager',
+    'url_prefix' => 'lfm',
 
     /*
     |--------------------------------------------------------------------------
@@ -24,9 +24,9 @@ return [
     */
 
     // If true, private folders will be created for each signed-in user.
-    'allow_multi_user' => true,
+    'allow_multi_user' => false,
     // If true, share folder will be created when allow_multi_user is true.
-    'allow_share_folder' => true,
+    'allow_share_folder' => false,
 
     // Flexible way to customize client folders accessibility
     // If you want to customize client folders, publish tag="lfm_handler"
@@ -60,7 +60,7 @@ return [
     // The default display type for items.
     // Supported: "grid", "list"
     'images_startup_view' => 'grid',
-    'files_startup_view' => 'list',
+    'files_startup_view' => 'grid',
 
     /*
     |--------------------------------------------------------------------------

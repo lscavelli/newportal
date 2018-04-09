@@ -39,8 +39,8 @@
                         'listMenu'=>[
                             __('Lista ruoli')=>url('/admin/roles'),
                             'divider'=>"divider",
-                            __('Aggiorna')=>url('/admin/roles/edit',$role->id),
-                            __('Profilo')=>url('/admin/roles/profile',$role->id),
+                            __('Modifica')=>url('/admin/roles/'.$role->id.'/edit'),
+                            __('Profilo')=>url('/admin/roles',$role->id),
                         ],
                         'urlNavPre'=>url('/admin/roles/assign',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/roles/assign',$pag['nexid']->id),

@@ -36,5 +36,6 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $subscribe = [
         'App\Listeners\ActivityEventsSubscriber',
+        'App\Listeners\FileEventsSubscriber',
     ];
 }

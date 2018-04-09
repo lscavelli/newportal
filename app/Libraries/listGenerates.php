@@ -31,7 +31,7 @@ class listGenerates
 
     public function __construct(LengthAwarePaginator $model=null) {
         if ($model) $this->setModel($model);
-        $this->urlDelete = url(\Request::path().'/delete');
+        $this->urlDelete = url(\Request::path());
     }
     public function setModel(LengthAwarePaginator $model) {
         $this->model = $model;
@@ -119,13 +119,13 @@ class listGenerates
     }
 
     public function setUrlDelete($path) {
-        if (!empty($path)) $this->urlDelete = url($path.'/delete');
+        if (!empty($path)) $this->urlDelete = url($path);
         return $this;
     }
 
-    public function addSplitButtons($buttons,$showButtonNew=true) {
+    public function addSplitButtons($options,$showButtonNew=true) {
         $this->showButtonNew($showButtonNew);
-        $this->splitButtons = $buttons;
+        $this->splitButtons = $options;
         return $this;
     }
 

@@ -1,6 +1,6 @@
 $(function () {
-    $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
-    $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Comprimi questo ramo').on('click', function (e) {
+    $('.sltree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+    $('.sltree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Comprimi questo ramo').on('click', function (e) {
         var children = $(this).parent('li.parent_li').find(' > ul > li');
         if (children.is(':visible')) {
             children.hide('fast');

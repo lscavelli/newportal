@@ -38,10 +38,10 @@
                         'listMenu'=>[
                             __('Lista gruppi')=>url('/admin/groups'),
                             'divider'=>"divider",
-                            __('Modifica')=>url('/admin/groups/edit',$group->id),
+                            __('Modifica')=>url('/admin/groups/'.$group->id.'/edit'),
                             __('Assegna permessi')=>url('/admin/groups/assignPerm',$group->id),
                             __('Assegna ruoli')=>url('/admin/groups/assignRole',$group->id),
-                            __('Profilo')=>url('/admin/groups/profile',$group->id),
+                            __('Profilo')=>url('/admin/groups',$group->id),
                         ],
                         'urlNavPre'=>url('/admin/groups/assign',$pag['preid']->id),
                         'urlNavNex'=>url('/admin/groups/assign',$pag['nexid']->id),

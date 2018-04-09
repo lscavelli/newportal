@@ -61,14 +61,14 @@ class pageController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function create(Theme $theme,$id=null)   {
-        $page = new Page(); $action = "PageController@store";
+        $page = new Page();
         if ($id) {
             $optionsSel = $this->rp->where('id',$id)->pluck()->toArray();
         } else {
             $optionsSel = $this->rp->optionsSel();
         }
         $listThemes = $theme->listThemes();
-        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes'));
+        return view('content.editPage')->with(compact('page','optionsSel','listThemes'));
     }
 
     /**
@@ -84,7 +84,7 @@ class pageController extends Controller {
         $data['parent_id'] = $data['parent_id'] ?: null;
         $data['theme'] = (!empty($data['theme'])) ? $data['theme'] : config('newportal.theme-default');
         $this->rp->create($data);
-        return redirect()->route('pages')->withSuccess('Pagina creata correttamente.');
+        return redirect('admin/pages')->withSuccess('Pagina creata correttamente.');
     }
 
     /**
@@ -97,8 +97,7 @@ class pageController extends Controller {
         $optionsSel = $this->rp->optionsSel($id);
         $listThemes = $theme->listThemes();
         //$listLayouts = $theme->setTheme($page->theme)->listlayouts();
-        $action = ["PageController@update",$id];
-        return view('content.editPage')->with(compact('page','action','optionsSel','listThemes'));
+        return view('content.editPage')->with(compact('page','optionsSel','listThemes'));
     }
 
     /**
@@ -115,9 +114,8 @@ class pageController extends Controller {
         $this->validator($data,true)->validate();
         if (isset($data['parent_id'])) $data['parent_id'] = $data['parent_id'] ?: null;
         if ($this->rp->update($id,$data)) {
-            return redirect()->route('pages')->withSuccess('Pagina aggiornata correttamente');
+            return redirect('admin/pages')->withSuccess('Pagina aggiornata correttamente');
         }
-        return redirect()->back()->withErrors('Si è verificato un  errore');
     }
 
     /**
@@ -129,7 +127,6 @@ class pageController extends Controller {
         if ($this->rp->delete($id)) {
             return redirect()->back()->withSuccess('pagina cancellata correttamente');
         }
-        return redirect()->back();
     }
 
     /**
@@ -153,15 +150,15 @@ class pageController extends Controller {
 
     /**
      * Mostra il profilo della pagina
-     * @param $Id
+     * @param $id
      * @param Request $request
      * @return \Illuminate\Contracts\View\View
      */
-    public function profile($Id, Request $request) {
-        $page = $this->rp->find($Id);
-        $pag['nexid'] = $this->rp->next($Id);
-        $pag['preid'] = $this->rp->prev($Id);
-        $listChildren = new listGenerates($this->rp->paginateArray($this->listChildren($Id)->toArray(),10,$request->page_a,'page_a'));
+    public function show($id, Request $request) {
+        $page = $this->rp->find($id);
+        $pag['nexid'] = $this->rp->next($id);
+        $pag['preid'] = $this->rp->prev($id);
+        $listChildren = new listGenerates($this->rp->paginateArray($this->listChildren($id)->toArray(),10,$request->page_a,'page_a'));
         $graphPage = $this->rp->whereNull('parent_id')->get();
         $titleGraph = "Rappresentazione grafica delle pagine";
         return view('content.profilePage')->with(compact('page','listChildren','pag','titleGraph','graphPage'));

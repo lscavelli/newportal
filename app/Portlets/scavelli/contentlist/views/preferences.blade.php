@@ -16,10 +16,6 @@
                             {!! Form::hidden('sitemap', null, ['id'=>"sitemap"]) !!}
 
                             <div class="form-group">
-                                <label for="service">Servizi disponibili</label>
-                                {!! Form::select('service', $cList->services , $cList->get('service') , ['class' => "form-control", "id"=>'service']) !!}
-                            </div>
-                            <div class="form-group">
                                 <label for="structure_id">Strutture di dati</label>
                                 {!! Form::select('structure_id', $cList->structures , $cList->get('structure_id') , ['class' => "form-control", "id"=>'structure_id']) !!}
                             </div>
@@ -154,6 +150,7 @@
 
     $("#setFeed").change(function(e) {
         e.preventDefault();
+        setFeed();
         $('.feed').toggle();
     });
 
@@ -162,12 +159,16 @@
     });
 
     function setFeed() {
-        $("#feed").val(null);
-        var ids = [];
-        ids.push({feed_name:$('#feed_name').val()});
-        ids.push({feed_size:$("#feed_size").find('option:selected').val()});
-        ids.push({feed_format:$("#feed_format").find('option:selected').val()});
-        $("#feed").val(JSON.stringify(ids));
+        //$("#feed").val(null);
+        if ($('#setFeed').find('option:selected').val()==1) {
+            var ids = [];
+            ids.push({feed_name:$('#feed_name').val()});
+            ids.push({feed_size:$("#feed_size").find('option:selected').val()});
+            ids.push({feed_format:$("#feed_format").find('option:selected').val()});
+            $("#feed").val(JSON.stringify(ids));
+        } else {
+            $("#feed").val(null);
+        }
     }
 
     $("#setSiteMap").change(function(e) {
