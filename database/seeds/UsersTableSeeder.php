@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Content\Page;
 use App\Models\Content\Structure;
+use App\Models\Content\Service;
 
 class UsersTableSeeder extends Seeder
 {
@@ -43,6 +44,16 @@ class UsersTableSeeder extends Seeder
          */
         //factory(App\Models\User::class, 30)->make();
 
+        $serviceCWeb = Service::create([
+            'name' => 'ContentWeb',
+            'class' => 'App\Models\Content\Content',
+            'color' => '#00a65a',
+            'content' => '{"varmodelli":{
+                "np_image":"Immagine",
+                "np_href":"Link"
+                }}'
+        ]);
+
         /**
          * Imposta la struttura di base e i modelli
          */
@@ -51,16 +62,31 @@ class UsersTableSeeder extends Seeder
             'name' => 'Contenuto base',
             'description' => 'Struttura di base del content web',
             'content' => $data,
-            'service_id' => 2,
+            'service_id' => $serviceCWeb->id,
             'user_id' => $user->id,
             'username' => $user->username,
+        ]);
+
+        $serviceDoc =Service::create([
+            'name' => 'Documenti',
+            'class' => 'App\Models\Content\File',
+            'color' => '#3c8dbc',
+            'content' => '{"varmodelli":{
+                "np_size":"Dimensione file",
+                "np_extension":"Estensione",
+                "np_fullpath":"Path",
+                "np_file_name":"Nome del File",
+                "np_mime_type":"Tipo file",
+                "np_href":"Link pubblico",
+                "np_class_icon":"Icona"
+                }}'
         ]);
 
         $structureDoc = Structure::create([
             'name' => 'Lista modelli documenti',
             'description' => 'Contenitore di base dei modelli per files list',
             'content' => '',
-            'service_id' => 2,
+            'service_id' => $serviceDoc->id,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
