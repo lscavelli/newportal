@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
+/*
         $user = User::create([
             'nome' => 'NewPortal',
             'email' => 'admin@example.com',
@@ -37,6 +37,7 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
+*/
 
         /**
          * per uso development
@@ -46,6 +47,7 @@ class UsersTableSeeder extends Seeder
         /**
          * Imposta la struttura di base e i modelli
          */
+        /*
         $data = File::get(base_path('database/data/content_base.json'));
         $structure = Structure::create([
             'name' => 'Contenuto base',
@@ -55,9 +57,10 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
-
+*/
         $json = File::get(base_path('database/data/modelli.json'));
         $data = json_decode($json,true);
-        $structure->models()->createMany($data);
+        dd($data);
+        //$structure->models()->createMany($data);
     }
 }
