@@ -51,7 +51,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Contenuto base',
             'description' => 'Struttura di base del content web',
             'content' => $data,
-            'type_id' => 2,
+            'service_id' => 2,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);

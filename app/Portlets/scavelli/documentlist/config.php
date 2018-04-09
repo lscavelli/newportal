@@ -5,7 +5,7 @@ return [
     |--------------------------------------------------------------------------
     | portlets Asset Publisher
     |--------------------------------------------------------------------------
-    |  Aggregatore di documentiv- è possibile
+    |  Aggregatore di documenti - è possibile
     |  taggare e categorizzare i file da visualizzare
     |
     */

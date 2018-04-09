@@ -19,8 +19,8 @@ class PortletsTableSeeder extends Seeder
             'type_id' => 1,
             'status_id' => 1,
             'author' => 'Scavelli',
-            'revision' => '1.0',
-            'date' => '19/02/2017',
+            'revision' => '1.2',
+            'date' => '07/04/2018',
             'description' => 'Widget per la visualizzazione dei contenuti web - completo di strutture e modelli'
         ]);
         Portlet::create([
@@ -63,8 +63,8 @@ class PortletsTableSeeder extends Seeder
             'type_id' => 1,
             'status_id' => 1,
             'author' => 'Scavelli',
-            'revision' => '1.0',
-            'date' => '17/05/2017',
+            'revision' => '1.2',
+            'date' => '07/04/2018',
             'description' => 'Widget per la creazione automatica di liste di contenuti - configurabile'
         ]);
         Portlet::create([
@@ -77,6 +77,17 @@ class PortletsTableSeeder extends Seeder
             'revision' => '1.0',
             'date' => '17/02/2017',
             'description' => 'Widget per la rappresentazione grafica delle organizzazioni - alpha release'
+        ]);
+        Portlet::create([
+            'name' => 'Aggregatore di documenti',
+            'init' => 'documentList',
+            'path' => 'scavelli\documentlist',
+            'type_id' => 1,
+            'status_id' => 1,
+            'author' => 'Scavelli',
+            'revision' => '1.0',
+            'date' => '07/04/2018',
+            'description' => 'Widget per la creazione automatica di liste di documenti - configurabile'
         ]);
     }
 }
