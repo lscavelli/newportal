@@ -1,11 +1,13 @@
 <?php
+
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Content\Page;
 use App\Models\Content\Structure;
 use App\Models\Content\Service;
-class UsersTableSeeder extends Seeder
+
+class ManyTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +16,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        /**
+         * Crea l'utente e gli assegna i permessi super admin
+         */
         $user = User::create([
             'nome' => 'NewPortal',
             'email' => 'admin@example.com',
@@ -23,6 +28,10 @@ class UsersTableSeeder extends Seeder
         ]);
         $superadmin = Role::where('slug', config('newportal.super_admin'))->first();
         $user->roles()->attach($superadmin);
+
+        /**
+         * Crea la pagina di ingresso
+         */
         Page::create([
             'name' => 'Welcome',
             'slug' => 'welcome',
@@ -33,11 +42,15 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
+
         /**
          * per uso development
          */
         //factory(App\Models\User::class, 30)->make();
 
+        /**
+         * Crea il service ContentWeb
+         */
         $serviceCWeb = Service::create([
             'name' => 'ContentWeb',
             'class' => 'App\Models\Content\Content',
@@ -49,7 +62,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         /**
-         * Imposta la struttura di base e i modelli
+         * Imposta la struttura di base per ContentWeb e i modelli
          */
         $data = File::get(base_path('database/data/content_base.json'));
         $structureCWeb = Structure::create([
@@ -61,6 +74,9 @@ class UsersTableSeeder extends Seeder
             'username' => $user->username,
         ]);
 
+        /**
+         * Crea il service Documenti
+         */
         $serviceDoc =Service::create([
             'name' => 'Documenti',
             'class' => 'App\Models\Content\File',
@@ -76,6 +92,9 @@ class UsersTableSeeder extends Seeder
                 }}'
         ]);
 
+        /**
+         * Imposta la struttura di base per Documenti e i modelli
+         */
         $structureDoc = Structure::create([
             'name' => 'Lista modelli documenti',
             'description' => 'Contenitore di base dei modelli per files list',
