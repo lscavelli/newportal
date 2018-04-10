@@ -15,8 +15,6 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.6",
-        "lfgscavelli/todolist": "@dev",
-        "orchestra/testbench": "^3.6",
         "unisharp/laravel-filemanager": "^1.8"
     },
     "require-dev": {
@@ -65,14 +63,5 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./packages/lfgscavelli/todolist/",
-            "options": {
-                "symlink": true
-            }
-        }
-    ]
+    "prefer-stable": true
 }
