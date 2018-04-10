@@ -1,11 +1,9 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Content\Page;
 use App\Models\Content\Structure;
-
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -15,7 +13,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-/*
         $user = User::create([
             'nome' => 'NewPortal',
             'email' => 'admin@example.com',
@@ -23,10 +20,8 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('admin'),
             'note' => 'Password provvisoria da cambiare dopo il primo accesso',
         ]);
-
         $superadmin = Role::where('slug', config('newportal.super_admin'))->first();
         $user->roles()->attach($superadmin);
-
         Page::create([
             'name' => 'Welcome',
             'slug' => 'welcome',
@@ -37,17 +32,13 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
-*/
-
         /**
          * per uso development
          */
         //factory(App\Models\User::class, 30)->make();
-
         /**
          * Imposta la struttura di base e i modelli
          */
-        /*
         $data = File::get(base_path('database/data/content_base.json'));
         $structure = Structure::create([
             'name' => 'Contenuto base',
@@ -57,10 +48,8 @@ class UsersTableSeeder extends Seeder
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
-*/
         $json = File::get(base_path('database/data/modelli.json'));
         $data = json_decode($json,true);
-        dd($data);
-        //$structure->models()->createMany($data);
+        $structure->models()->createMany($data);
     }
 }

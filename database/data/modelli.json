@@ -1,5 +1,6 @@
-{
-"ContentWeb":
+[{
+  "service":"ContentWeb",
+  "data":
   [
     {"name":"Modello base - Trasparent","type_id": 1,"content": "{!! $np31c75a2882bc4252952d83cb5f2df22b !!}"},
     {"name":"Modello base","type_id": 1,"content":"<h3>{!! $np_title !!}</h3>\nby <a href=\"/video?author={!! $np_author_id !!}\" class=\"articles_author\">{!! $np_author_name !!}</a>\non {!! $np_data_creazione !!}\n<br /><br />\n{!! $np31c75a2882bc4252952d83cb5f2df22b !!}"},
@@ -10,13 +11,15 @@
     {"name":"Modello base con Image e categorie - list","type_id": 2,"content": "<li class=\"articles clearfix content_divisor\">\n\t<a href=\"{!! $np_href !!}\" class=\"content_title\">{!! $np_title !!}</a><br />\n\t<span class=\"image left\"><img src=\"{!! $np_image !!}\" alt=\"{!! $np_title !!}\" class=\"img-responsive\"></span>\n\t<p>\n\t\t{!! \\App\\Libraries\\sl_text::sommario(strip_tags($np31c75a2882bc4252952d83cb5f2df22b)) !!}\n\t\t@if(strlen(strip_tags($np31c75a2882bc4252952d83cb5f2df22b))>255)\n\t\t\t<a href=\"{!! $np_href !!}\">Leggi ancora</a>\n\t\t@endif\n\t</p>\n\t<p class=\"articles_meta\">\n\t\t@if(count($np_categories)>0)\n\t\t\t@foreach($np_categories as $category)\n\t\t\t\t<a class=\"articles_category\" href=\"/{!! $np_page !!}?category={!! $category->id !!}\">#{!! $category->name !!}</a>,\n\t\t\t@endforeach\n\t\t@endif\n\t\tPosted by <a href=\"/{!! $np_page !!}?author={!! $np_author_id !!}\" class=\"articles_author\">{!! $np_author_name !!}</a>\n\t\ton <time datetime=\"{!! $np_data_creazione !!}\">{!! $np_data_creazione !!}</time>\n\t</p><br />\n</li>"},
     {"name":"Modello Base - Senza autore e data","type_id": 1,"content": "<h3>{!! $np_title !!}</h3>\n <br />\n {!! $np31c75a2882bc4252952d83cb5f2df22b !!}"},
     {"name":"Posts list","type_id": 2,"content": "<article>\n\t<a href=\"{!! $np_href !!}\" class=\"image\"><img src=\"{!! $np_image !!}\" alt=\"{!! $np_title !!}\"></a>\n\t<a href=\"{!! $np_href !!}\" class=\"content_title\">{!! $np_title !!}</a>\n\t<p style=\"margin-top:15px; color: #585858; line-height: 1.7em;\">{!! \\App\\Libraries\\sl_text::sommario(strip_tags($np714bc8ec8c2a4929bee9319dd31a1207)) !!}</p>\n\t<p style=\"font-size:14px\">\n\t\t@if(count($np_categories)>0)\n\t\t\t@foreach($np_categories as $category)\n\t\t\t\t<a class=\"articles_category\" href=\"/{!! $np_page !!}?category={!! $category->id !!}\">#{!! $category->name !!}</a>,\n\t\t\t@endforeach\n\t\t@endif\n\t\tPosted by <a href=\"/{!! $np_page !!}?author={!! $np_author_id !!}\" class=\"articles_author\">{!! $np_author_name !!}</a>\n\t\ton <time datetime=\"{!! $np_data_creazione !!}\">{!! $np_data_creazione !!}</time>\n\t</p>\n</article>"}
-  ],
-"Documenti":
-  [
+  ]
+},
+  {
+    "service":"Documenti",
+    "data": [
       {"name":"Modello solo titolo","type_id": 2,"content": "<li class=\"block-hover clearfix\">\n\t<a href=\"{!! $np_href !!}\" class=\"item\" title=\"{!! $np_title !!}\">\n\t\t<div class=\"icon\">\n\t\t\t<i class=\"{!! $np_class_icon !!}\" style=\"font-size: 1.5em\"></i>\n\t\t</div>\n\t\t<div class=\"text\">\n\t\t\t<span class=\"title\">{!! $np_title !!}</span>\n\t\t</div>\n\t</a>\n</li>"},
       {"name":"Modello con info","type_id": 2,"content": "<li class=\"block-hover clearfix\">\n\t<a href=\"{!! $np_href !!}\" class=\"item\" title=\"{!! $np_title !!}\">\n\t\t<div class=\"icon\">\n\t\t\t<i class=\"{!! $np_class_icon !!}\" style=\"font-size: 1.5em\"></i>\n\t\t</div>\n\t\t<div class=\"text\">\n\t\t\t<span class=\"title\">{!! $np_title !!}</span>\n\t\t\t<span class=\"size\">({!! $np_extension !!}  {!! $np_size !!})</span>\n\t\t</div>\n\t</a>\n</li>"},
       {"name":"Modello con descrizione e info","type_id": 2,"content": "<li class=\"block-hover clearfix\">\n\t<a href=\"{!! $np_href !!}\" class=\"item\" title=\"{!! $np_title !!}\">\n\t\t<div class=\"icon\">\n\t\t\t<i class=\"{!! $np_class_icon !!}\" style=\"font-size: 1.5em\"></i>\n\t\t</div>\n\t\t<div class=\"text\">\n\t\t\t<span class=\"title\">{!! $np_title !!}</span>\n\t\t</div>\n\t</a>\n\t<div class=\"text2\">\n\t\t<span class=\"description\">{!! \\App\\Libraries\\sl_text::sommario($np_description) !!}</span>\n\t\t<span class=\"size\">({!! $np_extension !!}  {!! $np_size !!}) - {!! $np_data_modifica !!}</span>\n\t</div>\n</li>"},
       {"name":"Modello per immagini con descrizione","type_id": 2,"content": "<li class=\"block-hover clearfix\">\n\t<a href=\"{!! $np_href !!}\" class=\"item\" title=\"{!! $np_title !!}\">\n\t\t<div class=\"icon\">\n\t\t\t<img src=\"{!! $np_fullpath !!}\" alt=\"{!! $np_title !!}\" />\n\t\t</div>\n\t\t<div class=\"text\">\n\t\t\t<span class=\"title\">{!! $np_title !!}</span>\n\t\t</div>\n\t</a>\n\t<div class=\"text3\">\n\t\t<span class=\"description\">{!! \\App\\Libraries\\sl_text::sommario($np_description) !!}</span>\n\t</div>\n</li>"},
       {"name":"Modello per immagini con descrizione e info","type_id": 2,"content": "<li class=\"block-hover clearfix\">\n\t<a href=\"{!! $np_href !!}\" class=\"item\" title=\"{!! $np_title !!}\">\n\t\t<div class=\"icon\">\n\t\t\t<img src=\"{!! $np_fullpath !!}\" alt=\"{!! $np_title !!}\" />\n\t\t</div>\n\t\t<div class=\"text\">\n\t\t\t<span class=\"title\">{!! $np_title !!}</span>\n\t\t</div>\n\t</a>\n\t<div class=\"text3\">\n\t\t<span class=\"description\">{!! \\App\\Libraries\\sl_text::sommario($np_description) !!}</span>\n\t\t<span class=\"size\">({!! $np_extension !!}  {!! $np_size !!}) - {!! $np_data_modifica !!}</span>\n\t</div>\n</li>"}
-  ]
-}
+    ]
+  }]
