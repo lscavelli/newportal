@@ -106,7 +106,6 @@ class viewWebContent extends Portlet {
         // inserisce i pulsanti per condividere il contenuto sui social
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('socialshare')) {
-            dd($this->config());
             if (!empty($this->config('providers'))) {
                 foreach($this->config('providers') as $provider=>$param) {
                     $items[$provider]['url'] = array_get($param,'uri').urlencode(request()->getUri());
