@@ -23,6 +23,9 @@ abstract class abstractPortlet {
         $this->rp = $rp;
         $this->request = \Request::instance();
         $this->theme = $theme;
+    }
+
+    public function getInitConfig() {
         $configFile = $this->getPathClass().'/config.php';
         if (file_exists($configFile)) {
             $this->setConfig(File::getRequire($configFile));
@@ -41,8 +44,8 @@ abstract class abstractPortlet {
         $this->config[$key] = $value;
     }
 
-    protected function config($key) {
-        return array_get($this->config,$key);
+    protected function config($key=null) {
+        return !is_null($key) ? array_get($this->config,$key) : $this->config;
     }
 
     public function inizializeConf() {

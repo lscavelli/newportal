@@ -48,6 +48,7 @@ class Portlet {
                 array_set($this->portlets, $className, $instance);
             }
             //$instance->setDirTemplate($this->getDirTemplate());
+            $instance->getInitConfig();
             $instance->setConfig($params);
             $instance->init();
             $content = $instance->getContent();
