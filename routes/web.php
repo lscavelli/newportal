@@ -52,6 +52,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::get('files/download/{file_id}', 'FileController@download');
         Route::get('files/view/{file_id}', 'FileController@viewFile');
         Route::post('files/categories/{file_id}', 'FileController@saveCategories');
+        Route::post('files/replace/{file_id}', 'FileController@replace');
 
 
         // Comments

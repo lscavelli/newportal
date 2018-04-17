@@ -171,16 +171,10 @@
                                 <a href="https://www.facebook.com/newportalcms/" class="btn-social btn-outline white"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline white"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
+                                <a href="https://twitter.com/newportalcms" class="btn-social btn-outline white"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline white"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline white"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline white"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
+                                <a href="https://github.com/lscavelli/newportal" class="btn-social btn-outline white"><span class="sr-only">GitHub</span><i class="fa fa-fw fa-github"></i></a>
                             </li>
                         </ul>
                     </div>

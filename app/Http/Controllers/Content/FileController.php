@@ -11,14 +11,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Filesystem\Filesystem;
 use App\Models\Content\Service;
 use App\Models\Content\File;
+use Intervention\Image\Facades\Image;
 
 class FileController extends Controller {
 
     private $rp;
+    private $fs;
 
-    public function __construct(RepositoryInterface $rp)  {
+    public function __construct(RepositoryInterface $rp, Filesystem $fs)  {
         $this->middleware('auth');
         $this->rp = $rp->setModel(File::class)->setSearchFields(['name','description','file_name']);
+        $this->fs = $fs;
     }
 
     /**
@@ -81,11 +84,10 @@ class FileController extends Controller {
     public function destroy($id)
     {
         $file = $this->rp->find($id);
-        $fs = new Filesystem();
         $filePath = public_path($file->path."/".$file->file_name);
         $fileThumbPath =  public_path($file->path."/".config('lfm.thumb_folder_name')."/".$file->file_name);
-        if ($fs->exists($filePath)) {
-            $fs->delete([$filePath,$fileThumbPath]);
+        if ($this->fs->exists($filePath)) {
+            $this->fs->delete([$filePath,$fileThumbPath]);
             if ($this->rp->delete($id)) {
                 return redirect('/admin/files')->withSuccess('File cancellato correttamente');
             }
@@ -99,6 +101,7 @@ class FileController extends Controller {
     public function download($id)
     {
         $file = $this->rp->find($id);
+        $file->increment('hits');
         return response()->download(public_path($file->getPath()));
     }
 
@@ -109,6 +112,7 @@ class FileController extends Controller {
     public function viewFile($id)
     {
         $file = $this->rp->find($id);
+        $file->increment('hits');
         return response()->file(public_path($file->getPath()));
     }
 
@@ -143,6 +147,75 @@ class FileController extends Controller {
     private function listVocabularies() {
         $service = $this->rp->setModel(Service::class)->where('class',File::class)->first();
         return $service->vocabularies;
+    }
+
+    /**
+     * Sostituisce il file
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function replace($id, Request $request) {
+        $file = $this->rp->find($id);
+        $data['avatar'] = null;
+        if ($request->file('fileUploaded')) {
+            $filePath = public_path($file->path."/".$file->file_name);
+            $fileThumbPath =  public_path($file->path."/".config('lfm.thumb_folder_name')."/".$file->file_name);
+            if ($this->fs->exists($filePath)) {
+                $this->fs->delete([$filePath, $fileThumbPath]);
+                //$this->rp->delete($id);
+                $data['file_name'] = $request->fileUploaded->getClientOriginalName();
+                $data['mime_type'] = $request->fileUploaded->getMimeType();
+                $data['extension'] = $request->fileUploaded->guessExtension();
+                $data['size'] = $request->fileUploaded->getClientSize();
+                $data['user_id'] = auth()->user()->id;
+                $data['username'] = auth()->user()->username;
+                $data['id'] = $id;
+                $this->validator($data)->validate();
+                if ($this->rp->update($id, $data)) {
+                    $request->fileUploaded->move(public_path($file->path."/"),$data['file_name']);
+                    if ($this->isImage($data['mime_type'])) {
+                        $this->makeThumb(public_path($file->path."/"),$data['file_name']);
+                    }
+                    return redirect('/admin/files/' . $file->id . "/edit")->withSuccess('File sostituito correttamente');
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Verifica se il file uploaded è di tipo immagine
+     * @return bool
+     */
+    private function isImage($mime_type) {
+        if(substr($mime_type, 0, 5) == 'image') {
+            return true;
+        }
+    }
+
+    /**
+     * Crea una miniatura del file img
+     * @param $path
+     * @param $file
+     */
+    private function makeThumb($path,$file)
+    {
+        $thumbFolder = $path.config('lfm.thumb_folder_name');
+        $this->createDir($thumbFolder);
+        Image::make($path.$file)
+            ->fit(config('lfm.thumb_img_width', 200), config('lfm.thumb_img_height', 200))
+            ->save($thumbFolder."/".$file);
+    }
+
+    /**
+     * Crea la dir se non esiste
+     * @param $path
+     */
+    private function createDir($path)
+    {
+        if (!$this->fs->exists($path)) {
+            $this->fs->makeDirectory($path, config('lfm.create_folder_mode', 0755), true, true);
+        }
     }
 
 }

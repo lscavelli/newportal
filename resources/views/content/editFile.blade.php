@@ -79,6 +79,7 @@
                         </div>
                         <div style="padding: 15px"><a href="/admin/files/download/{!! $file->id !!}" class="btn btn-default btn-block"><i class="fa fa-download"></i> {{ __("Download file") }}</a></div>
                         <div style="padding: 0px 15px 15px 15px"><a href="/admin/files/view/{!! $file->id !!}" class="btn btn-default btn-block"><i class="fa fa-eye"></i> {{ __("Visualizza file") }}</a></div>
+                        {!! Form::slFileUpload('Sostituisci file',$file->id,url('/admin/files/replace',$file->id)) !!}
                 </div>
                 <!-- /.box-body -->
             </div>
