@@ -1,0 +1,67 @@
+.content_title {
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: inherit;
+    font-weight: 700;
+    line-height: 1.25;
+    /*margin-bottom: 10px;*/
+    font-style: normal;
+    font-size: 24px;
+    letter-spacing: -.028em;
+}
+.content_div {
+    min-height: 100%;
+    /*background: #0b73af;
+    color: #fff;*/
+    /*margin-top: -120px;*/
+    margin-bottom: 20px;
+    /*padding: 10px 10px;*/
+    position: relative;
+    /*width: 24em;*/
+    overflow: auto;
+    height: auto;
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    padding: 20px 20px 20px 15px;
+    color: rgba(0,0,0,.8);
+}
+
+.content_div article {
+    width: 50%;
+    height: 250px;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 15px;
+    overflow: hidden;
+}
+.content_div article img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+.content_div article img.horizontal_crop {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+.content_div article .overlay {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    padding: 20px 20px;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+
+

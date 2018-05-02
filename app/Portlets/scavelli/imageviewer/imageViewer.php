@@ -15,7 +15,7 @@ class imageViewer extends Portlet {
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
 
         if ($this->theme)
-            $this->theme->addExCss($this->getPath().'css/documentAsset01.css');
+            $this->theme->addExCss($this->getPath().'css/imageViewer.css');
     }
 
     public function getContent() {
