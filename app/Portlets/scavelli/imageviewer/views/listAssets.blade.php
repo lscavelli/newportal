@@ -5,7 +5,8 @@
         @endforeach
     </ul>
 </div>
-@if($items->count()>$list->config('perPage'))
+
+@if($items->total()>$list->get('perPage'))
 <div class="row"  Style="padding-bottom: 20px;" >
     <div class="col-lg-12">
         <div class='pull-right' Style="margin-top: 0px; padding-right: 20px">

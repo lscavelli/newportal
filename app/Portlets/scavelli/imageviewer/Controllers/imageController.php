@@ -94,7 +94,7 @@ class imageController extends Controller
         $this->selectOrder = $this->selectOrder();
         $this->listView = $documentList->listView();
 
-        return view('documentlist::preferences')->with(['cList' => $this]);
+        return view('imageviewer::preferences')->with(['cList' => $this]);
     }
 
     /*

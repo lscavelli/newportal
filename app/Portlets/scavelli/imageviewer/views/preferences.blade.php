@@ -26,7 +26,7 @@
                                 {!! Form::select('listView', $cList->listView , $cList->get('listView') , ['class' => "form-control", "id"=>'listView']) !!}
                             </div>
                             <div class="form-group">
-                                <label for="listView">Contenuti per pagina</label>
+                                <label for="perPage">Contenuti per pagina</label>
                                 {!! Form::text('perPage', $cList->get('perPage') , ['class' => "form-control", "id"=>'perPage']) !!}
                             </div>
                             <div class="form-group">

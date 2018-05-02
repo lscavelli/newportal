@@ -204,7 +204,6 @@ class Theme {
      * @param $file
      * @param $type
      * @param $index
-     * @return $this
      */
     private function addExAsset($file,$type,$index) {
         $file = trim($file);
@@ -218,36 +217,36 @@ class Theme {
             if (!isset($this->$type[$index])) $this->$type[$index] = [];
             if (!in_array($file,$this->$type[$index])) $this->$type[$index][] = $file;
         }
-        return $this;
     }
 
     /**
      * Wrapper to addExAsset con js
      * @param $file
      * @param string $position
-     * @return Theme
      */
     public function addExJs($file,$position="body") {
-        return $this->addExAsset($file,'js',$position);
+        $this->addExAsset($file,'js',$position);
     }
 
     /**
      * Wrapper to addExAsset con css
      * @param $file
      * @param string $media
-     * @return Theme
      */
     public function addExCss($file,$media="screen") {
-        return $this->addExAsset($file,'css',$media);
+        $this->addExAsset($file,'css',$media);
     }
 
+    /**
+     * Svuota la variabile _excss
+     * @param string $media
+     */
     function emptyExCss($media="all") {
         if ($media=="all") {
             unset($this->_excss);
         } else {
             unset($this->_excss[$media]);
         }
-        return $this;
     }
 
     // da capire come trasferire arguments

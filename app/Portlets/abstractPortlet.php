@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\File;
 abstract class abstractPortlet {
 
     public $config = [];
+    public $theme;
     protected $request;
     protected $rp;
     protected $view;
-    protected $theme;
 
     public function __construct(RepositoryInterface $rp, Theme $theme=null, array $config = []) {
         foreach ($config as $key => $value) {

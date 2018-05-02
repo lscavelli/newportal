@@ -23,9 +23,9 @@ class imageViewer extends Portlet {
 
         $builder = $this->rp->getModel();
 
-        // considero solo i contenuti attivi
+        // considero solo i contenuti attivi e le immagini
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        $builder = $builder->where('status_id',1);
+        $builder = $builder->where('status_id',1)->where('mime_type', 'LIKE', 'image/%');
 
         // ordered
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -178,8 +178,8 @@ class imageViewer extends Portlet {
      * @param $key
      * @return mixed
      */
-    public function get($key) {
-        return array_get($this->conf,$key);
+    public function get($key=null) {
+        return is_null($key) ? $this->conf : array_get($this->conf,$key);
     }
 
     public function configPortlet($portlet) {
