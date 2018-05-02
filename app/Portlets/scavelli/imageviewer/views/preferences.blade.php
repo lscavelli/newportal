@@ -26,6 +26,10 @@
                                 {!! Form::select('listView', $cList->listView , $cList->get('listView') , ['class' => "form-control", "id"=>'listView']) !!}
                             </div>
                             <div class="form-group">
+                                <label for="listView">Contenuti per pagina</label>
+                                {!! Form::text('perPage', $cList->get('perPage') , ['class' => "form-control", "id"=>'perPage']) !!}
+                            </div>
+                            <div class="form-group">
                                 {{ Form::label('tags', 'Tags:') }}
                                 {{ Form::select('tags[]', $cList->tags, null, ['class' => 'form-control select2-multi tagsel', 'multiple' => 'multiple', 'style'=>'width:100%']) }}
                             </div>
@@ -79,7 +83,7 @@
     $("#structure_id").change(function(e) {
         e.preventDefault();
         $('#model_id').empty();
-        $.getJSON ("/admin/documentlist/listmodels/"+$('#structure_id').val(), function ( res ) {
+        $.getJSON ("/admin/imageviewer/listmodels/"+$('#structure_id').val(), function ( res ) {
         }).done(function(data) {
             $.each( data, function( key, val ) {
                 $('#model_id').append('<option value=' + key + '>' + val + '</option>');
