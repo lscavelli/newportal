@@ -15,3 +15,6 @@
         </div>
     </div>
 @endif
+
+{{ $list->theme->addExCss('/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css') }}
+{{ $list->theme->addExJs('/node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js') }}

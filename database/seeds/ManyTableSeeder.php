@@ -96,7 +96,7 @@ class ManyTableSeeder extends Seeder
          * Imposta la struttura di base per Documenti e i modelli
          */
         $structureDoc = Structure::create([
-            'name' => 'Lista modelli documenti',
+            'name' => 'Modelli documenti',
             'description' => 'Contenitore di base dei modelli per files list',
             'content' => '',
             'service_id' => $serviceDoc->id,
@@ -108,5 +108,18 @@ class ManyTableSeeder extends Seeder
 
         $structureCWeb->models()->createMany($data['ContentWeb']);
         $structureDoc->models()->createMany($data['Documenti']);
+
+        /**
+         * Imposta la struttura di base per Documenti e i modelli
+         */
+        $structureImg = Structure::create([
+            'name' => 'Modelli Immagini',
+            'description' => 'Contenitore di base dei modelli di tipo immagine',
+            'content' => '',
+            'service_id' => $serviceDoc->id,
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ]);
+        $structureImg->models()->createMany($data['Immagini']);
     }
 }

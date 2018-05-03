@@ -167,6 +167,7 @@ class FormGenerates
     }
 
     public function setList() {
+        if(!isset($this->schema->fields)) return;
         foreach ($this->schema->fields as $field) {
             $this->listLabel[$field->id] = $field->config->label;
             $this->listType[$field->id] = $this->getType($field);

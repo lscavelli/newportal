@@ -6,6 +6,7 @@ use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Models\Content\File;
 use App\Models\Content\Service;
+use App\Libraries\listGenerates;
 
 class imageController extends Controller
 {
@@ -40,10 +41,10 @@ class imageController extends Controller
     /**
      * Mostra il web form per la configurazione della portlet
      * @param $portlet
-     * @param $documentList
+     * @param $imageViewer
      * @return $this
      */
-    public function configPortlet($portlet, $documentList) {
+    public function configPortlet($portlet, $imageViewer) {
         $default = ['listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $this->conf = array_merge($default,json_decode($portlet->pivot->setting, true));
 
@@ -92,9 +93,14 @@ class imageController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $documentList->listView();
+        $this->listView = $imageViewer->listView();
 
-        return view('imageviewer::preferences')->with(['cList' => $this]);
+        $listContent = $this->rp->setModel(File::class)->where('status_id',1)->where('mime_type', 'LIKE', 'image/%')->get()->toArray();
+        $list = new listGenerates($this->rp->paginateArray($listContent,10,request()->page_a,'page_a'));
+        return view('imageviewer::preferences')->with([
+            'cList' => $this,
+            'list' => $list
+        ]);
     }
 
     /*
