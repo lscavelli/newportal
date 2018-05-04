@@ -261,7 +261,7 @@ class pageController extends Controller {
         //Log::info($request);
         if ($request->has('data')) {
             $data = json_decode($request->data, true);
-            Log::info($data);
+            //Log::info($data);
             $newdata =[];
             foreach ($data as $item) {
 
@@ -278,7 +278,7 @@ class pageController extends Controller {
             $portpage = $modelpp->find($newdata['pivot_id']);
             $arrport = array('css','js','template','position','title','comunication'); $setting = $db = [];
 
-            foreach (array_except($newdata, ['page_id','pivot_id']) as $key=>$val) {
+            foreach (array_except($newdata, ['page_id','pivot_id','_token']) as $key=>$val) {
                 if (in_array($key,$arrport)) {
                     $db[$key] = $val;
                 } else {

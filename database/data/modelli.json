@@ -21,5 +21,16 @@
     ],
   "Immagini":
     [
+      {"name":"Singola con bordo","type_id": 2,"content": "<div class=\"content_div\">\n\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\" height=\"100%\" width=\"100%\">\n</div>"},
+      {"name":"Singola con bordo - Link","type_id": 2,"content": "<div class=\"content_div\">\n\t<a href=\"{!! $np_href !!}\" title=\"{!! $np_file_name !!}\">\n\t\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\"  height=\"100%\" width=\"100%\">\n\t</a>\n</div>"},
+      {"name":"Singola senza bordo","type_id": 2,"content": "<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\" height=\"100%\" width=\"100%\">"},
+      {"name":"Singola senza bordo - Link","type_id": 2,"content": "<a href=\"{!! $np_href !!}\" title=\"{!! $np_file_name !!}\">\n\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\" height=\"100%\" width=\"100%\">\n</a>"},
+      {"name":"Singola senza bordo - 50% - Centrata","type_id": 2,"content": "<div style=\"text-align: center\">\n\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\"  width=\"50%\">\n</div>"},
+      {"name":"Singola senza bordo - 50% - Centrata - FancyBox","type_id": 2,"content": "<div style=\"text-align: center\">\n\t<a data-fancybox=\"gallery\" href=\"{!! $np_href !!}\">\n\t\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\"  width=\"50%\">\n\t</a>\n</div>"},
+      {"name":"Singola senza bordo - FancyBox","type_id": 2,"content": "<a data-fancybox=\"gallery\" href=\"{!! $np_href !!}\">\n\t<img src=\"{!! $np_href !!}\" alt=\"{!! $np_file_name !!}\"  width=\"100%\">\n</a>"},
+      {"name":"Multiple","type_id": 2,"content": "<article>\n\t<div style=\"background-image: url('{!! $np_href !!}');\"></div>\n</article>"},
+      {"name":"Multiple - Link","type_id": 2,"content": "<article>\n\t<a href=\"{!! $np_href !!}\" title=\"{!! $np_file_name !!}\">\n\t\t<div style=\"background-image: url('{!! $np_href !!}');\"></div>\n\t</a>\n</article>"},
+      {"name":"Multiple - FancyBox","type_id": 2,"content": "<article>\n\t<a data-fancybox=\"gallery\" href=\"{!! $np_href !!}\" title=\"{!! $np_file_name !!}\">\n\t\t<div style=\"background-image: url('{!! $np_href !!}');\"></div>\n\t</a>\n</article>"},
+      {"name":"Multiple - FuncyBox - info","type_id": 2,"content": "<article>\n\t<a data-fancybox=\"gallery\" href=\"{!! $np_href !!}\" title=\"{!! $np_file_name !!}\">\n\t\t<div style=\"background-image: url('{!! $np_href !!}');\"></div>\n\t</a>\n\t<div class=\"overlay\">\n\t\t<h5>{!! $np_title !!}</h5>\n\t\t<p class=\"cat\">\n\t\t\t<a href=\"#\">{!! $np_extension !!} {!! $np_size !!}</a>\n\t\t</p>\n\t\t<p class=\"date\">\n\t\t\t<a href=\"#\">{!! $np_data_creazione !!}</a>\n\t\t</p>\n\t</div>\n</article>"}
     ]
 }

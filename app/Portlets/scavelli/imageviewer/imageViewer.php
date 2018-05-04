@@ -131,7 +131,7 @@ class imageViewer extends Portlet {
         //if (!empty($this->config('structure_id')))
         $listView = $this->config('listView') ?:  'listAssets';
 
-        if (!$this->config('template')) {
+        if (!$this->config('template') && view()->exists("imageviewer::$listView")) {
             return view("imageviewer::$listView")->with([
                 'items' => $items,
                 'title' => $this->config('title'),
