@@ -89,7 +89,7 @@ abstract class abstractPortlet {
      * restituisce il path al file chiamante della portlet corrente
      * @return string
      */
-    protected function getPath() {
+    public function getPath() {
         return strtolower(str_replace(app_path(),'',$this->getPathClass()))."/";
     }
 

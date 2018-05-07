@@ -165,12 +165,10 @@ class Theme {
 
     public function addCss($source) {
         $this->addAsset('css', $source);
-        return $this;
     }
 
     public function addJs($source,$position='body') {
         $this->addAsset('js', $source, $position);
-        return $this;
     }
 
     public function addAsset($type, $source, $position='body') {
@@ -185,7 +183,6 @@ class Theme {
             case 'style' :
             $this->_css .= $source. "\n"; break;
         }
-        return $this;
     }
 
     public function url($uri) {
