@@ -13,9 +13,6 @@ class imageSlider extends Portlet {
         $model = "App\\Models\\Content\\File";
         $this->rp->setModel($model);
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
-
-        if ($this->theme)
-            $this->theme->addExCss($this->getPath().'css/imageViewer.css');
     }
 
     public function getContent() {
@@ -23,103 +20,82 @@ class imageSlider extends Portlet {
 
         $builder = $this->rp->getModel();
 
-        if (!empty($this->config['file_id'])) {
-            $items = collect([$this->rp->find($this->config['file_id'])]);
-        } else {
 
-            // considero solo i contenuti attivi e le immagini
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            $builder = $builder->where('status_id',1)->where('mime_type', 'LIKE', 'image/%');
 
-            // ordered
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            if ($this->config('ord') || $this->config('dir')) {
-                $ord = ['id','name','created_at','updated_at','hits'];
-                $dir = ['asc','desc'];
-                $dirkey = (!is_null($this->config('dir'))) ? $this->config('dir') : 0;
-                $ordkey = (!is_null($this->config('ord'))) ? $this->config('ord') : 0;
-                $builder = $builder->orderBy($ord[$ordkey], $dir[$dirkey]);
+        // considero solo i contenuti attivi e le immagini
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        $builder = $builder->where('status_id',1)->where('mime_type', 'LIKE', 'image/%');
+
+        // ordered
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('ord') || $this->config('dir')) {
+            $ord = ['id','name','created_at','updated_at','hits'];
+            $dir = ['asc','desc'];
+            $dirkey = (!is_null($this->config('dir'))) ? $this->config('dir') : 0;
+            $ordkey = (!is_null($this->config('ord'))) ? $this->config('ord') : 0;
+            $builder = $builder->orderBy($ord[$ordkey], $dir[$dirkey]);
+        }
+
+        // inizializzo le variabili $categories e $tags
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        $categories = null;
+        $tags = null;
+        $file = null;
+
+        // se la comunicazione è attiva
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('comunication')) {
+            // imposta $tags o/e $categories se presenti nell'url
+            if ($this->request->has('tag')) {
+                $tags = ['tags'=>['tag'=>$this->request->tag]];
             }
-
-            // inizializzo le variabili $categories e $tags
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            $categories = null;
-            $tags = null;
-            $file = null;
-
-            // se la comunicazione è attiva
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            if ($this->config('comunication')) {
-                // imposta $tags o/e $categories se presenti nell'url
-                if ($this->request->has('tag')) {
-                    $tags = ['tags'=>['tag'=>$this->request->tag]];
-                }
-                if ($this->request->has('category')) {
-                    $categories = ['categories'=>['category'=>$this->request->category]];
-                }
-
-            }
-            // considero i valori settati se tags e cats sono vuoti
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            if (!$tags and !$categories) {
-                $tags = $this->config('tags');
-                $categories = $this->config('categories');
-            }
-
-            // se è impostata la variabile tags applico i filtri sui tags
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            // in AND
-            if ($tags) {
-                foreach ($tags as $tag) {
-                    $builder = $builder->whereHas('tags', function ($q) use ($tag) {
-                        $q->where('tag_id', '=', $tag['tag']);
-                    });
-                }
-            }
-
-            // se categories non è nulla applico i filtri sulle categorie
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            // in AND
-            if ($categories) {
-                foreach ($categories as $category) {
-                    $builder = $builder->whereHas('categories', function ($q) use ($category) {
-                        $q->where('category_id', $category['category']);
-                    });
-                }
-            }
-
-            // se l'url contiene author applico il filtro sull'autore
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            if ($this->config('comunication') and $this->request->has('author')) {
-                $builder = $builder->where('user_id',$this->request->author);
-            }
-
-
-            $items = [];
-            // controllo se è richiesta la navigazione del contenuto
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            if ($this->config('scrolling')) {
-                if ($file) {
-                    $builder1 = clone $builder;
-                    if ($this->config('scrolling')=='nextf') {
-                        $items = $builder->where('id', '>', $file->id)->orderBy('id','asc')->paginate(1);
-                        if($items->count()<1){
-                            $items = $builder1->orderBy('id','asc')->paginate(1);
-                        }
-                    } elseif ($this->config('scrolling')=='prevf') {
-                        $items = $builder->where('id', '<', $file->id)->orderBy('id','desc')->paginate(1);
-                        if($items->count()<1)
-                            $items = $builder1->orderBy('id','desc')->paginate(1);
-                    }
-                } else {
-                    return;
-                }
-            } else {
-                $perpage = $this->config('perPage') ?: 4;
-                $items = $builder->paginate($perpage,['*'],'pagepid'.$this->get('id'));
+            if ($this->request->has('category')) {
+                $categories = ['categories'=>['category'=>$this->request->category]];
             }
 
         }
+        // considero i valori settati se tags e cats sono vuoti
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if (!$tags and !$categories) {
+            $tags = $this->config('tags');
+            $categories = $this->config('categories');
+        }
+
+        // se è impostata la variabile tags applico i filtri sui tags
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        // in AND
+        if ($tags) {
+            foreach ($tags as $tag) {
+                $builder = $builder->whereHas('tags', function ($q) use ($tag) {
+                    $q->where('tag_id', '=', $tag['tag']);
+                });
+            }
+        }
+
+        // se categories non è nulla applico i filtri sulle categorie
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        // in AND
+        if ($categories) {
+            foreach ($categories as $category) {
+                $builder = $builder->whereHas('categories', function ($q) use ($category) {
+                    $q->where('category_id', $category['category']);
+                });
+            }
+        }
+
+        // se l'url contiene author applico il filtro sull'autore
+        // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        if ($this->config('comunication') and $this->request->has('author')) {
+            $builder = $builder->where('user_id',$this->request->author);
+        }
+
+        $cols = [1,2,3,4,6,12];
+        $columns = (!in_array($this->get('perPage'), $cols)) ? 6 : (12 / $this->get('perPage'));
+        $this->setConfig(['columns'=>$columns]);
+        $this->conf = $this->config; //da sistemare
+
+        $items = $builder->paginate(0,['*'],'pagepid'.$this->get('id'));
+
 
         if ($items->count()<1) return;
 
@@ -131,8 +107,8 @@ class imageSlider extends Portlet {
         //if (!empty($this->config('structure_id')))
         $listView = $this->config('listView') ?:  'listAssets';
 
-        if (!$this->config('template') && view()->exists("imageviewer::$listView")) {
-            return view("imageviewer::$listView")->with([
+        if (!$this->config('template') && view()->exists("imageslider::$listView")) {
+            return view("imageslider::$listView")->with([
                 'items' => $items,
                 'title' => $this->config('title'),
                 'list'  => $this

@@ -44,7 +44,7 @@ class imageSliderController extends Controller
      * @param $imageViewer
      * @return $this
      */
-    public function configPortlet($portlet, $imageViewer) {
+    public function configPortlet($portlet, $imageSlider) {
         $default = ['listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$portlet->pivot->comunication];
         if(!empty($portlet->pivot->setting)) $this->conf = array_merge($default,json_decode($portlet->pivot->setting, true));
 
@@ -93,11 +93,11 @@ class imageSliderController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $imageViewer->listView();
+        $this->listView = $imageSlider->listView();
 
         $listContent = $this->rp->setModel(File::class)->where('status_id',1)->where('mime_type', 'LIKE', 'image/%')->get()->toArray();
         $list = new listGenerates($this->rp->paginateArray($listContent,10,request()->page_a,'page_a'));
-        return view('imageviewer::preferences')->with([
+        return view('imageslider::preferences')->with([
             'cList' => $this,
             'list' => $list
         ]);

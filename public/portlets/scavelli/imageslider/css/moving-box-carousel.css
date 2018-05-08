@@ -1,0 +1,71 @@
+a {
+    -webkit-transition: all 150ms ease;
+    -moz-transition: all 150ms ease;
+    -ms-transition: all 150ms ease;
+    -o-transition: all 150ms ease;
+    transition: all 150ms ease;
+}
+.carouselred a:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+    filter: alpha(opacity=50); /* IE7 */
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+/* Page Header */
+.carouselred .page-header {
+    background: #f9f9f9;
+    margin: 10px 0 30px;
+    padding: 20px 40px;
+    border-top: 4px solid #ccc;
+    color: #999;
+    text-transform: uppercase;
+}
+.carouselred .page-header h3 {
+    line-height: 0.88rem;
+    color: #000;
+}
+
+.carouselred .carousel-control {
+    min-width: 10px;
+    max-width: 100px;
+}
+.carouselred .carousel-control, .carouselred .carousel-control.left, .carouselred .carousel-control.right {
+    background-image: none;
+    vertical-align: top;
+}
+.carouselred .carousel-control span {
+    width: auto !important;
+    height: auto !important;
+    border-radius: 50%;
+    padding: 6px;
+    margin: 0 -40px;
+    background-image: -webkit-radial-gradient(circle at center, rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    background-image: -o-radial-gradient(circle at center, rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    background-image: radial-gradient(circle at center, rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+}
+
+.carouselred .carousel-inner {
+     margin: 0 55px;
+     width: auto;
+}
+
+.carouselred .carousel-indicators {
+    bottom: 0;
+}
+.carouselred .carousel-indicators .active {
+    background-color: #999999;
+}
+
+.carouselred .carousel-indicators li {
+    border: 1px solid #999999;
+}
+
+/* Mobile only
+------------------------------------------------ */
+@media (max-width: 767px) {
+    .carouselred .page-header { text-align: center; }
+}
+@media (max-width: 479px) {
+    .carouselred .carousel-caption { word-break: break-all; }
+}

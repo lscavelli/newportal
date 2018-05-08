@@ -44,7 +44,7 @@ abstract class abstractPortlet {
         $this->config[$key] = $value;
     }
 
-    protected function config($key=null) {
+    public function config($key=null) {
         return !is_null($key) ? array_get($this->config,$key) : $this->config;
     }
 
