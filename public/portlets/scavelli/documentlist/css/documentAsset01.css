@@ -70,7 +70,9 @@ li.block-hover .item .icon {
 li.block-hover .item .icon i,
 li.block-hover .item .text .title,
 li.block-hover .text2 .description,
-li.block-hover .text2 .size {
+li.block-hover .text2 .size,
+li.block-hover .text3 .description,
+li.block-hover .text3 .size {
 
     display: block;
 
@@ -84,7 +86,7 @@ li.block-hover .item {
     font-size: 1.5em;
 }
 
-li.block-hover a .text .size, li.block-hover .text2 .size {
+li.block-hover a .text .size, li.block-hover .text2 .size, li.block-hover .text3 .size {
     margin-top: 8px;
     color: #666;
     font-size: 0.8em;

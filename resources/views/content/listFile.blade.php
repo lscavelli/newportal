@@ -14,7 +14,7 @@
         <div class="col-xs-12">
             <div class="box" style="padding-top: 20px;">
                 {!!
-                    $list->columns(['id'=>'Id','thumb'=>__('Anteprima'),'name'=>'Titolo','file_name'=>'File','created_at'=>__('Creato il')])
+                    $list->columns(['id'=>'Id','thumb'=>__('Anteprima'),'name'=>'Titolo','status_id'=>__('Stato'),'created_at'=>__('Creato il')])
                     ->addSplitButtons([
                         'file'=>'Nuovo file',
                         'image'=>'Nuova immagine',
@@ -22,6 +22,12 @@
                     ->sortFields(['id','name','file_name'])
                     ->customizes('created_at',function($row){
                         return $row['created_at']->format('d/m/Y');
+                    })
+                    ->customizes('status_id',function($row){
+                        return config('newportal.status_general')[$row['status_id']];
+                    })
+                    ->customizes('name',function($row){
+                        return Html::link(url("/admin/files/view",$row['id']), $row['name'], array('title' => $row['name']), true);
                     })
                     ->customizes('thumb',function($row){
                         $file = $row['path']."/".config('lfm.thumb_folder_name')."/".$row['file_name'];

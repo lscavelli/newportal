@@ -48,6 +48,9 @@ class ManyTableSeeder extends Seeder
          */
         //factory(App\Models\User::class, 30)->make();
 
+        $json = File::get(base_path('database/data/modelli.json'));
+        $data = json_decode($json,true);
+
         /**
          * Crea il service ContentWeb
          */
@@ -64,15 +67,15 @@ class ManyTableSeeder extends Seeder
         /**
          * Imposta la struttura di base per ContentWeb e i modelli
          */
-        $data = File::get(base_path('database/data/content_base.json'));
         $structureCWeb = Structure::create([
             'name' => 'Contenuto base',
             'description' => 'Struttura di base del content web',
-            'content' => $data,
+            'content' => File::get(base_path('database/data/content_base.json')),
             'service_id' => $serviceCWeb->id,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
+        $structureCWeb->models()->createMany($data['ContentWeb']);
 
         /**
          * Crea il service Documenti
@@ -93,33 +96,42 @@ class ManyTableSeeder extends Seeder
         ]);
 
         /**
-         * Imposta la struttura di base per Documenti e i modelli
+         * Struttura sul service "Documenti" x modelli documents & image list
          */
         $structureDoc = Structure::create([
-            'name' => 'Modelli documenti',
-            'description' => 'Contenitore di base dei modelli per files list',
+            'name' => 'Modelli documents & image list',
+            'description' => 'Contenitore di base dei modelli per files e images list',
             'content' => '',
             'service_id' => $serviceDoc->id,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
-        $json = File::get(base_path('database/data/modelli.json'));
-        $data = json_decode($json,true);
-
-        $structureCWeb->models()->createMany($data['ContentWeb']);
         $structureDoc->models()->createMany($data['Documenti']);
 
         /**
-         * Imposta la struttura di base per Documenti e i modelli
+         * Struttura sul service "Documenti" x modelli imageView
          */
         $structureImg = Structure::create([
-            'name' => 'Modelli Immagini',
-            'description' => 'Contenitore di base dei modelli di tipo immagine',
+            'name' => 'Modelli imageView',
+            'description' => 'Contenitore dei modelli per la visualizzazione delle immagini',
             'content' => '',
             'service_id' => $serviceDoc->id,
             'user_id' => $user->id,
             'username' => $user->username,
         ]);
         $structureImg->models()->createMany($data['Immagini']);
+
+        /**
+         * Struttura sul service "Documenti" x modelli imageSlider
+         */
+        $structureImg = Structure::create([
+            'name' => 'Modelli imageSlider',
+            'description' => 'Contenitore dei modelli per lo scorrimento delle immagini - Carousel',
+            'content' => '',
+            'service_id' => $serviceDoc->id,
+            'user_id' => $user->id,
+            'username' => $user->username,
+        ]);
+        $structureImg->models()->createMany($data['Slider']);
     }
 }
