@@ -2,6 +2,7 @@
 
 namespace App\Portlets\scavelli\contentlist\Controllers;
 
+use App\Models\Content\Structure;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -49,18 +50,21 @@ class assetController extends Controller
 
         // definizione della lista dei modelli
         //===============================================
-
         $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
-        $structures = $this->rp->setModel('App\Models\Content\Structure')->where('service_id',$service->id)->where('status_id',1);
-        if (!empty($this->get('structure_id'))) {
-            $structure = $this->rp->getModel()->find($this->get('structure_id'));
-        } elseif($structures->count()>0) {
-            $structure = $structures->first();
+        $structures = $this->rp->setModel(Structure::class);
+        if(!empty($portlet->structure_id)) {
+            $structure = $structures->find($portlet->structure_id);
+            $this->structures = collect([$structure])->pluck('name','id')->toArray();
+        } else {
+            $structures = $structures->where('service_id',$service->id)->where('status_id',1);
+            $this->structures = $structures->pluck('name','id')->toArray();
+            if (!empty($this->get('structure_id'))) {
+                $structure = $this->rp->getModel()->find($this->get('structure_id'));
+            } elseif($structures->count()>0) {
+                $structure = $structures->first();
+            }
         }
-
-        $this->structures = $structures->pluck('name','id')->toArray();
-        if (isset($structure))
-            $this->models = $structure->models->where('type_id',2)->pluck('name','id')->toArray();
+        $this->models = $structure->models->where('type_id',2)->pluck('name','id')->toArray();
         //===============================================
 
         $this->pages = $this->rp->setModel('App\Models\Content\Page')->where('status_id',1)->orderBy('name')->pluck('name','slug')->toArray();

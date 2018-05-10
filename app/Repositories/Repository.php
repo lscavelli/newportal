@@ -458,6 +458,10 @@ class Repository implements RepositoryInterface {
         return $this->model->first($columns);
     }
 
+    public function firstOrFail($columns = ['*']) {
+        return $this->model->firstOrFail($columns);
+    }
+
     public function increment($column, $amount = 1, array $extra = array()) {
         return $this->model->increment($column,$amount,$extra);
     }

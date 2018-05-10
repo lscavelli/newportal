@@ -17,7 +17,8 @@ return [
             'date'          =>  '07/05/2018',
             'description'   =>  'Consente lo scorrimento delle immagini',
             'type'          =>  '1',
-            'path'          =>  'scavelli\imageslider'
+            'path'          =>  'scavelli\imageslider',
+            'service'       =>  'App\Models\Content\File'
         ]
     ]
 ];

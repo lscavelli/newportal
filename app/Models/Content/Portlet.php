@@ -10,7 +10,7 @@ class Portlet extends Model
 
     protected $fillable = array(
         'name', 'init', 'description', 'type_id', 'title', 'status_id',
-        'author', 'path', 'container', 'revision', 'date'
+        'author', 'path', 'container', 'revision', 'date', 'structure_id', 'service'
     );
 
     public function pages() {

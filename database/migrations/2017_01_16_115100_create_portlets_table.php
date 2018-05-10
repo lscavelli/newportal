@@ -25,6 +25,8 @@ class CreatePortletsTable extends Migration
             $table->string('revision')->nullable();
             $table->string('date')->nullable();
             $table->text('description')->nullable();
+            $table->unsignedInteger('structure_id')->nullable();
+            $table->string('service', 191)->nullable();
             $table->timestamps();
         });
     }

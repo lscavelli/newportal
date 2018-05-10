@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Content;
 
 use App\Libraries\listGenerates;
+use App\Models\Content\Service;
+use App\Models\Content\Structure;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -26,7 +28,7 @@ class PortletController extends Controller {
      */
     private function validator(array $data)   {
         return Validator::make($data, [
-            'name' => 'required|min:2|max:80',
+            //'structure_id' => 'required',
         ]);
     }
 
@@ -89,6 +91,33 @@ class PortletController extends Controller {
         $pag['preid'] = $this->rp->prev($id);
         $listPages = new listGenerates($this->rp->paginateArray($portlet->pages->toArray(),10,$request->page_a,'page_a'));
         return view('content.profilePortlet')->with(compact('portlet','pag','listPages'));
+    }
+
+    /**
+     * Mostra il form per il setting della portlet
+     * @param $id
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function edit($id) {
+        $portlet = $this->rp->find($id);
+        $service = $this->rp->setModel(Service::class)->where('class',$portlet->service)->firstOrFail();
+        $structures = [''=>''];
+        $structures += $this->rp->setModel(Structure::class)->where('service_id',$service->id)->where('status_id',1)->pluck()->toArray();
+        return view('content.settingPortlet')->with(compact('portlet','structures'));
+    }
+
+    /**
+     * Aggiorna i dati della Portlet nel DB
+     * @param $id
+     * @param Request $request
+     * @return $this
+     */
+    public function update($id, Request $request)  {
+        $data = $request->all();
+        $this->validator($data)->validate();
+        if ($this->rp->update($id,$data)) {
+            return redirect('admin/portlets')->withSuccess('Portlet aggiornata correttamente');
+        }
     }
 
 

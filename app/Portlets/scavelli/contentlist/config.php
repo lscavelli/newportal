@@ -17,7 +17,8 @@ return [
             'date'          =>  '17/05/2017',
             'description'   =>  '',
             'type'          =>  '1',
-            'path'          =>  'scavelli\contentlist'
+            'path'          =>  'scavelli\contentlist',
+            'service'       =>  'App\Models\Content\Content'
         ]
     ]
 ];

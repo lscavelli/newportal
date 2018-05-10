@@ -14,7 +14,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'Nome','description'=>'Descrizione','type_id'=>'Tipologia','created_at'=>'Registrata il'])
-                    ->onlyActions(['0'=>'Mostra dettagli','#'=>'Delete'])
+                    ->onlyActions(['0'=>'Mostra dettagli','#'=>'Delete',url('admin/portlets/setting')=>'Setting'])
                     ->addSplitButtons(['#'=>'Carica Portlets'],false)
                     ->customizes('type_id',function($row){
                         return (is_null($row['type_id']) ? null : config('newportal.type_portlets')[$row['type_id']]);

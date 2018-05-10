@@ -67,7 +67,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 
         // Portlets
         // *****************************************************************************
-        Route::resource('portlets','PortletController', ['except' => ['edit', 'create', 'update']]);
+        Route::get('portlets/setting/{portlet_id}','PortletController@edit');
+        Route::resource('portlets','PortletController', ['except' => ['create']]);
 
         // DynamicDataList - ddl
         // *****************************************************************************

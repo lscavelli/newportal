@@ -17,7 +17,8 @@ return [
             'date'          =>  '30/04/2018',
             'description'   =>  'Consente di visualizzare le immagini singolarmente o in modalità multipla',
             'type'          =>  '1',
-            'path'          =>  'scavelli\imageviewer'
+            'path'          =>  'scavelli\imageviewer',
+            'service'       =>  'App\Models\Content\File'
         ]
     ]
 ];

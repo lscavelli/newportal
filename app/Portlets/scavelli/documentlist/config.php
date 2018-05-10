@@ -17,7 +17,8 @@ return [
             'date'          =>  '30/03/2018',
             'description'   =>  'Consente di visualizzare le liste di documenti ',
             'type'          =>  '1',
-            'path'          =>  'scavelli\documentlist'
+            'path'          =>  'scavelli\documentlist',
+            'service'       =>  'App\Models\Content\File'
         ]
     ]
 ];
