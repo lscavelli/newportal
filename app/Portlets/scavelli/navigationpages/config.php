@@ -14,7 +14,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '13/03/2017',
-            'description'   =>  '',
+            'description'   =>  'Widget per la navigazione delle pagine attive - configurabile',
             'type'          =>  '1',
             'path'          =>  'scavelli\navigationpages'
         ]

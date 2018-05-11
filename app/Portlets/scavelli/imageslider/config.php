@@ -15,7 +15,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '07/05/2018',
-            'description'   =>  'Consente lo scorrimento delle immagini',
+            'description'   =>  'Widget per lo scorrimento delle immagini - Carousel',
             'type'          =>  '1',
             'path'          =>  'scavelli\imageslider',
             'service'       =>  'App\Models\Content\File'

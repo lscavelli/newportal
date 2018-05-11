@@ -14,7 +14,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '08/06/2017',
-            'description'   =>  'Mostra un menu navigabile delle categorie',
+            'description'   =>  'Widget per la navigazione per categoria - configurabile',
             'type'          =>  '1',
             'path'          =>  'scavelli\navigationcat'
         ]

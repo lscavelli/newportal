@@ -100,9 +100,11 @@ class PortletController extends Controller {
      */
     public function edit($id) {
         $portlet = $this->rp->find($id);
-        $service = $this->rp->setModel(Service::class)->where('class',$portlet->service)->firstOrFail();
         $structures = [''=>''];
-        $structures += $this->rp->setModel(Structure::class)->where('service_id',$service->id)->where('status_id',1)->pluck()->toArray();
+        if (!empty($portlet->service)) {
+            $service = $this->rp->setModel(Service::class)->where('class',$portlet->service)->firstOrFail();
+            $structures += $this->rp->setModel(Structure::class)->where('service_id',$service->id)->where('status_id',1)->pluck()->toArray();
+        }
         return view('content.settingPortlet')->with(compact('portlet','structures'));
     }
 

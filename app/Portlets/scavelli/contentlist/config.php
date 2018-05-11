@@ -13,9 +13,9 @@ return [
         'contentList' => [
             'name'          =>  'Aggregatore di contenuti',
             'author'        =>  'Scavelli',
-            'revision'      =>  '1.0',
-            'date'          =>  '17/05/2017',
-            'description'   =>  '',
+            'revision'      =>  '1.2',
+            'date'          =>  '07/04/2018',
+            'description'   =>  'Widget per la creazione automatica di liste di contenuti - configurabile',
             'type'          =>  '1',
             'path'          =>  'scavelli\contentlist',
             'service'       =>  'App\Models\Content\Content'

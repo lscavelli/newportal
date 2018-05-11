@@ -13,9 +13,9 @@ return [
         'documentList' => [
             'name'          =>  'Aggregatore di documenti',
             'author'        =>  'Scavelli',
-            'revision'      =>  '1.0',
-            'date'          =>  '30/03/2018',
-            'description'   =>  'Consente di visualizzare le liste di documenti ',
+            'revision'      =>  '1.3',
+            'date'          =>  '07/05/2018',
+            'description'   =>  'Widget per la creazione automatica di liste di documenti - configurabile',
             'type'          =>  '1',
             'path'          =>  'scavelli\documentlist',
             'service'       =>  'App\Models\Content\File'

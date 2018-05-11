@@ -14,7 +14,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '14/06/2017',
-            'description'   =>  'Mostra un menu navigabile dei tag',
+            'description'   =>  'Widget per la navigazione per tag - configurabile',
             'type'          =>  '1',
             'path'          =>  'scavelli\navigationtag'
         ]

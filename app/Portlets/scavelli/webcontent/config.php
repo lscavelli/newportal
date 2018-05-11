@@ -12,9 +12,9 @@ return [
         'viewWebContent' => [
             'name'          =>  'Visualizzazione Contenuto Web',
             'author'        =>  'Scavelli',
-            'revision'      =>  '1.0',
-            'date'          =>  '19/02/2017',
-            'description'   =>  '',
+            'revision'      =>  '1.2',
+            'date'          =>  '07/04/2018',
+            'description'   =>  'Widget per la visualizzazione dei contenuti web - completo di strutture e modelli',
             'type'          =>  '1',
             'path'          =>  'scavelli\webcontent'
         ]

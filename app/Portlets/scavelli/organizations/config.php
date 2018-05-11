@@ -14,7 +14,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
             'date'          =>  '17/02/2017',
-            'description'   =>  'Lista delle organizzazioni presenti',
+            'description'   =>  'Widget per la rappresentazione grafica delle organizzazioni - alpha release',
             'type'          =>  '1',
             'path'          =>  'scavelli\organizations'
         ],
@@ -23,7 +23,7 @@ return [
             'author'        =>  'Scavelli',
             'revision'      =>  '1.4',
             'date'          =>  '15/02/2017',
-            'description'   =>  'Scheda di dettaglio dell\'organizzazione',
+            'description'   =>  'Scheda di dettaglio dell\'organizzazione - alpha release',
             'type'          =>  '1',
             'path'          =>  'scavelli\organizations'
         ]
