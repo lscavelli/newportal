@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Content;
 
 use App\Libraries\listGenerates;
+use App\Models\Content\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Validator;
@@ -121,11 +122,12 @@ class FileController extends Controller {
      * @param $id
      * @param Request $request
      * @return mixed
+     * @throws \Exception
      */
     public function saveCategories($id, Request $request) {
         $file = $this->rp->find($id);
         if (isset($request->tags)) {
-            $file->tags()->sync($request->tags);
+            $this->rp->syncTags($file, $request->tags);
         } elseif ($request->has('saveCategory')) {
             $file->tags()->sync([]);
         }

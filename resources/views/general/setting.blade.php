@@ -24,32 +24,11 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="impostazioni">
                         {!! Form::open(['action' => $action,'class' => 'form-horizontal']) !!}
-                            <div class="form-group">
-                                <label for="open_registration" class="col-sm-2 control-label">Autoregistrazione utenti</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('open_registration', ['Disabilitata','Abilitata'] , $settings->get('open_registration'), ['class' => "form-control input-sm", 'id'=>"open_registration"]) !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="social_registration" class="col-sm-2 control-label">Registrazione social</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('social_registration', ['Dissattivata','Attivata'] , $settings->get('social_registration'), ['class' => "form-control input-sm", 'id'=>"social_registration"]) !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="content_not_found" class="col-sm-2 control-label">Messaggio per contenuto non trovato</label>
-                                <div class="col-sm-10">
-                                    {!! Form::select('content_not_found', ['Non visualizzare','Visualizza'] , $settings->get('content_not_found'), ['class' => "form-control input-sm", 'id'=>"content_not_found"]) !!}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-danger">Salva</button>
-                                </div>
-                            </div>
+                            {!! Form::slSelect('open_registration','Autoregistrazione utenti',['Disabilitata','Abilitata'],[],$settings->get('open_registration')) !!}
+                            {!! Form::slSelect('social_registration','Registrazione social',['Disattivata','Attivata'],[],$settings->get('social_registration')) !!}
+                            {!! Form::slSelect('content_not_found','Messaggio per contenuto non trovato',['Non visualizzare','Visualizza'],[],$settings->get('content_not_found')) !!}
+                            {!! Form::slSelect('tag_dynamic','Abilita Tag dinamico',['Disabilitato','Abilitato'],[],$settings->get('tag_dynamic')) !!}
+                            {!! Form::slSubmit('Salva') !!}
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->

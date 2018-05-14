@@ -30,7 +30,7 @@ class SettingController extends Controller {
      * @return mixed
      */
     private function validator(array $data)   {
-            return Validator::make($data, [
+        return Validator::make($data, [
             'open_registration' => 'required|boolean'
         ]);
     }
@@ -62,6 +62,7 @@ class SettingController extends Controller {
     /**
      * Switch Insert Or Update
      * @param Request $request
+     * @return mixed
      */
     public function storeOrUpdate(Request $request)   {
         $settings = $request->except('_token');

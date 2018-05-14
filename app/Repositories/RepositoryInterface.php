@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 interface RepositoryInterface {
 
@@ -50,4 +51,5 @@ interface RepositoryInterface {
     public function take($value);
     public function limit($value);
     public function makeSlug($slug,$id=0);
+    public function syncTags(EloquentModel $model, array $tags);
 }

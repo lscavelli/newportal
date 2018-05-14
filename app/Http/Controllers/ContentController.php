@@ -219,7 +219,7 @@ class ContentController extends Controller {
 
     private function saveCat($content,$request) {
         if (isset($request->tags)) {
-            $content->tags()->sync($request->tags);
+            $this->rp->syncTags($content, $request->tags);
         } elseif ($request->has('saveCategory')) {
             $content->tags()->sync([]);
         }
