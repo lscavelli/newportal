@@ -158,6 +158,12 @@ class viewWebContent extends Portlet {
             $cw->increment('hits');
         }
 
+        if ($this->request->has('json')) {
+            header("Content-Type: application/json");
+            header("Access-Control-Allow-Origin: *");
+            echo json_encode(['content' => $return]);
+            exit;
+        }
         return $return;
     }
 
