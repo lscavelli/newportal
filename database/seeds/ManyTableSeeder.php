@@ -60,7 +60,9 @@ class ManyTableSeeder extends Seeder
             'color' => '#00a65a',
             'content' => '{"varmodelli":{
                 "np_image":"Immagine",
-                "np_href":"Link"
+                "np_href":"Link",
+				"np_modify_url":"Url modifica contenuto",
+                "np_modify_icon":"Icona modifica contenuto"
                 }}'
         ]);
 
@@ -91,7 +93,9 @@ class ManyTableSeeder extends Seeder
                 "np_file_name":"Nome del File",
                 "np_mime_type":"Tipo file",
                 "np_href":"Link pubblico",
-                "np_class_icon":"Icona"
+                "np_class_icon":"Icona",
+				"np_modify_url":"Url modifica contenuto",
+                "np_modify_icon":"Icona modifica contenuto"
                 }}'
         ]);
 

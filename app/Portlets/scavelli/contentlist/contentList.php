@@ -232,6 +232,8 @@ class contentList extends Portlet {
                 if (str_contains($model, '$np_image')) $data['_image'] = $rec->getImage();
                 if (str_contains($model, '$np_categories')) $data['_categories'] = $rec->categories;
                 if (str_contains($model, '$np_page')) $data['_page'] = $this->request->segment(1);
+                if (str_contains($model, '$np_modify_url')) $data['_modify_url'] = url('/admin/content/'.$rec->id.'/edit');
+                if (str_contains($model, '$np_modify_icon')) $data['_modify_icon'] = auth()->check() ? "<div style='position: relative'><a href=\"#\" class=\"pencil-update\" title=\"modifica file {$rec->name}\" onclick=\"window.open('".url('/admin/content/'.$rec->id.'/edit')."')\"><i class=\"glyphicon glyphicon-pencil\"></i></a></div>" : null;
                 $data['_author_name'] = $rec->user->name; $data['_author_username'] = $rec->username; $data['_author_id'] = $rec->user_id;
                 $url = (!empty($this->conf['inpage'])) ?  url($this->conf['inpage']) : url()->current();
                 //$data['_href'] = $url.'?'.http_build_query(['content'=>$rec->slug]);

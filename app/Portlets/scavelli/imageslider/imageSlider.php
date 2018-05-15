@@ -145,6 +145,8 @@ class imageSlider extends Portlet {
                 if (str_contains($model, '$np_mime_type')) $data['_mime_type'] = $rec->mime_type;
                 if (str_contains($model, '$np_fullpath')) $data['_fullpath'] = $rec->path."/".config('lfm.thumb_folder_name')."/".$rec->file_name;
                 if (str_contains($model, '$np_class_icon')) $data['_class_icon'] = "fa ".$rec->getIcon();
+                if (str_contains($model, '$np_modify_url')) $data['_modify_url'] = url('/admin/files/'.$rec->id.'/edit');
+                if (str_contains($model, '$np_modify_icon')) $data['_modify_icon'] = auth()->check() ? "<div style='position: relative'><a href=\"#\" class=\"pencil-update\" title=\"modifica file {$rec->name}\" onclick=\"window.open('".url('/admin/files/'.$rec->id.'/edit')."')\"><i class=\"glyphicon glyphicon-pencil\"></i></a></div>" : null;
                 $data['_author_name'] = $rec->user->name; $data['_author_username'] = $rec->username; $data['_author_id'] = $rec->user_id;
                 $data['_data_creazione'] = $rec->created_at->format('d/m/Y');
                 $data['_data_modifica'] = \Carbon\Carbon::parse($rec->updated_at)->format('d/m/Y');

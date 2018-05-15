@@ -188,3 +188,13 @@
 .noset:after {
     /*content: 'New Portlet';*/
 }
+
+.pencil-update {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0.2;
+}
+.pencil-update:hover {
+    opacity: 1.0;
+}
