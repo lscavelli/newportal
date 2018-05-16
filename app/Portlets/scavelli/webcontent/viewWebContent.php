@@ -30,17 +30,28 @@ class viewWebContent extends Portlet {
         if (!empty($this->config['comunication'])) {
             if ($this->request->has('content')) {
                 $cw = $this->rp->findBySlug($this->request->content);
+            } elseif ($this->request->has('id')) {
+                $cw = $this->rp->find($this->request->id);
             } elseif (count($segments)>1) {
                 $cw = $this->rp->findBySlug(end($segments));
             }
             // setto i meta tag della pagina con i dati del web content
-            if (!is_null($cw)) $mt = 1; // $mit mi assicura che ci sia il content con la comunicazione attiva
+            if (!is_null($cw)) $mt = 1; // $mt mi assicura che ci sia il content con la comunicazione attiva
 
+            // se è richiesto il formato json
+            if ($mt && $this->request->has('json')) {
+                $feed = $this->buildFeedJson($cw);
+                header("Content-Type: application/json");
+                header("Access-Control-Allow-Origin: *");
+                echo json_encode($feed);
+                exit;
+            }
         }
+
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
         }
-        // se non viene trrovato alcun contenuto mostra un messaggio di errore
+        // se non viene trovato alcun contenuto mostra un messaggio di errore
         if (!isset($cw->content)) {
             if (array_get(cache('settings'), 'content_not_found')==1) {
                 return view('errors.contentNotFound');
@@ -158,12 +169,6 @@ class viewWebContent extends Portlet {
             $cw->increment('hits');
         }
 
-        if ($this->request->has('json')) {
-            header("Content-Type: application/json");
-            header("Access-Control-Allow-Origin: *");
-            echo json_encode(['content' => $return]);
-            exit;
-        }
         return $return;
     }
 
@@ -201,5 +206,42 @@ class viewWebContent extends Portlet {
         }
         $forall = array_merge($forall,$forguest);
         return validator()->make($data, $forall );
+    }
+
+    /**
+     * return feed json
+     * @param $item
+     * @return array
+     */
+    private function buildFeedJson($item) {
+
+        $data = [
+            'version' => 'https://jsonfeed.org/version/1',
+            'title' => 'Feed Json Content Web',
+            'home_page_url' => $this->request->url(),
+            'feed_url' => $this->request->url().'?json',
+            'favicon' => url("/favicon.ico"),
+            'items' => [],
+        ];
+
+        $author = "";
+        if(!empty($item->user)){
+            $author = $item->user->name;
+        }
+        $data['items'][0] = [
+            'id' => $item->id,
+            'title' => htmlspecialchars(strip_tags($item->name), ENT_COMPAT, 'UTF-8'),
+            'url' => url(url()->current()."/".$item->slug),
+            'image' => $item->getImage(),
+            'content_html' => head(json_decode($item->content,true)),
+            'summary'=> htmlspecialchars(strip_tags($item->description), ENT_COMPAT, 'UTF-8'),
+            'date_created' => $item->created_at->tz('UTC')->toRfc3339String(),
+            'date_modified' => $item->updated_at->tz('UTC')->toRfc3339String(),
+            'author' => [
+                'name' => $author
+            ],
+        ];
+
+        return $data;
     }
 }
