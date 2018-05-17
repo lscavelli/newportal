@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $theme->get('description') }}">
-    <meta name="keywords" content="{{ $theme->get('keywords') }}">
-    <meta name="author" content="{{ $theme->get('author') }}">
+    @if($theme->get('keywords'))<meta name="keywords" content="{{ $theme->get('keywords') }}">@endif
+    @if($theme->get('robots'))<meta name="robots" content="{{ $theme->get('robots') }}">@endif
+    @if($theme->get('author'))<meta name="author" content="{{ $theme->get('author') }}">@endif
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @foreach($theme->get('feedLink',[]) as $feedLink)

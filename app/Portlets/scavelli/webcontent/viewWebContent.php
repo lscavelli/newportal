@@ -101,12 +101,16 @@ class viewWebContent extends Portlet {
         $return = $this->applyModel($model->content,$data).$update;
 
         // se la comunicazione è attiva e il nome del content è presente
-        // nell'url, setto i meta Tag della pagina
+        // nell'url, setto i meta Tag della pagina con i dati del content
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($mt) {
             $mt = array();
             $mt['title'] = $data['_title'];
-            $mt['description'] = str_limit($cw->description,150);
+            if (!empty($cw->description)) {
+                $mt['description'] = str_limit($cw->description,160);
+            } else {
+                $mt['description'] = str_limit(htmlspecialchars(strip_tags(head($data)), ENT_COMPAT, 'UTF-8'),160);
+            }
             $mt['image'] = $cw->getImage();
             $this->setConfigTheme($mt);
         }

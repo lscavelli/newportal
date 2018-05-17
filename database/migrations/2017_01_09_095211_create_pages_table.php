@@ -24,7 +24,7 @@ class CreatePagesTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
             $table->string('title')->nullable();
             $table->text('keywords')->nullable();
-            $table->string('description', 255)->nullable();
+            $table->text('description')->nullable();
             $table->text('robots')->nullable();
             $table->text('css')->nullable();
             $table->text('javascript')->nullable();

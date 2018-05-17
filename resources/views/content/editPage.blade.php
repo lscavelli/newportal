@@ -28,7 +28,6 @@
 
                             {!! Form::slText('name','Nome') !!}
                             {!! Form::slText('slug','Slug',null,['placeholder'=> __("Generato automaticamente se lasciato vuoto")]) !!}
-                            {!! Form::slTextarea('description','Descrizione') !!}
                             {!! Form::slCheckbox('hidden_','Nascosta', 1) !!}
                             {!! Form::slSelect('status_id','Stato',config('newportal.status_general')) !!}
                             {!! Form::slSelect('parent_id','Figlia di',$optionsSel) !!}
@@ -44,7 +43,11 @@
 
                             {!! Form::slSelect('type_id','Tipo pagina',config('newportal.type_page')) !!}
                             <div class="urlpage">{!! Form::slText('url','Url',null,['placeholder'=> __("Url esterno o a pagina e documento interno")]) !!}</div>
-                            {!! Form::slSelect('sitemap','SiteMap',['No','Si']) !!}
+                            {!! Form::slSelect('sitemap','SEO - SiteMap',['No','Si']) !!}
+                            {!! Form::slTextarea('description','SEO - Descrizione',null,['rows'=>5]) !!}
+                            {!! Form::slTextarea('keywords','SEO - Parole chiave',null,['rows'=>5]) !!}
+                            {!! Form::slTextarea('robots','SEO - Robots',null,['rows'=>5]) !!}
+                            {!! Form::slTextarea('javascript','Javascript',null,['rows'=>5]) !!}
                             {!! Form::slSubmit('Salva',['value'=>1,'name'=>"sButtonOther"]) !!}
 
                         {!! Form::close() !!}
