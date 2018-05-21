@@ -28,6 +28,7 @@
                             {!! Form::slSelect('social_registration','Registrazione social',['Disattivata','Attivata'],[],$settings->get('social_registration')) !!}
                             {!! Form::slSelect('content_not_found','Messaggio per contenuto non trovato',['Non visualizzare','Visualizza'],[],$settings->get('content_not_found')) !!}
                             {!! Form::slSelect('tag_dynamic','Abilita Tag dinamico',['Disabilitato','Abilitato'],[],$settings->get('tag_dynamic')) !!}
+                            {!! Form::slSelect('2fa_activation','Auth. a due fattori',['Disattivata','Attivata'],[],$settings->get('2fa_activation')) !!}
                             {!! Form::slSubmit('Salva') !!}
                         {!! Form::close() !!}
                     </div>

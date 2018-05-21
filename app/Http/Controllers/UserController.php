@@ -445,4 +445,22 @@ class UserController extends Controller {
         return redirect('admin/dashboard');
     }
 
+    /**
+     * Activate Authentication 2FA
+     */
+    public function activate2FA() {
+        //$registration_data = $request->all();
+        if (array_get(cache('settings'), '2fa_activation')) {
+            $google2fa = app('pragmarx.google2fa');
+            $registration_data["google2fa_secret"] = $google2fa->generateSecretKey(64);
+            //$request->session()->flash('registration_data', $registration_data);
+            // https://developers.google.com/chart/infographics/docs/qr_codes
+            $rootUrl = "https://chart.googleapis.com/chart?cht=qr&chs=250x205&chld=M|0&chl=";
+            $type = "totp"; // hotp
+            $label = config('app.name'); // name:email
+            $url = $rootUrl.urlencode("otpauth://".$type."/".$label."?secret=".$registration_data["google2fa_secret"]);
+            return view('auth.google2fa', ['src_qrcode'=>$url,'data'=>$registration_data]);
+        }
+        //'google2fa_secret' => $data['google2fa_secret'],
+    }
 }

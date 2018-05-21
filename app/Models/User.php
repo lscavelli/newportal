@@ -22,7 +22,9 @@ class User extends Authenticatable
     protected $fillable = [
         'nome','cognome','email', 'password', 'username', 'indirizzo',
         'data_nascita', 'note', 'telefono', 'status_id', 'avatar',
-        'country_id', 'city_id', 'confirmation_token', 'confirmed_at'
+        'country_id', 'city_id', 'confirmation_token', 'confirmed_at',
+        'google2fa_secret'
+
     ];
 
     /**
@@ -31,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'google2fa_secret'
     ];
 
     /**
@@ -256,6 +258,28 @@ class User extends Authenticatable
     public function scopeTokenVerification($query,$token)
     {
         return $query->where('confirmation_token', $token);
+    }
+
+    /**
+     * Ecrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $this->attributes['google2fa_secret'] = encrypt($value);
+    }
+
+    /**
+     * Decrypt the user's google_2fa secret.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getGoogle2faSecretAttribute($value)
+    {
+        return decrypt($value);
     }
 
 }

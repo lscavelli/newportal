@@ -108,9 +108,11 @@ class RegisterController extends Controller
      * Override di register - si evita il login automatico dopo la registrazione
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
 	public function register(Request $request)
     {
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
