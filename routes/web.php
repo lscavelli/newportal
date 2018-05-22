@@ -164,6 +164,8 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
         Route::post('users/{user_id}/edit/avatar', 'UserController@setAvatar');
         Route::get('users/{user_id}/edit', 'UserController@edit');
         Route::post('users/update/{user_id}', 'UserController@update');
+        Route::get('users/2fa', 'UserController@activation2FA');
+        Route::post('users/active2fa', 'UserController@active2FA');
     });
 
     /**

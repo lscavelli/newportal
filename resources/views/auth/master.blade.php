@@ -12,7 +12,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset("/node_modules/font-awesome/css/font-awesome.min.css") }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{{ asset("/node_modules/Ionicons/css/ionicons.min.css") }}">
+  <link rel="stylesheet" href="{{ asset("/node_modules/ionicons/dist/css/ionicons.min.css") }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset("/node_modules/admin-lte/dist/css/AdminLTE.min.css") }}">
 

@@ -81,6 +81,7 @@
                     @if($user->id)
                         <p><a href="#" class="btn btn-default btn-block selectAvatar" data-id="{!! $user->id !!}"><i class="fa fa-camera"></i> {{ __("Cambia Foto") }}</a></p>
                         <a href="/admin/users/{!! $user->id !!}" class="btn btn-primary btn-block"><b>{{ __("Profilo") }}</b></a>
+                        @if(array_get(cache('settings'), '2fa_activation'))<a href="/admin/users/2fa" class="btn btn-primary btn-block" style="margin-top:10px;"><i class="fa fa-key"></i> <b>{{ __("Autenticazione 2FA") }}</b></a>@endif
                     @endif
                 </div>
                 <!-- /.box-body -->

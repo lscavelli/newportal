@@ -16,6 +16,7 @@ use App\Models\Data\Country;
 use App\Models\Data\City;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Gate;
+use App\Libraries\Theme;
 
 class UserController extends Controller {
 
@@ -446,21 +447,54 @@ class UserController extends Controller {
     }
 
     /**
+     * Attenzione - la funzione è attivabile direttamente dall'utente connesso
      * Activate Authentication 2FA
      */
-    public function activate2FA() {
-        //$registration_data = $request->all();
+    public function activation2FA(Theme $theme) {
+
+        $user = auth()->user();
+        $action = ["UserController@active2FA"];
         if (array_get(cache('settings'), '2fa_activation')) {
             $google2fa = app('pragmarx.google2fa');
-            $registration_data["google2fa_secret"] = $google2fa->generateSecretKey(64);
-            //$request->session()->flash('registration_data', $registration_data);
+            $secret = $google2fa->generateSecretKey(32); // defaults to 16 bytes
+            request()->session()->flash('secret', $secret);
             // https://developers.google.com/chart/infographics/docs/qr_codes
-            $rootUrl = "https://chart.googleapis.com/chart?cht=qr&chs=250x205&chld=M|0&chl=";
-            $type = "totp"; // hotp
-            $label = config('app.name'); // name:email
-            $url = $rootUrl.urlencode("otpauth://".$type."/".$label."?secret=".$registration_data["google2fa_secret"]);
-            return view('auth.google2fa', ['src_qrcode'=>$url,'data'=>$registration_data]);
+            // $rootUrl = "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=M|0&chl=";
+            // $type = "totp"; // totp = basato sull'ora ; hotp = basato sul contatore;
+            // $label = config('app.name').":(".$user->email.")"; // name:email
+            // $url = $rootUrl.urlencode("otpauth://".$type."/".$label."?secret=".$secret);
+            $url = $google2fa->getQRCodeGoogleUrl(
+                config('app.name'),
+                $user->email,
+                $secret
+            );
+            return view('auth.google2fa', [
+                'src_qrcode'=>$url,
+                'secret'=>$secret,
+                'theme'=>$theme,
+                'user'=>$user,
+                'action'=>$action]);
         }
-        //'google2fa_secret' => $data['google2fa_secret'],
+    }
+
+    /**
+     * Salva la key 2FA nel DB
+     * Attenzione - la funzione è attivabile direttamente dall'utente connesso
+     * @return mixed
+     */
+    public function active2FA() {
+        if(!request()->has('one_time_password')) {
+            return redirect()->back()->withErrors("E' necessario fornire un codice valido");
+        }
+        $data['google2fa_secret'] = session('secret');
+        $google2fa = app('pragmarx.google2fa');
+        dd($google2fa->verifyKey($data['google2fa_secret'], request()->one_time_password));
+
+        if ($google2fa->verifyKey($data['google2fa_secret'], request()->one_time_password) &&
+            $this->repo->update(auth()->user()->id,$data))
+        {
+            return redirect()->back()->withSuccess('Le impostazioni sono state aggiornate');
+        }
+        return redirect()->back()->withErrors("Attenzione si è verificato un errore");
     }
 }

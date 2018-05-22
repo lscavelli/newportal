@@ -1,7 +1,7 @@
 @extends('auth.master')
 @section('body')
     <body class="hold-transition login-page">
-    <div class="login-box">
+    <div style="width: 50%; margin: 2% auto 7% auto;">
         @include('ui.messages')
         <div class="login-logo">
             <a href="#"><b>Newportal</b> Platform</a>
@@ -9,37 +9,84 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
 
-            <p class="login-box-msg">Autenticazione a 2 fattori</p>
-
-            <form action="{{ url('/register') }}" role="form" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="form-group">
-                        <label for="one_time_password" class="col-md-4 control-label">One Time Password</label>
-
-                        <div class="col-md-8">
-                            <input id="one_time_password" type="number" class="form-control" name="one_time_password" required autofocus>
+            <p class="login-box-msg" style="font-weight: bold">Configurazione autenticazione a 2 fattori</p>
+            <hr>
+            <div class="clear_both">
+                <div class="col img">
+                    <img src="{{ asset("img/2fa_download.png") }}" style="width: 100%; max-width: 200px">
+                </div>
+                <div class="col des">
+                    <p>Passaggio 1</p>
+                    <p style="font-weight: bold">Scarica l'app</p>
+                    <p>Scarica sul tuo smartphone l'app (es. Google Authenticator) per generare la One Time Password richiesta nel terzo passaggio</p>
+                </div>
+                <hr>
+            </div>
+            <div class="clear_both">
+                <div class="col img">
+                    <img src="{{ $src_qrcode }}" style="width: 100%; max-width: 200px">
+                </div>
+                <div class="col des">
+                <p>Passaggio 2</p>
+                <p style="font-weight: bold">Scansiona il QR Code</p>
+                <p>Scansione il QR Code mostrato a sinistra, utilizzando l'app scaricata sul tuo smartphone.
+                    Nel caso risulti impossibile effettuare la scansione, effettua nell'app l'inserimento manuale del
+                    seguente codice basato sull'ora {{ $secret }}</p>
+                </div>
+                <hr>
+            </div>
+            <div class="clear_both">
+                <div class="col img">
+                    <img src="{{ asset("img/google-2fa.png") }}" style="width: 100%; max-width: 200px">
+                </div>
+                <div class="col des">
+                    <p>Passaggio 3</p>
+                    <p style="font-weight: bold">Inserisci il codice di verifica</p>
+                    <p>Inserisci il codice di verifica a 6 cifre generato dall'app scaricata sul tuo smartphone</p>
+                    {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal']) !!}
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input id="one_time_password" type="number" class="form-control" name="one_time_password" required autofocus>
+                            </div>
+                            <div class="col-md-8">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Verifica codice di attivazione</button>
+                            </div>
+                            <!-- /.col -->
                         </div>
-                    </div>
+                    {!! Form::close() !!}
                 </div>
-                <p>Scansione il QR Code con Google Authenticator App {{ $data['google2fa_secret'] }}</p>
-                <div><img src="{{ $src_qrcode }}"></div>
-
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
-
+                <hr>
+            </div>
         </div>
     </div>
     <!-- /.login-box -->
 @endsection
 
 @section('style')
+    <style>
+        hr {
+            border: none;
+            border-top: 1px solid #e8e8e8;
+            margin: 2rem auto;
+            clear: both;
+        }
+        .img {
+            width: 30%;
+        }
+        .des {
+            width: 70%;
+        }
+        .col {
+            display: block;
+            float: left;
+            margin: 0 0 2%;
+            padding-right: 2%;
+        }
+        .clear_both {
+            clear: both;
+        }
+    </style>
 @stop
 @section('scripts')
 @stop
