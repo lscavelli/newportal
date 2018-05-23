@@ -81,12 +81,26 @@
                     @if($user->id)
                         <p><a href="#" class="btn btn-default btn-block selectAvatar" data-id="{!! $user->id !!}"><i class="fa fa-camera"></i> {{ __("Cambia Foto") }}</a></p>
                         <a href="/admin/users/{!! $user->id !!}" class="btn btn-primary btn-block"><b>{{ __("Profilo") }}</b></a>
-                        @if(array_get(cache('settings'), '2fa_activation'))<a href="/admin/users/2fa" class="btn btn-primary btn-block" style="margin-top:10px;"><i class="fa fa-key"></i> <b>{{ __("Autenticazione 2FA") }}</b></a>@endif
                     @endif
                 </div>
                 <!-- /.box-body -->
             </div>
+
             <!-- /.box -->
+            @if(array_get(cache('settings'), '2fa_activation'))
+                <!-- 2FA -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+
+                        <h3 class="profile-username text-center">2FA</h3>
+                        <p class="text-muted text-center">Autenticazione a 2 fattori</p>
+                        <a href="/admin/users/2fa" class="btn @if(!empty($user->google2fa_secret)) btn-danger disattiva2FA @else btn-default @endif btn-block" style="margin-top:10px;"><i class="fa fa-key"></i> <strong>@if(!empty($user->google2fa_secret)){{ __("Disabilita") }}@else{{ __("Abilita") }}@endif</strong></a>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            @endif
+
         </div>
         <!-- /.col -->
     </div>
@@ -119,6 +133,9 @@
             if( $(this).is(':checked') ) {
                 $(".filename").prop('value',null);
             };
+        });
+        $('.disattiva2FA').on('click', function(){
+            return (confirm("Sei sicuro disattivare l'autenticazione 2FA?"));
         });
 
     </script>

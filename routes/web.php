@@ -15,7 +15,7 @@ Route::get('/', function () {
     return redirect("/welcome");
 });
 
-Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
+Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], function () {
 
     Route::get('api/listportlets', "Content\\PortletController@listPortletDisp");
     Route::any('api/saveportlets', "PageController@savePortlets");
@@ -251,6 +251,10 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth']], function () {
 });
 
 Auth::routes();
+Route::post('/2fa', function () {
+    return redirect(URL()->previous());
+})->name('2fa')->middleware('2fa');
+
 Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\SocialController@getProviderCallback');
 

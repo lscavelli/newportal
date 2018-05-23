@@ -43,7 +43,7 @@
                     <p>Passaggio 3</p>
                     <p style="font-weight: bold">Inserisci il codice di verifica</p>
                     <p>Inserisci il codice di verifica a 6 cifre generato dall'app scaricata sul tuo smartphone</p>
-                    {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal']) !!}
+                    {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal', 'id'=>'sendotp']) !!}
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -89,5 +89,10 @@
     </style>
 @stop
 @section('scripts')
+    <script>
+        $('#one_time_password').on('keyup', function() {
+            if(this.value.length==6) $('#sendotp').submit();
+        });
+    </script>
 @stop
 
