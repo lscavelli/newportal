@@ -161,13 +161,9 @@ class ContentController extends Controller {
         $content = $this->rp->find($id);
         $action = ["ContentController@otherUpdate",$id];
         $tags = $this->rp->setModel('App\Models\Content\Tag')->pluck();
-        // =======================
-        $vocabularies = $this->listVocabularies();
-        // =======================
-        $cats = $this->rp->setModel('App\Models\Content\Category');
-        $categories = $cats->pluck();
+        $vocabularies = $this->rp->listVocabularies($content);
 
-        return view('content.editContentCategorization')->with( compact('content','action','tags','categories','categoryJson','vocabularies'));
+        return view('content.editContentCategorization')->with( compact('content','action','tags','vocabularies'));
     }
 
     /**
@@ -213,24 +209,8 @@ class ContentController extends Controller {
         }
 
         $this->rp->update($id, $data);
-        if ($request->has('saveCategory')) $this->saveCat($content,$request);
+        if ($request->has('saveCategory')) $this->rp->saveCategories($id);
         return redirect()->route('content')->withSuccess('Contenuto aggiornato correttamente');
-    }
-
-    private function saveCat($content,$request) {
-        if (isset($request->tags)) {
-            $this->rp->syncTags($content, $request->tags);
-        } elseif ($request->has('saveCategory')) {
-            $content->tags()->sync([]);
-        }
-
-        $content->categories()->detach();
-        foreach($this->listVocabularies() as $vocabulary) {
-            $itemCats = "categories".$vocabulary->id;
-            if (isset($request->$itemCats)) {
-                $content->categories()->attach($request->$itemCats,['vocabulary_id'=>$vocabulary->id]);
-            }
-        }
     }
 
     public function listCategoryJson($vocabulary_id,$default=null) {
@@ -264,11 +244,6 @@ class ContentController extends Controller {
         }
         $jd .= "]";
         return $jd;
-    }
-
-    private function listVocabularies() {
-        $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
-        return $service->vocabularies;
     }
 
     private function checkUseImage($image) {

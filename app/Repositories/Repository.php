@@ -14,6 +14,7 @@ use App\Events\Removed;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
+use App\Models\Content\Service;
 
 
 class Repository implements RepositoryInterface {
@@ -497,6 +498,12 @@ class Repository implements RepositoryInterface {
         return $this;
     }
 
+    /**
+     * Sincronizza i tags
+     * @param EloquentModel $model
+     * @param array $tags
+     * @throws \Exception
+     */
     public function syncTags(EloquentModel $model, array $tags) {
 
         foreach ($tags as $key=>$tag) {
@@ -509,6 +516,40 @@ class Repository implements RepositoryInterface {
             }
         }
         $model->tags()->sync($tags);
-
     }
+
+    /**
+     * Salva tags e le categorie
+     * @param $id
+     * @throws \App\Repositories\RepositoryException
+     * @throws \Exception
+     */
+    public function saveCategories($id) {
+        $model = $this->find($id);
+        if (isset(request()->tags)) {
+            $this->syncTags( $model, request()->tags);
+        } elseif (request()->has('saveCategory')) {
+            $model->tags()->sync([]);
+        }
+
+        $model->categories()->detach();
+        foreach($this->listVocabularies($model) as $vocabulary) {
+            $itemCats = "categories".$vocabulary->id;
+            if (isset(request()->$itemCats)) {
+                $model->categories()->attach(request()->$itemCats,['vocabulary_id'=>$vocabulary->id]);
+            }
+        }
+    }
+
+    /**
+     * Restituisce la lista dei vocabolari
+     * @return mixed
+     * @throws \App\Repositories\RepositoryException
+     */
+    public function listVocabularies(EloquentModel $model) {
+        $class =  get_class($model);
+        $service = $this->setModel(Service::class)->where('class',$class)->firstOrFail();
+        return $service->vocabularies;
+    }
+
 }

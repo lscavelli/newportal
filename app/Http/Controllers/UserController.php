@@ -504,8 +504,8 @@ class UserController extends Controller {
             $this->repo->update($id,$data))
         {
             session()->forget('secret');
-            session()->put(config('google2fa.ssession_var').".otp_timestamp",request()->one_time_password);
-            // invia notifica via email
+            session()->put(config('google2fa.session_var').".otp_timestamp",request()->one_time_password);
+            // TODO: invia notifica via email
             return redirect("/admin/users/{$id}/edit")->withSuccess('Le impostazioni sono state aggiornate');
         }
         return redirect()->back()->withErrors("Attenzione si è verificato un errore");
@@ -533,6 +533,8 @@ class UserController extends Controller {
     private function disactive2FA($user) {
         $data['google2fa_secret'] = null;
         $this->repo->update($user->id,$data);
-        // invia notifica via email
+        session()->forget(config('google2fa.session_var').".otp_timestamp");
+        // TODO: invia notifica via email
+
     }
 }
