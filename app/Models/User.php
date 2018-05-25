@@ -279,7 +279,7 @@ class User extends Authenticatable
      */
     public function getGoogle2faSecretAttribute($value)
     {
-        return decrypt($value);
+        return !empty($value) ? decrypt($value) : null;
     }
 
 }

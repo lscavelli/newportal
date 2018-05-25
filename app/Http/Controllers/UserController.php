@@ -504,7 +504,7 @@ class UserController extends Controller {
             $this->repo->update($id,$data))
         {
             session()->forget('secret');
-            $google2fa->storeOldTimestamp(request()->one_time_password);
+            session()->put(config('google2fa.ssession_var').".otp_timestamp",request()->one_time_password);
             // invia notifica via email
             return redirect("/admin/users/{$id}/edit")->withSuccess('Le impostazioni sono state aggiornate');
         }

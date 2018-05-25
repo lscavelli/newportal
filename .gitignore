@@ -3,6 +3,7 @@
 /public/bower_components/
 /public/hot
 /public/storage
+/public/img/webcontent
 /storage/*.key
 /vendor
 /.idea
