@@ -14,7 +14,7 @@
             <div class="text">
                 <p>{{$comment->content}}</p>
             </div>
-            <p class="attribution">by <a href="mailto:@if(!is_null($comment->user_id)) {{ $comment->autore->email }} ">{{ $comment->autore->name }} @else {{$comment->email}} ">{{$comment->author}} @endif </a> {{ Carbon\Carbon::parse($comment->created_at)->format('d-m-Y H:i') }}</p>
+            <p class="attribution">by @if(!is_null($comment->user_id)) {{ $comment->autore->name }} @else {{$comment->author}} @endif {{ Carbon\Carbon::parse($comment->created_at)->format('d-m-Y H:i') }}</p>
         </div>
     </article>
 @endforeach
