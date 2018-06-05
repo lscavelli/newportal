@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name')->nullable();
             $table->string('code',40)->nullable();
+            $table->string('color', 50)->nullable();
             $table->integer('parent_id')->unsigned()->nullable()->default(null);
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('vocabulary_id')->unsigned()->index();

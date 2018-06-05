@@ -70,8 +70,10 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
-		<div class="col-lg-12">
+
+		<section class="col-lg-7 connectedSortable ui-sortable">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Attività utente</h3>
@@ -87,15 +89,58 @@
 				</div>
 				<!-- /.box-body -->
 			</div>
-		</div>
+		</section>
+
+		@isset($tasks)
+			<section class="col-lg-5 connectedSortable ui-sortable">
+				{!! $tasks !!}
+			</section>
+		@endisset
+
 	</div>
+
 </section>
+@endsection
+@section('style')
+	<!-- jQuery ui -->
+	<link href="{{ asset("/node_modules/jquery-ui-dist/jquery-ui.min.css") }}" rel="stylesheet">
 @endsection
 @section('scripts')
 	<!-- ChartJS 1.0.1 -->
 	{!! Html::script("/node_modules/chart.js/Chart.min.js") !!}
-<script>
-    $(function () {
+	<!-- jQuery ui -->
+	<script src="{{ asset("/node_modules/jquery-ui-dist/jquery-ui.min.js") }}"></script>
+	<script>
+        $(function () {
+
+
+            // Make the dashboard widgets sortable Using jquery UI
+            $('.connectedSortable').sortable({
+                placeholder         : 'sort-highlight',
+                connectWith         : '.connectedSortable',
+                handle              : '.box-header, .nav-tabs',
+                forcePlaceholderSize: true,
+                zIndex              : 999999
+            });
+            $('.connectedSortable .box-header, .connectedSortable .nav-tabs-custom').css('cursor', 'move');
+
+            // jQuery UI sortable for the todo list
+            $('.todo-list').sortable({
+                placeholder         : 'sort-highlight',
+                handle              : '.handle',
+                forcePlaceholderSize: true,
+                zIndex              : 999999
+            });
+            $('.todo-list').todoList({
+                onCheck  : function () {
+                    window.console.log($(this), 'The element has been checked');
+                },
+                onUnCheck: function () {
+                    window.console.log($(this), 'The element has been unchecked');
+                }
+            });
+
+
         //--------------
         //- AREA CHART -
         //--------------
@@ -184,4 +229,4 @@
       });
 
 </script>
-@stop
+@endsection

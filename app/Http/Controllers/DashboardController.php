@@ -37,8 +37,9 @@ class DashboardController extends Controller
         $users = \App\Models\User::all()->count();
         $roles = \App\Models\Role::all()->count();
         $permissions = \App\Models\Permission::all()->count();
+        $tasks = app()->getProvider('todo-list') ? app('todo-list')->tasksOfUser(): null;
         //$activities = $this->activitiesData();
-        return view('dashboard.dashboard', compact('users', 'roles', 'permissions'));
+        return view('dashboard.dashboard', compact('users', 'roles', 'permissions','tasks'));
 
     }
 }

@@ -29,6 +29,7 @@
                             {!! Form::slText('vocabulary_name','Vocabolario',$vocabulary->name,['class' => 'form-control', 'disabled'=>'']) !!}
                             {!! Form::slText('name','Nome') !!}
                             {!! Form::slText('code','Codice') !!}
+                            {!! Form::slColorPicker('color','Colore',$category->id) !!}
                             {!! Form::slSelect('parent_id','Sottocategoria di',$selectCat) !!}
                             {!! Form::slSubmit('Salva') !!}
 
