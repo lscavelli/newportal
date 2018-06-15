@@ -73,7 +73,7 @@
 
 	<div class="row">
 
-		<section class="col-lg-7 connectedSortable ui-sortable">
+		<section class="col-lg-@isset($tasks){{ 7 }}@else{{ 12 }}@endif connectedSortable ui-sortable">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Attività utente</h3>
