@@ -129,14 +129,42 @@
                 placeholder         : 'sort-highlight',
                 handle              : '.handle',
                 forcePlaceholderSize: true,
-                zIndex              : 999999
+                zIndex              : 999999,
+                update: function(event,ui){
+                    var itemID = ui.item.data('item-id'),
+                        sortableContainer = this,
+                        afterItemID = null;
+                    if (ui.item.prev().data('item-id') !== undefined) {
+                        afterItemID = ui.item.prev().data('item-id');
+                    }
+                    jQuery.ajax({
+                        type: 'POST',
+                        data: {itemID : itemID, afterItemID : afterItemID},
+                        dataType: 'json',
+                        url: "/admin/api/tasks/order",
+                        cache: false,
+                        success: function(data){
+                            if (data.success === false) {
+                                jQuery(sortableContainer).sortable('cancel');
+                            }
+                        },
+                        error: function(){
+                            jQuery(sortableContainer).sortable('cancel');
+                            return false;
+                        },
+                        complete: function(){
+                            jQuery(sortableContainer).sortable('enable');
+                        }
+                    });
+
+                }
             });
             $('.todo-list').todoList({
                 onCheck  : function () {
-                    window.console.log($(this), 'The element has been checked');
+                    $.getJSON("/admin/api/tasks/state/"+$(this).data('id')+"/1");
                 },
                 onUnCheck: function () {
-                    window.console.log($(this), 'The element has been unchecked');
+                    $.getJSON("/admin/api/tasks/state/"+$(this).data('id')+"/0");
                 }
             });
 
