@@ -14,7 +14,7 @@ class position
         $this->orderfield = 'position';
     }
 
-    public function reorder($id=null,$pos=null,$newpos=null,$filter=null) {
+    public function reorder($id=null,$pos=null,$newpos=null,$filter=[]) {
         if($pos!=$newpos) {
             if($newpos>$pos) {
                 $this->rp->filter($filter)->where($this->orderfield,'<=',$newpos)->where('id','<>',$id)->decrement($this->orderfield);

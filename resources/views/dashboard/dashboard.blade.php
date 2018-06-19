@@ -138,7 +138,7 @@
                         afterItemID = ui.item.prev().data('item-id');
                     }
                     jQuery.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         data: {itemID : itemID, afterItemID : afterItemID},
                         dataType: 'json',
                         url: "/admin/api/tasks/order",
