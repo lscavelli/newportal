@@ -25,6 +25,7 @@ class FormComponents
         $this->form->component('slFormeo', 'components.formeo', ['structure', 'formId', 'saveButton', 'hiddenContent']);
         $this->form->component('slFileUpload', 'components.fileUpload', ['label', 'id', 'action']);
         $this->form->component('slColorPicker', 'components.colorPicker', ['name', 'label', 'id', 'value' => null, 'attributes' => []]);
+        $this->form->component('slSeparator', 'components.separator', ['label']);
     }
 }
 
