@@ -53,6 +53,6 @@ interface RepositoryInterface {
     public function makeSlug($slug,$id=0);
     public function syncTags(EloquentModel $model, array $tags);
     public function saveCategories($id);
-    public function listVocabularies(EloquentModel $model);
+    public function listVocabularies($model);
 
 }

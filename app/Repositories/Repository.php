@@ -543,11 +543,18 @@ class Repository implements RepositoryInterface {
 
     /**
      * Restituisce la lista dei vocabolari
+     * @param $model
      * @return mixed
      * @throws \App\Repositories\RepositoryException
      */
-    public function listVocabularies(EloquentModel $model) {
-        $class =  get_class($model);
+    public function listVocabularies($model) {
+        if (is_string($model)) {
+            $class = $model;
+        } elseif($model instanceof EloquentModel) {
+            $class = get_class($model);
+        } else {
+            return;
+        }
         $service = $this->setModel(Service::class)->where('class',$class)->firstOrFail();
         return $service->vocabularies;
     }
