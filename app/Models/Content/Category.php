@@ -9,7 +9,7 @@ class Category extends Model
     protected $table = 'categories';
 
     protected $fillable = array(
-        'name', 'code', 'parent_id','vocabulary_id'
+        'name', 'code', 'parent_id','vocabulary_id', 'color'
     );
 
     public function parent() {
@@ -26,5 +26,16 @@ class Category extends Model
 
     public function vocabulary() {
         return $this->belongsTo('\App\Models\Content\Vocabulary', 'vocabulary_id');
+    }
+
+    /**
+     * restituisce il colore
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getColorAttribute($value)
+    {
+        return empty($value) ? '#16813D' : $value;
     }
 }

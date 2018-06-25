@@ -98,6 +98,14 @@
 		@endisset
 
 	</div>
+	@isset($tasksCategories)
+		<div class="row">
+			<section class="col-lg-7 connectedSortable ui-sortable">
+				{!! $tasksCategories !!}
+			</section>
+		</div>
+	@endisset
+
 
 </section>
 @endsection

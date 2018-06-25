@@ -54,7 +54,7 @@ class position
         if (request()->has($itemID)) {
             $taskPos = $this->rp->find(request()->$itemID)->position;
             $taskNewPos = request()->has($afterItemID) && !empty(request()->$afterItemID) ? $this->rp->find(request()->$afterItemID)->position : 0;
-            if ($taskNewPos<$taskPos) $taskNewPos++; //salgo
+            if ($taskNewPos<=$taskPos) $taskNewPos++; //salgo
             if ($taskNewPos>$this->rp->count()) $taskNewPos--;
             $this->reorder(request()->$itemID,$taskPos,$taskNewPos,$filter);
             return response()->json(['success' => true], 200);
