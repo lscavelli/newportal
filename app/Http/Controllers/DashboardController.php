@@ -37,14 +37,19 @@ class DashboardController extends Controller
         $users = \App\Models\User::all()->count();
         $roles = \App\Models\Role::all()->count();
         $permissions = \App\Models\Permission::all()->count();
-        $tasks = app()->isAlias('todo-list') ? app('todo-list')->tasksOfUser(): null;
-        $tasksCategories = app()->isAlias('todo-list') ? app('todo-list')->categories(): null;
+        $tasks = $tasksCategories = $tasksCalendar = null;
+        if (app()->isAlias('todo-list')) {
+            $tasks = app('todo-list')->tasksOfUser();
+            $tasksCategories = app('todo-list')->categories();
+            $tasksCalendar = app('todo-list')->calendar();
+        }
         //$activities = $this->activitiesData();
         return view('dashboard.dashboard', compact(
             'users',
             'roles',
             'permissions',
             'tasks',
-            'tasksCategories'));
+            'tasksCategories',
+            'tasksCalendar'));
     }
 }

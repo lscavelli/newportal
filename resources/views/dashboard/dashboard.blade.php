@@ -103,6 +103,9 @@
 			<section class="col-lg-7 connectedSortable ui-sortable">
 				{!! $tasksCategories !!}
 			</section>
+			<section class="col-lg-5 connectedSortable ui-sortable">
+				{!! $tasksCalendar !!}
+			</section>
 		</div>
 	@endisset
 

@@ -21,7 +21,7 @@
     <script src="{{ asset("/node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js") }}"></script>
     <script>
         $(function () {
-            $('#cp-{{$id}}').colorpicker({"color": "#16813D"});
+            $('#cp-{{$id}}').colorpicker();
         });
     </script>
 @endpush
