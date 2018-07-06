@@ -73,7 +73,7 @@
 
 	<div class="row">
 
-		<section class="col-lg-@isset($tasks){{ 7 }}@else{{ 12 }}@endif connectedSortable ui-sortable">
+		<section class="col-lg-@isset($tasks){{ 7 }}@else{{ 12 }}@endif">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Attività utente</h3>
@@ -91,20 +91,14 @@
 			</div>
 		</section>
 
-		@isset($tasks)
-			<section class="col-lg-5 connectedSortable ui-sortable">
-				{!! $tasks !!}
-			</section>
-		@endisset
-
 	</div>
-	@isset($tasksCategories)
+	@isset($tasks,$tasksCategories)
 		<div class="row">
-			<section class="col-lg-7 connectedSortable ui-sortable">
+			<section class="col-lg-7">
 				{!! $tasksCategories !!}
 			</section>
-			<section class="col-lg-5 connectedSortable ui-sortable">
-				{!! $tasksCalendar !!}
+			<section class="col-lg-5">
+				<app-root></app-root>
 			</section>
 		</div>
 	@endisset

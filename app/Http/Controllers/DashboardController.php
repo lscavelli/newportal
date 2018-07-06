@@ -39,9 +39,9 @@ class DashboardController extends Controller
         $permissions = \App\Models\Permission::all()->count();
         $tasks = $tasksCategories = $tasksCalendar = null;
         if (app()->isAlias('todo-list')) {
-            $tasks = app('todo-list')->tasksOfUser();
+            //$tasks = app('todo-list')->tasksOfUser();
             $tasksCategories = app('todo-list')->categories();
-            $tasksCalendar = app('todo-list')->calendar();
+            //$tasksCalendar = app('todo-list')->calendar();
         }
         //$activities = $this->activitiesData();
         return view('dashboard.dashboard', compact(
