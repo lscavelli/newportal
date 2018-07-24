@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePresetspagesTable extends Migration
+class CreatePresetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePresetspagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('presetspages', function (Blueprint $table) {
+        Schema::create('presets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 150);
             $table->text('description')->nullable();
@@ -40,6 +40,6 @@ class CreatePresetspagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('presetspages');
+        Schema::dropIfExists('presets');
     }
 }
