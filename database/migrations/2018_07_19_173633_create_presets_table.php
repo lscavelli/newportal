@@ -19,7 +19,7 @@ class CreatePresetsTable extends Migration
             $table->text('description')->nullable();
             $table->string('layout')->nullable();
             $table->string('theme')->nullable();
-            $table->integer('portlet_id')->unsigned()->index();
+            $table->integer('widget_id')->unsigned()->index();
             $table->string('frame',150);
             $table->string('template')->nullable();
             $table->tinyInteger('position')->default(0);

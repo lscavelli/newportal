@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: prefbat02
- * Date: 25/10/2016
- * Time: 16:58
- */
 
 return [
 
@@ -104,15 +98,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Portlet
+    | Widgets
     |--------------------------------------------------------------------------
     |
-    | Impostazioni per le portlet
+    | Impostazioni per i widgets
     |
     */
 
-    'portlets' => [
-        'namespace' => 'Portlets',
+    'widgets' => [
+        'namespace' => 'Widgets',
     ],
 
     /*
@@ -151,7 +145,7 @@ return [
     */
 
     'type_page' => [
-        0   =>  'Portlet',
+        0   =>  'Widget',
         1   =>  'Url',
         2   =>  'Pagina interna'
     ]

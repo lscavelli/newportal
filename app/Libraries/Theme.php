@@ -257,11 +257,11 @@ class Theme {
     }
 
     /**
-     * aggiunge una portlet alla proprietà $this->frames
+     * aggiunge una widget alla proprietà $this->frames
      * @param $data
      * @return $this
      */
-    public function addPortlet($data) {
+    public function addWidget($data) {
         //View::addLocation('/additional/path/to/search/in');
         $pathTemplate = $this->theme.'::'.config('newportal.themeSubDir.partial').'.'.$data['template'];
         if (!View()->exists($pathTemplate)) {
@@ -400,16 +400,16 @@ class Theme {
      * @return mixed
      */
     public function getFrame($frame) {
-        $portlets = null;
+        $widgets = null;
         if (!empty($frame) and key_exists($frame,$this->frames)) {
             ksort($this->frames[$frame]);
-            $portlets = null; $and = "";
+            $widgets = null; $and = "";
             foreach ($this->frames[$frame] as $items) {
-                $portlets .= $and . implode("\r\n",$items); $and = "\r\n";
+                $widgets .= $and . implode("\r\n",$items); $and = "\r\n";
             }
         }
-        if ($this->isadmin) {$portlets = "<div class='droppedArea' data-frame='$frame' data-page='{$this->arguments["id"]}'>$portlets</div>";}
-        return $portlets;
+        if ($this->isadmin) {$widgets = "<div class='droppedArea' data-frame='$frame' data-page='{$this->arguments["id"]}'>$widgets</div>";}
+        return $widgets;
     }
 
 }

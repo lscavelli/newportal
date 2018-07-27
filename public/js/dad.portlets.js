@@ -4,9 +4,9 @@ function docReady() {
 
     var _ctrl_index = 1000;
     /* Popolo la lista dei campi nel div */
-    $.getJSON("/admin/api/listportlets", function (result) {
+    $.getJSON("/admin/api/listwidgets", function (result) {
         $(result).each(function(index,value) {
-            $("#listOfFields").append("<div class='fld' data-portlet_id='"+value.id+"'><i class=\"glyphicon glyphicon-th\"></i>&nbsp;&nbsp;"+value.name+" (ver."+ value.revision +")</div>");
+            $("#listOfFields").append("<div class='fld' data-widget_id='"+value.id+"'><i class=\"glyphicon glyphicon-th\"></i>&nbsp;&nbsp;"+value.name+" (ver."+ value.revision +")</div>");
         });
     }).done(function() {
         $(".fld").draggable({
@@ -33,7 +33,7 @@ function docReady() {
             //        "</div>").html( draggable.html()+"<div class='sposta'>X</div>"+"<div class='cancella'>X</div>").appendTo( this );
         },
         out: function( event, ui ) {
-            //cancella portlet
+            //cancella widget
             //$(this).css("background-color", "");
         },
         over: function( event, ui ) {
@@ -62,7 +62,7 @@ function docReady() {
                 data.push({
                     //id: $(el).attr('id'),
                     pivot_id: $(el).data('pivotid'),
-                    portlet_id: $(el).data('portlet_id'),
+                    widget_id: $(el).data('widget_id'),
                     page_id: $(el).data('pageid'),
                     frame: $(el).data('frame'),
                     position: $(el).index()+1 // escludo l'indice 0
@@ -76,7 +76,7 @@ function docReady() {
             });
             $.ajax({
                 //contentType: "application/json",
-                url: '/admin/api/saveportlets',
+                url: '/admin/api/savewidgets',
                 data: {data: JSON.stringify(data)},
                 type: 'POST',
                 dataType: 'json',
@@ -87,8 +87,8 @@ function docReady() {
                     $(ui.item)[0].id = 'ctrl_'+_ctrl_index;
                     var ctrl = "#"+$(ui.item)[0].id;
                     $(ui.item).attr('data-pivotid',response.last_id);
-                    $(ui.item).removeAttr("data-portlet_id");
-                    $(ui.item).removeData("portlet_id");
+                    $(ui.item).removeAttr("data-widget_id");
+                    $(ui.item).removeData("widget_id");
                     updateControl($(ctrl));
                     eventClick(ctrl);
                 }
@@ -97,7 +97,7 @@ function docReady() {
             });
         },
         receive: function( event, ui ) {
-            //console.log($(ui.item).data('portlet_id'));
+            //console.log($(ui.item).data('widget_id'));
         }
     }).disableSelection();
 
@@ -105,7 +105,7 @@ function docReady() {
     eventClick(".fld-extensive .field-actions");
 
     /**
-     * cicla sulle portlet presenti nella pagina web
+     * cicla sulle widget presenti nella pagina web
      *
      */
     function updateAllOptions() {
@@ -130,7 +130,7 @@ function docReady() {
         });
         $(ctrl +' .field-actions .del-button').on('click', function(e){
             e.preventDefault();
-            if (confirm("Sei sicuro di voler cancellare la portlet?")) {
+            if (confirm("Sei sicuro di voler cancellare la widget?")) {
                 $(ctrl).remove();
                 if (pageid && pivotid){
                     $.getJSON ("/admin/pages/"+pageid+"/removePivotId/"+pivotid);
@@ -154,14 +154,14 @@ function docReady() {
         $(element+" .toggle-form").click(function() {
             var ec = $(this).parent().parent();
             //alert(JSON.stringify(ec));
-            var url = "/admin/pages/"+ec.data('pageid')+"/configPortlet/"+ec.data('pivotid');
+            var url = "/admin/pages/"+ec.data('pageid')+"/configWidget/"+ec.data('pivotid');
             $('#prefIframe').attr('src', url);
             /**
-             * prelevo tutti gli altri dati relativi alla portlet
+             * prelevo tutti gli altri dati relativi alla widget
              * css, js, lista delle porzioni di template, posizione e titolo
              * inserisco i contenuti nei relativi campi del model
              **/
-                //$.get( "/pages/"+$(this).data('pageid')+"/configPortlet/"+$(this).data('pivotid'), function( data ) {
+                //$.get( "/pages/"+$(this).data('pageid')+"/configWidget/"+$(this).data('pivotid'), function( data ) {
                 //    $('#tabpreferences').html(data);
                 //});
             $('#pivot_id').attr('value', ec.data('pivotid'));
@@ -172,7 +172,7 @@ function docReady() {
                 if (res.title) $('#title').val(res.title);
 
                 $('#position').empty();
-                for(i = 1; i <= res.numportlets; i++) {
+                for(i = 1; i <= res.numwidgets; i++) {
                     $('#position').append($('<option>', {
                         value: i,
                         text : i
@@ -203,9 +203,9 @@ $("#ctrl_1001").hover(function() {
 });
 
 function getFields() {
-    $.getJSON("/admin/api/listportlets", function (result) {
+    $.getJSON("/admin/api/listwidgets", function (result) {
         $(result).each(function(index,value) {
-            $("#listOfFields").append("<div class='fld' id='portlet_"+value.id+"' fieldtype='"+value.id+"'>"+value.name+" (ver."+ value.revision +")</div>");
+            $("#listOfFields").append("<div class='fld' id='widget_"+value.id+"' fieldtype='"+value.id+"'>"+value.name+" (ver."+ value.revision +")</div>");
         });
     });
     $(".fld").draggable({
@@ -228,15 +228,15 @@ function getOptions(id) {
 
 $(document).ready(docReady);
 
-//var presets = $('.portlet-chooser ul li');
+//var presets = $('.widget-chooser ul li');
 
-$('.portlet-chooser .toggler').on('click', function(e){
+$('.widget-chooser .toggler').on('click', function(e){
     e.preventDefault();
-    $(this).closest('.portlet-chooser').toggleClass('opened');
+    $(this).closest('.widget-chooser').toggleClass('opened');
 });
 
 
-function searchPortlet(q) {
+function searchWidget(q) {
     //console.log(q);
     $("#listOfFields .fld").each(function() {
         if ($(this).text().search(new RegExp(q, "i")) > -1) {
@@ -247,7 +247,7 @@ function searchPortlet(q) {
     });
 }
 
-/*$('.portlet-chooser ul li a').on('click', function(e){
+/*$('.widget-chooser ul li a').on('click', function(e){
  e.preventDefault();
  presets.removeClass('active');
  $(this).parent().addClass('active');
@@ -257,9 +257,9 @@ function searchPortlet(q) {
 $('#submitPreferences').on('click', function(e){
     e.preventDefault();
     var data = [];
-    var formPortlet = $("#prefIframe").contents().find('#preferencePortlet');
-    if (formPortlet.length>0) {
-        data = formPortlet.serializeArray();
+    var formWidget = $("#prefIframe").contents().find('#preferenceWidget');
+    if (formWidget.length>0) {
+        data = formWidget.serializeArray();
     }
     //console.log(JSON.stringify(data));
 

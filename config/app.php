@@ -160,7 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 	    App\Providers\ComposerServiceProvider::class,
-        App\Providers\PortletServiceProvider::class,
+        App\Providers\WidgetServiceProvider::class,
 
     ],
 

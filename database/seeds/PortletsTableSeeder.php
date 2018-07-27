@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Content\Portlet;
+use App\Models\Content\Widget;
 
-class PortletsTableSeeder extends Seeder
+class WidgetsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,17 +12,17 @@ class PortletsTableSeeder extends Seeder
      */
     public function run()
     {
-        $dirPortlets = app_path().'/'.config('newportal.portlets.namespace').'/';
-        DB::table('portlets')->delete();
-        if (is_dir($dirPortlets)) {
-            foreach (File::allFiles($dirPortlets) as $file) {
+        $dirWidgets = app_path().'/'.config('newportal.widgets.namespace').'/';
+        DB::table('widgets')->delete();
+        if (is_dir($dirWidgets)) {
+            foreach (File::allFiles($dirWidgets) as $file) {
                 $pathFile = (string)$file;
                 if (class_basename($pathFile)=="config.php") {
-                    foreach (File::getRequire($pathFile)['portlets'] as $init=>$portlet) {
-                        $portlet['init'] = $init;
-                        $portlet['type_id'] = $portlet['type'];
-                        unset($portlet['type']);
-                        Portlet::create($portlet);
+                    foreach (File::getRequire($pathFile)['widgets'] as $init=>$widget) {
+                        $widget['init'] = $init;
+                        $widget['type_id'] = $widget['type'];
+                        unset($widget['type']);
+                        Widget::create($widget);
                     }
                 }
             }

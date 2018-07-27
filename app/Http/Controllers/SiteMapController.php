@@ -34,7 +34,7 @@ class SiteMapController extends Controller {
     }
 
     /**
-     * per ogni pagina estraggo le portlet di tipo AssetP
+     * per ogni pagina estraggo le widget di tipo AssetP
      */
     private function setMap($pages,$siteMap) {
         foreach ($pages as $key=>$page)
@@ -44,13 +44,13 @@ class SiteMapController extends Controller {
             } else {
                 $siteMap->addItem(url($page->slug), $page->updated_at, 'daily');
             }
-            foreach ($page->portlets as $portlet)
+            foreach ($page->widgets as $widget)
             {
-                if ($portlet->init == "contentList") {
-                    $setting = (!empty($portlet->pivot->setting)) ? json_decode($portlet->pivot->setting, true) : [];
+                if ($widget->init == "contentList") {
+                    $setting = (!empty($widget->pivot->setting)) ? json_decode($widget->pivot->setting, true) : [];
                     if (!empty($setting['sitemap'])) {
                         $url = (!empty($setting['inpage'])) ?  url($setting['inpage']) : $page->slug;
-                        $contents = app()->portlet->run($portlet->init, null, $portlet->path, $setting);
+                        $contents = app()->widget->run($widget->init, null, $widget->path, $setting);
                         foreach ($contents as $content)
                         {
                             $siteMap->addItem(url($url . "/" . $content->slug), $page->updated_at, 'weekly','0.9');

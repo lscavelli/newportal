@@ -22,14 +22,14 @@ class Page extends Model
         return $this->hasMany('App\Models\Content\Page', 'parent_id');
     }
 
-    public function portlets()    {
-        return $this->belongsToMany('App\Models\Content\Portlet','portlets_pages')
+    public function widgets()    {
+        return $this->belongsToMany('App\Models\Content\Widget','widgets_pages')
             ->withPivot('id','frame', 'template', 'position', 'comunication', 'title', 'css', 'js', 'setting')
             ->withTimestamps();
     }
 
     public function resources() {
-        return $this->belongsToMany('App\Models\Content\Portlet_page','portlets_pages','page_id','id');
+        return $this->belongsToMany('App\Models\Content\Widget_page','widgets_pages','page_id','id');
     }
 
 }

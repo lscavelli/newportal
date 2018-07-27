@@ -509,7 +509,7 @@ class Repository implements RepositoryInterface {
         foreach ($tags as $key=>$tag) {
             if(!is_numeric($tag)) {
                 if (array_get(cache('settings'), 'tag_dynamic')) {
-                    $tags[$key] = \App\Models\Content\tag::firstOrCreate(['name' => $tag])->id;
+                    $tags[$key] = \App\Models\Content\Tag::firstOrCreate(['name' => $tag])->id;
                 } else {
                     unset($tags[$key]);
                 }

@@ -7,8 +7,8 @@
     -webkit-overflow-scrolling: touch;
 }
 
-/* portlet selection */
-.portlet-chooser {
+/* widget selection */
+.widget-chooser {
     width: 210px;
     left: -210px;
     position: fixed;
@@ -18,10 +18,10 @@
     transition: left 400ms;
 }
 
-.portlet-chooser.opened {
+.widget-chooser.opened {
     left: 0;
 }
-.portlet-chooser input {
+.widget-chooser input {
     position: relative;
     border: 1px solid #5c6c7b;
     -webkit-border-radius:3px;
@@ -32,7 +32,7 @@
     margin: 3px 3px 10px 3px;
 }
 
-.portlet-chooser .toggler {
+.widget-chooser .toggler {
     position: absolute;
     top: 0;
     right: -48px;
@@ -46,13 +46,13 @@
     color: white;
 }
 
-.portlet-chooser-inner {
+.widget-chooser-inner {
     position: relative;
     background: #2C3E50;
     padding: 15px;
 }
 
-.portlet-chooser-inner h4 {
+.widget-chooser-inner h4 {
     margin: 0 0 10px;
     text-transform: uppercase;
     font-size: 12px;
@@ -186,7 +186,7 @@
 }
 
 .noset:after {
-    /*content: 'New Portlet';*/
+    /*content: 'New Widget';*/
 }
 
 .pencil-update {

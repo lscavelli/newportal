@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Libraries\listGenerates;
-use App\Models\Content\Portlet;
-use App\Models\Content\Portlet_page;
+use App\Models\Content\Widget;
+use App\Models\Content\Widget_page;
 use App\Models\Content\Content;
 use App\Models\Content\Structure;
 use App\Models\Content\Page;
@@ -130,7 +130,7 @@ class pageController extends Controller {
     }
 
     /**
-     * duplica la pagina, impostando tutte le portlets
+     * duplica la pagina, impostando tutte le widgets
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -140,10 +140,10 @@ class pageController extends Controller {
         $clone->name = $page->name."-".$helpers->makeCode();
         $clone->slug = str_slug($clone->name);
         $clone->save();
-        foreach($page->portlets as $portlet) {
-            $otherField = array_except($portlet->pivot->toArray(),
+        foreach($page->widgets as $widget) {
+            $otherField = array_except($widget->pivot->toArray(),
                 ['id',"created_at","updated_at","page_id"]);
-            $this->rp->attach($clone->portlets(),$portlet,$otherField);
+            $this->rp->attach($clone->widgets(),$widget,$otherField);
         }
         return redirect()->back();
     }
@@ -185,7 +185,7 @@ class pageController extends Controller {
     }
 
     /**
-     * Mostra le liste delle portlet disponibili, di quelle agganciate alla pagina corrente
+     * Mostra le liste delle widget disponibili, di quelle agganciate alla pagina corrente
      * e dei frame presenti nel layout
      * @param $id
      * @param Theme $theme
@@ -196,7 +196,7 @@ class pageController extends Controller {
 
         $page = $this->rp->find($id);
         // valida alternativa a ->withPivot inserito nel model page
-        // $page = Page::with('portlets')->find($id);
+        // $page = Page::with('widgets')->find($id);
         $listLayouts = $theme->setTheme($page->theme)->listlayouts();
         array_unshift($listLayouts, "");
         $listFrames = $theme->listFramesOfLayout($page->layout);
@@ -210,39 +210,39 @@ class pageController extends Controller {
             $frame['preid'] = ($current_key_index==0) ? $count - 1: $current_key_index-1;
             $frame['index'] = $current_key_index;
         }
-        $portlets = $page->portlets()->wherePivot('frame', $frame['name'])->orderBy('position')->get()->toArray();
-        $listPortletsAssign = new listGenerates($this->rp->paginateArray($portlets,10,\Request::input('page_a'),'page_a'));
-        $portletsArray = $this->rp->setModel(new Portlet())->all()->toArray();
-        $listPortletsDisp = new listGenerates($this->rp->paginateArray($portletsArray,4,\Request::input('page_b'),'page_b'));
+        $widgets = $page->widgets()->wherePivot('frame', $frame['name'])->orderBy('position')->get()->toArray();
+        $listWidgetsAssign = new listGenerates($this->rp->paginateArray($widgets,10,\Request::input('page_a'),'page_a'));
+        $widgetsArray = $this->rp->setModel(new Widget())->all()->toArray();
+        $listWidgetsDisp = new listGenerates($this->rp->paginateArray($widgetsArray,4,\Request::input('page_b'),'page_b'));
 
         $action = ["PageController@update",$id];
-        return view('content.assignPortletFrame')->with(compact('page','action','listLayouts',
-            'listPortletsAssign','listFrames','listPortletsDisp','frame'));
+        return view('content.assignWidgetFrame')->with(compact('page','action','listLayouts',
+            'listWidgetsAssign','listFrames','listWidgetsDisp','frame'));
     }
 
     /**
-     * Aggancia la portlet alla pagina
+     * Aggancia la widget alla pagina
      * @param $idPage
-     * @param $idportlet
+     * @param $idwidget
      * @param $frame
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addPortlet($idPage, $idportlet, $frame ) {
+    public function addWidget($idPage, $idwidget, $frame ) {
         $page = $this->rp->find($idPage);
-        $name = $this->rp->setModel(new Portlet())->find($idportlet)->name;
-        $this->rp->attach($page->portlets(),$idportlet,['frame'=>$frame,'name'=>$name]);
+        $name = $this->rp->setModel(new Widget())->find($idwidget)->name;
+        $this->rp->attach($page->widgets(),$idwidget,['frame'=>$frame,'name'=>$name]);
         $this->order($frame,$idPage);
         return redirect()->back();
     }
 
     /**
-     * Eliminazione della portlet dalla pagina
+     * Eliminazione della widget dalla pagina
      * @param $idPage
      * @param $idPivot
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delPortlet($idPage, $idPivot) {
-        $frame = $this->rp->setModel(new Portlet_page())->find($idPivot)->frame;
+    public function delWidget($idPage, $idPivot) {
+        $frame = $this->rp->setModel(new Widget_page())->find($idPivot)->frame;
         $page = $this->rp->setModel('App\Models\Content\Page')->find($idPage);
         $this->rp->detach($page->resources(),$idPivot);
         $this->order($frame,$idPage);
@@ -250,10 +250,10 @@ class pageController extends Controller {
     }
 
     /**
-     * Aggiorna la pivot, salvando le preferenze della portlet rispetto ad una pagina
-     * Poichè la pivot accetta più portlet con lo stesso id non è possibile usare
-     * $page->portlets()->sync([idportlet => $db ], false); né
-     * $page->portlets()->updateExistingPivot(idportlet, $db);
+     * Aggiorna la pivot, salvando le preferenze della widget rispetto ad una pagina
+     * Poichè la pivot accetta più widget con lo stesso id non è possibile usare
+     * $page->widgets()->sync([idwidget => $db ], false); né
+     * $page->widgets()->updateExistingPivot(idwidget, $db);
      * @param Request $request
      * @return null
      */
@@ -274,7 +274,7 @@ class pageController extends Controller {
                 }
             }
 
-            $modelpp = $this->rp->setModel(new Portlet_page());
+            $modelpp = $this->rp->setModel(new Widget_page());
             $portpage = $modelpp->find($newdata['pivot_id']);
             $arrport = array('css','js','template','position','title','comunication'); $setting = $db = [];
 
@@ -300,47 +300,47 @@ class pageController extends Controller {
     }
 
     /**
-     * Configurazione della portlet inserita nella pagina
+     * Configurazione della widget inserita nella pagina
      * @param $idPage
      * @param $idPivot
      * @param Theme $theme
      * @return mixed
      * @throws Exception
      */
-    public function configPortlet($idPage, $idPivot, Theme $theme) {
+    public function configWidget($idPage, $idPivot, Theme $theme) {
         $page = $this->rp->setModel(Page::class)->find($idPage);
-        $portlet = $page->portlets()->wherepivot('id', $idPivot)->first();
-        $className = "App\\".config('newportal.portlets.namespace')."\\".$portlet->path."\\".$portlet->init;
+        $widget = $page->widgets()->wherepivot('id', $idPivot)->first();
+        $className = "App\\".config('newportal.widgets.namespace')."\\".$widget->path."\\".$widget->init;
         if (class_exists($className)) {
             $init = new $className($this->rp,$theme);
-            return $init->configPortlet($portlet);
+            return $init->configWidget($widget);
         } else {
             throw new Exception("Classe $className non trovata");
         }
     }
 
     public function getPref($id, Theme $theme) {
-        $inpage =   $this->rp->setModel(new Portlet_page())->find($id);
+        $inpage =   $this->rp->setModel(new Widget_page())->find($id);
         $elements =   $this->rp->where('page_id',$inpage->page_id)->where('frame',$inpage->frame)->count();
         $templates = [""=>""]+$theme->listPartials($this->rp->setModel('App\Models\Content\Page')->find($inpage->page_id)->theme);
-        return json_encode( $inpage->toArray()+['numportlets'=>$elements,'templates'=>$templates] );
+        return json_encode( $inpage->toArray()+['numwidgets'=>$elements,'templates'=>$templates] );
     }
 
     /**
-     * Aggancia le portlet alla pagina o le aggiorna (chiamata js)
+     * Aggancia le widget alla pagina o le aggiorna (chiamata js)
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function savePortlets(Request $request) {
+    public function saveWidgets(Request $request) {
         if ($request->has('data')) {
             $data = json_decode($request->data, true);
-            $pp = $this->rp->setModel(new Portlet_page());
+            $pp = $this->rp->setModel(new Widget_page());
             $NewPP = null;
             foreach ($data as $item) {
-                if (!empty($item['portlet_id']) && !isset($item['pivot_id'])) {
-                    $item['name'] = $this->rp->find($item['portlet_id'],new Portlet)->name;
+                if (!empty($item['widget_id']) && !isset($item['pivot_id'])) {
+                    $item['name'] = $this->rp->find($item['widget_id'],new Widget)->name;
                     //$page = $this->rp->setModel($p)->find($item['page_id']);
-                    //attach($page->portlets(),$item['portlet_id'],['frame'=>$item['frame'],'position'=>$item['position']]);
+                    //attach($page->widgets(),$item['widget_id'],['frame'=>$item['frame'],'position'=>$item['position']]);
                     $NewPP = $pp->create($item);
                 } else {
                     $set['frame'] = $item['frame'];
@@ -366,7 +366,7 @@ class pageController extends Controller {
      * @param null $newpos
      */
     private function order($frame,$page_id,$id=null,$pos=null,$newpos=null) {
-        $this->rp->setModel(new Portlet_page());
+        $this->rp->setModel(new Widget_page());
         (new position($this->rp))->reorder($id,$pos,$newpos,['frame'=>$frame,'page_id'=>$page_id]);
     }
 

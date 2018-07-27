@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], function () {
 
-    Route::get('api/listportlets', "Content\\PortletController@listPortletDisp");
-    Route::any('api/saveportlets', "PageController@savePortlets");
+    Route::get('api/listwidgets', "Content\\WidgetController@listWidgetDisp");
+    Route::any('api/savewidgets', "PageController@saveWidgets");
     Route::any('api/listcatecory/{vocabulary_id}/{default?}', "ContentController@listCategoryJson");
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
@@ -65,10 +65,10 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
         Route::delete('comments/{service}/{post_id}/{comment_id}', 'CommentController@destroy');
         Route::get('comments/{service}/{post_id}/updatestate/{comment_id}', 'CommentController@state');
 
-        // Portlets
+        // Widgets
         // *****************************************************************************
-        Route::get('portlets/setting/{portlet_id}','PortletController@edit');
-        Route::resource('portlets','PortletController', ['except' => ['create']]);
+        Route::get('widgets/setting/{widget_id}','WidgetController@edit');
+        Route::resource('widgets','WidgetController', ['except' => ['create']]);
 
         // DynamicDataList - ddl
         // *****************************************************************************
@@ -123,9 +123,9 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
 
     Route::get('pages/removeChild/{child_id}', 'PageController@delChild');
     Route::get('pages/addLayout/{page_id}/{frame_id?}', 'PageController@layout');
-    Route::get('pages/{page_id}/addPortlet/{portlet_id}/{frame}', 'PageController@addPortlet');
-    Route::get('pages/{page_id}/removePivotId/{pivot_id}', 'PageController@delPortlet');
-    Route::any('pages/{page_id}/configPortlet/{pivot_id}', 'PageController@configPortlet');
+    Route::get('pages/{page_id}/addWidget/{widget_id}/{frame}', 'PageController@addWidget');
+    Route::get('pages/{page_id}/removePivotId/{pivot_id}', 'PageController@delWidget');
+    Route::any('pages/{page_id}/configWidget/{pivot_id}', 'PageController@configWidget');
     Route::post('pages/savepref', 'PageController@savePref');
     Route::get('pages/getpref/{pivot_id}', 'PageController@getPref');
     Route::get('pages/test/{id}/{pos}/{newpos}', 'PageController@test');

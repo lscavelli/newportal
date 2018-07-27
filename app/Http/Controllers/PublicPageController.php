@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Providers\PortletServiceProvider;
+use App\Providers\WidgetServiceProvider;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Libraries\Theme;
-use App\Libraries\Portlet;
+use App\Libraries\Widget;
 
 
 class PublicPageController extends Controller {
 
     private $rp;
-    //private $mPortlet;
+    //private $mWidget;
 
     public function __construct()  {
         $this->middleware('web');
-        //RepositoryInterface $rp, Portlet $mPortlet
+        //RepositoryInterface $rp, Widget $mWidget
         //$this->rp = $rp->setModel('App\Models\Content\Page');
-        //$this->mPortlet = ; //$mPortlet->setRepository($rp);
+        //$this->mWidget = ; //$mWidget->setRepository($rp);
     }
 
     public function getPage(Theme $theme, $uri=null) {
 
         //$page = $this->rp->where('slug',$uri)->where('status_id',1)->first();
-        $page = app()->make('portlet')->getPage();
+        $page = app()->make('widget')->getPage();
         if (!$page) app()->abort(404, 'Pagina non trovata');
         if ($page->type_id===1 && !empty($page->url)) {
             return redirect($page->url);
@@ -33,21 +33,21 @@ class PublicPageController extends Controller {
         $themePage = $page->theme ?: config('newportal.theme-default');
         $layout = $page->layout ?: config('newportal.layout-default');
         $theme->setTheme($themePage)->setLayout($layout,$page->toArray());
-        $listPortlets = $page->portlets;
-        // ricavo le portlets associate alla pagina
-        foreach ($listPortlets as $portlet) {
-            $data = $setting = $portlet->pivot->toArray();
-            $data['title'] = ($portlet->pivot->title) ?: $portlet->title;
-            $data['template'] = $portlet->pivot->template ?: config('newportal.partial-default');
-            $data['setting'] = (!empty($portlet->pivot->setting)) ? json_decode($portlet->pivot->setting, true) : [];
+        $listWidgets = $page->widgets;
+        // ricavo le widgets associate alla pagina
+        foreach ($listWidgets as $widget) {
+            $data = $setting = $widget->pivot->toArray();
+            $data['title'] = ($widget->pivot->title) ?: $widget->title;
+            $data['template'] = $widget->pivot->template ?: config('newportal.partial-default');
+            $data['setting'] = (!empty($widget->pivot->setting)) ? json_decode($widget->pivot->setting, true) : [];
             $setting = array_merge($setting,$data['setting']); unset($setting['setting']);
-            $data['content'] = app()->portlet->run($portlet->init,$theme,$portlet->path,$setting);
+            $data['content'] = app()->widget->run($widget->init,$theme,$widget->path,$setting);
             // se priva di contenuti ( $data['content'] == null)
-            // verifica l'impostazione della portlet se deve essere visualizzata comunque
+            // verifica l'impostazione della widget se deve essere visualizzata comunque
             // TODO:  INSERIRE NEL SETTING DELLA PORTLET - VISUALIZZA ANCHE SENZA CONTENUTI
             if (!$data['content'] && !auth()->check()) continue;
-            if (empty($data['content'])) $data['content'] = view('ui.portlet')->with(['portlet'=>$portlet]);
-            $theme->addPortlet($data);
+            if (empty($data['content'])) $data['content'] = view('ui.widget')->with(['widget'=>$widget]);
+            $theme->addWidget($data);
         }
         // aggiungo gli asset dei temi
         return $theme->render();

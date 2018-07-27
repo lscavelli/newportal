@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Route::get('/book', "Content\\TagController@listTag");
-//Route::middleware('auth:api')->get('/listportlets', "PageController@listPortletDisp");
+//Route::middleware('auth:api')->get('/listwidgets', "PageController@listWidgetDisp");

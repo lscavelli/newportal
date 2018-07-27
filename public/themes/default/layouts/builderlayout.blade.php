@@ -208,7 +208,7 @@
     </footer>
 
 @if(auth()->check())
-    @include('ui.configPortlet')
+    @include('ui.configWidget')
 @endif
 
 @endsection
