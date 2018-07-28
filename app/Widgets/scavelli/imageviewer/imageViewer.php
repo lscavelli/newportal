@@ -4,8 +4,9 @@ namespace App\Widgets\scavelli\imageviewer;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\imageviewer\Controllers\imageController;
+use Illuminate\Contracts\Support\Renderable;
 
-class imageViewer extends Widget {
+class imageViewer extends Widget implements Renderable {
 
     public $conf;
 
@@ -18,7 +19,7 @@ class imageViewer extends Widget {
             $this->theme->addExCss($this->getPath().'css/imageViewer.css');
     }
 
-    public function getContent() {
+    public function render() {
         if (empty($this->config('model_id'))) return;
 
         $builder = $this->rp->getModel();

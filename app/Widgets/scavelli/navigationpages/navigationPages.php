@@ -5,8 +5,9 @@ namespace app\Widgets\scavelli\navigationpages;
 use App\Widgets\abstractWidget as Widget;
 use App\Libraries\navigation;
 use App\Widgets\scavelli\navigationpages\Controllers\pageController;
+use Illuminate\Contracts\Support\Renderable;
 
-class navigationPages extends Widget {
+class navigationPages extends Widget implements Renderable {
 
     private $menu;
 
@@ -17,7 +18,7 @@ class navigationPages extends Widget {
         $this->theme->addExJs($this->getPath().'js/navpages.js');
     }
 
-    public function getContent() {
+    public function render() {
 
         $builder = $this->rp->getModel()->where('status_id',1);
         if ($this->config('page')) {

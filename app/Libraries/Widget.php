@@ -48,12 +48,11 @@ class Widget {
                 array_set($this->widgets, $className, $instance);
             }
             //$instance->setDirTemplate($this->getDirTemplate());
+            $instance->inizializeConf();
             $instance->getInitConfig();
             $instance->setConfig($params);
             $instance->init();
-            $content = $instance->getContent();
-            $instance->inizializeConf();
-            return $content;
+            return $instance;
         }
         return null;
     }

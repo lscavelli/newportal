@@ -6,8 +6,9 @@ use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\contentlist\Controllers\assetController;
 use App\Libraries\feeds;
 use App\Libraries\sl_text;
+use Illuminate\Contracts\Support\Renderable;
 
-class contentList extends Widget {
+class contentList extends Widget implements Renderable {
 
     public $conf;
 
@@ -21,7 +22,7 @@ class contentList extends Widget {
             $this->theme->addExCss($this->getPath().'css/assetpublisher007.css');
     }
 
-    public function getContent() {
+    public function render() {
         if (empty($this->config('model_id'))) return;
 
         $builder = $this->rp->getModel();

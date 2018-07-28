@@ -7,8 +7,9 @@ use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\webcontent\Controllers\ContentWebController;
 use Exception;
 use App\Notifications\NewComment;
+use Illuminate\Contracts\Support\Renderable;
 
-class viewWebContent extends Widget {
+class viewWebContent extends Widget implements Renderable {
 
     public function init() {
         $this->rp->setModel('App\Models\Content\Content');
@@ -23,6 +24,10 @@ class viewWebContent extends Widget {
     }
 
     public function getContent() {
+        return $this->render();
+    }
+
+    public function render() {
 
         $segments = $this->request->segments();
 

@@ -3,18 +3,17 @@
 namespace app\Widgets\scavelli\organizations;
 
 use App\Widgets\abstractWidget as Widget;
+use Illuminate\Contracts\Support\Renderable;
 
-
-class listOrganizations extends Widget {
+class listOrganizations extends Widget implements Renderable {
 
     public function init() {
         $this->rp->setModel('App\Models\Organization');
-
         $this->theme->addExCss($this->getPath().'css/treeview.css');
         $this->theme->addExJs($this->getPath().'js/treeview.js');
     }
 
-    public function getContent() {
+    public function render() {
         $organizations = $this->rp->whereNull('parent_id')->get();
         if ($organizations->count()<1) return;
         return view('organizations::listOrganization')->with(['organizations'=>$organizations,'title'=>'test title'])->render();

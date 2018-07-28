@@ -4,8 +4,9 @@ namespace App\Widgets\scavelli\imageslider;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\imageslider\Controllers\imageSliderController;
+use Illuminate\Contracts\Support\Renderable;
 
-class imageSlider extends Widget {
+class imageSlider extends Widget implements Renderable {
 
     public $conf;
 
@@ -15,7 +16,7 @@ class imageSlider extends Widget {
         $this->conf = $this->config; // necessario per la chiamata getItem() della view
     }
 
-    public function getContent() {
+    public function render() {
         if (empty($this->config('model_id'))) return;
 
         $builder = $this->rp->getModel();

@@ -54,8 +54,6 @@ abstract class abstractWidget {
 
     abstract public function init();
 
-    abstract public function getContent();
-
     abstract public function configWidget($widget);
 
     protected function applyModel($model, $__data) {

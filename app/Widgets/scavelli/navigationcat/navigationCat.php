@@ -5,8 +5,9 @@ namespace app\Widgets\scavelli\navigationcat;
 use App\Widgets\abstractWidget as Widget;
 use App\Libraries\navigation;
 use App\Widgets\scavelli\navigationcat\Controllers\categoryController;
+use Illuminate\Contracts\Support\Renderable;
 
-class navigationCat extends Widget {
+class navigationCat extends Widget implements Renderable {
 
     private $menu;
 
@@ -17,7 +18,7 @@ class navigationCat extends Widget {
         $this->theme->addExJs($this->getPath().'js/menucat.js');
     }
 
-    public function getContent() {
+    public function render() {
         // dal config sarà possibile impostare uno o più vocabolari - ad esempio voc. 1
         // e la pagina di visualizzazione dei contenuti
 

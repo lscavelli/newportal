@@ -4,8 +4,9 @@ namespace App\Widgets\scavelli\documentlist;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\documentlist\Controllers\documentController;
+use Illuminate\Contracts\Support\Renderable;
 
-class documentList extends Widget {
+class documentList extends Widget implements Renderable {
 
     public $conf;
 
@@ -18,7 +19,7 @@ class documentList extends Widget {
             $this->theme->addExCss($this->getPath().'css/documentAsset01.css');
     }
 
-    public function getContent() {
+    public function render() {
         if (empty($this->config('model_id'))) return;
 
         $builder = $this->rp->getModel();

@@ -93,14 +93,7 @@
 
 	</div>
 	@isset($tasks,$tasksCategories)
-		<div class="row">
-			<section class="col-lg-7">
-				{!! $tasksCategories !!}
-			</section>
-			<section class="col-lg-5">
-				<app-root></app-root>
-			</section>
-		</div>
+		<app-component></app-component>
 	@endisset
 
 
