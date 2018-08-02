@@ -52,7 +52,7 @@ class Widget {
             $instance->getInitConfig();
             $instance->setConfig($params);
             $instance->init();
-            return $instance;
+            return $instance->render();
         }
         return null;
     }

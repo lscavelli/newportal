@@ -3,9 +3,8 @@
 namespace app\Widgets\scavelli\organizations;
 
 use App\Widgets\abstractWidget as Widget;
-use Illuminate\Contracts\Support\Renderable;
 
-class listOrganizations extends Widget implements Renderable {
+class listOrganizations extends Widget {
 
     public function init() {
         $this->rp->setModel('App\Models\Organization');

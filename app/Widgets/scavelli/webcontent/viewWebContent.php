@@ -7,9 +7,8 @@ use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\webcontent\Controllers\ContentWebController;
 use Exception;
 use App\Notifications\NewComment;
-use Illuminate\Contracts\Support\Renderable;
 
-class viewWebContent extends Widget implements Renderable {
+class viewWebContent extends Widget {
 
     public function init() {
         $this->rp->setModel('App\Models\Content\Content');
@@ -21,10 +20,6 @@ class viewWebContent extends Widget implements Renderable {
             $this->theme->addExCss($this->getPath().'css/prism.css');
         }
 
-    }
-
-    public function getContent() {
-        return $this->render();
     }
 
     public function render() {

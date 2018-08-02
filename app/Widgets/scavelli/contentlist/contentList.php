@@ -6,9 +6,8 @@ use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\contentlist\Controllers\assetController;
 use App\Libraries\feeds;
 use App\Libraries\sl_text;
-use Illuminate\Contracts\Support\Renderable;
 
-class contentList extends Widget implements Renderable {
+class contentList extends Widget {
 
     public $conf;
 

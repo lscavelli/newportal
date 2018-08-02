@@ -4,9 +4,8 @@ namespace App\Widgets\scavelli\imageslider;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\imageslider\Controllers\imageSliderController;
-use Illuminate\Contracts\Support\Renderable;
 
-class imageSlider extends Widget implements Renderable {
+class imageSlider extends Widget {
 
     public $conf;
 

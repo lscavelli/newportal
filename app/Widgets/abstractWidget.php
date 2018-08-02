@@ -56,6 +56,8 @@ abstract class abstractWidget {
 
     abstract public function configWidget($widget);
 
+    abstract public function render();
+
     protected function applyModel($model, $__data) {
 
         $__data = array_map(function ($k,$v) {

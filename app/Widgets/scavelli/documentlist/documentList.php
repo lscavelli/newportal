@@ -4,9 +4,8 @@ namespace App\Widgets\scavelli\documentlist;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\documentlist\Controllers\documentController;
-use Illuminate\Contracts\Support\Renderable;
 
-class documentList extends Widget implements Renderable {
+class documentList extends Widget {
 
     public $conf;
 

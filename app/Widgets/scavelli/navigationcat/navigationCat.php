@@ -5,9 +5,8 @@ namespace app\Widgets\scavelli\navigationcat;
 use App\Widgets\abstractWidget as Widget;
 use App\Libraries\navigation;
 use App\Widgets\scavelli\navigationcat\Controllers\categoryController;
-use Illuminate\Contracts\Support\Renderable;
 
-class navigationCat extends Widget implements Renderable {
+class navigationCat extends Widget {
 
     private $menu;
 

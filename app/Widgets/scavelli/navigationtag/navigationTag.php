@@ -5,9 +5,8 @@ namespace app\Widgets\scavelli\navigationtag;
 use App\Widgets\abstractWidget as Widget;
 use App\Libraries\navigation;
 use App\Widgets\scavelli\navigationtag\Controllers\tagController;
-use Illuminate\Contracts\Support\Renderable;
 
-class navigationTag extends Widget implements Renderable {
+class navigationTag extends Widget {
 
     private $menu;
 

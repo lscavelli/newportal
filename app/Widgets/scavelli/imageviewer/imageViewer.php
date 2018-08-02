@@ -4,9 +4,8 @@ namespace App\Widgets\scavelli\imageviewer;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\imageviewer\Controllers\imageController;
-use Illuminate\Contracts\Support\Renderable;
 
-class imageViewer extends Widget implements Renderable {
+class imageViewer extends Widget {
 
     public $conf;
 

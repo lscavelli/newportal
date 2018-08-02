@@ -5,9 +5,8 @@ namespace app\Widgets\scavelli\navigationpages;
 use App\Widgets\abstractWidget as Widget;
 use App\Libraries\navigation;
 use App\Widgets\scavelli\navigationpages\Controllers\pageController;
-use Illuminate\Contracts\Support\Renderable;
 
-class navigationPages extends Widget implements Renderable {
+class navigationPages extends Widget {
 
     private $menu;
 
