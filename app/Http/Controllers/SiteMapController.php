@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface;
-use App\Libraries\siteMap;
+use App\Services\siteMap;
 use App\Models\Content\Page;
 
 

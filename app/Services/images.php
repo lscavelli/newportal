@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Services;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;

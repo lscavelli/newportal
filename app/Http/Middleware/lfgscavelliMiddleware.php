@@ -17,7 +17,7 @@ class lfgscavelliMiddleware
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            new \App\Libraries\FormComponents();
+            new \App\Services\FormComponents();
         }
         return $next($request);
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Services;
 
-use App\Libraries\sl_text;
+use App\Services\sl_text;
 
 class Feeds
 {

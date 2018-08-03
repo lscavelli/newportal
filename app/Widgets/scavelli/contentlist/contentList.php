@@ -4,8 +4,8 @@ namespace App\Widgets\scavelli\contentlist;
 
 use App\Widgets\abstractWidget as Widget;
 use App\Widgets\scavelli\contentlist\Controllers\assetController;
-use App\Libraries\feeds;
-use App\Libraries\sl_text;
+use App\Services\feeds;
+use App\Services\sl_text;
 
 class contentList extends Widget {
 

@@ -3,7 +3,7 @@
 namespace app\Widgets\scavelli\navigationtag;
 
 use App\Widgets\abstractWidget as Widget;
-use App\Libraries\navigation;
+use App\Services\navigation;
 use App\Widgets\scavelli\navigationtag\Controllers\tagController;
 
 class navigationTag extends Widget {

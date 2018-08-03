@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Structure;
 use Illuminate\Http\Request;
 use Carbon\Carbon;

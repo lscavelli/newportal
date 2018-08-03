@@ -3,7 +3,7 @@
 namespace app\Widgets\scavelli\navigationpages;
 
 use App\Widgets\abstractWidget as Widget;
-use App\Libraries\navigation;
+use App\Services\navigation;
 use App\Widgets\scavelli\navigationpages\Controllers\pageController;
 
 class navigationPages extends Widget {

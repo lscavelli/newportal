@@ -7,7 +7,7 @@ use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Models\Content\File;
 use App\Models\Content\Service;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 
 class imageController extends Controller
 {

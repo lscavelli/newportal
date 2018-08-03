@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Services;
 
 use Illuminate\Filesystem\Filesystem;
-use App\Libraries\ThemeException;
+use App\Services\ThemeException;
 use Illuminate\Support\Facades\View;
 
 

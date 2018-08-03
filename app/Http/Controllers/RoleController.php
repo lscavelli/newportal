@@ -11,7 +11,7 @@ use App\Models\Permission;
 use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\Repository;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Repositories\RepositoryInterface;
 
 

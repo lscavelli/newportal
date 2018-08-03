@@ -2,7 +2,7 @@
 
 namespace App\Widgets\scavelli\webcontent\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Content;
 use App\Models\Content\Modelli;
 use App\Models\Content\Structure;

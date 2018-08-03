@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\DynamicDataList;
 use App\Models\Content\DynamicDataListContent;
 use Illuminate\Http\Request;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\FormGenerates;
+use App\Services\FormGenerates;
 use App\Http\Controllers\Controller;
 
 class DynamicContentController extends Controller {

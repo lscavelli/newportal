@@ -24,7 +24,7 @@ class Repository implements RepositoryInterface {
     protected $searchFields;
 
     public function setModel($model)  {
-        if (is_string($model)) $model = app($model); // \App::make - ex.. 'App\Models\Content\Tag'
+        if (is_string($model) && class_exists($model)) $model = app($model); // \App::make(... - ex.. 'App\Models\Content\Tag'
         if (!$model instanceof EloquentModel) {
             throw new RepositoryException("Class $model dev'essere una istanza di Illuminate\\Database\\Eloquent\\Model");
         }

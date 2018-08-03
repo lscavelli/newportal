@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Libraries;
+namespace app\Services;
 
 class sl_text {
 

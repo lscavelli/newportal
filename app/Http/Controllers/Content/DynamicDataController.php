@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\Controller;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\DynamicDataList;
 use App\Models\Content\Structure;
 use Illuminate\Http\Request;

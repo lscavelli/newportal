@@ -4,7 +4,7 @@ namespace App\Widgets\scavelli\navigationpages\Controllers;
 
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
-use App\Libraries\Theme;
+use App\Services\Theme;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Log;
 

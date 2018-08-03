@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Content\Category;
 use Validator;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 
 /**
  * Class CategoryController

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Widget;
 use App\Models\Content\Widget_page;
 use App\Models\Content\Content;
@@ -16,10 +16,10 @@ use Validator;
 use Exception;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\Theme;
+use App\Services\Theme;
 use Illuminate\Support\Facades\Log;
-use App\Libraries\position;
-use App\Libraries\Helpers;
+use App\Services\position;
+use App\Services\Helpers;
 
 class pageController extends Controller {
 

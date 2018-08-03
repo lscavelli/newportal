@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -50,7 +50,7 @@ class GroupController extends Controller
      */
     public function index(Request $request,User_group $user_group)   {
         $groups = $this->repo->paginate($request);
-        $list = new \App\Libraries\listGenerates($groups);
+        $list = new \App\Services\listGenerates($groups);
         $user_group = $this->repo->get($user_group); // for column count user
         return view('users.listGroup', compact('groups','list','user_group'));
     }

@@ -4,7 +4,7 @@ namespace App\Widgets;
 
 use App\Repositories\RepositoryInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
-use App\Libraries\Theme;
+use App\Services\Theme;
 use ReflectionClass;
 use Illuminate\Support\Facades\File;
 

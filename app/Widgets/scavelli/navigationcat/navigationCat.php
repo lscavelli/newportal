@@ -3,7 +3,7 @@
 namespace app\Widgets\scavelli\navigationcat;
 
 use App\Widgets\abstractWidget as Widget;
-use App\Libraries\navigation;
+use App\Services\navigation;
 use App\Widgets\scavelli\navigationcat\Controllers\categoryController;
 
 class navigationCat extends Widget {

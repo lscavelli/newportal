@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Providers\WidgetServiceProvider;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use App\Libraries\Theme;
-use App\Libraries\Widget;
+use App\Services\Theme;
+use App\Services\Widget;
 
 
 class PublicPageController extends Controller {

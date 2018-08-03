@@ -1,7 +1,7 @@
 <?php
 // ver. 2.1 del 26.09.09 luigi
 
-namespace App\Libraries;
+namespace App\Services;
 
 class sl_datatime {
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Blog;
 
 use Illuminate\Http\Request;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Blog\Post;
 use Carbon\Carbon;
 use App\Http\Requests;

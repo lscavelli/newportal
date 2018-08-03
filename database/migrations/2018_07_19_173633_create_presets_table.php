@@ -24,7 +24,6 @@ class CreatePresetsTable extends Migration
             $table->string('template')->nullable();
             $table->tinyInteger('position')->default(0);
             $table->tinyInteger('comunication')->default(0);
-            $table->string('name', 150)->nullable();
             $table->string('title')->nullable();
             $table->text('css')->nullable();
             $table->text('js')->nullable();

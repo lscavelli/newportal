@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Filesystem\Filesystem;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\Widget;
+use App\Services\Widget;
 
 class WidgetServiceProvider extends ServiceProvider
 {

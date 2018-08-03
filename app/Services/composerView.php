@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Libraries;
+namespace app\Services;
 
 use Illuminate\Support\Facades\View;
 

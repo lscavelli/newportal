@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests;

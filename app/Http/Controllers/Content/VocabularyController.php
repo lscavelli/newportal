@@ -9,7 +9,7 @@ use App\Models\Content\Vocabulary;
 use Illuminate\Support\Collection;
 use Validator;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 
 /**
  * Class VocabularyController

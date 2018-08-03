@@ -17,7 +17,7 @@
                     $list->columns(['id','name'=>__("Nome"),'slug','description'=>__('Descrizione')])
                     ->actions([__('Profilo')])
                     ->customizes('description',function($row){
-                        return \App\Libraries\sl_text::sommario($row['description'],50);
+                        return \App\Services\sl_text::sommario($row['description'],50);
                     })->render()
                 !!}
             </div> <!-- /.box -->

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Modelli;
 use App\Models\Content\Structure;
 use Illuminate\Http\Request;
@@ -11,8 +11,8 @@ use Validator;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
-use App\Libraries\FormGenerates;
-use App\Libraries\Helpers;
+use App\Services\FormGenerates;
+use App\Services\Helpers;
 
 
     class ModelliController extends Controller {

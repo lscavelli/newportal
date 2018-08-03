@@ -17,9 +17,9 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View()->share('breadcrumb', new \App\Libraries\breadcrumb());
-        View()->share('composer', new \App\Libraries\composerView());
-        View()->share('navigation', new \App\Libraries\navigation());
+        View()->share('breadcrumb', new \App\Services\breadcrumb());
+        View()->share('composer', new \App\Services\composerView());
+        View()->share('navigation', new \App\Services\navigation());
         try {
             View()->share('cspages', $this->app
                 ->make(RepositoryInterface::class)

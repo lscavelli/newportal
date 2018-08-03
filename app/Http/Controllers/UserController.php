@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -11,12 +11,12 @@ use Carbon\Carbon;
 use App\Http\Requests;
 use Validator;
 use Illuminate\Validation\Rule;
-use App\Libraries\Images;
+use App\Services\Images;
 use App\Models\Data\Country;
 use App\Models\Data\City;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Gate;
-use App\Libraries\Theme;
+use App\Services\Theme;
 
 class UserController extends Controller {
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Content;
 
 use Illuminate\Http\Request;
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Comment;
 use Carbon\Carbon;
 use App\Http\Requests;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\listGenerates;
+use App\Services\listGenerates;
 use App\Models\Content\Structure;
 use App\Models\Content\Tag;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Validator;
 use App\Models\Content\Content;
 use Illuminate\Validation\Rule;
 use App\Repositories\RepositoryInterface;
-use App\Libraries\FormGenerates;
+use App\Services\FormGenerates;
 use App\Models\Content\Service;
-use App\Libraries\Images;
+use App\Services\Images;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
