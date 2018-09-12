@@ -1,0 +1,125 @@
+.treeviewsl {
+  background: 0 0;
+  overflow: auto;
+  white-space: nowrap;
+  border: 1px solid #e6e6e6;
+  padding: 5px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #444;
+  height: 200px;
+  padding: 10px 10px 10px 10px;
+}
+
+.checktree, .checktree *{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.checktree ul {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.checktree li {
+  float: left;
+  padding: 3px 0;
+  width: 100%;
+}
+
+.checktree li label {
+   vertical-align: middle;
+   cursor: pointer;
+   padding: 4px 10px 2px 0;
+   font-size: 14px;
+   font-weight: normal!important;
+   line-height: 15px;
+   float: left;
+ }
+
+.checktree li label.hover {
+    paddind: 0 10px 0 0;
+    background-color: #eee;
+}
+
+.checktree li .arrow {
+  width: 14px;
+  height: 14px;
+  margin: 5px 8px 0;
+  cursor: pointer;
+  float: left;
+}
+
+.checktree li .collapsed {
+  background: url(checktree_icon.png) no-repeat;
+  background-position: 0px -22px;
+}
+
+.checktree li .collapsed:before {
+	/**content: "\2799";**/
+}
+
+.checktree li .checkbox {
+  float: left;
+  position: relative;
+  border: 1px solid #7f7f7f;
+  border-radius: 1px;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 16px;
+  background: #fff;
+  vertical-align: text-top;
+  cursor: pointer;
+  margin-right: 7px;
+  color: #444;
+}
+
+.checktree li .checkbox:before {
+  content: "";
+}
+
+.checktree li .expanded {
+  background: url(checktree_icon.png) no-repeat;
+  background-position: -14px -22px;
+}
+
+
+.checktree li .checked {
+  /**background-position: -15px 0;**/
+  background-color: #a6c8ff!important;
+  border-color: #a6c8ff!important;
+  color: #fff!important;
+}
+
+.checktree li .checked:before {
+  content: "\2713"!important;
+}
+
+.checktree li .half_checked {
+    border-color: #a6c8ff!important;
+	
+}
+
+.checktree li .half_checked:before {
+  content: "\2714"!important;
+  color: #a6c8ff!important;
+}
+
+.checktree li li .arrow {
+  margin-left: 24px;
+}
+
+.checktree li li li .arrow {
+  margin-left: 48px;
+}
+
+.checktree li li li li .arrow {
+  margin-left: 72px;
+}
+
+.checktree li li li li li .arrow {
+  margin-left: 96px;
+}
