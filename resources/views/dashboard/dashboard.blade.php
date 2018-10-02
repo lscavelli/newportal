@@ -25,7 +25,7 @@
 					<p>Users</p>
 				</div>
 				<div class="icon">
-					<i class="ion ion-person-stalker"></i>
+					<i class="fa fa-user-plus"></i>
 				</div>
 				<a href="{{url('/admin/users')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
@@ -38,7 +38,7 @@
 					<p>Roles</p>
 				</div>
 				<div class="icon">
-					<i class="fa fa-user-plus"></i>
+					<i class="fa fa-lock"></i>
 				</div>
 				<a href="{{url('/admin/roles')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
@@ -64,12 +64,13 @@
 					<p>Gruppi</p>
 				</div>
 				<div class="icon">
-					<i class="ion ion-stats-bars"></i>
+					<i class="fa fa-users"></i>
 				</div>
 				<a href="{{url('/admin/groups')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 	</div>
+
 
 	<div class="row">
 
