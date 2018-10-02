@@ -73,7 +73,7 @@
 
 	<div class="row">
 
-		<section class="col-lg-@isset($tasks){{ 7 }}@else{{ 12 }}@endif">
+		<section class="col-lg-12">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title">Attività utente</h3>
@@ -92,9 +92,9 @@
 		</section>
 
 	</div>
-	@isset($tasks,$tasksCategories)
+	@if(app()->isAlias('todo-list'))
 		<app-component></app-component>
-	@endisset
+	@endif
 
 
 </section>
@@ -104,6 +104,13 @@
 	<link href="{{ asset("/node_modules/jquery-ui-dist/jquery-ui.min.css") }}" rel="stylesheet">
 @endsection
 @section('scripts')
+	@if(app()->isAlias('todo-list'))
+		<!-- js Calendar -->
+		<script type="text/javascript" src="{{ asset("/webapp/runtime.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/webapp/polyfills.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/webapp/scripts.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/webapp/main.js") }}"></script>
+	@endif
 	<!-- ChartJS 1.0.1 -->
 	{!! Html::script("/node_modules/chart.js/Chart.min.js") !!}
 	<!-- jQuery ui -->
