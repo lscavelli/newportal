@@ -32,7 +32,8 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Lfgscavelli\\Todolist\\": "../packages/lfgscavelli/todolist/src"
         }
     },
     "autoload-dev": {

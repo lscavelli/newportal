@@ -161,7 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 	    App\Providers\ComposerServiceProvider::class,
         App\Providers\WidgetServiceProvider::class,
-
+        Lfgscavelli\Todolist\TodolistServiceProvider::class
     ],
 
     /*

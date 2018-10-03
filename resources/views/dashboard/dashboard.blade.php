@@ -107,10 +107,10 @@
 @section('scripts')
 	@if(app()->isAlias('todo-list'))
 		<!-- js Calendar -->
-		<script type="text/javascript" src="{{ asset("/webapp/runtime.js") }}"></script>
-		<script type="text/javascript" src="{{ asset("/webapp/polyfills.js") }}"></script>
-		<script type="text/javascript" src="{{ asset("/webapp/scripts.js") }}"></script>
-		<script type="text/javascript" src="{{ asset("/webapp/main.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/vendor/todolist/js/runtime.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/vendor/todolist/js/polyfills.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/vendor/todolist/js/scripts.js") }}"></script>
+		<script type="text/javascript" src="{{ asset("/vendor/todolist/js/main.js") }}"></script>
 	@endif
 	<!-- ChartJS 1.0.1 -->
 	{!! Html::script("/node_modules/chart.js/Chart.min.js") !!}
