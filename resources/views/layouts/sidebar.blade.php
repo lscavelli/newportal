@@ -46,8 +46,7 @@
           'Widgets'=>'/widgets','Settings'=>'/settings','Siti'=>'#',
           'Aggiornamenti'=>'#']]
     ])->add([
-      'Services'=>['class'=>'treeview','icon'=>'fa-th','submenu'=>[
-          'Tasks'=>'/tasks']]
+      'Services'=>['class'=>'treeview','icon'=>'fa-th','submenu'=>app('menu-services')]
     ])->render()
 
   !!}

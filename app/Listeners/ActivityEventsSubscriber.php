@@ -9,6 +9,7 @@ use App\Events\Assigned;
 use App\Events\Removed;
 use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class ActivityEventsSubscriber {
 
@@ -35,10 +36,16 @@ class ActivityEventsSubscriber {
     public function onRemove(Removed $event) {
         $model = $event->getModel();
         $children = $event->getRemoved();
-        $message = "Rimossi tutti {$children->getTable()}";
-        if (!is_null($children->id)) {
-            $message = "Rimosso \"$children->name\" (id $children->id - {$children->getTable()})";
-        }
+        /*
+        $message = "Rimosso ";
+        if ($children instanceof Collection) {
+            $message .= $children->each(function ($item, $key) {
+                 return "\"$item->name\" (id $item->id) ";
+            });
+
+        }*/
+        $message = "Rimossi alcuni elementi ";
+        $message .= "({$children->first()->getTable()})";
         $message .= " da \"$model->name\" (id $model->id - {$model->getTable()}) ";
         $this->saveToDbActivity($message);
     }

@@ -26,13 +26,13 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
 
     // Webcontent
     // *****************************************************************************
+    Route::delete('content/{content_id}', 'ContentController@destroy');
     Route::any('content/store', 'ContentController@store');
     Route::any('content/{structure_id?}', 'ContentController@index')->name('content');
     Route::get('content/create/{structure_id?}', 'ContentController@create');
     Route::get('content/{content_id}/edit/', 'ContentController@edit');
     Route::get('content/{structure_id}/edit/{content_id}', 'ContentController@editWrapper');
     Route::post('content/update/{content_id}', 'ContentController@update');
-    Route::delete('content/{content_id}', 'ContentController@destroy');
     Route::get('content/categorization/{content_id}', 'ContentController@categorization');
     Route::get('content/model/{content_id}', 'ContentController@model');
     Route::get('content/estratto/{content_id}', 'ContentController@extract');

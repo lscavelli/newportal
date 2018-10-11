@@ -32,7 +32,7 @@ class ContentController extends Controller {
      * @return mixed
      */
     private function validator(array $data)   {
-            return Validator::make($data, [
+        return Validator::make($data, [
             'name' => 'sometimes|required|min:3|max:255',
             'content' => 'sometimes|required'
         ]);
