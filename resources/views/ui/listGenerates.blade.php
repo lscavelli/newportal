@@ -83,69 +83,76 @@
                                     @endif
                                     @if(count($list->actions)>0)
                                         @foreach($list->actions as $actionUrl=>$actionLabel)
-                                            <li><a href="
-                                        @if(starts_with($actionUrl, 'http'))
-                                                {{$actionUrl."/".$row['id']}}
-                                                @elseif(is_numeric($actionUrl))
-                                                {{ url(Request::path(), $row['id']) }}
+                                            @if(is_array($actionLabel))
+                                                @can($actionLabel[1])
+                                                        <?php $actionLabel = $actionLabel[0]; ?>
                                                 @else
-                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
-                                                @endif
-                                                        " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </div>
-                        </td>
-                    @endif
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-        <!-- /fine table -->
-    </div>
+                                                        @continue
+                                                @endcan
+                                            @endif
+                                        <li><a href="
+                                    @if(starts_with($actionUrl, 'http'))
+                                            {{$actionUrl."/".$row['id']}}
+                                            @elseif(is_numeric($actionUrl))
+                                            {{ url(Request::path(), $row['id']) }}
+                                            @else
+                                            {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
+                                            @endif
+                                                    " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </div>
+                    </td>
+                @endif
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    <!-- /fine table -->
+</div>
 </div>
 <!-- .footer-list -->
 <div class="box-body">
-    <div class="col-sm-5">
-        @if($list->showAll and $list->showXpage)
-        <div class="dataTables_length">
-            Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
-            <label>
-                <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
-                    @csrf
-                    {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
-                    @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
-                        {!! Form::hidden($key,$value) !!}
-                    @endforeach
-                </form>
-            </label>
-        </div>
-        @endif
+<div class="col-sm-5">
+    @if($list->showAll and $list->showXpage)
+    <div class="dataTables_length">
+        Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
+        <label>
+            <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
+                @csrf
+                {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
+                @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
+                    {!! Form::hidden($key,$value) !!}
+                @endforeach
+            </form>
+        </label>
     </div>
-    <div class="col-sm-7">
-        <div class='pull-right' Style="margin-top: -20px;">
-            {{
-                $model->appends(array_except(\Request::all(),['_token','page']))->links()
-            }}
-        </div>
+    @endif
+</div>
+<div class="col-sm-7">
+    <div class='pull-right' Style="margin-top: -20px;">
+        {{
+            $model->appends(array_except(\Request::all(),['_token','page']))->links()
+        }}
     </div>
+</div>
 </div>
 @include('ui.confirmdelete')
 @if($list->showAll)
-    @section('scripts')
-        <script>
-            $("#xpage").change(function () {
-                $("#xpage-form").submit();
-            });
-            $('#confirmdelete').on('shown.bs.modal', function(){
-            });
+@section('scripts')
+    <script>
+        $("#xpage").change(function () {
+            $("#xpage-form").submit();
+        });
+        $('#confirmdelete').on('shown.bs.modal', function(){
+        });
 
-            $(".delete").click(function() {
-                $('#confirmdelete').modal('toggle');
-                $('.modal-body p').text("Sei sicuro di voler eliminare l'elemento id "+$(this).data('id'));
-                $('#confirmForm').prop('action', '{{ $list->urlDelete }}/' + $(this).data('id'));
-            });
-        </script>
-    @stop
+        $(".delete").click(function() {
+            $('#confirmdelete').modal('toggle');
+            $('.modal-body p').text("Sei sicuro di voler eliminare l'elemento id "+$(this).data('id'));
+            $('#confirmForm').prop('action', '{{ $list->urlDelete }}/' + $(this).data('id'));
+        });
+    </script>
+@stop
 @endif
