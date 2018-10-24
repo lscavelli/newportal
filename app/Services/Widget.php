@@ -42,7 +42,7 @@ class Widget {
             if (!$instance = array_get($this->widgets, $className)) {
                 $reflector = new ReflectionClass($className);
                 if (!$reflector->isInstantiable()) {
-                    throw new WidgetException("La Widget [$className] non è istanziabile.");
+                    throw new WidgetException("Il Widget [$className] non è istanziabile.");
                 }
                 $instance = $reflector->newInstance($this->rp,$theme);
                 array_set($this->widgets, $className, $instance);

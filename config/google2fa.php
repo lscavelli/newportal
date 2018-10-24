@@ -62,7 +62,7 @@ return [
      * One Time Password error message
      */
     'error_messages' => [
-        'wrong_otp' => "The 'One Time Password' typed was wrong.",
+        'wrong_otp' => "Il 'One Time Password' digitato non è corretto.",
     ],
 
     /*

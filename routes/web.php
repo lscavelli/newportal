@@ -245,6 +245,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
         Route::group(['namespace' => 'General'], function () {
             Route::get('settings','SettingController@index')->name('settings');
             Route::post('settings/storeorupdate','SettingController@storeOrUpdate');
+            Route::get('routes','RouteController@getRoutes');
         });
     });
 
@@ -252,7 +253,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
 
 Auth::routes();
 Route::post('/2fa', function () {
-    return redirect(URL()->previous());
+    return redirect('/admin/dashboard'); //redirect(URL()->previous());
 })->name('2fa')->middleware('2fa');
 
 Route::get('login/{provider}', 'Auth\SocialController@redirectToProvider');
