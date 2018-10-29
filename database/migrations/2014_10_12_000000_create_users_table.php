@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->string('confirmation_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('google2fa_secret')->nullable();
+            $table->string('google2fa_secret',255)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

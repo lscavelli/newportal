@@ -109,7 +109,6 @@
 		<!-- js Calendar -->
 		<script type="text/javascript" src="{{ asset("/vendor/lfgscavelli/todolist/js/runtime.js") }}"></script>
         <script type="text/javascript" src="{{ asset("/vendor/lfgscavelli/todolist/js/polyfills.js") }}"></script>
-        <script type="text/javascript" src="{{ asset("/vendor/lfgscavelli/todolist/js/scripts.js") }}"></script>
         <script type="text/javascript" src="{{ asset("/vendor/lfgscavelli/todolist/js/main.js") }}"></script>
 	@endif
 	<!-- ChartJS 1.0.1 -->
