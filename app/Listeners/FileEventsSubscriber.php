@@ -2,15 +2,14 @@
 
 namespace App\Listeners;
 
-use UniSharp\Laravelfilemanager\Events\ImageWasUploaded;
-use UniSharp\Laravelfilemanager\Events\ImageWasDeleted;
-use UniSharp\Laravelfilemanager\Events\ImageWasRenamed;
-use UniSharp\Laravelfilemanager\Events\ImageIsUploading;
-use UniSharp\Laravelfilemanager\Events\FolderWasRenamed;
+use UniSharp\LaravelFilemanager\Events\ImageWasUploaded;
+use UniSharp\LaravelFilemanager\Events\ImageWasDeleted;
+use UniSharp\LaravelFilemanager\Events\ImageWasRenamed;
+use UniSharp\LaravelFilemanager\Events\ImageIsUploading;
+use UniSharp\LaravelFilemanager\Events\FolderWasRenamed;
 use App\Models\Content\File;
 use Illuminate\Filesystem\Filesystem;
 use App\Repositories\RepositoryInterface;
-use Illuminate\Support\Facades\Log;
 
 class FileEventsSubscriber {
 
@@ -21,7 +20,6 @@ class FileEventsSubscriber {
     {
         $this->fs = $fs;
         $this->rp = $rp->setModel(File::class);
-        Log::info("cccccc");
     }
 
     /**
@@ -53,7 +51,6 @@ class FileEventsSubscriber {
      */
     public function onImageWasRenamed(ImageWasRenamed $event)
     {
-        Log::info("kkkkkkk");
         $oldFilePath = str_replace(public_path(), "", $event->oldPath());
         $newFilePath = str_replace(public_path(), "", $event->newPath());
         $file = $this->rp
