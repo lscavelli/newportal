@@ -51,6 +51,7 @@ class viewWebContent extends Widget {
         if (isset($this->config['content_id']) && !empty($this->config['content_id']) && is_null($cw)) {
             $cw = $this->rp->find($this->config['content_id']);
         }
+
         // se non viene trovato alcun contenuto mostra un messaggio di errore
         if (!isset($cw->content)) {
             if (array_get(cache('settings'), 'content_not_found')==1) {

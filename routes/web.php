@@ -263,5 +263,9 @@ Route::post('contactform', 'Mail\\MailController@contact');
 Route::get('sitemap.xml', 'SiteMapController@siteMap');
 Route::get('users/confirmation/{token}', 'Auth\\RegisterController@confirmationEmail')->name('confirmation.email');
 
+Route::group(['prefix' => 'lfm', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
 Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin|web).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');

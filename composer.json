@@ -16,7 +16,7 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.7",
         "pragmarx/google2fa-laravel": "^0.2.0",
-        "unisharp/laravel-filemanager": "^1.9"
+        "unisharp/laravel-filemanager": "v2.0.0-alpha5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

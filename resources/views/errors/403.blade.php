@@ -46,7 +46,7 @@
         <div class="container">
             <h1 class="content"><span class="error">403</span>Page Forbidden!</h1>
             <h2 style="margin-top:-20px">Siamo spiacenti, non puoi avere accesso alla pagina che hai richiesto.
-                Per favore torna <a href="/">sulla homepage</a><br />
+                Per favore torna sulla <a href="/">homepage</a><br />
             Potresti comunque visualizzare questa pagina, accedendo con un differente account</h2>
 
             @if (\Auth::check())

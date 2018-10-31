@@ -29,7 +29,7 @@
   "columns": {
     "8bacb4bf-cec0-4f54-85dc-33ff0d0fa573": {
       "fields": [
-        "31c75a28-82bc-4252-952d-83cb5f2df22b"
+        "714bc8ec-8c2a-4929-bee9-319dd31a1207"
       ],
       "id": "8bacb4bf-cec0-4f54-85dc-33ff0d0fa573",
       "config": {
@@ -39,7 +39,7 @@
     }
   },
   "fields": {
-    "31c75a28-82bc-4252-952d-83cb5f2df22b": {
+    "714bc8ec-8c2a-4929-bee9-319dd31a1207": {
       "tag": "textarea",
       "attrs": {
         "type": "ckeditor",
@@ -54,7 +54,7 @@
         "icon": "textarea",
         "id": "visual-editor"
       },
-      "id": "31c75a28-82bc-4252-952d-83cb5f2df22b"
+      "id": "714bc8ec-8c2a-4929-bee9-319dd31a1207"
     }
   }
 }
