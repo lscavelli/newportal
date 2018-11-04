@@ -3,6 +3,7 @@
 namespace App\Models\Content;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Model
 {
@@ -48,11 +49,20 @@ class File extends Model
     }
 
     /**
+     * Restituisce l'URL del file
+     * @return string
+     */
+    public function getUrl() {
+        //return $this->path."/".$this->file_name;
+        return Storage::url($this->path."/".$this->file_name);
+    }
+
+    /**
      * Restituisce il fullpath del file
      * @return string
      */
     public function getPath() {
-        return $this->path."/".$this->file_name;
+        return Storage::disk(config('newportal.disk'))->getDriver()->getAdapter()->getPathPrefix().$this->path;
     }
 
     /**

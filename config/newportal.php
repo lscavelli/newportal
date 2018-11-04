@@ -128,10 +128,10 @@ return [
     | WebContent
     |--------------------------------------------------------------------------
     |
-    | dir per l'upload delle immagini - sistemazione temporanea
+    | dir per l'upload delle immagini dei web content - sistemazione temporanea
     |
     */
-    'path_upload_imgwc' => 'img/webcontent',
+    'path_images_wc' => 'img/webcontent',
 
 
     /*
@@ -148,6 +148,18 @@ return [
         0   =>  'Widget',
         1   =>  'Url',
         2   =>  'Pagina interna'
-    ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Disk predefinito
+    |--------------------------------------------------------------------------
+    |
+    | Utilizzato nel model file
+    |
+    |
+    */
+
+    'disk' => 'public'
 
 ];

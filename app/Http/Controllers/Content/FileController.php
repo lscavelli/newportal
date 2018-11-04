@@ -85,8 +85,8 @@ class FileController extends Controller {
     public function destroy($id)
     {
         $file = $this->rp->find($id);
-        $filePath = public_path($file->path."/".$file->file_name);
-        $fileThumbPath =  public_path($file->path."/".config('lfm.thumb_folder_name')."/".$file->file_name);
+        $filePath = $file->getPath()."/".$file->file_name;
+        $fileThumbPath =  $file->getPath()."/".config('lfm.thumb_folder_name')."/".$file->file_name;
         if ($this->fs->exists($filePath)) {
             $this->fs->delete([$filePath,$fileThumbPath]);
             if ($this->rp->delete($id)) {
@@ -103,7 +103,7 @@ class FileController extends Controller {
     {
         $file = $this->rp->find($id);
         $file->increment('hits');
-        return response()->download(public_path($file->getPath()));
+        return response()->download($file->getPath()."/".$file->file_name);
     }
 
     /**
@@ -114,7 +114,7 @@ class FileController extends Controller {
     {
         $file = $this->rp->find($id);
         $file->increment('hits');
-        return response()->file(public_path($file->getPath()));
+        return response()->file($file->getPath()."/".$file->file_name);
     }
 
     /**
@@ -136,8 +136,8 @@ class FileController extends Controller {
         $file = $this->rp->find($id);
         $data['avatar'] = null;
         if ($request->file('fileUploaded')) {
-            $filePath = public_path($file->path."/".$file->file_name);
-            $fileThumbPath =  public_path($file->path."/".config('lfm.thumb_folder_name')."/".$file->file_name);
+            $filePath = $file->getPath()."/".$file->file_name;
+            $fileThumbPath =  $file->getPath()."/".config('lfm.thumb_folder_name')."/".$file->file_name;
             if ($this->fs->exists($filePath)) {
                 $this->fs->delete([$filePath, $fileThumbPath]);
                 //$this->rp->delete($id);
@@ -150,9 +150,9 @@ class FileController extends Controller {
                 $data['id'] = $id;
                 $this->validator($data)->validate();
                 if ($this->rp->update($id, $data)) {
-                    $request->fileUploaded->move(public_path($file->path."/"),$data['file_name']);
+                    $request->fileUploaded->move($file->getPath()."/",$data['file_name']);
                     if ($this->isImage($data['mime_type'])) {
-                        $this->makeThumb(public_path($file->path."/"),$data['file_name']);
+                        $this->makeThumb($file->getPath()."/",$data['file_name']);
                     }
                     return redirect('/admin/files/' . $file->id . "/edit")->withSuccess('File sostituito correttamente');
                 }

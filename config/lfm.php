@@ -55,7 +55,7 @@ return [
     'folder_categories'  => [
         'file' => [
             'folder_name'  => 'files',
-            'startup_view' => 'grid',
+            'startup_view' => 'list',
             'max_size'     => 50000,
             'valid_mime'   => [
                 'image/jpeg',
@@ -63,6 +63,8 @@ return [
                 'image/png',
                 'image/gif',
                 'image/svg+xml',
+                'application/pdf',
+                'text/plain',
             ],
         ],
         'image' => [
@@ -74,9 +76,7 @@ return [
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
-                'image/svg+xml',
-                'application/pdf',
-                'text/plain',
+                'image/svg+xml'
             ],
         ],
     ],

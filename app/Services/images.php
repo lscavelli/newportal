@@ -6,6 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Validator;
 use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
 
 class Images {
 
@@ -55,7 +56,8 @@ class Images {
      * @param $dir
      */
     public function setPath($dir) {
-        $this->path = sprintf("%s/%s", public_path(), $dir);
+        $this->path = Storage::disk(config('newportal.disk'))->getDriver()->getAdapter()->getPathPrefix().$dir;
+        //$this->path = sprintf("%s/%s", $storage, $dir);
     }
 
     /**

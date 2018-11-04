@@ -189,13 +189,12 @@ class ContentController extends Controller {
     public function otherUpdate($id, Images $image, Request $request) {
         $content = $this->rp->find($id);
         $data = $request->all();
-        $image->setPath(config('newportal.path_upload_imgwc'));
+        $image->setPath(config('newportal.path_images_wc'));
         $check =$this->checkUseImage($content->image);
         if ($request->file('image')) {
             $canc = null; if($check) $canc = $content->image;
             $data['image'] = $image->uploadImage($canc, 331, 200)[0];
         } elseif($request->has('setImageDefault') or (isset($request->urlImage) && !$request->has('urlImage'))) {
-            dd('ALT');
             $data['image'] = null;
             // se non viene utilizzato da un altro contenuto cancello l'immagine
             if ($check) $image->delFile($content->image);

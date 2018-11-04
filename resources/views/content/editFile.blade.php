@@ -72,7 +72,7 @@
 
                         <div class="image" style="text-align: center; padding: 15px 15px 0 15px">
                             @if($file->isImage())
-                                <img src="{{ $file->getPath() }}" alt="Content Image" style="border-radius: 0.375em; width:100%;">
+                                <img src="{{ $file->getUrl() }}" alt="Content Image" style="border-radius: 0.375em; width:100%;">
                             @else
                                 <div style="border: 1px solid lightgrey; padding: 80px 0 80px 0; border-radius: 0.375em;" ><i class="fa {{ $file->getIcon() }} fa-5x"></i></div>
                             @endif

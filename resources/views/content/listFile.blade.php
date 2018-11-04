@@ -30,9 +30,10 @@
                         return Html::link(url("/admin/files/view",$row['id']), $row['name'], array('title' => $row['name']), true);
                     })
                     ->customizes('thumb',function($row){
-                        $file = $row['path']."/".config('lfm.thumb_folder_name')."/".$row['file_name'];
-                        if($row->isImage() && file_exists(public_path($file))) {
-                            return '<div style="text-align:center"><img src=\''.$file.'\' alt=\''.$row['name'].'\' style="width: 100%; max-width: 45px; height: auto; border-radius: 50%;"></div>';
+                        $file = "/".config('lfm.thumb_folder_name')."/".$row['file_name'];
+                        $pathFile = $row->getPath().$file;
+                        if($row->isImage() && file_exists($pathFile)) {
+                            return '<div style="text-align:center"><img src=\''.asset("storage/".$row['path'].$file).'\' alt=\''.$row['name'].'\' style="width: 100%; max-width: 45px; height: auto; border-radius: 50%;"></div>';
                         } else {
                             return '<div style="text-align:center"><i class="fa '.$row->getIcon() .' fa-3x"></i></div>';
                         }
@@ -48,8 +49,8 @@
     <script>
         $('.splitButtons li a').on('click', function(e){
             e.preventDefault();
-            var height = 600;
-            var width = 900;
+            var height = 720;
+            var width = 1080;
             var top =  (screen.height/2)-(height/2) - 100;
             var left = (screen.width/2)-(width/2);
             var win = window.open('/lfm?type='+$(this).attr('href'), '', 'width='+width+',height='+height+',top='+top+',left='+left);

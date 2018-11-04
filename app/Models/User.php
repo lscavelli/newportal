@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -225,12 +226,13 @@ class User extends Authenticatable
     }
 
     public function getAvatar() {
+        $path = Storage::disk(config('newportal.disk'))->getDriver()->getAdapter()->getPathPrefix();
         $image = config('newportal.path_upload_user')."/".$this->avatar;
-        $imagePath = sprintf("%s/%s", public_path(), $image);
+        $imagePath = sprintf("%s%s", $path, $image);
         if (! $this->avatar or !file_exists($imagePath)) {
-            return asset('img/avatar.png');
+            return asset('storage/img/general/avatar.png');
         }
-        return asset($image);
+        return asset('storage/'.$image);
     }
 
     /**

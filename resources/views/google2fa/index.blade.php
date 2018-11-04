@@ -13,7 +13,7 @@
             <hr>
             <div class="clear_both">
                 <div class="col img">
-                    <img src="{{ asset("img/google-2fa.png") }}" style="width: 100%; max-width: 200px">
+                    <img src="{{ asset("storage/img/general/google-2fa.png") }}" style="width: 100%; max-width: 200px">
                 </div>
                 <div class="col des">
                     <p style="font-weight: bold">Inserisci il codice di verifica</p>

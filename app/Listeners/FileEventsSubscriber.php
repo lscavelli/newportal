@@ -10,16 +10,19 @@ use UniSharp\LaravelFilemanager\Events\FolderWasRenamed;
 use App\Models\Content\File;
 use Illuminate\Filesystem\Filesystem;
 use App\Repositories\RepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class FileEventsSubscriber {
 
     public $fs;
     private $rp;
+    private $storage;
 
     public function __construct(Filesystem $fs, RepositoryInterface $rp)
     {
         $this->fs = $fs;
         $this->rp = $rp->setModel(File::class);
+        $this->storage =  Storage::disk(config('lfm.disk'))->getDriver()->getAdapter()->getPathPrefix();
     }
 
     /**
@@ -28,8 +31,8 @@ class FileEventsSubscriber {
      */
     public function onFolderWasRenamed(FolderWasRenamed $event)
     {
-        $oldFolderPath = str_replace(public_path(), "", $event->oldPath());
-        $newFolderPath = str_replace(public_path(), "", $event->newPath());
+        $oldFolderPath = str_replace($this->storage, "", $event->oldPath());
+        $newFolderPath = str_replace($this->storage, "", $event->newPath());
         //info($oldFolderPath);
         $this->rp->getModel()->where('path', $oldFolderPath)->update(['path'=>$newFolderPath]);
     }
@@ -51,8 +54,8 @@ class FileEventsSubscriber {
      */
     public function onImageWasRenamed(ImageWasRenamed $event)
     {
-        $oldFilePath = str_replace(public_path(), "", $event->oldPath());
-        $newFilePath = str_replace(public_path(), "", $event->newPath());
+        $oldFilePath = str_replace($this->storage, "", $event->oldPath());
+        $newFilePath = str_replace($this->storage, "", $event->newPath());
         $file = $this->rp
             ->where('path', $this->getDirname($oldFilePath))
             ->where('file_name', $this->getFile($event->oldPath()))
@@ -69,7 +72,7 @@ class FileEventsSubscriber {
      */
     public function onImageWasDeleted(ImageWasDeleted $event)
     {
-        $filePath = str_replace(public_path(), "", $event->path());
+        $filePath = str_replace($this->storage, "", $event->path());
         $file = $this->rp
             ->where('path', $this->getDirname($filePath))
             ->where('file_name', $this->getFile($event->path()))
@@ -83,7 +86,7 @@ class FileEventsSubscriber {
      */
     public function onImageWasUploaded(ImageWasUploaded $event)
     {
-        $filePath = str_replace(public_path(), "", $event->path());
+        $filePath = str_replace($this->storage, "", $event->path());
         $file = $this->getFile($event->path());
         $this->rp->create([
             'path' => $this->getDirname($filePath),
