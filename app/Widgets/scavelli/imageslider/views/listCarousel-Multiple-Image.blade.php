@@ -8,7 +8,7 @@
             </div>
 
 
-            <div id="carousel-generic-{{ $list->get('id') }}" class="carousel slide" data-ride="carousel">
+            <div id="carousel-generic-{{ $list->get('id') }}" class="carousel slide"  data-ride="carousel">
 
                 <!-- Indicators -->
                 <ol class="carousel-indicators">

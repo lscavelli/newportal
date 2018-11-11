@@ -22,6 +22,19 @@ class SettingsTableSeeder extends Seeder
             'setting_key' => 'social_registration',
             'setting_value' => 0,
         ]);
+        Setting::create([
+            'setting_key' => 'content_not_found',
+            'setting_value' => 0,
+        ]);
+        Setting::create([
+            'setting_key' => 'tag_dynamic',
+            'setting_value' => 0,
+        ]);
+        Setting::create([
+            'setting_key' => '2fa_activation',
+            'setting_value' => 1,
+        ]);
+
         $settings = Setting::pluck('setting_value', 'setting_key')->all();
         Cache::forever('settings', $settings);
 

@@ -15,9 +15,14 @@
         <div class="col-xs-12">
             <div class="box" style="padding-top: 20px;">
                 {!!
-                    $list->columns(['id'=>'Id','name'=>'Titolo','structure_id'=>'Struttura','updated_at'=>'Aggiornato il' ])
+                    $list->columns(['id'=>'Id','name'=>'Titolo','type_id'=>'Tipo','structure_id'=>'Struttura','updated_at'=>'Aggiornato il' ])
                     ->sortFields(['id','name','structure_id','updated_at'])
                     ->actions([url('/admin/models/duplicates')=>'Duplica modello'])
+                    ->customizes('type_id',function($row){
+                        $color = ($row['type_id']==1) ? 'label-success' : 'label-warning';
+                        $tipo = ($row['type_id']==1) ? 'Base' : 'Lista';
+                        return "<span class=\"label $color\">".$tipo."</span>";
+                    })
                     ->customizes('structure_id',function($row) {
                         return \App\Models\content\Structure::find($row['structure_id'])->name;
                     })

@@ -89,7 +89,7 @@ class ManyTableSeeder extends Seeder
             'content' => '{"varmodelli":{
                 "np_size":"Dimensione file",
                 "np_extension":"Estensione",
-                "np_fullpath":"Path",
+                "np_thumb_url":"Thumb url",
                 "np_file_name":"Nome del File",
                 "np_mime_type":"Tipo file",
                 "np_href":"Link pubblico",

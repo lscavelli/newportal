@@ -147,9 +147,10 @@ class ContentController extends Controller {
         if ($content->categories()->count()>0) $this->rp->detach($content->categories(), $content->categories()->pluck('id'));
         if ($content->comments()->count()>0) $content->comments()->delete();
         if ($this->rp->delete($id)) {
-            $this->rp->setModel('App\Models\Content\Widget_page')->getModel()
-                ->where('widget_id',10)
-                ->where('setting', 'LIKE', '%'."\"content_id\":\"$id\"".'%')->delete();
+            $this->rp->getModel('App\Models\Content\Widget_page')
+                ->join('widgets', 'widgets.id', '=', 'widgets_pages.widget_id')
+                ->where('widgets.init','viewWebContent')
+                ->where('widgets_pages.setting', 'LIKE', '%'."\"content_id\":\"$id\"".'%')->delete();
             return redirect()->back()->withSuccess('Contenuto web cancellato correttamente');
         }
         return redirect()->back();

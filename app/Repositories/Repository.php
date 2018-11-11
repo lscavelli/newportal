@@ -40,10 +40,12 @@ class Repository implements RepositoryInterface {
     }
 
     /**
-     * Restituisce il Model
+     * @param null $model
      * @return mixed
+     * @throws \App\Repositories\RepositoryException
      */
-    public function getModel() {
+    public function getModel($model = null) {
+        if (!is_null($model)) $this->setModel($model);
         return $this->originalModel;
     }
 

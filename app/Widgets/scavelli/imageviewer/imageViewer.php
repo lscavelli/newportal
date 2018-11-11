@@ -164,10 +164,10 @@ class imageViewer extends Widget {
                 if (str_contains($model, '$np_description')) $data['_description'] = $rec->description;
                 if (str_contains($model, '$np_extension')) $data['_extension'] = strtoupper($rec->extension);
                 if (str_contains($model, '$np_size')) $data['_size'] = strtoupper($this->formatBytes($rec->size));
-                if (str_contains($model, '$np_href')) $data['_href'] = "/web/".$rec->slug;
+                if (str_contains($model, '$np_href')) $data['_href'] = sprintf("/storage/%s/%s", $rec->path , $rec->file_name);
                 if (str_contains($model, '$np_file_name')) $data['_file_name'] = $rec->file_name;
                 if (str_contains($model, '$np_mime_type')) $data['_mime_type'] = $rec->mime_type;
-                if (str_contains($model, '$np_fullpath')) $data['_fullpath'] = $rec->path."/".config('lfm.thumb_folder_name')."/".$rec->file_name;
+                if (str_contains($model, '$np_thumb_url')) $data['_thumb_url'] = sprintf("/storage/%s/%s/%s", $rec->path, config('lfm.thumb_folder_name'), $rec->file_name);
                 if (str_contains($model, '$np_class_icon')) $data['_class_icon'] = "fa ".$rec->getIcon();
                 if (str_contains($model, '$np_modify_url')) $data['_modify_url'] = url('/admin/files/'.$rec->id.'/edit');
                 if (str_contains($model, '$np_modify_icon')) $data['_modify_icon'] = auth()->check() ? "<div style='position: relative'><a href=\"#\" class=\"pencil-update\" title=\"modifica file {$rec->name}\" onclick=\"window.open('".url('/admin/files/'.$rec->id.'/edit')."')\"><i class=\"glyphicon glyphicon-pencil\"></i></a></div>" : null;
