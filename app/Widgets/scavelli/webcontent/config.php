@@ -16,7 +16,8 @@ return [
             'date'          =>  '07/04/2018',
             'description'   =>  'Widget per la visualizzazione dei contenuti web - completo di strutture e modelli',
             'type'          =>  '1',
-            'path'          =>  'scavelli\webcontent'
+            'path'          =>  'scavelli\webcontent',
+            'service'       =>  'App\Models\Content\Content'
         ]
     ],
     'providers' => [

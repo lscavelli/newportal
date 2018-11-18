@@ -56,8 +56,14 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-2">
-                    <label for="selectVariable">Variabili disponibili</label>
-                    {!! Form::select('selectVariable', $listVariable , \Request::input('selectVariable'), ['class' => "form-control", 'id'=>"selectVariable"]) !!}
+                    <div class="form-group">
+                        <label for="selectVariable">Variabili disponibili</label>
+                        {!! Form::select('selectVariable', $listVariable , \Request::input('selectVariable'), ['class' => "form-control", 'id'=>"selectVariable"]) !!}
+                    </div>
+                    <div class="form-group">
+                        <label for="selectWidgets">Widgets disponibili</label>
+                        {!! Form::select('selectWidgets', $listWidgets , \Request::input('selectWidgets'), ['class' => "form-control", 'id'=>"selectWidgets"]) !!}
+                    </div>
                 </div>
                 <!-- /.col -->
             </div>

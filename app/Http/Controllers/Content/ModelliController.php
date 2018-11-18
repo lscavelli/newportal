@@ -82,7 +82,8 @@ use App\Services\Helpers;
         $modello = $this->rp->find($id); $action = ["Content\\ModelliController@update",$id];
         $structure = $this->rp->setModel(new Structure())->find($structureId);
         $listVariable = $this->listVariable($structure);
-        return view('content.editModel')->with(compact('modello','action','structure','listVariable'));
+        $listWidgets = $this->rp->setModel('App\Models\Content\Widget')->where('service',$structure->service->class)->pluck();
+        return view('content.editModel')->with(compact('modello','action','structure','listVariable','listWidgets'));
     }
 
         /**
