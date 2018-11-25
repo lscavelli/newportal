@@ -25,7 +25,6 @@ class assetController extends Controller
     public $tags_reg;
     public $cats_reg;
     public $selectOrder;
-    public $listView;
 
 
     public function __construct(RepositoryInterface $rp) {
@@ -41,7 +40,7 @@ class assetController extends Controller
      * @return $this
      */
     public function configWidget($widget, $contentList) {
-        $default = ['inpage'=>'', 'listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
+        $default = ['inpage'=>'', 'scrolling'=>'','ord'=>0,'dir'=>0,'service'=>'','structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
         if(!empty($widget->pivot->setting)) $this->conf = array_merge($default,json_decode($widget->pivot->setting, true));
 
         if ($this->get('feed')) {
@@ -96,7 +95,6 @@ class assetController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $contentList->listView();
 
         return view('contentlist::preferences')->with(['cList' => $this]);
     }

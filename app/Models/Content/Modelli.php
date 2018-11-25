@@ -10,7 +10,8 @@ class Modelli extends Model
     protected $table = 'models';
 
     protected $fillable = array(
-        'name', 'description', 'content', 'type_id', 'structure_id'
+        'name', 'description', 'content', 'type_id', 'structure_id',
+        'widget_id', 'template'
     );
 
     public function parent() {

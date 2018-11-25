@@ -10,6 +10,7 @@ return [
     */
     'widgets' => [
         'listOrganizations' => [
+            'id'            =>  8,
             'name'          =>  'Graphic Representation',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',
@@ -19,6 +20,7 @@ return [
             'path'          =>  'scavelli\organizations'
         ],
         'cardOrganization'  =>  [
+            'id'            =>  9,
             'name'          =>  'Profilo organization',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.4',

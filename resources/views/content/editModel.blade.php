@@ -36,12 +36,26 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="description">Descrizione</label>
-                        {!! Form::textarea('description',null,['class' => 'form-control', 'id'=>'description', 'style'=>'height: 7.7em;']) !!}
+                        <label for="type_id">Tipo modello</label>
+                        {!! Form::select('type_id', [1=>'base',2=>'lista'] , null, ['class' => "form-control","id"=>'type_id']) !!}
+                    </div>
+                    <div class="row listModel">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="widget_id">Widgets disponibili</label>
+                                {!! Form::select('widget_id', ['' => 'Seleziona il tuo widget'] + $listWidgets->toArray() , \Request::input('widget_id'), ['class' => "form-control", 'id'=>"widget_id"]) !!}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="template">Modelli lista disponibili</label>
+                                {!! Form::select('template', ['' => '']+($templates ?? []) , \Request::input('template'), ['class' => "form-control", 'id'=>"template"]) !!}
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="type_id">Tipo modello</label>
-                        {!! Form::select('type_id', [1=>'base',2=>'lista'] , null, ['class' => "form-control"]) !!}
+                        <label for="description">Descrizione</label>
+                        {!! Form::textarea('description',null,['class' => 'form-control', 'id'=>'description', 'style'=>'height: 7.7em;']) !!}
                     </div>
                 </div>
             </div>
@@ -59,10 +73,6 @@
                     <div class="form-group">
                         <label for="selectVariable">Variabili disponibili</label>
                         {!! Form::select('selectVariable', $listVariable , \Request::input('selectVariable'), ['class' => "form-control", 'id'=>"selectVariable"]) !!}
-                    </div>
-                    <div class="form-group">
-                        <label for="selectWidgets">Widgets disponibili</label>
-                        {!! Form::select('selectWidgets', $listWidgets , \Request::input('selectWidgets'), ['class' => "form-control", 'id'=>"selectWidgets"]) !!}
                     </div>
                 </div>
                 <!-- /.col -->
@@ -123,6 +133,40 @@
                 editor.insert( '\{\!! $'+ ble + ' \!!\}');
             }
         });
+
+        $( "#widget_id").change(function() {
+            $('#template').empty();
+            if ($(this).val()) {
+                $.getJSON("/admin/api/listview/"+$(this).val(), function (res) {
+                    //alert(JSON.stringify(result));
+                    $.each(res, function( index, value ) {
+                        $('#template').append($('<option>', {
+                            value: index,
+                            text : value
+                        }));
+                    });
+                }).done(function() {});
+            }
+        });
+
+        showListModel();
+
+        $('#type_id').on('change', function(e){
+            e.preventDefault();
+            showListModel();
+        });
+
+        function showListModel() {
+            $type = $( "#type_id" ).val();
+            if ($type==2) {
+                $('.listModel').show();
+            } else {
+                $('.listModel').hide();
+            }
+        }
+
+
+
     </script>
 @stop
 

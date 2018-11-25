@@ -11,6 +11,7 @@ return [
     */
     'widgets' => [
         'imageSlider' => [
+            'id'            =>  3,
             'name'          =>  'Slider di immagini',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',

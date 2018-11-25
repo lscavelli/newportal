@@ -78,7 +78,8 @@ class ActivityEventsSubscriber {
     private function writeToActivity($event,$operation) {
         $model = $event->getModel();
         $name = "\"{$model->name}\" (id {$model->id})";
-        $message = sprintf("$operation $name in %s.",$model->getTable());
+        //$message = sprintf("$operation $name in %s.",$model->getTable());
+        $message = $operation . " ". $name ."in ".$model->getTable();
         $this->saveToDbActivity($message);
     }
 

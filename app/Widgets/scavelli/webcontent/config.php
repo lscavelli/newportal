@@ -10,6 +10,7 @@ return [
     */
     'widgets' => [
         'viewWebContent' => [
+            'id'            =>  10,
             'name'          =>  'Visualizzazione Contenuto Web',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.2',

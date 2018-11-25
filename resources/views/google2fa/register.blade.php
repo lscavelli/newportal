@@ -57,6 +57,11 @@
                     {!! Form::close() !!}
                 </div>
                 <hr>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <a href="/admin/users/{!! $user->id !!}/edit" class="btn btn-default btn-block"><b>{{ __("Annulla") }}</b></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ return [
     */
     'widgets' => [
         'contentList' => [
+            'id'            =>  1,
             'name'          =>  'Aggregatore di contenuti',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.2',

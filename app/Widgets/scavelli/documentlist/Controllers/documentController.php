@@ -20,7 +20,6 @@ class documentController extends Controller
     public $tags_reg;
     public $cats_reg;
     public $selectOrder;
-    public $listView;
     public $models;
     public $structures;
 
@@ -45,7 +44,7 @@ class documentController extends Controller
      * @return $this
      */
     public function configWidget($widget, $documentList) {
-        $default = ['listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
+        $default = ['scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
         if(!empty($widget->pivot->setting)) $this->conf = array_merge($default,json_decode($widget->pivot->setting, true));
 
 
@@ -96,7 +95,6 @@ class documentController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $documentList->listView();
 
         return view('documentlist::preferences')->with(['cList' => $this]);
     }

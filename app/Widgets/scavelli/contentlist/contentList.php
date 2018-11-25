@@ -198,7 +198,11 @@ class contentList extends Widget {
 
         //$template = 'listAssets';
         //if (!empty($this->config('structure_id')))
-        $listView = $this->config('listView') ?:  'listAssets';
+        //$listView = $this->config('listView') ?:  'listAssets';
+
+        // Prelevo il template di lista dal modello
+        $templateModel = $this->rp->setModel('App\Models\Content\Modelli')->find($this->config('model_id'))->template;
+        $listView = $templateModel ?:  'listAssets';
 
         if (!$this->config('template')) {
             return view("contentlist::$listView")->with([

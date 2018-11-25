@@ -10,6 +10,7 @@ return [
     */
     'widgets' => [
         'navigationCat' => [
+            'id'            =>  5,
             'name'          =>  'Navigazione per categoria',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',

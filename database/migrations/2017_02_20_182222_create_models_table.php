@@ -18,6 +18,8 @@ class CreateModelsTable extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->unsignedInteger('type_id')->nullable();
+            $table->integer('widget_id')->unsigned()->nullable();
+            $table->string('template')->nullable();
             $table->integer('structure_id')->unsigned()->index();
             $table->foreign('structure_id')->references('id')->on('structure')->onDelete('cascade');
             $table->text('content')->nullable();

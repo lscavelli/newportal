@@ -11,6 +11,7 @@ return [
     */
     'widgets' => [
         'imageViewer' => [
+            'id'            =>  4,
             'name'          =>  'Visualizzatore di immagini',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',

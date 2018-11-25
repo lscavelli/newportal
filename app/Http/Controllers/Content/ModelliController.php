@@ -13,6 +13,7 @@ use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Services\FormGenerates;
 use App\Services\Helpers;
+use Illuminate\Support\Facades\File;
 
 
     class ModelliController extends Controller {
@@ -57,7 +58,8 @@ use App\Services\Helpers;
         $modello = new Modelli(); $action = "Content\\ModelliController@store";
         $structure = $this->rp->setModel(Structure::class)->find($strutturaId);
         $listVariable = $this->listVariable($structure);
-        return view('content.editModel')->with(compact('modello','action','structure','listVariable'));
+        $listWidgets = $this->rp->setModel('App\Models\Content\Widget')->where('service',$structure->service->class)->pluck();
+        return view('content.editModel')->with(compact('modello','action','structure','listVariable','listWidgets'));
     }
 
     /**
@@ -83,7 +85,8 @@ use App\Services\Helpers;
         $structure = $this->rp->setModel(new Structure())->find($structureId);
         $listVariable = $this->listVariable($structure);
         $listWidgets = $this->rp->setModel('App\Models\Content\Widget')->where('service',$structure->service->class)->pluck();
-        return view('content.editModel')->with(compact('modello','action','structure','listVariable','listWidgets'));
+        $templates = ($modello->widget_id) ? $this->listView($modello->widget_id, false) : [];
+        return view('content.editModel')->with(compact('modello','action','structure','listVariable','listWidgets','templates'));
     }
 
         /**
@@ -95,6 +98,7 @@ use App\Services\Helpers;
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         $this->validator($data,true)->validate();
+        if (is_null($data['widget_id'])) $data['template'] = null;
         if ($this->rp->update($id,$data)) {
             return redirect()->route('models',['structure_id' => $request->structure_id])->withSuccess('Modello aggiornato correttamente');
         }
@@ -147,6 +151,31 @@ use App\Services\Helpers;
         $clone->name = $model->name."-".$helpers->makeCode();
         $clone->save();
         return redirect()->back();
+    }
+
+    /**
+     * mostra le view (list) contenute nella directory view della widget
+     * @return array
+     * @throws ThemeException
+     */
+    public function listView($id,$json=true) {
+        $widget = $this->rp->setModel('App\Models\Content\Widget')->find($id);
+        $path = str_replace('\\', '/' ,$widget->path);
+        $path = app_path().'/'.config("newportal.widgets.namespace").'/'.$path."/views";
+
+        if (!is_dir($path)) {
+            throw new ThemeException("la directory dei template non esiste");
+        }
+        $files = File::allFiles($path);
+        $view = [""=>""];
+        foreach ($files as $file) {
+            $file = substr(basename($file), 0, -10); //remove .blade.php
+            if (starts_with($file,'list')) {
+                $view[$file] = $file;
+            }
+        }
+        if ($json) return json_encode( $view );
+        return $view;
     }
 
 }

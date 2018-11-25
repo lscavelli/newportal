@@ -105,7 +105,11 @@ class imageSlider extends Widget {
 
         //$template = 'listAssets';
         //if (!empty($this->config('structure_id')))
-        $listView = $this->config('listView') ?:  'listAssets';
+        //$listView = $this->config('listView') ?:  'listAssets';
+
+        // Prelevo il template di lista dal modello
+        $templateModel = $this->rp->setModel('App\Models\Content\Modelli')->find($this->config('model_id'))->template;
+        $listView = $templateModel ?:  'listAssets';
 
         if (!$this->config('template') && view()->exists("imageslider::$listView")) {
             return view("imageslider::$listView")->with([

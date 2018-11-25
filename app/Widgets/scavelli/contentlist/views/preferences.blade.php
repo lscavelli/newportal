@@ -16,16 +16,12 @@
                             {!! Form::hidden('sitemap', null, ['id'=>"sitemap"]) !!}
 
                             <div class="form-group">
-                                <label for="structure_id">Strutture di dati</label>
+                                <label for="structure_id">Struttura dati</label>
                                 {!! Form::select('structure_id', $cList->structures , $cList->get('structure_id') , ['class' => "form-control", "id"=>'structure_id']) !!}
                             </div>
                             <div class="form-group">
-                                <label for="model_id">Modello applicato alle righe</label>
+                                <label for="model_id">Modello di struttura</label>
                                 {!! Form::select('model_id', $cList->models , $cList->get('model_id') , ['class' => "form-control", "id"=>'model_id']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label for="listView">Modello applicato alla lista</label>
-                                {!! Form::select('listView', $cList->listView , $cList->get('listView') , ['class' => "form-control", "id"=>'listView']) !!}
                             </div>
                             <div class="form-group">
                                 <label for="inpage">Visualizza in</label>

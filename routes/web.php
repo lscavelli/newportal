@@ -20,6 +20,7 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
     Route::get('api/listwidgets', "Content\\WidgetController@listWidgetDisp");
     Route::any('api/savewidgets', "PageController@saveWidgets");
     Route::any('api/listcatecory/{vocabulary_id}/{default?}', "ContentController@listCategoryJson");
+    Route::get('api/listview/{id}', "Content\\ModelliController@listView");
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('dashboard/data', 'DashboardController@activitiesData');

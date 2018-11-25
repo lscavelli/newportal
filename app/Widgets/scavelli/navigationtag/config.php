@@ -10,6 +10,7 @@ return [
     */
     'widgets' => [
         'navigationTag' => [
+            'id'            =>  7,
             'name'          =>  'Navigazione per tag',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',

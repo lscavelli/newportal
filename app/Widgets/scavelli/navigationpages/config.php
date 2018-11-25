@@ -10,6 +10,7 @@ return [
     */
     'widgets' => [
         'navigationPages' => [
+            'id'            =>  6,
             'name'          =>  'Navigazione delle pagine',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.0',

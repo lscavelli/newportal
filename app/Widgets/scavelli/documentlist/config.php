@@ -11,6 +11,7 @@ return [
     */
     'widgets' => [
         'documentList' => [
+            'id'            =>  2,
             'name'          =>  'Aggregatore di documenti',
             'author'        =>  'Scavelli',
             'revision'      =>  '1.3',

@@ -21,7 +21,6 @@ class imageSliderController extends Controller
     public $tags_reg;
     public $cats_reg;
     public $selectOrder;
-    public $listView;
     public $models;
     public $structures;
 
@@ -46,7 +45,7 @@ class imageSliderController extends Controller
      * @return $this
      */
     public function configWidget($widget, $imageSlider) {
-        $default = ['listView'=>'','scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
+        $default = ['scrolling'=>'','ord'=>0,'dir'=>0,'structure_id'=>0,'model_id'=>0,'comunication'=>$widget->pivot->comunication];
         if(!empty($widget->pivot->setting)) $this->conf = array_merge($default,json_decode($widget->pivot->setting, true));
 
 
@@ -96,7 +95,6 @@ class imageSliderController extends Controller
         //===============================================
 
         $this->selectOrder = $this->selectOrder();
-        $this->listView = $imageSlider->listView();
 
         $listContent = $this->rp->setModel(File::class)->where('status_id',1)->where('mime_type', 'LIKE', 'image/%')->get()->toArray();
         $list = new listGenerates($this->rp->paginateArray($listContent,10,request()->page_a,'page_a'));
