@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Filesystem\Filesystem;
 use App\Services\ThemeException;
 use Illuminate\Support\Facades\View;
+use PragmaRX\Google2FALaravel\Support\Authenticator;
 
 
 // dal template loadcss()
@@ -410,6 +411,22 @@ class Theme {
         }
         if ($this->isadmin) {$widgets = "<div class='droppedArea' data-frame='$frame' data-page='{$this->arguments["id"]}'>$widgets</div>";}
         return $widgets;
+    }
+
+    /**
+     * Verifica che l'utente con 2fa abilitato sia autenticato in 2fa
+     * @return bool
+     * @throws \Exception
+     */
+    public function check2fa() {
+        if (array_get(cache('settings'), '2fa_activation')) {
+            $authenticator = app(Authenticator::class)->boot(request());
+            if ($authenticator->isAuthenticated()) {
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
 
 }

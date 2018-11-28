@@ -30,8 +30,17 @@
                             <!-- /.col -->
                         </div>
                     </form>
+
                 </div>
                 <hr>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <a href="{{ url('/logout') }}" class="btn btn-default btn-block" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><strong>{{ __("Annulla") }}</strong></a>
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

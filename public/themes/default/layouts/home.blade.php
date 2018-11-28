@@ -195,7 +195,7 @@
             </div>
         </div>
     </footer>
-@if(auth()->check())
+@if(auth()->check() && $theme->check2fa())
     @include('ui.configWidget')
 @endif
 @endsection
