@@ -12,7 +12,7 @@ class FormComponents
     }
 
     public function makeComponent() {
-        $this->form->component('slText', 'components.text', ['name', 'label', 'value' => null, 'attributes' => []]);
+        $this->form->component('slText', 'components.text', ['name', 'label' => null, 'value' => null, 'attributes' => []]);
         $this->form->component('slTextarea', 'components.textarea', ['name', 'label', 'value' => null, 'attributes' => []]);
         $this->form->component('slSubmit', 'components.submit', ['label', 'attributes' => [], 'pull'=>'left', 'color'=>'danger']);
         $this->form->component('slSelect', 'components.select', ['name', 'label', 'value' => [], 'attributes' => [], 'default'=>null]);

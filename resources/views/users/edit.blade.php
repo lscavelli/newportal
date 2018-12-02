@@ -94,7 +94,19 @@
 
                         <h3 class="profile-username text-center">2FA</h3>
                         <p class="text-muted text-center">Autenticazione a 2 fattori</p>
-                        <a href="/admin/users/2fa" class="btn @if(!empty($user->google2fa_secret)) btn-danger disattiva2FA @else btn-default @endif btn-block" style="margin-top:10px;"><i class="fa fa-key"></i> <strong>@if(!empty($user->google2fa_secret)){{ __("Disabilita") }}@else{{ __("Abilita") }}@endif</strong></a>
+                        @if(!empty($user->google2fa_secret))
+                            {!! Form::open(['url'=>url('/admin/users/2fa'),'class' => 'form-horizontal']) !!}
+                                {!! Form::label('password','Password corrente', ['class' => 'control-label']) !!}
+                                {!! Form::slText('password') !!}
+                                <div class="col-sm-12">
+                                    <div class="pull-center">
+                                        <input class="disattiva2FA btn btn-danger btn-block" type="submit" value="Disattiva 2Fa">
+                                    </div>
+                                </div>
+                            {!! Form::close() !!}
+                        @else
+                            <a href="/admin/users/2fa" class="btn btn-default btn-block" style="margin-top:10px;"><i class="fa fa-key"></i> <strong>{{ __("Abilita") }}</strong></a>
+                        @endif
                     </div>
                     <!-- /.box-body -->
                 </div>

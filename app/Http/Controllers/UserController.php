@@ -17,6 +17,7 @@ use App\Models\Data\City;
 use App\Repositories\RepositoryInterface;
 use Illuminate\Support\Facades\Gate;
 use App\Services\Theme;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
 
@@ -455,6 +456,12 @@ class UserController extends Controller {
         if (array_get(cache('settings'), '2fa_activation')) {
             $user = auth()->user();
             if (!empty($user->google2fa_secret)) {
+                request()->validate([
+                    'password' => 'required',
+                ]);
+                if (!(Hash::check(request()->get('password'), $user->password))) {
+                    return redirect()->back()->with("error","La tua password non corrisponde alla password del tuo account.. Per favore riprova.");
+                }
                 // $google2fa->logout();
                 $this->disactive2FA($user);
                 return redirect()->back()->withSuccess("Le impostazioni sono state aggiornate");
@@ -530,11 +537,11 @@ class UserController extends Controller {
      * disattiva 2FA
      * @param $user
      */
-    private function disactive2FA($user) {
+    private function disactive2FA($user)
+    {
         $data['google2fa_secret'] = null;
-        $this->repo->update($user->id,$data);
-        session()->forget(config('google2fa.session_var').".otp_timestamp");
+        $this->repo->update($user->id, $data);
+        session()->forget(config('google2fa.session_var') . ".otp_timestamp");
         // TODO: invia notifica via email
-
     }
 }
