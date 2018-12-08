@@ -264,6 +264,7 @@ Route::post('contactform', 'Mail\\MailController@contact');
 Route::get('sitemap.xml', 'SiteMapController@siteMap');
 Route::get('users/confirmation/{token}', 'Auth\\RegisterController@confirmationEmail')->name('confirmation.email');
 
+
 Route::group(['prefix' => 'lfm', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
