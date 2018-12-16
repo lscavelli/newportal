@@ -466,7 +466,7 @@ class UserController extends Controller {
                 $this->disactive2FA($user);
                 return redirect()->back()->withSuccess("Le impostazioni sono state aggiornate");
             }
-            $action = ["UserController@active2FA"];
+
             $google2fa = app('pragmarx.google2fa');
             $secret = $this->generateKey2fa($google2fa);
 
@@ -488,8 +488,7 @@ class UserController extends Controller {
                 'src_qrcode'=>$url,
                 'secret'=>$secret,
                 'theme'=>$theme,
-                'user'=>$user,
-                'action'=>$action]);
+                'user'=>$user]);
         }
         app()->abort(404, 'Pagina non trovata');
     }

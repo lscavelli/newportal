@@ -161,12 +161,12 @@ Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], functio
     // Users - public
     // *****************************************************************************
     Route::group(['middleware' => ['can:profile,user_id']], function() {
+        Route::any('users/2fa/{user_id?}', 'UserController@activation2FA');
+        Route::post('users/active2fa/{user_id?}', 'UserController@active2FA');
         Route::get('users/{user_id}', 'UserController@profile')->name('profile')->where('user_id', '[0-9]+');
         Route::post('users/{user_id}/edit/avatar', 'UserController@setAvatar');
         Route::get('users/{user_id}/edit', 'UserController@edit');
         Route::post('users/update/{user_id}', 'UserController@update');
-        Route::any('users/2fa', 'UserController@activation2FA');
-        Route::post('users/active2fa', 'UserController@active2FA');
     });
 
     /**

@@ -43,8 +43,7 @@
                     <p>Passaggio 3</p>
                     <p style="font-weight: bold">Inserisci il codice di verifica</p>
                     <p>Inserisci il codice di verifica a 6 cifre generato dall'app scaricata sul tuo smartphone</p>
-                    {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal', 'id'=>'sendotp']) !!}
-                        @csrf
+                    {!! Form::model($user, ['url' => '/admin/users/active2fa/'.$user->id,'class' => 'form-horizontal', 'id'=>'sendotp']) !!}
                         <div class="row">
                             <div class="col-md-4">
                                 <input id="one_time_password" type="number" class="form-control" name="one_time_password" required autofocus>
