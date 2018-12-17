@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\File;
      */
     public function index($id, Request $request, listGenerates $list) {
         $structure = $this->rp->setModel(Structure::class)->find($id);
-        $list->setModel($this->rp->paginateArray($structure->models->toArray(),10,$request->page_a,'page_a'));
+        $list->setPagination($this->rp->paginateArray($structure->models->toArray(),10,$request->page_a,'page_a'));
         return view('content.listModels')->with(compact('list','structure'));
     }
 

@@ -41,7 +41,7 @@ class StructureController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request, listGenerates $list) {
-        $list->setModel($this->rp->paginate($request));
+        $list->setPagination($this->rp->paginate($request));
         $optionsSel = $this->rp->setModel(Service::class)->pluck()->mapWithKeys(function ($val, $key) {
             return ["structure/service/".$key."/create" => $val];
         });

@@ -39,7 +39,7 @@ class WidgetController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $widgets = $this->rp->paginate($request);
-        $list->setModel($widgets);
+        $list->setPagination($widgets);
         return view('content.listWidget')->with(compact('widgets','list'));
     }
 

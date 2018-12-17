@@ -19,7 +19,7 @@
                         <h3 class="box-title">Categorie diponibili</h3>
                     </div>
                     {!!
-                        $list->setModel($subcatDis)
+                        $list->setPagination($subcatDis)
                             ->columns(['id','name'=>'Nome','azioni'])
                             ->showActions(false)
                             ->showButtonNew(false)
@@ -50,7 +50,7 @@
 
                 <div class="box box-default">
                     {!!
-                         $list->setModel($subcatAss)
+                         $list->setPagination($subcatAss)
                             ->columns(['id','name'=>'Nome','azioni'])
                             ->showActions(false)
                             ->showButtonNew(false)

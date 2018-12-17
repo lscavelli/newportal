@@ -40,7 +40,7 @@ class PostController extends Controller  {
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request, listGenerates $list) {
-        $posts = $this->rp->paginate($request); $list->setModel($posts);
+        $posts = $this->rp->paginate($request); $list->setPagination($posts);
         return view('blog.listPost')->with(compact('posts','list'));
     }
 

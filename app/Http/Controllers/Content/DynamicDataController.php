@@ -43,7 +43,7 @@ class DynamicDataController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request, listGenerates $list) {
-        $list->setModel($this->repo->paginate($request));
+        $list->setPagination($this->repo->paginate($request));
         return view('content.listDynamicData', compact('list'));
     }
 

@@ -51,7 +51,7 @@ class ContentController extends Controller {
             $nameStructure = $this->rp->setModel(new Structure())->find($structureId)->name;
         } else
             $content = $this->rp->paginate($request);
-        $list->setModel($content);
+        $list->setPagination($content);
 
         $service = $this->rp->setModel(Service::class)->where('class',Content::class)->first();
         if(is_null($service)) {

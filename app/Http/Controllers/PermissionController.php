@@ -41,7 +41,7 @@ class PermissionController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $permissions = $this->repo->paginate($request);
-        $list->setModel($permissions);
+        $list->setPagination($permissions);
         return view('users.listPermission')->with(compact('permissions','list'));
     }
 

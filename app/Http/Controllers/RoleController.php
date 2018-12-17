@@ -49,7 +49,7 @@ class RoleController extends Controller
      */
     public function index(Request $request, listGenerates $list)   {
         $roles = $this->repo->paginate($request);
-        $list->setModel($roles);
+        $list->setPagination($roles);
         return view('users.listRole', compact('roles','list'));
     }
 

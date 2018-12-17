@@ -45,7 +45,7 @@ class CategoryController extends Controller
             $vocabulary_name = null;
             $categories = $this->rp->paginate($request);
         }
-        $list->setModel($categories);
+        $list->setPagination($categories);
 
         if ($vocabulary_id) $vocabulary_name = $this->rp->setModel('App\Models\Content\Vocabulary')->find($vocabulary_id)->name;
         return view('content.listCategories')->with(compact('categories','list','vocabulary_name'));

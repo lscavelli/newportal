@@ -19,7 +19,7 @@
                         <h3 class="box-title">{{ __('Ruoli diponibili') }}</h3>
                     </div>
                     {!!
-                        $list->setModel($roleDis)
+                        $list->setPagination($roleDis)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
@@ -51,7 +51,7 @@
 
                 <div class="box box-default">
                     {!!
-                         $list->setModel($roleAss)
+                         $list->setPagination($roleAss)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)

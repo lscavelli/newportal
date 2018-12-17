@@ -53,7 +53,7 @@ class CommentController extends Controller {
         } else {
             $comments = $services->getModel()->comments()->paginate(4); $nameContent = null;
         }
-        $list->setModel($comments);
+        $list->setPagination($comments);
         return view('content.listComment')->with(compact('comments','list','nameContent'));
     }
 

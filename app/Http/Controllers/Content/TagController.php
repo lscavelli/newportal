@@ -36,7 +36,7 @@ class TagController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $tags = $this->rp->paginate($request);
-        $list->setModel($tags);
+        $list->setPagination($tags);
         return view('content.listTag')->with(compact('tags','list'));
     }
 
@@ -109,7 +109,7 @@ class TagController extends Controller {
     public function content($TagId, Request $request, listGenerates $list) {
         $tag = $this->rp->find($TagId);
         $content = $this->listWebContent($TagId)->toArray();
-        $list->setModel($this->rp->paginateArray($content,4));
+        $list->setPagination($this->rp->paginateArray($content,4));
         return view('content.listTagContent')->with(compact('content','list','tag'));
     }
 

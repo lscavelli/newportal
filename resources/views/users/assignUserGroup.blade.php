@@ -18,7 +18,7 @@
                         <h3 class="box-title">{{ __("Utenti diponibili") }}</h3>
                     </div>
                     {!!
-                        $list->setModel($usersDis)
+                        $list->setPagination($usersDis)
                             ->columns(['id','nome'=>__("Nome"),'cognome'=>__("Cognome"),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
@@ -50,7 +50,7 @@
 
                 <div class="box box-default">
                     {!!
-                         $list->setModel($usersAss)
+                         $list->setPagination($usersAss)
                             ->columns(['id','nome'=>__("Nome"),'cognome'=>__("Cognome"),'azioni'])
                             ->showActions(false)
                             ->showAll(false)

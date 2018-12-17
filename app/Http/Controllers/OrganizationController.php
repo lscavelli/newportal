@@ -44,7 +44,7 @@ class OrganizationController extends Controller
      */
     public function index(Request $request, listGenerates $list, User_organization $user_organization)   {
         $organizations = $this->repo->paginate($request);
-        $list->setModel($organizations);
+        $list->setPagination($organizations);
         $user_organization = $this->repo->get($user_organization);
         return view('users.listOrganization', compact('organizations','list','user_organization'));
     }

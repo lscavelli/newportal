@@ -40,7 +40,7 @@ class DynamicContentController extends Controller {
         $listLabel = $formObj->listLabel();
         $listType = $formObj->listType();
         $sortFields = array_keys($listLabel);
-        $list->setModel($dataPaginate)->columns($listLabel)->sortFields($sortFields);
+        $list->setPagination($dataPaginate)->columns($listLabel)->sortFields($sortFields);
         foreach($sortFields as $val) {
             $list->customizes($val,function($row) use($val,$listType){
                 if ($listType[$val]=='date') {

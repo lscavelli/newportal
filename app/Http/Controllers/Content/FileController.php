@@ -43,7 +43,7 @@ class FileController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $files = $this->rp->paginate($request);
-        $list->setModel($files);
+        $list->setPagination($files);
         return view('content.listFile')->with(compact('$files','list'));
     }
 

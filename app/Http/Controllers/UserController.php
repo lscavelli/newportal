@@ -57,7 +57,7 @@ class UserController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $users = $this->repo->paginate($request);
-        $list->setModel($users);
+        $list->setPagination($users);
         return view('users.list')->with(compact('users','list'));
     }
 
@@ -170,7 +170,7 @@ class UserController extends Controller {
         $nameUser = null;
         if (!is_null($id)) $nameUser = $this->repo->find($id)->name;
         $activity = $this->listActivity($request,$id);
-        $list->setModel($activity); $list->setPrefixPage('_a');
+        $list->setPagination($activity); $list->setPrefixPage('_a');
         return view('users.activity')->with(compact('activity','list','nameUser'));
     }
 
@@ -194,7 +194,7 @@ class UserController extends Controller {
      */
     public function showSessions(Request $request, listGenerates $list, $id = null) {
         $sessions = $this->listSessions($request,$id);
-        $list->setModel($sessions); $list->setPrefixPage('_a');
+        $list->setPagination($sessions); $list->setPrefixPage('_a');
         return view('users.sessions')->with(compact('sessions','list'));
     }
 

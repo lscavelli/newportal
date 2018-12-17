@@ -15,7 +15,7 @@ class listGenerates
     public $attributes = [];
     public $customize = [];
     public $actions = [];
-    public $model;
+    public $paginator;
     public $sortFields = [];
     public $prefix_ = null;
     public $labelsList = [];
@@ -29,12 +29,12 @@ class listGenerates
     public $splitButtons = [];
     public $showActionsDefault = true;
 
-    public function __construct(LengthAwarePaginator $model=null) {
-        if ($model) $this->setModel($model);
+    public function __construct(LengthAwarePaginator $paginator=null) {
+        if ($paginator) $this->setPagination($paginator);
         $this->urlDelete = url(\Request::path());
     }
-    public function setModel(LengthAwarePaginator $model) {
-        $this->model = $model;
+    public function setPagination(LengthAwarePaginator $paginator) {
+        $this->paginator = $paginator;
         return $this;
     }
     public function columns(array $columns = []) {
@@ -134,7 +134,7 @@ class listGenerates
      * @return mixed
      */
     public function count() {
-        $count = $this->model->count();
+        $count = $this->paginator->count();
         return ($count<1 ? null: $count);
     }
     /**
@@ -142,7 +142,7 @@ class listGenerates
      * @return mixed
      */
     public function total() {
-        $total = $this->model->total();
+        $total = $this->paginator->total();
         return ($total<1 ? null: $total);
     }
 
@@ -152,7 +152,7 @@ class listGenerates
         if (!empty($viewp)) $view = $viewp;
         return View::make($view, [
             'list' => $this,
-            'model' => $this->model
+            'model' => $this->paginator
         ])->render();
     }
 
@@ -217,7 +217,7 @@ class listGenerates
     }
 
     public function appends(Array $data) {
-        $this->model->appends($data);
+        $this->paginator->appends($data);
         return $this;
     }
 
@@ -227,7 +227,7 @@ class listGenerates
      * @return $this
      */
     public function fragment($hf) {
-        $this->model->fragment($hf);
+        $this->paginator->fragment($hf);
         return $this;
     }
 }

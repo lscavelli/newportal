@@ -41,7 +41,7 @@ class VocabularyController extends Controller
      */
     public function index(Request $request, listGenerates $list)   {
         $Vocabularies = $this->rp->paginate($request);
-        $list->setModel($Vocabularies);
+        $list->setPagination($Vocabularies);
         return view('content.listVocabularies')->with(compact('Vocabularies','list'));
     }
 

@@ -19,7 +19,7 @@
                         <h3 class="box-title">{{ __('Organizzazioni diponibili') }}</h3>
                     </div>
                     {!!
-                        $list->setModel($filialDis)
+                        $list->setPagination($filialDis)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
@@ -50,7 +50,7 @@
 
                 <div class="box box-default">
                     {!!
-                         $list->setModel($filialAss)
+                         $list->setPagination($filialAss)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)

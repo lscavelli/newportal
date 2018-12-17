@@ -52,7 +52,7 @@ class pageController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $pages = $this->rp->paginate($request);
-        $list->setModel($pages);
+        $list->setPagination($pages);
         return view('content.listPage')->with(compact('pages','list'));
     }
 

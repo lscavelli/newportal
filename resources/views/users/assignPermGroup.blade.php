@@ -19,7 +19,7 @@
                         <h3 class="box-title">{{ __('Permessi diponibili') }}</h3>
                     </div>
                     {!!
-                        $list->setModel($permissionDis)
+                        $list->setPagination($permissionDis)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
@@ -51,7 +51,7 @@
 
                 <div class="box box-default">
                     {!!
-                         $list->setModel($permissionAss)
+                         $list->setPagination($permissionAss)
                             ->columns(['id','name'=>__('Nome'),'azioni'])
                             ->showActions(false)
                             ->showAll(false)
