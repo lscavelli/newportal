@@ -69,14 +69,13 @@ class listGenerates
         $this->showActionsDefault = $actions;
         return $this;
     }
-    public function actions(array $actions = []) {
-        $this->actions = array_merge($this->actions,$actions);
-        return $this;
-    }
 
-    public function onlyActions(array $actions = []) {
-        $this->actions = array_merge($this->actions,$actions);
-        $this->showActionsDefault(false);
+    public function actions($actions) {
+        if(is_array($actions)) {
+            $this->actions = array_merge($this->actions,$actions);
+        } elseif ($actions instanceof Closure) {
+            $this->actions['closure'] = $actions;
+        }
         return $this;
     }
 

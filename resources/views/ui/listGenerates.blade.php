@@ -83,30 +83,33 @@
                                     @endif
                                     @if(count($list->actions)>0)
                                         @foreach($list->actions as $actionUrl=>$actionLabel)
-                                            @if(is_array($actionLabel))
+                                            @if($actionUrl=='closure')
+                                                {!! call_user_func_array($actionLabel, array($row)) !!}
+                                                @continue
+                                            @elseif (is_array($actionLabel))
                                                 @can($actionLabel[1])
                                                         <?php $actionLabel = $actionLabel[0]; ?>
                                                 @else
                                                         @continue
                                                 @endcan
                                             @endif
-                                        <li><a href="
-                                    @if(starts_with($actionUrl, 'http'))
-                                            {{$actionUrl."/".$row['id']}}
+                                            <li><a href="
+                                            @if(starts_with($actionUrl, 'http'))
+                                                {{$actionUrl."/".$row['id']}}
                                             @elseif(is_numeric($actionUrl))
-                                            {{ url(Request::path(), $row['id']) }}
+                                                {{ url(Request::path(), $row['id']) }}
                                             @else
-                                            {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
+                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
                                             @endif
                                                     " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
-                    </td>
-                @endif
-            </tr>
-        @endforeach
+                                        @endforeach
+                                    @endif
+                                </ul>
+                            </div>
+                        </td>
+                    @endif
+                </tr>
+            @endforeach
         </tbody>
     </table>
     <!-- /fine table -->

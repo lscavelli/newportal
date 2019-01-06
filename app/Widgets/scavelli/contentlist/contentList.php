@@ -24,11 +24,11 @@ class contentList extends Widget {
     public function render() {
         if (empty($this->config('model_id'))) return;
 
-        $builder = $this->rp->getModel();
+        $builder = $this->rp->getModel()->newQuery();
 
         // considero solo i contenuti attivi
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        $builder = $builder->where('status_id',1);
+        $builder->where('status_id',1);
 
         // ordered
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -37,7 +37,7 @@ class contentList extends Widget {
             $dir = ['asc','desc'];
             $dirkey = (!is_null($this->config('dir'))) ? $this->config('dir') : 0;
             $ordkey = (!is_null($this->config('ord'))) ? $this->config('ord') : 0;
-            $builder = $builder->orderBy($ord[$ordkey], $dir[$dirkey]);
+            $builder->orderBy($ord[$ordkey], $dir[$dirkey]);
         }
 
         // inizializzo le variabili $categories e $tags
@@ -66,7 +66,7 @@ class contentList extends Widget {
                 }
                 if (!is_null($qwc)) {
                     // escludo il content web dell'URL dalla lista
-                    $builder = $builder->where('slug','<>',$qwc);
+                    $builder->where('slug','<>',$qwc);
 
                     // prelevo tutti i tag e le categorie del content
                     $content = $this->rp->findBySlug($qwc);
@@ -96,7 +96,7 @@ class contentList extends Widget {
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($tags) {
             foreach ($tags as $tag) {
-                $builder = $builder->whereHas('tags', function ($q) use ($tag) {
+                $builder->whereHas('tags', function ($q) use ($tag) {
                     $q->where('tag_id', '=', $tag['tag']);
                 });
             }
@@ -107,7 +107,7 @@ class contentList extends Widget {
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($categories) {
             foreach ($categories as $category) {
-                $builder = $builder->whereHas('categories', function ($q) use ($category) {
+                $builder->whereHas('categories', function ($q) use ($category) {
                     $q->where('category_id', $category['category']);
                 });
             }
@@ -116,13 +116,13 @@ class contentList extends Widget {
         // se il servizio è di tipo "content web" verifico se risultano impostati la struttura e il modello
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('structure_id')) {
-            $builder = $builder->where('structure_id',$this->config('structure_id'));
+            $builder->where('structure_id',$this->config('structure_id'));
         }
 
         // se l'url contiene author applico il filtro sull'autore
         // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         if ($this->config('comunication') and $this->request->has('author')) {
-            $builder = $builder->where('user_id',$this->request->author);
+            $builder->where('user_id',$this->request->author);
         }
 
         if ($this->config('sitemap') && is_null($this->theme)) {
@@ -140,13 +140,13 @@ class contentList extends Widget {
 
             if ($this->request->widgetid==$this->config('id')) {
                 if($this->request->has($this->config('feed.feed_format'))) {
-                    $builder = $builder->take($this->config('feed.feed_size'));
+                    $builder->take($this->config('feed.feed_size'));
                     $feed = $this->buildFeed($builder->get());
                     header("Content-Type: ".$this->conf['feedCtype']);
                     echo $feed;
                     exit;
                 } elseif ( $this->request->has('json') ) {
-                    $builder = $builder->take($this->config('feed.feed_size'));
+                    $builder->take($this->config('feed.feed_size'));
                     $feed = $this->buildFeedJson($builder->get());
                     header("Content-Type: application/json");
                     header("Access-Control-Allow-Origin: *");
