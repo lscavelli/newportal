@@ -83,7 +83,7 @@
                                     @endif
                                     @if(count($list->actions)>0)
                                         @foreach($list->actions as $actionUrl=>$actionLabel)
-                                            @if($actionUrl=='closure')
+                                            @if($actionUrl==='closure')
                                                 {!! call_user_func_array($actionLabel, array($row)) !!}
                                                 @continue
                                             @elseif (is_array($actionLabel))
