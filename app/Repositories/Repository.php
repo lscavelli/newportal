@@ -557,7 +557,8 @@ class Repository implements RepositoryInterface {
         } else {
             return;
         }
-        $service = $this->setModel(Service::class)->where('class',$class)->firstOrFail();
+        $service = $this->setModel(Service::class)->where('class',$class)->first();
+        if (is_null($service)) return null;
         return $service->vocabularies;
     }
 

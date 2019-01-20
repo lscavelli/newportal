@@ -1,5 +1,5 @@
 <div style="padding: 0px 15px 15px 15px">
-    <a href="#" class="btn btn-default btn-block selectFile" data-id="{!! $id !!}"><i class="fa fa-file"></i> {{ __($label) }}</a>
+    <a href="#" class="btn btn-default btn-block selectFile {{ implode(" ",$attributes) }}" data-id="{!! $id !!}"><i class="fa fa-file"></i> {{ __($label) }}</a>
 </div>
 
 @include('components.fileUploadWindow')
