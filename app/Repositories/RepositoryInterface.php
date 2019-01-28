@@ -54,5 +54,6 @@ interface RepositoryInterface {
     public function syncTags(EloquentModel $model, array $tags);
     public function saveCategories($id);
     public function listVocabularies($model);
+    public function optionsSel($id=null, $filters=null, $column='name', $key = 'id');
 
 }

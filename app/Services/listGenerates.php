@@ -70,12 +70,13 @@ class listGenerates
         return $this;
     }
 
-    public function actions($actions) {
+    public function actions($actions,$showActionsDefault = true) {
         if(is_array($actions)) {
             $this->actions = array_merge($this->actions,$actions);
         } elseif ($actions instanceof Closure) {
             $this->actions['closure'] = $actions;
         }
+        $this->showActionsDefault($showActionsDefault);
         return $this;
     }
 

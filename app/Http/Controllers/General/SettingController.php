@@ -12,6 +12,7 @@ use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
 use Validator;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Content\Page;
 
 
 class SettingController extends Controller {
@@ -42,9 +43,11 @@ class SettingController extends Controller {
     public function index()   {
         $action = "General\\SettingController@storeOrUpdate";
         $this->settings =  $this->rp->pluck('setting_value', 'setting_key')->all();
+        $pages = $this->rp->setModel(Page::class)->optionsSel(null,null,'name','slug');
         return view('general.setting')->with([
             'settings' => $this,
-            'action' => $action
+            'action' => $action,
+            'pages' => $pages
         ]);
     }
 
