@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return redirect("/welcome");
+    $defaultpage = array_get(cache('settings'), 'start_page') ?? 'welcome';
+    return redirect("/".$defaultpage );
 });
-
 Route::group(['prefix'=>'admin','middleware' => ['web', 'auth', '2fa']], function () {
 
     Route::get('api/listwidgets', "Content\\WidgetController@listWidgetDisp");
@@ -269,5 +269,5 @@ Route::group(['prefix' => 'lfm', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin|web).*)?'); //'([A-z\d-\/_.]+)?');
+Route::match(['get', 'post'],'{uri}','PublicPageController@getPage')->where('uri', '((?!admin|web|api).*)?'); //'([A-z\d-\/_.]+)?');
 //Route::get('{uri?}','PublicPageController@getPage');

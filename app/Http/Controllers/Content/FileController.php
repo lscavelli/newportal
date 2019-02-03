@@ -89,14 +89,14 @@ class FileController extends Controller {
         $fileThumbPath =  $file->getPath()."/".config('lfm.thumb_folder_name')."/".$file->file_name;
         if ($this->fs->exists($filePath)) {
             $this->fs->delete([$filePath,$fileThumbPath]);
-            if ($this->rp->delete($id)) {
-                $this->rp->getModel('App\Models\Content\Widget_page')
-                    ->join('widgets', 'widgets.id', '=', 'widgets_pages.widget_id')
-                    ->where('widgets.init','imageViewer')
-                    ->where('widgets_pages.setting', 'LIKE', '%'."\"file_id\":\"$id\"".'%')->delete();
+        }
+        if ($this->rp->delete($id)) {
+            $this->rp->getModel('App\Models\Content\Widget_page')
+                ->join('widgets', 'widgets.id', '=', 'widgets_pages.widget_id')
+                ->where('widgets.init','imageViewer')
+                ->where('widgets_pages.setting', 'LIKE', '%'."\"file_id\":\"$id\"".'%')->delete();
 
-                return redirect('/admin/files')->withSuccess('File cancellato correttamente');
-            }
+            return redirect('/admin/files')->withSuccess('File cancellato correttamente');
         }
     }
 

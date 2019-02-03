@@ -28,10 +28,12 @@ class listGenerates
     public $urlDelete = null;
     public $splitButtons = [];
     public $showActionsDefault = true;
+    public $actionsUrl = null;
 
     public function __construct(LengthAwarePaginator $paginator=null) {
         if ($paginator) $this->setPagination($paginator);
         $this->urlDelete = url(\Request::path());
+        $this->actionsUrl = \Request::path();
     }
     public function setPagination(LengthAwarePaginator $paginator) {
         $this->paginator = $paginator;
@@ -78,6 +80,14 @@ class listGenerates
         }
         $this->showActionsDefault($showActionsDefault);
         return $this;
+    }
+
+    public function setActionsUrl($url) {
+        $this->actionsUrl = $url;
+        return $this;
+    }
+    public function getActionsUrl() {
+        return $this->actionsUrl;
     }
 
     public function showButtonNew($showB=true, $path=null) {

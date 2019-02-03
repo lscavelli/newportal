@@ -24,13 +24,23 @@ return [
     ],
 
     'stato' => [
-        'Aperto',
-        'Chiuso',
-        'Sospeso',
-        'In lavorazione 20%',
-        'In lavorazione 40%',
-        'In lavorazione 60%',
-        'In lavorazione 80%'
-    ]
+        1 =>'Aperto',
+        2 =>'Chiuso',
+        3 =>'Sospeso',
+        4 =>'In lavorazione 20%',
+        5 =>'In lavorazione 40%',
+        6 =>'In lavorazione 60%',
+        7 =>'In lavorazione 80%'
+    ],
+
+    'stato-label' => [
+        1 =>'label-success',
+        2 =>'label-danger',
+        3 =>'label-warning',
+        4 =>'label-success',
+        5 =>'label-success',
+        6 =>'label-success',
+        7 =>'label-success'
+    ],
 
 ];

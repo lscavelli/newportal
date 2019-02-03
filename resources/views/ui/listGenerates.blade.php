@@ -4,7 +4,7 @@
 <div class="box-body">
     <div class="col-sm-3">
         @if($list->showButtonNew)
-            <a href="{{ url(Request::path().'/create') }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
+            <a href="{{ url($list->getActionsUrl().'/create') }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
         @endif
         @if (count($list->splitButtons)>0)
             <div class="btn-group">
@@ -78,7 +78,7 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     @if($list->showActionsDefault)
-                                        <li><a href="{{ url(Request::path().'/'.$row['id'], 'edit') }}">Edit</a></li>
+                                        <li><a href="{{ url($list->getActionsUrl().'/'.$row['id'], 'edit') }}">Edit</a></li>
                                         <li><a href="#" class="delete" data-id="{{$row['id']}}">Delete</a></li>
                                     @endif
                                     @if(count($list->actions)>0)
@@ -97,9 +97,9 @@
                                             @if(starts_with($actionUrl, 'http'))
                                                 {{$actionUrl."/".$row['id']}}
                                             @elseif(is_numeric($actionUrl))
-                                                {{ url(Request::path(), $row['id']) }}
+                                                {{ url($list->getActionsUrl(), $row['id']) }}
                                             @else
-                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
+                                                {{ url($list->getActionsUrl().'/'.$actionUrl, $row['id']) }}
                                             @endif
                                                     " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
                                         @endforeach
