@@ -230,7 +230,7 @@ class User extends Authenticatable
         $image = config('newportal.path_upload_user')."/".$this->avatar;
         $imagePath = sprintf("%s%s", $path, $image);
         if (! $this->avatar or !file_exists($imagePath)) {
-            return asset('storage/img/general/avatar.png');
+            return asset('storage/images/general/avatar.png');
         }
         return asset('storage/'.$image);
     }

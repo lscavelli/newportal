@@ -19,7 +19,7 @@ return [
         4   =>  'Bandito'
     ],
 
-    'path_upload_user' => 'img/upload/users',
+    'path_upload_user' => 'images/upload/users',
 
     /*
     |--------------------------------------------------------------------------
@@ -131,7 +131,7 @@ return [
     | dir per l'upload delle immagini dei web content - sistemazione temporanea
     |
     */
-    'path_images_wc' => 'img/webcontent',
+    'path_images_wc' => 'images/webcontent',
 
 
     /*

@@ -13,7 +13,7 @@
             <hr>
             <div class="clear_both">
                 <div class="col img">
-                    <img src="{{ asset("storage/img/general/2fa_download.png") }}" style="width: 100%; max-width: 200px">
+                    <img src="{{ asset("storage/images/general/2fa_download.png") }}" style="width: 100%; max-width: 200px">
                 </div>
                 <div class="col des">
                     <p>Passaggio 1</p>
@@ -37,7 +37,7 @@
             </div>
             <div class="clear_both">
                 <div class="col img">
-                    <img src="{{ asset("storage/img/general/google-2fa.png") }}" style="width: 100%; max-width: 200px">
+                    <img src="{{ asset("storage/images/general/google-2fa.png") }}" style="width: 100%; max-width: 200px">
                 </div>
                 <div class="col des">
                     <p>Passaggio 3</p>

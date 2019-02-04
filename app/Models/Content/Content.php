@@ -44,7 +44,7 @@ class Content extends Model
      */
     public function getImage() {
         if (! $this->image ) {
-            return asset('storage/img/general/webcontent.jpg');
+            return asset('storage/images/general/webcontent.jpg');
         } elseif (starts_with($this->image,['http','https'])) {
             return $this->image;
         } else {
