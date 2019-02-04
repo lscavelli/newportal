@@ -1,7 +1,7 @@
 {{--dd($model)--}}
 <!-- .header-list -->
 @if($list->showAll and ($list->showButtonNew or $list->showSearch))
-<div class="box-body">
+<div class="box-header">
     <div class="col-sm-3">
         @if($list->showButtonNew)
             <a href="{{ url($list->getActionsUrl().'/create') }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
@@ -110,36 +110,36 @@
                     @endif
                 </tr>
             @endforeach
-        </tbody>
-    </table>
-    <!-- /fine table -->
-</div>
+            </tbody>
+        </table>
+        <!-- /fine table -->
+    </div>
 </div>
 <!-- .footer-list -->
-<div class="box-body">
-<div class="col-sm-5">
-    @if($list->showAll and $list->showXpage)
-    <div class="dataTables_length">
-        Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
-        <label>
-            <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
-                @csrf
-                {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
-                @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
-                    {!! Form::hidden($key,$value) !!}
-                @endforeach
-            </form>
-        </label>
+<div class="box-footer clearfix">
+    <div class="col-sm-5">
+        @if($list->showAll and $list->showXpage)
+        <div class="dataTables_length">
+            Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
+            <label>
+                <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
+                    @csrf
+                    {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
+                    @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
+                        {!! Form::hidden($key,$value) !!}
+                    @endforeach
+                </form>
+            </label>
+        </div>
+        @endif
     </div>
-    @endif
-</div>
-<div class="col-sm-7">
-    <div class='pull-right' Style="margin-top: -20px;">
-        {{
-            $model->appends(array_except(\Request::all(),['_token','page']))->links()
-        }}
+    <div class="col-sm-7">
+        <div class='pull-right' Style="margin-top: -20px;">
+            {{
+                $model->appends(array_except(\Request::all(),['_token','page']))->links()
+            }}
+        </div>
     </div>
-</div>
 </div>
 @include('ui.confirmdelete')
 @if($list->showAll)

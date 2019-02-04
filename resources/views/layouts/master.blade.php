@@ -16,7 +16,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset("/node_modules/admin-lte/dist/css/AdminLTE.min.css") }}">
   <!-- AdminLTE Skins -->
-  <link rel="stylesheet" href="{{ asset("/node_modules/admin-lte/dist/css/skins/skin-blue.min.css") }}">
+  <link rel="stylesheet" href="{{ asset("/node_modules/admin-lte/dist/css/skins/skin-black.min.css") }}">
   <link rel="stylesheet" href="{{ asset("/css/custom.css") }}">
   @yield('style')
   @stack('style')
@@ -27,7 +27,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
   @yield('body')
 </body>
 <!-- REQUIRED JS SCRIPTS -->
