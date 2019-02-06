@@ -4,7 +4,7 @@
         {{ Form::label('categories'.$vocabulary->id.'[]', __($vocabulary->name), ['class' => 'col-sm-2 control-label']) }}
         <div class="col-sm-10">
             {!! Form::select('categories'.$vocabulary->id.'[]', $vocabulary->categories()->pluck('name','id') , null, array_merge(['class' => "form-control select2-multi multicat", 'multiple' => 'multiple', 'style'=>'width:80%;', 'id'=>'categories'.$vocabulary->id],$attributes)) !!}
-            <button type="button" class="btn btn-info selbut" data-vid="{{ $vocabulary->id }}">Seleziona</button>
+            <button type="button" class="btn btn-default selbut" data-vid="{{ $vocabulary->id }}">Selezione</button>
         </div>
     </div>
 @endforeach

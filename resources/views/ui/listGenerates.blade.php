@@ -4,12 +4,12 @@
 <div class="box-header">
     <div class="col-sm-3">
         @if($list->showButtonNew)
-            <a href="{{ url($list->getActionsUrl().'/create') }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
+            <a href="{{ url($list->getActionsUrl().'/create') }}" class="btn btn-{{ $list->colorButton }} btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
         @endif
         @if (count($list->splitButtons)>0)
             <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-sm">Nuovo</button>
-                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-{{ $list->colorButton }} btn-sm">Nuovo</button>
+                <button type="button" class="btn btn-{{ $list->colorButton }} dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -31,7 +31,7 @@
             <div class="input-group input-group-sm">
                 <input id="{{$list->prefix_}}keySearch" name = "{{$list->prefix_}}keySearch" type="text" class="form-control validate" value="{{Request::input($list->prefix_.'keySearch')}}" placeholder="Chiave di ricerca">
                 <span class="input-group-btn">
-                  <button type="submit" class="btn btn-primary btn-flat">Cerca</button>
+                  <button type="submit" class="btn btn-{{ $list->colorButton }} btn-flat">Cerca</button>
                 </span>
             </div>
         </form>
@@ -73,7 +73,7 @@
                     @if($list->showActions and $list->showAll)
                         <td>
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                                <button type="button" class="btn btn-{{ $list->colorButton }} btn-xs dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-fire"></i> Azioni <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">

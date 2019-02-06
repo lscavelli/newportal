@@ -29,12 +29,19 @@ class listGenerates
     public $splitButtons = [];
     public $showActionsDefault = true;
     public $actionsUrl = null;
+    public $colorButton = 'primary';
 
     public function __construct(LengthAwarePaginator $paginator=null) {
         if ($paginator) $this->setPagination($paginator);
         $this->urlDelete = url(\Request::path());
         $this->actionsUrl = \Request::path();
     }
+
+    public function setColorButton($color) {
+        $this->colorButton = $color;
+        return $this;
+    }
+
     public function setPagination(LengthAwarePaginator $paginator) {
         $this->paginator = $paginator;
         return $this;

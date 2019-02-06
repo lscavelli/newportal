@@ -4,7 +4,7 @@
         <li @if(is_array($item))
                {{--dd($item)--}}
                 @if($nav->isSelected($item))class="active"@endif>
-                <a href="{{ $item['url'] ?? '#' }}" @if(isset($item['class']))class="{{$item['class']}}"@endif><i class="fa {{ $item['icon'] ?? "fa-circle-o"}}"></i><span>{{ $title }}</span>
+                <a href="{{ $item['url'] ?? '#' }}" @if(isset($item['class']))class="{{$item['class']}}"@endif><i class="fa {{ $item['icon'] ?? "fa-circle-o"}}" style="color: gray"></i><span>{{ $title }}</span>
                 @if(isset($item['submenu']) and count($item['submenu'])>0)
                     <span class="pull-right-container">
                          <i class="fa fa-angle-left pull-right"></i>
