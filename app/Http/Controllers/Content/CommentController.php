@@ -10,6 +10,7 @@ use App\Http\Requests;
 use Validator;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
+use App\Models\Content\Service;
 
 class CommentController extends Controller {
     private $rp;
@@ -143,8 +144,12 @@ class CommentController extends Controller {
      * @return mixed
      */
     private function getService($service) {
-        $flip = array_flip(config('newportal.services'));
-        return $this->rp->setModel(array_get(array_change_key_case($flip, CASE_LOWER),$service));
+        //$flip = array_flip(config('newportal.services'));
+        //return $this->rp->setModel(array_get(array_change_key_case($flip, CASE_LOWER),$service));
+        $class = $this->rp->setModel(Service::class)->where('name',$service)->pluck('class')->first();
+        return $this->rp->setModel($class);
     }
+
+
 
 }
