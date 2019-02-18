@@ -25,6 +25,7 @@ class Theme {
     private   $namespaceLayout;
     protected $config = array();
     private $isadmin = false;
+    public $page;
 
 
     public function __construct(Filesystem $files) {
@@ -427,6 +428,26 @@ class Theme {
             return false;
         }
         return true;
+    }
+
+    /**
+     * imposta la pagina corrente
+     * @param $page
+     */
+    public function setPageCurrent($page) {
+        $this->page = $page;
+    }
+
+    /**
+     * chiama il metodo passato come argomento della classe $class
+     * @param $class
+     * @param $method
+     * @return mixed
+     */
+    public function call($class,$method) {
+        if (class_exists($class)) {
+            return app()->make($class)->$method();
+        }
     }
 
 }
