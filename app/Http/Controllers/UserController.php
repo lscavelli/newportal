@@ -90,6 +90,7 @@ class UserController extends Controller {
     public function update($id, Request $request)  {
         $data = $request->all(); $data['id'] = $id;
         if (empty($data['password'])) unset($data['password']); //non la richiede se è in update
+        if (empty($data['username'])) unset($data['username']); //non la richiede se è in update
 
         // se non si dispone del permesso di aggiornamento utenti l
         // l'email non viene validata ne aggiornata

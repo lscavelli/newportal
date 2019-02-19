@@ -24,13 +24,18 @@ class Theme {
     protected $frames = array();
     private   $namespaceLayout;
     protected $config = array();
-    private $isadmin = false;
+    private $isAuthorized = false;
     public $page;
 
 
     public function __construct(Filesystem $files) {
         $this->files = $files;
-        $this->isadmin = \Auth::check(); //da sostituire con i permessi
+    }
+
+    private function isAuthorized() {
+        if(is_null($this->isAuthorized))
+            $this->isAuthorized = auth()->user()->can('widget-control');
+        return $this->isAuthorized;
     }
 
     public function getThemeName() {
@@ -273,7 +278,7 @@ class Theme {
         if (!empty($data['css'])) $this->addCss($data['css']);
         if (!empty($data['js'])) $this->addJs($data['js']);
         $content = View::make($pathTemplate, $data)->render();
-        if ($this->isadmin) {
+        if ($this->isAuthorized()) {
             $div = "<div
             id = 'ctrl_{$data["id"]}'
             class='fld-extensive";
@@ -410,7 +415,7 @@ class Theme {
                 $widgets .= $and . implode("\r\n",$items); $and = "\r\n";
             }
         }
-        if ($this->isadmin) {$widgets = "<div class='droppedArea' data-frame='$frame' data-page='{$this->arguments["id"]}'>$widgets</div>";}
+        if ($this->isAuthorized()) {$widgets = "<div class='droppedArea' data-frame='$frame' data-page='{$this->arguments["id"]}'>$widgets</div>";}
         return $widgets;
     }
 
