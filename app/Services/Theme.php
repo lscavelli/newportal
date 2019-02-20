@@ -24,7 +24,6 @@ class Theme {
     protected $frames = array();
     private   $namespaceLayout;
     protected $config = array();
-    private $isAuthorized = false;
     public $page;
 
 
@@ -33,9 +32,7 @@ class Theme {
     }
 
     private function isAuthorized() {
-        if(is_null($this->isAuthorized))
-            $this->isAuthorized = auth()->user()->can('widget-control');
-        return $this->isAuthorized;
+        return (auth()->check() && auth()->user()->can('widget-control'));
     }
 
     public function getThemeName() {

@@ -43,5 +43,10 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'delete-content',
             'description' => 'Consente la cancellazione di un contenuto per il service webContent'
         ]);
+        Permission::create([
+            'name' => 'Controllo dei widgets',
+            'slug' => 'widget-control',
+            'description' => 'Consente di aggiungere, cancellare o modificare i widget delle pagine'
+        ]);
     }
 }

@@ -21,4 +21,26 @@ class Helpers {
         return $code;
     }
 
+    /**
+     * Restituisce un sommario senza troncare il testo
+     * @param $testo
+     * @param string $num_char
+     * @param bool $strip_tags
+     * @param string $pos
+     * @return bool|string
+     */
+    public static function sommario($testo, $num_char='255', $strip_tags=true, $pos=' ') {
+        if ($strip_tags) $testo = strip_tags($testo);
+        $lung_str= strlen($testo);
+        if ($lung_str<$num_char)
+            return $testo;
+        else {
+            //$voce= "<strong>".$voce."</strong>";
+            $testo=substr($testo,0,$num_char);
+            $spazio_bianco=strrpos($testo,$pos);
+            $testo_1=substr($testo,0,$spazio_bianco);
+            return $testo_1."...";
+        }
+    }
+
 }

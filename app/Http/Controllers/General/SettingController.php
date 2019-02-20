@@ -32,7 +32,7 @@ class SettingController extends Controller {
      */
     private function validator(array $data)   {
         return Validator::make($data, [
-            'open_registration' => 'required|boolean'
+            //'open_registration' => 'required|boolean'
         ]);
     }
 
@@ -80,7 +80,7 @@ class SettingController extends Controller {
         }
         $updateSettings = $this->rp->pluck('setting_value', 'setting_key')->all();
         Cache::forever('settings', $updateSettings);
-        return redirect()->route('settings')->withSuccess('Impostazioni registrate correttamente.');
+        return redirect()->back()->withSuccess('Impostazioni registrate correttamente.');
     }
 
     /**
