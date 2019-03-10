@@ -19,8 +19,8 @@
                     ->sortFields(['id','name','structure_id','updated_at'])
                     ->actions([url('/admin/models/duplicates')=>'Duplica modello'])
                     ->customizes('type_id',function($row){
-                        $color = ($row['type_id']==1) ? 'label-success' : 'label-warning';
-                        $tipo = ($row['type_id']==1) ? 'Base' : 'Lista';
+                        $tipo = ['Base','Lista'][$row->type_id];
+                        $color = ['label-warning','label-success'][$row->type_id];
                         return "<span class=\"label $color\">".$tipo."</span>";
                     })
                     ->customizes('structure_id',function($row) {

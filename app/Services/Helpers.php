@@ -9,7 +9,7 @@ class Helpers {
      * @param int $length
      * @return null|string
      */
-    function makeCode($length=6) {
+    public static function makeCode($length=6) {
         // Sono stati eliminati l,I,O,1 e 0 perchè generano confusione
         $allow_char = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
         $len = strlen($allow_char);

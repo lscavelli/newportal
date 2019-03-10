@@ -154,7 +154,7 @@
         $(".delete").click(function() {
             $('#confirmdelete').modal('toggle');
             $('.modal-body p').text("Sei sicuro di voler eliminare l'elemento id "+$(this).data('id'));
-            $('#confirmForm').prop('action', '{{ $list->urlDelete }}/' + $(this).data('id'));
+            $('#confirmForm').prop('action', '{{ $list->getUrlDelete() }}/' + $(this).data('id'));
         });
     </script>
 @stop

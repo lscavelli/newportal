@@ -91,6 +91,7 @@ class listGenerates
 
     public function setActionsUrl($url) {
         $this->actionsUrl = $url;
+        $this->setUrlDelete($url);
         return $this;
     }
     public function getActionsUrl() {
