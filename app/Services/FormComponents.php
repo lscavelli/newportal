@@ -26,6 +26,7 @@ class FormComponents
         $this->form->component('slFileUpload', 'components.fileUpload', ['label', 'id', 'action','attributes' => []]);
         $this->form->component('slColorPicker', 'components.colorPicker', ['name', 'label', 'id', 'value' => null, 'attributes' => []]);
         $this->form->component('slSeparator', 'components.separator', ['label']);
+        $this->form->component('slCkeditor', 'components.ckeditor', ['name', 'label', 'value' => null, 'attributes' => []]);
     }
 }
 
