@@ -70,6 +70,7 @@ class ContentController extends Controller {
      * @return \Illuminate\Contracts\View\View
      */
     public function create($structureId=null)   {
+        Config()->set('file-manager.leftDisk', 'images');
         if (empty($structureId)) $structureId = 1; //structure default
         $structure = $this->rp->setModel(Structure::class)->find($structureId);
         $form = new FormGenerates($structure->content);
