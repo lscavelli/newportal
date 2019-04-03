@@ -56,7 +56,7 @@ class navigationCat extends Widget {
                 $this->menu[$category->name]['submenu'] = $this->submenu($category->children);
             } else {
                 $url = (!empty($this->config['inpage'])) ?  url($this->config['inpage']) : url()->current();
-                $this->menu[$category->name]['url'] = $url.'?'.http_build_query(['category'=>$category->id]);
+                $this->menu[$category->name]['url'] = $url.'?'.http_build_query(array_merge($this->request->all(),['category'=>$category->id]));
             }
             $nav->add($this->menu);
         }
@@ -70,7 +70,7 @@ class navigationCat extends Widget {
         foreach($categories as $category) {
             //$arr += [$category->name=>$category->id];
             $url = (!empty($this->config['inpage'])) ?  url($this->config['inpage']) : url()->current();
-            $arr += [$category->name=>$url.'?'.http_build_query(['category'=>$category->id])];
+            $arr += [$category->name=>$url.'?'.http_build_query(array_merge($this->request->all(),['category'=>$category->id]))];
             if (count($category->children)) {
                 $arr[$category->name]['submenu'] = $this->submenu($category->children);
             }

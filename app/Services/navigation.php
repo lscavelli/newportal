@@ -120,10 +120,11 @@ class Navigation {
      */
     private function checkUrl($url) {
         //return str_is(url($this->prefix.$url).'*',\Request::fullUrl());
-        if (\Request::has('category') and $cat=strstr($url,'category=')){
-            return \Request::input('category') == explode("=",$cat)[1];
-        } elseif (\Request::has('tag') and $tag=strstr($url,'tag=')){
-            return \Request::input('tag') == explode("=",$tag)[1];
+
+        if (\Request::has('category') and preg_match("/category=([0-9]+)&?/i", $url, $cat)) {     //$cat=strstr($url,'category=')){ explode("=",$cat)[1];
+            return \Request::input('category') == $cat[1];
+        } elseif (\Request::has('tag') and preg_match("/tag=([0-9]+)&?/i", $url, $tag)) {
+            return \Request::input('tag') == $tag[1];
         }
         $slash = null; $segment = ($this->prefix) ? 2 : 1;
         if (starts_with($url, '/')) $slash = "/";

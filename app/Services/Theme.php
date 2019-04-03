@@ -181,7 +181,7 @@ class Theme {
             case 'js' :
             case 'script' : {
                 if (!isset($this->_js[$position])) $this->_js[$position] = null;
-                $this->_js[$position] =  $source. "\n";
+                $this->_js[$position] .=  $source. "\n";
             } break;
             case 'css' :
             case 'style' :
@@ -208,9 +208,12 @@ class Theme {
      */
     private function addExAsset($file,$type,$index) {
         $file = trim($file);
-        $dir = $this->getPathAsset()."$type/";
+        $pathAsset = $this->getPathAsset();
+        $dir = $pathAsset."$type/";
         if (file_exists($dir.$file)) {
-            $file = $dir.$file;
+            $file = $this->asset("$type/".$file);
+        } elseif (file_exists($pathAsset.$file)) {
+            $file = $this->asset($file);
         }
         if (!empty($file)) {
             $type = '_ex'.$type;
