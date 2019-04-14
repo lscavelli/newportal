@@ -1,8 +1,9 @@
 <?php
 
-namespace app\Services;
+namespace App\Services;
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class Navigation {
 
@@ -119,6 +120,7 @@ class Navigation {
      * @return bool
      */
     private function checkUrl($url) {
+
         //return str_is(url($this->prefix.$url).'*',\Request::fullUrl());
 
         if (\Request::has('category') and preg_match("/category=([0-9]+)&?/i", $url, $cat)) {     //$cat=strstr($url,'category=')){ explode("=",$cat)[1];
@@ -127,8 +129,13 @@ class Navigation {
             return \Request::input('tag') == $tag[1];
         }
         $slash = null; $segment = ($this->prefix) ? 2 : 1;
-        if (starts_with($url, '/')) $slash = "/";
-        return $url === $slash.\Request::segment($segment);
+        $confr = \Request::segment($segment);
+        if (Str::startsWith($url, '/')) {
+            $slash = "/";
+        } elseif (Str::startsWith($url, 'http')) {
+            $confr = url($confr);
+        }
+        return $url === $slash.$confr;
     }
 
     /** Controlla se esiste un discendente selezionato (attivo anche il parent)
@@ -143,7 +150,4 @@ class Navigation {
         }
         return false;
     }
-
-
-
 }

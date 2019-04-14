@@ -163,14 +163,32 @@ class User extends Authenticatable
     }
 
     /**
-     * Verifica se si possiede il ruoo passato come argomento
-     * @param $role
-     * @return mixed
+     * Verifica se si possiede il ruolo passato come argomento
+     * @param $roles
+     * @param string $key
+     * @return bool
      */
-    public function hasRole($role) {
+    public function hasRole($roles,$key='slug') {
+        if (is_string($roles) or is_numeric($roles)) {
+            return $this->listRoles()->contains($key,$roles);
+        }
+        if ($roles instanceof Role) {
+            return $this->listRoles()->contains($key, $roles->slug);
+        }
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->hasRole($role,$key)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+
         //$roles = is_array($roles) ? $roles : [$roles];
         //array_push($roles, config('newportal.super_admin'));
-        return $this->listRoles()->contains('slug', $role);
+        // ^^^^
+        // return $this->listRoles()->contains('slug', $role);
+        // ^^^^
         //if ($this->listRoles()->where('slug',$role)->first() { return true; }
         //return $this->listRoles()->where('slug', $roleSlug)->count() == 1;
     }
