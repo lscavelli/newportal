@@ -160,9 +160,12 @@ class Repository implements RepositoryInterface {
         if(empty($slug)) {
             $slug = \Request::has('name')? \Request::input('name'):'';
         }
-        $slug = str_slug($slug, "-");
+        $slug = str::slug($slug, "-");
         $allSlugs = $this->getModel()->where('slug', 'like', $slug.'%')->where('id', '<>', $id)->get(['slug']);
-        if (! $allSlugs->contains('slug', $slug)){
+
+        $istPage = $this->model instanceof Page;
+
+        if (! $allSlugs->contains('slug', $slug) && (!$istPage or ($istPage && !in_array($slug, ['admin','web','api'])))){
             return $slug;
         }
         $i=1;
