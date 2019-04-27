@@ -311,6 +311,7 @@ class pageController extends Controller {
         $page = $this->rp->setModel(Page::class)->find($idPage);
         $widget = $page->widgets()->wherepivot('id', $idPivot)->first();
         $className = "App\\".config('newportal.widgets.namespace')."\\".$widget->path."\\".$widget->init;
+        $theme->setTheme($page->theme);
         if (class_exists($className)) {
             $init = new $className($this->rp,$theme);
             return $init->configWidget($widget);

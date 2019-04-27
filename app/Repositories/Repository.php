@@ -438,7 +438,7 @@ class Repository implements RepositoryInterface {
      * @param $id
      * @return array
      */
-    public function optionsSel($id=null, $filters=null, $column='name', $key = 'id') {
+    public function optionsSel($id=null, $filters=null, $column='name', $keye = 'id') {
         if (!is_null($id)) {
             // Escludo tutti i discendenti
             $IdDescendants = $this->getIdDescendants($id);
@@ -452,7 +452,7 @@ class Repository implements RepositoryInterface {
                 $this->where($key, $val);
             }
         }
-        return [null=>null] + $this->pluck($column,$key)->toArray();
+        return [null=>null] + $this->pluck($column,$keye)->toArray();
     }
 
     /**

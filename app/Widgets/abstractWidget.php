@@ -90,7 +90,7 @@ abstract class abstractWidget {
      * @return string
      */
     public function getPath() {
-        return strtolower(str_replace(app_path(),'',$this->getPathClass()))."/";
+        return strtolower(str_replace(app_path().'/','',$this->getPathClass()))."/";
     }
 
     private function getPathClass() {
@@ -107,22 +107,30 @@ abstract class abstractWidget {
 
     /**
      * mostra le view (list) contenute nella directory view della widget
+     * @param bool $isList
      * @return array
-     * @throws ThemeException
      */
-    public function listView() {
+    public function listView($isList=true) {
         $path = $this->getPathClass()."/views";
         if (!is_dir($path)) {
             throw new ThemeException("la directory dei template non esiste");
         }
+        $pathTheme = $this->theme->getPath().$this->getPath();
         $files = File::allFiles($path);
+        $files2 = File::allFiles($pathTheme);
+        $files = array_merge($files,$files2);
         $view = [""=>""];
         foreach ($files as $file) {
             $file = substr(basename($file), 0, -10); //remove .blade.php
-            if (starts_with($file,'list')) {
+            if ($isList) {
+                if(starts_with($file,'list')) {
+                    $view[$file] = $file;
+                }
+            } else {
                 $view[$file] = $file;
             }
         }
+        dd($view);
         return $view;
     }
 
