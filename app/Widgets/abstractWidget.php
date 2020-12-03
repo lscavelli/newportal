@@ -90,7 +90,7 @@ abstract class abstractWidget {
      * @return string
      */
     public function getPath() {
-        return strtolower(str_replace(app_path().'/','',$this->getPathClass()))."/";
+        return strtolower(str_replace(app_path(),'',$this->getPathClass()))."/"; //app_path().'/'
     }
 
     private function getPathClass() {

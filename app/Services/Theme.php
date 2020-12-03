@@ -210,11 +210,15 @@ class Theme {
         $file = trim($file);
         $pathAsset = $this->getPathAsset();
         $dir = $pathAsset."$type/";
+
+        // $dir.$file => /var/www/newportal/public/themes/default/assets/js/widgets/scavelli/webcontent/js/socialshare.js
         if (file_exists($dir.$file)) {
             $file = $this->asset("$type/".$file);
+        // $pathAsset.$file => var/www/newportal/public/themes/default/assets/widgets/scavelli/webcontent/js/socialshare.js
         } elseif (file_exists($pathAsset.$file)) {
             $file = $this->asset($file);
         }
+
         if (!empty($file)) {
             $type = '_ex'.$type;
             //if (!isset($this->$type[$index])) $this->$type[$index] = NULL;
