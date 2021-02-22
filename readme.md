@@ -40,16 +40,16 @@ Created and maintained by LFG Scavelli<br /><br />
 
 ## To know more
 
-- Web site: http://newportalclub.com<br />
-- All Features: http://newportalclub.com/features<br />
-- Changelog: http://newportalclub.com/changelog<br />
-- Video: http://newportalclub.com/video<br />
-- Installation: http://newportalclub.com/installation<br />
-- Help on Gitter: https://gitter.im/newportalclub/help<br />
+- Web site: http://newportalcms.com<br />
+- All Features: http://newportalcms.com/features<br />
+- Changelog: http://newportalcms.com/changelog<br />
+- Video: http://newportalcms.com/video<br />
+- Installation: http://newportalcms.com/installation<br />
+- Help on Gitter: https://gitter.im/newportalcms/help<br />
 - Documentation under costruction http://newportal.readthedocs.io/it/latest/
 
 ## Author Newportal
 
 - LFG Scavelli
 - newportalclub@gmail.com
-- Contact: http://newportalclub.com/welcome#contact
+- Contact: http://newportalcms.com/welcome#contact
