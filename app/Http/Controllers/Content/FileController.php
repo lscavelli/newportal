@@ -6,6 +6,7 @@ use App\Services\listGenerates;
 use App\Models\Content\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Arr;
 use Validator;
 use App\Repositories\RepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -43,8 +44,46 @@ class FileController extends Controller {
      */
     public function index(Request $request, listGenerates $list) {
         $files = $this->rp->paginate($request);
+        session()->forget('product');
         $list->setPagination($files);
-        return view('content.listFile')->with(compact('$files','list'));
+        return view('content.listFile')->with(compact('files','list'));
+    }
+
+    /**
+     * Mostra il form per la creazione del file
+     * @return bool|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function create()
+    {
+        $file = new File();
+        return view('content.editFile', compact('file'));
+    }
+
+    /**
+     * Salva il file nel database dopo aver validato i dati
+     * @param Request $request
+     * @param Filesystem $fs
+     * @return bool|\Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request, Filesystem $fs)
+    {
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+        $data['username'] = auth()->user()->username;
+        if (!$request->has('path'))
+            $data['path'] = config('shop.path-general-image');
+
+        $data = $this->makeFile($data,$request);
+        $this->validator($data)->validate();
+
+        $file = $this->rp->create($data);
+
+        // per consentire alla funzione di ritorno di eseguire delle operazioni sul file
+        if(config('shop.return_session_file') && (strpos($request->get('return'), 'admin/files') !== true)) {
+            $request->session()->put('shop_id_file',$file->id);
+        }
+
+        return redirect($request->get('return'))->withSuccess('File aggiunto correttamente.');
     }
 
     /**
@@ -67,12 +106,13 @@ class FileController extends Controller {
      * @param $id
      * @return mixed
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request, Filesystem $fs)
     {
         $data = $request->all(); $data['id'] = $id;
+        $data = $this->makeFile($data,$request);
         $this->validator($data)->validate();
         if ($this->rp->update($id,$data)) {
-            return redirect('/admin/files')->withSuccess('File modificato correttamente.');
+            return redirect($request->get('return'))->withSuccess('File modificato correttamente.');
         }
     }
 
@@ -96,7 +136,7 @@ class FileController extends Controller {
                 ->where('widgets.init','imageViewer')
                 ->where('widgets_pages.setting', 'LIKE', '%'."\"file_id\":\"$id\"".'%')->delete();
 
-            return redirect('/admin/files')->withSuccess('File cancellato correttamente');
+            return redirect(request()->get('return'))->withSuccess('File cancellato correttamente');
         }
     }
 
@@ -129,42 +169,46 @@ class FileController extends Controller {
      */
     public function saveCategories($id) {
         $this->rp->saveCategories($id);
-        return redirect('admin/files')->withSuccess('File aggiornato correttamente');
+        return redirect(request()->get('return'))->withSuccess('File aggiornato correttamente');
     }
 
-    /**
-     * Sostituisce il file
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function replace($id, Request $request) {
-        $file = $this->rp->find($id);
-        $data['avatar'] = null;
+
+    private function makeFile($data, Request $request) {
+
         if ($request->file('fileUploaded')) {
-            $filePath = $file->getPath()."/".$file->file_name;
-            $fileThumbPath =  $file->getPath()."/".config('lfm.thumb_folder_name')."/".$file->file_name;
+
+            if (!empty($data['id'])) {
+                $file = $this->rp->find($data['id']);
+                $fullpath = $file->getPath();
+                $path = $file->path;
+            } else {
+                $fullpath = storage_path('app/public')."/".config('shop.path-general-image');
+                $path = config('shop.path-general-image');
+            }
+
+            $data['file_name'] = $request->fileUploaded->getClientOriginalName();
+            if(empty($data['name'])) $data['name'] = $data['file_name'];
+            $filePath = $fullpath."/".$data['file_name'];
+            $fileThumbPath =  $fullpath."/".config('shop.thumb_folder_name')."/".$data['file_name'];
+
             if ($this->fs->exists($filePath)) {
+                // sovrascrivo di default ?
                 $this->fs->delete([$filePath, $fileThumbPath]);
-                //$this->rp->delete($id);
-                $data['file_name'] = $request->fileUploaded->getClientOriginalName();
-                $data['mime_type'] = $request->fileUploaded->getMimeType();
-                $data['extension'] = $request->fileUploaded->guessExtension();
-                $data['size'] = $request->fileUploaded->getClientSize();
-                $data['user_id'] = auth()->user()->id;
-                $data['username'] = auth()->user()->username;
-                $data['id'] = $id;
-                $this->validator($data)->validate();
-                if ($this->rp->update($id, $data)) {
-                    $request->fileUploaded->move($file->getPath()."/",$data['file_name']);
-                    if ($this->isImage($data['mime_type'])) {
-                        $this->makeThumb($file->getPath()."/",$data['file_name']);
-                    }
-                    return redirect('/admin/files/' . $file->id . "/edit")->withSuccess('File sostituito correttamente');
-                }
+            }
+
+            $data['slug'] = $this->rp->setModel(File::class)->makeSlug($data['file_name']);
+            if (!isset($data['path'])) $data['path'] = $path;
+            $data['mime_type'] = $request->fileUploaded->getMimeType();
+            $data['extension'] = $request->fileUploaded->guessExtension();
+            $data['size'] = $request->fileUploaded->getClientSize();
+
+            $request->fileUploaded->move($fullpath."/",$data['file_name']);
+            if ($this->isImage($data['mime_type'])) {
+                $this->makeThumb($fullpath."/",$data['file_name']);
             }
         }
+        return $data;
     }
-
 
     /**
      * Verifica se il file uploaded è di tipo immagine
