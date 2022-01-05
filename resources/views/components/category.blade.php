@@ -4,17 +4,18 @@
         {{ Form::label('categories'.$vocabulary->id.'[]', __($vocabulary->name), ['class' => 'col-sm-2 control-label']) }}
         <div class="col-sm-10">
             {!! Form::select('categories'.$vocabulary->id.'[]', $vocabulary->categories()->pluck('name','id') , null, array_merge(['class' => "form-control select2-multi multicat", 'multiple' => 'multiple', 'style'=>'width:80%;', 'id'=>'categories'.$vocabulary->id],$attributes)) !!}
-            <button type="button" class="btn btn-default selbut" data-vid="{{ $vocabulary->id }}">Selezione</button>
+            <button type="button" class="btn btn-info selbut" data-vid="{{ $vocabulary->id }}">Seleziona</button>
         </div>
     </div>
 @endforeach
+@if(!is_null($tags))
     <div class="form-group">
         {{ Form::label('tags[]', 'Tags:', ['class' => 'col-sm-2 control-label']) }}
         <div class="col-sm-10">
             {{ Form::select('tags[]', $tags, null, ['class' => 'form-control select2-multi tagsel', 'multiple' => 'multiple', 'style'=>'width:100%']) }}
         </div>
     </div>
-
+@endif
 @push('style')
     {{ Html::style('/node_modules/select2/dist/css/select2.min.css') }}
     {{ Html::style('/css/highCheckTree.css') }}
@@ -30,9 +31,11 @@
     {{ Html::script('/js/highchecktree.js') }}
 
     <script type="text/javascript">
-        var $tagMulti = $('.tagsel').select2({tags: true});
-        $tagMulti.val({!! $model->tags()->pluck('id') !!}).trigger('change');
-        //$.each('.multicat')
+        @if(!is_null($tags))
+            var $tagMulti = $('.tagsel').select2({tags: true});
+            $tagMulti.val({!! $model->tags()->pluck('id') !!}).trigger('change');
+            //$.each('.multicat')
+        @endif
 
         $('.multicat').each(function() {
             $(this).select2({categories: true}).val({!! $model->categories()->pluck('id') !!}).trigger('change');

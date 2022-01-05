@@ -6,7 +6,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">N<b>PL</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">NEW<b>Portal</b></span>
+      <span class="logo-lg">New<b> Portal</b></span>
     </a>
 
     <!-- Header Navbar -->

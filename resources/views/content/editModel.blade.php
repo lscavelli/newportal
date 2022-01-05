@@ -61,7 +61,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="form-group">
                         <label for="content">Schema modello</label>
                         <pre id="ace_content"></pre>
@@ -93,7 +93,7 @@
 @section('style')
     <style>
         #ace_content {
-            min-height: 300px;
+            min-height: 600px;
             font-size: 14px!important;
         }
     </style>

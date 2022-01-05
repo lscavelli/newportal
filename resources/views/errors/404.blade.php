@@ -50,7 +50,7 @@
                     Per favore torna sulla <a href="/">homepage</a></h2>
             @if (\Auth::check())
                 <h2>
-                    <a href="{{  route('dashboard') }}" class="btn btn-large btn-info">
+                    <a href="{{  url('admin/dashboard') }}" class="btn btn-large btn-info">
                         <i class="glyphicon glyphicon-home"></i> oppure vai alla Dashboard
                     </a>
                 </h2>

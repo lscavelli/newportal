@@ -16,8 +16,8 @@
                 {!!
                     $list->columns(['id'=>'Id','thumb'=>__('Anteprima'),'name'=>'Titolo','status_id'=>__('Stato'),'created_at'=>__('Creato il')])
                     ->addSplitButtons([
-                        'file'=>'Nuovo file',
-                        'image'=>'Nuova immagine',
+                        'form' => 'Nuovo file',
+                        'file'=>'Apri file manager',
                     ],false)
                     ->sortFields(['id','name','file_name'])
                     ->customizes('created_at',function($row){
@@ -30,7 +30,7 @@
                         return Html::link(url("/admin/files/view",$row['id']), $row['name'], array('title' => $row['name']), true);
                     })
                     ->customizes('thumb',function($row){
-                        $file = "/".config('lfm.thumb_folder_name')."/".$row['file_name'];
+                        $file = "/".config('newportal.thumb_folder_name')."/".$row['file_name'];
                         $pathFile = $row->getPath().$file;
                         if($row->isImage() && file_exists($pathFile)) {
                             return '<div style="text-align:center"><img src=\''.asset("storage/".$row['path'].$file).'\' alt=\''.$row['name'].'\' style="width: 100%; max-width: 45px; height: auto; border-radius: 50%;"></div>';
@@ -48,12 +48,20 @@
 @push('scripts')
     <script>
         $('.splitButtons li a').on('click', function(e){
+            if($(this).attr('href')==='form') {
+                location.href = '/admin/files/create';
+                return false;
+            };
             e.preventDefault();
-            var height = 720;
-            var width = 1080;
+
+            let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+            let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+            let width = x * 0.8;
+            let height = y * 0.8;
             var top =  (screen.height/2)-(height/2) - 100;
             var left = (screen.width/2)-(width/2);
-            var win = window.open('/lfm?type='+$(this).attr('href'), '', 'width='+width+',height='+height+',top='+top+',left='+left);
+
+            var win =  window.open('/file-manager/fm-button', 'fm', 'width='+width+',height='+height+',top='+top+',left='+left);
 
             var timer = setInterval(function() {
                 if(win.closed) {

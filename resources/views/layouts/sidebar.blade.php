@@ -26,7 +26,7 @@
           </span>
     </div>
   </form>
-  <!-- /.search form -->
+  <!-- /.search form 'Dashboard'=>['icon'=>'fa-dashboard','url'=>'/dashboard'], -->
 
   {!!
 

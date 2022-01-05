@@ -26,8 +26,8 @@
 
                         {!! Form::model($user, ['action' => $action,'class' => 'form-horizontal']) !!}
 
-                            {!! Form::slText('nome','Nome') !!}
-                            {!! Form::slText('cognome','Cognome') !!}
+                            {!! Form::slText('first_name','Nome') !!}
+                            {!! Form::slText('last_name','Cognome') !!}
                             {!! Form::slEmail('email','Email') !!}
                             {!! Form::slPassword('password','Password') !!}
                             {!! Form::slPassword('password_confirmation','Conferma Password') !!}

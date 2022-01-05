@@ -19,6 +19,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#editpages" data-toggle="tab" aria-expanded="true">Pagine</a></li>
                     <li><a href="#othersettings" data-toggle="tab">Altri dati</a></li>
+                    @isset($page->id)<li><a href="#tags" data-toggle="tab">Tags</a></li>@endisset
                 </ul>
                 <div class="tab-content">
                     <!-- /.tab-pane -->
@@ -54,6 +55,20 @@
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->
+                    @isset($page->id)
+                        <!-- tab-pane -->
+                        <div class="tab-pane" id="tags">
+
+                            {!! Form::model($page, ['url' => url('admin/pages',$page->id),'class' => 'form-horizontal']) !!}
+                                @method('PUT')
+                                {!! Form::slText('name','Titolo',null,['disabled'=>'']) !!}
+                                {!! Form::slTags($tags,$page) !!}
+                                {!! Form::slSubmit('Salva',['name'=>'saveTags']) !!}
+                            {!! Form::close() !!}
+
+                        </div>
+                        <!-- /.tab-pane -->
+                    @endisset
                 </div>
                 <!-- /.tab-content -->
             </div>

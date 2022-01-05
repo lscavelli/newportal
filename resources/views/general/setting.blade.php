@@ -24,13 +24,13 @@
                     <!-- /.tab-pane -->
                     <div class="tab-pane active" id="impostazioni">
                         {!! Form::open(['action' => $action,'class' => 'form-horizontal']) !!}
-                        {!! Form::slSelect('open_registration','Autoregistrazione utenti',['Disabilitata','Abilitata'],[],$settings->get('open_registration')) !!}
-                        {!! Form::slSelect('social_registration','Registrazione social',['Disattivata','Attivata'],[],$settings->get('social_registration')) !!}
-                        {!! Form::slSelect('content_not_found','Messaggio per contenuto non trovato',['Non visualizzare','Visualizza'],[],$settings->get('content_not_found')) !!}
-                        {!! Form::slSelect('tag_dynamic','Abilita Tag dinamico',['Disabilitato','Abilitato'],[],$settings->get('tag_dynamic')) !!}
-                        {!! Form::slSelect('2fa_activation','Auth. a due fattori',['Disattivata','Attivata'],[],$settings->get('2fa_activation')) !!}
-                        {!! Form::slSelect('start_page','Pagina di avvio',$pages,[],$settings->get('start_page')) !!}
-                        {!! Form::slSubmit('Salva') !!}
+                            {!! Form::slSelect('open_registration','Autoregistrazione utenti',['Disabilitata','Abilitata'],[],$settings->get('open_registration')) !!}
+                            {!! Form::slSelect('social_registration','Registrazione social',['Disattivata','Attivata'],[],$settings->get('social_registration')) !!}
+                            {!! Form::slSelect('content_not_found','Messaggio per contenuto non trovato',['Non visualizzare','Visualizza'],[],$settings->get('content_not_found')) !!}
+                            {!! Form::slSelect('tag_dynamic','Abilita Tag dinamico',['Disabilitato','Abilitato'],[],$settings->get('tag_dynamic')) !!}
+                            {!! Form::slSelect('2fa_activation','Auth. a due fattori',['Disattivata','Attivata'],[],$settings->get('2fa_activation')) !!}
+                            {!! Form::slSelect('start_page','Pagina di avvio',$pages,[],$settings->get('start_page')) !!}
+                            {!! Form::slSubmit('Salva') !!}
                         {!! Form::close() !!}
                     </div>
                     <!-- /.tab-pane -->

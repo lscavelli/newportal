@@ -1,15 +1,15 @@
 {{--dd($model)--}}
 <!-- .header-list -->
 @if($list->showAll and ($list->showButtonNew or $list->showSearch))
-<div class="box-header">
+<div class="box-body">
     <div class="col-sm-3">
         @if($list->showButtonNew)
-            <a href="{{ url($list->getActionsUrl().'/create') }}" class="btn btn-{{ $list->colorButton }} btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
+            <a href="{{ url(Request::path().'/create') }}" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-plus"></i> Nuovo</a>
         @endif
         @if (count($list->splitButtons)>0)
             <div class="btn-group">
-                <button type="button" class="btn btn-{{ $list->colorButton }} btn-sm">Nuovo</button>
-                <button type="button" class="btn btn-{{ $list->colorButton }} dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-primary btn-sm">Nuovo</button>
+                <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -19,6 +19,11 @@
             @endforeach
                 </ul>
             </div>
+        @endif
+        @if (isset($list->newButtons) and count($list->newButtons)>0)
+            @foreach($list->newButtons  as $val)
+                    <a href="{{ $val[0] }}" class="btn btn-primary btn-sm"> {{ $val[1] }} </a>
+            @endforeach
         @endif
     </div>
     <div class="col-sm-3 col-sm-offset-6">
@@ -31,7 +36,7 @@
             <div class="input-group input-group-sm">
                 <input id="{{$list->prefix_}}keySearch" name = "{{$list->prefix_}}keySearch" type="text" class="form-control validate" value="{{Request::input($list->prefix_.'keySearch')}}" placeholder="Chiave di ricerca">
                 <span class="input-group-btn">
-                  <button type="submit" class="btn btn-{{ $list->colorButton }} btn-flat">Cerca</button>
+                  <button type="submit" class="btn btn-primary btn-flat">Cerca</button>
                 </span>
             </div>
         </form>
@@ -62,10 +67,12 @@
                             @if(array_key_exists($key, $list->customize))
                                 {!! call_user_func_array($list->customize[$key], array($row)) !!}
                             @else
-                                @if($row[$key])
-                                    {!! $row[$key]  !!}
-                                @else
-                                    @if(isset($row[$val])){!! $row[$val]  !!}@endif
+                                @if(isset($row[$key]))
+                                    {!! $row[$key] !!}
+                                @elseif(isset($row->{$list->with}->$key))
+                                    {!! $row->{$list->with}->$key !!}
+                                @elseif(isset($row[$val]))
+                                    {!! $row[$val] !!}
                                 @endif
                             @endif
                         </td>
@@ -73,12 +80,12 @@
                     @if($list->showActions and $list->showAll)
                         <td>
                             <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-{{ $list->colorButton }} btn-xs dropdown-toggle" data-toggle="dropdown">
+                                <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
                                     <i class="glyphicon glyphicon-fire"></i> Azioni <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     @if($list->showActionsDefault)
-                                        <li><a href="{{ url($list->getActionsUrl().'/'.$row['id'], 'edit') }}">Edit</a></li>
+                                        <li><a href="{{ url(Request::path().'/'.$row['id'], 'edit') }}">Edit</a></li>
                                         <li><a href="#" class="delete" data-id="{{$row['id']}}">Delete</a></li>
                                     @endif
                                     @if(count($list->actions)>0)
@@ -97,11 +104,11 @@
                                             @if(starts_with($actionUrl, 'http'))
                                                 {{$actionUrl."/".$row['id']}}
                                             @elseif(is_numeric($actionUrl))
-                                                {{ url($list->getActionsUrl(), $row['id']) }}
+                                                {{ url(Request::path(), $row['id']) }}
                                             @else
-                                                {{ url($list->getActionsUrl().'/'.$actionUrl, $row['id']) }}
+                                                {{ url(Request::path().'/'.$actionUrl, $row['id']) }}
                                             @endif
-                                                    " @if($actionLabel=="Delete")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
+                                                    " @if($actionLabel=="Delete" or $actionLabel=="Cancella")class="delete" data-id="{{$row['id']}}"@endif>{{$actionLabel}}</a></li>
                                         @endforeach
                                     @endif
                                 </ul>
@@ -110,36 +117,36 @@
                     @endif
                 </tr>
             @endforeach
-            </tbody>
-        </table>
-        <!-- /fine table -->
-    </div>
+        </tbody>
+    </table>
+    <!-- /fine table -->
+</div>
 </div>
 <!-- .footer-list -->
-<div class="box-footer clearfix">
-    <div class="col-sm-5">
-        @if($list->showAll and $list->showXpage)
-        <div class="dataTables_length">
-            Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
-            <label>
-                <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
-                    @csrf
-                    {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
-                    @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
-                        {!! Form::hidden($key,$value) !!}
-                    @endforeach
-                </form>
-            </label>
-        </div>
-        @endif
+<div class="box-body">
+<div class="col-sm-5">
+    @if($list->showAll and $list->showXpage)
+    <div class="dataTables_length">
+        Da {!! $model->firstItem() !!} a {!! $model->lastItem() !!} / {!! $model->count() !!} - Mostra
+        <label>
+            <form method="GET" id="{{$list->prefix_}}xpage-form" action="{{ url(Request::path()) }}">
+                @csrf
+                {!! Form::select($list->prefix_.'xpage', ['5'=>'5','15'=>'15','25'=>'25','50'=>'50','100'=>'100'], \Request::input($list->prefix_.'xpage'), ['class' => "form-control input-sm", 'id'=>$list->prefix_.'xpage']) !!}
+                @foreach(array_except(\Request::all(),['_token',$list->prefix_.'xpage',$list->prefix_.'page']) as $key=>$value)
+                    {!! Form::hidden($key,$value) !!}
+                @endforeach
+            </form>
+        </label>
     </div>
-    <div class="col-sm-7">
-        <div class='pull-right' Style="margin-top: -20px;">
-            {{
-                $model->appends(array_except(\Request::all(),['_token','page']))->links()
-            }}
-        </div>
+    @endif
+</div>
+<div class="col-sm-7">
+    <div class='pull-right' Style="margin-top: -20px;">
+        {{
+            $model->appends(array_except(\Request::all(),['_token','page']))->links()
+        }}
     </div>
+</div>
 </div>
 @include('ui.confirmdelete')
 @if($list->showAll)
@@ -154,7 +161,7 @@
         $(".delete").click(function() {
             $('#confirmdelete').modal('toggle');
             $('.modal-body p').text("Sei sicuro di voler eliminare l'elemento id "+$(this).data('id'));
-            $('#confirmForm').prop('action', '{{ $list->getUrlDelete() }}/' + $(this).data('id'));
+            $('#confirmForm').prop('action', '{{ $list->urlDelete }}/' + $(this).data('id'));
         });
     </script>
 @stop

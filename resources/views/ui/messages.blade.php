@@ -37,7 +37,7 @@
 @push('scripts')
 <script>
     $.fn.removeWin = function() {
-        $('.msgDisabled').slideUp(800, function () {
+        $('.msgDisabled').slideUp(2000, function () {
             $(this).remove();
         })
     }

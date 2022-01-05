@@ -18,60 +18,67 @@
                 <!-- Main content -->
                 <div class="row">
                     <div class="col-md-12">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tabpreferences" data-toggle="tab" aria-expanded="true">Web Content</a></li>
-                            <li><a href="#tabcss" data-toggle="tab">Applica Style</a></li>
-                            <li><a href="#tabjs" data-toggle="tab">Javascript</a></li>
-                            <li><a href="#tabother" data-toggle="tab">Altre impostazioni</a></li>
+                        <ul role="tablist" class="nav nav-tabs flex-column flex-sm-row">
+                            <li class="nav-item active"><a data-toggle="tab" href="#tabpreferences" role="tab" class="nav-link active">Web Content</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#tabcssjs" role="tab" class="nav-link">Applica Style/js</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#tabnote" role="tab" class="nav-link">Note</a></li>
+                            <li class="nav-item"><a data-toggle="tab" href="#tabother" role="tab" class="nav-link">Altre impostazioni</a></li>
                         </ul>
+
                         <div class="tab-content" style="height: auto">
-                            <div class="tab-pane fade in active" id="tabpreferences">
+                            <div class="tab-pane active" id="tabpreferences" role="tabpanel">
                                 <iframe src="" name="prefIframe" id="prefIframe"><p>Il tuo browser non supporta iframe</p></iframe>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tabcss">
-                                <div class="box-body">
-                                    <form action="" method="POST" name="cssForm" id="cssForm">
+                            <div class="tab-pane" id="tabcssjs" role="tabpanel">
+                                <div class="box-body"><br />
+                                    <form action="" method="POST" name="cssjsForm" id="cssjsForm">
                                         <div class="form-group">
-                                            <label for="css" class="col-sm-2 control-label">Style avanzato</label>
+                                            <label for="css" class="col-sm-2 form-label">Style</label>
                                             <div class="col-sm-10">
-                                                <textarea name="css" id="css" rows="8" cols="60"></textarea>
+                                                <textarea name="css" id="css" rows="8" cols="60" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="js" class="col-sm-2 form-label">Javascript</label>
+                                            <div class="col-sm-10">
+                                                <textarea name="js" id="js" rows="8" cols="60" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tabjs">
-                                <div class="box-body">
-                                    <form action="" method="POST" name="jsForm" id="jsForm">
+                            <div class="tab-pane" id="tabnote" role="tabpanel">
+                                <div class="box-body"><br />
+                                    <form action="" method="POST" name="noteForm" id="noteForm">
                                         <div class="form-group">
-                                            <label for="js" class="col-sm-2 control-label">Javascript</label>
+                                            <label for="note" class="col-sm-2 form-label">Note</label>
                                             <div class="col-sm-10">
-                                                <textarea name="js" id="js" rows="8" cols="60"></textarea>
+                                                <textarea name="note" id="note" rows="8" cols="60" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="tabother">
+                            <div class="tab-pane" id="tabother" role="tabpanel">
                                 <div class="box-body"><br />
                                     <form action="" method="POST" name="otherForm" class="form-horizontal" id="otherForm">
                                         <div class="form-group">
-                                            <label for="title" class="col-sm-2 control-label">Titolo</label>
+                                            <label for="title" class="col-sm-2 form-label">Titolo</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="title" id="title" class="form-control" placeholder="Ridefinizione titolo" value="">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="position" class="col-sm-2 control-label">Posizione</label>
+                                            <label for="position" class="col-sm-2 form-label">Posizione</label>
                                             <div class="col-sm-10">
                                                 <select name="position" class="form-control input-sm" id="position"></select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="comunication" class="col-sm-2 control-label">Comunicazione</label>
+                                            <label for="comunication" class="col-sm-2 form-label">Comunicazione</label>
                                             <div class="col-sm-10">
                                                 <select name="comunication" class="form-control input-sm" id="comunication">
                                                     <option value="0">Non attiva</option>
@@ -80,7 +87,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="template" class="col-sm-2 control-label">Template</label>
+                                            <label for="template" class="col-sm-2 form-label">Template</label>
                                             <div class="col-sm-10">
                                                 <select name="template" class="form-control input-sm" id="template"></select>
                                             </div>

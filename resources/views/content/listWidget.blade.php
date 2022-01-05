@@ -14,7 +14,7 @@
             <div class="box" style="padding-top: 20px;">
                 {!!
                     $list->columns(['id','name'=>'Nome','description'=>'Descrizione','type_id'=>'Tipologia','created_at'=>'Registrata il'])
-                    ->onlyActions(['0'=>'Mostra dettagli','#'=>'Delete',url('admin/widgets/setting')=>'Setting'])
+                    ->actions(['0'=>'Mostra dettagli','#'=>'Delete',url('admin/widgets/setting')=>'Setting'])
                     ->addSplitButtons(['#'=>'Carica Widgets'],false)
                     ->customizes('type_id',function($row){
                         return (is_null($row['type_id']) ? null : config('newportal.type_widgets')[$row['type_id']]);

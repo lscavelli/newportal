@@ -49,7 +49,7 @@
             <h2 style="margin-top:-20px">Siamo spiacenti, la pagina che hai richiesto ha generato un errore improvviso. Vai sulla <a href="/">homepage</a></h2>
             @if (\Auth::check())
                 <h2>
-                    <a href="{{  route('dashboard') }}" class="btn btn-large btn-info">
+                    <a href="@if(array_key_exists(auth()->user()->type, config('newportal.role_register'))){{  url('web/dashboard') }}@else{{ url('admin/dashboard') }}@endif" class="btn btn-large btn-info">
                         <i class="glyphicon glyphicon-home"></i> oppure vai alla Dashboard
                     </a>
                 </h2>
